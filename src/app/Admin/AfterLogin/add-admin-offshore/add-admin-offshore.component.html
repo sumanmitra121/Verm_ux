@@ -1,0 +1,80 @@
+<app-adminheader></app-adminheader>
+<div class="page-body-wrapper">
+<app-adminsidebar class="sidebarMain"></app-adminsidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="card">
+         <div class="card-body">
+            <div class="titleSec"><h2>Add New Offshore</h2></div>
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
+            <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
+            <input type="hidden" name="Id" id="default_id" [(ngModel)]="default_value">
+            <input type="hidden" name="user" id="User" [(ngModel)]="User">
+
+            <div class="row">
+                <!-- <div class="col-1"></div> -->
+                <div class="col-5">
+                    <b>Offshore Name</b>
+                    <input  type="text" name="offshore_name" id="offshore_name" class="form-control" ngModel #offshore_name="ngModel" required>
+                    <div *ngIf="offshore_name.errors?.required && (offshore_name.touched || offshore_name.dirty)" class="text-danger">
+                        *Please Provide Offshore Name
+                      </div>
+                </div>
+                    <div class="col-1"> </div>
+                <div class="col-5">
+                    <b>Location</b>
+                    <input type="text" name="location" id="location" class="form-control" #location="ngModel" ngModel required>
+                    <div *ngIf="location.errors?.required && (location.touched || location.dirty)" class="text-danger">
+                        *Please Provide Location
+                      </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                    <!-- <div class="col-1"></div> -->
+                <div class="col-5">
+                    <b>Latitude</b> 
+                    <input type="text" name="lattitude" id="lattitude" class="form-control" #lattitude="ngModel" ngModel>
+                </div>
+                    <div class="col-1"></div>
+                <div class="col-5">
+                    <b>Longitude</b>
+                    <input type="text" name="longitude" id="longitude" class="form-control" #longitude="ngModel" ngModel>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <!-- <div class="col-1"><b>No. of Workers</b></div> -->
+                <div class="col-5">
+                    <b>No. of Workers</b>
+                    <input type="text" name="workers_no" id="Workers_no" class="form-control" #Workers_no="ngModel" ngModel>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <!-- <b>Status</b> -->
+                    <select class="form-control" hidden name="status" id="status" #status="ngModel" [(ngModel)]="Status">
+                        <option value="" [selected]="Status==''">Select</option>
+                        <option value="A" [selected]="Status=='A'">Active</option>
+                        <option value="I" [selected]="Status=='I'">InActive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                
+                <div class="col-4">
+                <div class="form-group row">
+                        <b>&nbsp;</b><br>
+                        <div class="col-sm-12 btnSubmitSec mt-2">      
+                        <input type="submit" class="btn btn-info" id="submit" name="submit" value="Save" [disabled]="logForm.invalid">
+                        <input type="reset" (click)="logForm.reset()" class="btn btn-info" value="Cancel" >
+                        </div>
+                        </div>
+                </div>
+            </div>
+             </form> 
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

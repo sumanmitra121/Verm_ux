@@ -1,0 +1,81 @@
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="card">
+         <div class="card-body">
+            <div class="titleSec"><h2 *ngIf="id == '0'">Add Call Log</h2> <h2 *ngIf="id != '0'">Update Call Log</h2></div>
+      <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
+            <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">    
+                   <div class="row mt-2">
+                       <div class="col-md-12">
+                           <input type="hidden" name="user" [(ngModel)]="user" class="form-control">
+                           <input type="hidden" name="id"  [(ngModel)]="id" class="form-cotrol">
+                           <input type="hidden" name="inc_id"  [(ngModel)]="Inc_id" class="form-cotrol">
+
+                           <label>Call Made / Reference No.</label>
+                           <input type="text" class="form-control" id="call_made" name="ref_no" ngModel #ref_no="ngModel" required readonly>
+                           <div *ngIf="ref_no.errors?.required && (ref_no.touched || ref_no.dirty)" class="text-danger">
+                            *Please Provide Reference No
+                          </div>
+                       </div>
+                   </div>
+                   <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label>Made By</label>
+                        <input type="text" class="form-control" id="made_by" name="made_by" ngModel #made_by="ngModel" required>
+                        <div *ngIf="made_by.errors?.required && (made_by.touched || made_by.dirty)" class="text-danger">
+                            *Please Provide This Field
+                          </div>
+                    </div>
+                <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" >... </p></ngx-spinner> -->
+
+                    <div class="col-md-6">
+                        <label>Made To</label>
+                        <input type="text" class="form-control" id="made_to" name="made_to" ngModel #made_to="ngModel" required>
+                        <div *ngIf="made_to.errors?.required && (made_to.touched || made_to.dirty)" class="text-danger">
+                            *Please Provide This Field
+                          </div>
+
+                    </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <label>Received By</label>
+                            <input type="text" name="received_by" id="received_by" class="form-control" ngModel #received_by="ngModel" required>
+                            <div *ngIf="received_by.errors?.required && (received_by.touched || received_by.dirty)" class="text-danger">
+                                *Please Provide This Field
+                              </div>
+                        </div>
+                        <div class="col-6">
+                            <label>Call Date & Time</label>
+                            <input type="datetime-local" name="call_datetime" id="call_datetime" class="form-control" ngModel #call_datetime="ngModel" required>
+                            <div *ngIf="call_datetime.errors?.required && (call_datetime.touched || call_datetime.dirty)" class="text-danger">
+                                *Please Provide Date & Time
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2 mb-2">
+                        <div class="col-12">
+                            <label>Call Details</label>
+                            <textarea name="call_details" id="call_details" class="form-control" rows="5" cols="5" ngModel #call_details="ngModel" required></textarea>
+                            <div *ngIf="call_details.errors?.required && (call_details.touched || call_details.dirty)" class="text-danger">
+                                *Please Provide Date & Time
+                              </div>
+                        </div>
+                      
+                    </div>
+                     <div class="btnSubmitSec">
+                     <input type="submit" class="btn btn-info" id="submit" value="Save" [disabled]="logForm.invalid">
+                     <!-- <input type="reset" id="reset" value="RESET" class="btn btn-danger"  (click)="logForm.reset()"> -->
+                    </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

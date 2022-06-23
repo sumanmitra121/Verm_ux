@@ -1,0 +1,131 @@
+
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+         <div class="card">
+         <div class="card-body">
+            <div class="titleSec">
+              <h2>Audio / Video Conferencing</h2>
+             </div>
+             <hr />
+             <!-- <div id="meetingSDKElement">
+           
+             </div> -->
+             <!-- <div class="row">
+                 <div class="col-6">
+                      <button class="btn btn-light" data-toggle="modal" data-target="#host_modal" (click)="host('1')">Host A Meeting</button>
+                    <button class="btn btn-light" data-toggle="modal" data-target="#join_modal" (click)="host('0')">Join Meeting</button>
+
+                 </div>
+             </div> -->
+
+             <!-- For Jitsi -->
+             <!-- <div class="row mb-2">
+                 <div class="col-4">
+                    <input type="text" class="form-control" #join_room>
+                 </div>
+                 <div class="col-3"><button class="btn btn-light" (click)="join_video(join_room.value)">Join</button>
+                 <button class="btn btn-light" (click)="Host_video()">Host</button></div>
+             </div> -->
+             <ngx-spinner bdColor = "" size = "medium" color = "black" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: rgb(0, 0, 0)" > Loading... </p></ngx-spinner>
+             <div id="jist-iframe"></div>
+             <div id="jist-iframe_join"></div>
+               
+             <div class="row mt-5">
+              <div class="col-3"></div>
+              <div class="col-3"  style="cursor:poiner">
+               <!-- <div class="file-man-box" #Tooltip="matTooltip" matTooltip="Host a meeting">
+                 <div class="file-img-box">
+                   <img src="assets/images/videos.png" class="img-fluid" (click)="Host_video()">
+                 </div>
+                 <div class="file-man-title">
+                       <p>Host Meeting</p>
+                 </div>
+               </div> -->
+               <div class="whiteBox2"  #Tooltip="matTooltip" matTooltip="Host a meeting" >
+                <ul class="watherRepoort">
+                  <!-- <li><img src="assets/images/videos.png"  height="70px" width="70px" (click)="Host_video()"></li> -->
+                  <li><a [routerLink]="['/Conference',room,name,email]"  target="_blank"><img src="assets/images/videos.png"  height="70px" width="70px" ></a></li>
+
+                  <li>Host Meeting</li>
+                </ul>
+              </div>
+              </div>
+              <div class="col-3">
+               <!-- <div class="file-man-box"  #Tooltip="matTooltip" matTooltip="Join meeting">
+                 <div class="file-img-box">
+                  <img src="assets/images/join_video.png" class="img-fluid" >
+                 </div>
+                 <div class="file-man-title">
+                   <p>Join Meeting</p>
+                 </div>
+             </div> -->     
+             <div class="whiteBox2"  #Tooltip="matTooltip" matTooltip="Join meeting"  data-toggle="modal" data-target="#join_modal" style="cursor: pointer;">
+              <ul class="watherRepoort">
+                <li><img src="assets/images/join_video.png"  height="70px" width="70px"></li>
+                <li>Join Meeting</li>
+              </ul>
+            </div>
+            </div>
+              <div class="col-3"></div>
+            </div>
+       
+       
+          </div>
+        </div>
+    </div> 
+</div>
+</div>
+
+
+
+  <!-- The Modal -->
+  <div class="modal fade" id="join_modal">
+    <div class="modal-dialog  modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Join Meeting</h4>
+          <button type="button" class="close" data-dismiss="modal" id="close_modal">&times;</button>
+        </div>
+      <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm)" >
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+    
+                    <!-- <label>User Name</label> -->
+                    <!-- <input type="text" name="meet_url" id="meet_url" #meet_url="ngModel" ngModel > -->
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Meeting Url</mat-label>
+                      <input type="text" matInput  name="meet_url" id="meet_url" #meet_url="ngModel" ngModel required placeholder="Ex. http://meet.jit.si/UTbwe">
+                      <mat-error *ngIf="meet_url.errors?.required && (meet_url.touched || meet_url.dirty)">
+                        Please enter a valid meeting url
+                      </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 mt-2">
+                  <!-- <label>Name</label> -->
+                    <!-- <label>Name.</label>
+                    <input type="text" name="meet_no" id="meetNo" #meet_no="ngModel" ngModel class="form-control"> -->
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>Name</mat-label>
+                      <input type="text" matInput  name="user_name" id="user_name" #user_name="ngModel" ngModel>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <div class="btnSubmitSec"> 
+          <input type="submit" class="btn btn-info" value="Join" [disabled]="logForm.invalid">
+          </div>
+        </div>
+     </form> 
+      </div>
+    </div>
+  </div>

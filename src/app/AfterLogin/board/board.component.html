@@ -1,0 +1,1168 @@
+
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+  <div class="content-wrapper">
+    <!-- <div class="row" *ngIf="get_incident_details!=''">
+      <div class="col-4">
+        <h3 class="text-dark"><strong>Incident Name: {{inc_name}}</strong></h3>
+      </div>
+      <div class="col-4">
+        <h3 class="text-dark"><strong>Location: {{Inc_location}}</strong></h3>
+
+      </div>
+      <div class="col-2">
+      <h3 class="text-dark"><strong>Initial tier:&nbsp;Tier1</strong></h3>
+      </div>
+      <div class="col-2">
+      <h3 class="text-dark"><strong>Days Elapsed:&nbsp;7</strong></h3>
+
+      </div>
+     </div> -->
+    <div class="card whiteBoxComon_cardCus">
+     <div class="card-body">
+
+       <!-- Inicdent Status -->
+       <!-- <div class="row "> -->
+       <div class="rowCustomFlex">
+         <div class="col-3">
+          <div class="whiteBoxComon" id="inc_create" (click)="set_modal_for_create('inc_create')" type="button" data-toggle="modal" data-target="#create_incident_modal">
+            <div class="card-header card_headerCustom">
+              <h2 class="pull-left text-dark titleDashBox">Incident Status</h2>
+              <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
+            </div>
+            <div class="card_bodyCustom">
+              <ul class="listDashboard" *ngIf="get_in_status!=''">
+                <li><strong>Visibility:</strong> {{inc_visibility}}</li>
+                <li><strong>Sea State:</strong> {{inc_sea_state}}</li>
+                <li><strong>Temparature:</strong>
+                  <!-- {{inc_temparature}} -->
+                 {{temp}}&#xb0;{{deg}}
+                </li>
+                <li><strong>Wind Speed:</strong> {{wind_speed}}</li>
+              </ul>
+                <!-- <mat-list *ngIf="get_in_status!=''">
+              <mat-list-item ><b>Visibility:&nbsp;{{inc_visibility}}</b></mat-list-item>
+              <mat-list-item ><b>Sea State:&nbsp;{{inc_sea_state}}</b></mat-list-item>
+              <mat-list-item ><b>Temparature:&nbsp;{{inc_temparature}}</b></mat-list-item>
+              <mat-list-item ><b>Wind Speed:&nbsp;{{wind_speed}}</b></mat-list-item>
+            </mat-list> -->
+            <!-- </marquee> -->
+            </div>
+          </div>
+         </div>
+         <div class="col-3">
+              <!-- VESSEL Status -->
+          <div class="whiteBoxComon" type="button" id="vessel_create" (click)="set_modal_for_create('vessel_create')" data-toggle="modal" data-target="#create_incident_modal">
+            <div class="card-header card_headerCustom">
+              <h2 class="pull-left text-dark titleDashBox">Vessel Status</h2>
+            </div>
+            <div class="card_bodyCustom">
+              <!-- <mat-list *ngIf="get_vessel_status!=''">
+                <mat-list-item id="first-item" class="text-center"><h2 >{{this.ves_name}}</h2></mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item id="second-item" ><b >From:</b >&nbsp;&nbsp;{{this.form_at}}</mat-list-item>
+                <mat-list-item  id="third-item" ><b>To:</b >&nbsp;&nbsp;{{this.to_at}}</mat-list-item>
+                <mat-list-item  ></mat-list-item>
+
+             </mat-list> -->
+             <div *ngIf="get_vessel_status!=''">
+            <h3 id="first-item">{{this.ves_name}}</h3>
+             <ul class="listDashboard">
+              <li id="second-item" ><strong>From:</strong> {{this.form_at}}</li>
+              <li id="third-item" ><strong>To:</strong > {{this.to_at}}</li>
+            </ul>
+            </div>
+            </div>
+        </div>
+         </div>
+         <div class="col-3">
+             <!-- HELICOPTER STATUS -->
+          <div class="whiteBoxComon" type="button" id="hel_create" (click)="set_modal_for_create('hel_create')"  data-toggle="modal" data-target="#create_incident_modal">
+            <div class="card-header card_headerCustom">
+              <h2 class="pull-left text-dark titleDashBox">Helicopter Status</h2>
+            </div>
+            <div class="card_bodyCustom">
+              <!-- <mat-list *ngIf="get_helicopter_status!=''">
+                <mat-list-item id="first-helicopter" class="text-center"><h2>{{call_sign}}</h2></mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item id="second-helicopter" ><b>From:</b>&nbsp;&nbsp;{{hel_from}}</mat-list-item>
+                <mat-list-item  id="third-helicopter" ><b>To:</b>&nbsp;&nbsp;{{hel_to}}</mat-list-item>
+                <mat-list-item  ></mat-list-item>
+              </mat-list> -->
+              <div *ngIf="get_helicopter_status!=''">
+              <h3 id="first-helicopter">{{call_sign}}</h3>
+             <ul class="listDashboard">
+              <li id="second-helicopter" ><strong>From:</strong> {{hel_from}}</li>
+              <li id="third-helicopter" ><strong>To:</strong > {{hel_to}}</li>
+            </ul>
+            </div>
+
+            </div>
+          </div>
+         </div>
+         <div class="col-3">
+          <!-- POB status -->
+          <div class="whiteBoxComon" type="button" id="pob" (click)="set_modal_for_create('pob')"  data-toggle="modal" data-target="#create_incident_modal">
+            <!-- <div class="card-header card_headerCustom">
+              <h2 class="pull-left text-dark titleDashBox"> Pob Status</h2>
+
+            </div>
+            <div class="card_bodyCustom">
+            <ngx-spinner bdColor = ""  name="pob" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Loading.... </p></ngx-spinner>
+            <div *ngIf="get_prob_status!=''">
+              <ul class="listDashboard">
+               <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
+             </ul>
+             </div>
+
+            </div> -->
+            <div class="card-header card_headerCustom">
+              <h2 class="pull-left text-dark titleDashBox">Pob Status</h2>
+              <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
+            </div>
+            <div class="card_bodyCustom" *ngIf="get_prob_status!=''">
+              <h3 id="first-item"></h3>
+              <ul class="listDashboard" >
+                <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
+              </ul>
+            </div>
+
+          </div>
+         </div>
+
+       </div>
+       <div class="row mt-3 p-2">
+         <div class="col-3">
+            <!-- Casulaity Status -->
+        <div class="whiteBoxComon" type="button" id="casual" (click)="set_modal_for_create('casual')"  data-toggle="modal" data-target="#create_incident_modal" >
+        <div class="card-header card_headerCustom">
+          <h2 class="pull-left text-dark titleDashBox">Casualty Status</h2>
+
+
+          </div>
+        <div class="card_bodyCustom">
+
+          <!-- <mat-list *ngIf="get_casualty_status!=''">
+            <mat-list-item id="full_name"><b>Total:</b>{{total}}</mat-list-item>
+            <mat-list-item id="location" ><b>Location:</b>{{Location}}</mat-list-item>
+            <mat-list-item  id="location" ><b>Lat:</b>{{this.lat}}</mat-list-item>
+            <mat-list-item  id="location" ><b>Long:</b>{{this.long}}</mat-list-item>
+         </mat-list> -->
+
+         <div *ngIf="get_casualty_status!=''">
+        <h3 id="first-item"></h3>
+
+         <ul class="listDashboard">
+          <li id="full_name"><strong>Total:</strong> {{total}}</li>
+          <li id="location" ><strong>Location:</strong> {{Location}}</li>
+          <li id="location" ><strong>Lat:</strong> {{this.lat}}</li>
+          <li id="location" ><strong>Long:</strong> {{this.long}}</li>
+        </ul>
+        </div>
+
+        </div>
+      </div>
+         </div>
+         <div class="col-3">
+            <!-- Evacuation Status -->
+     <div class="whiteBoxComon" type="button" id="evacuation" (click)="set_modal_for_create('evacuation')"  data-toggle="modal" data-target="#create_incident_modal">
+      <div class="card-header card_headerCustom">
+        <h2 class="pull-left text-dark titleDashBox">Evacuation Status</h2>
+      </div>
+      <div class="card_bodyCustom">
+        <ngx-spinner bdColor = ""  name="evacuation" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner>
+        <!-- <mat-list *ngIf="get_evacuation_status!=''">
+          <mat-list-item id="first-evacuation"><b>Transport:</b>{{transport_mode}}</mat-list-item>
+          <mat-list-item id="second-evacuation" ><b>Time:</b>{{evacuation_time}}</mat-list-item>
+          <mat-list-item  id="third-evacuation" ></mat-list-item>
+       </mat-list> -->
+
+       <div *ngIf="get_evacuation_status!=''">
+        <h3 _ngcontent-alt-c211="" id="first-item"></h3>
+        <ul class="listDashboard">
+         <li id="first-evacuation"><strong>Transport:</strong> {{transport_mode}}</li>
+         <li id="second-evacuation"><strong>Time:</strong> {{evacuation_time}}</li>
+       </ul>
+       </div>
+
+
+      </div>
+    </div>
+         </div>
+         <div class="col-3">
+         <!-- Events Log -->
+        <div class="whiteBoxComon" type="button" id="events" (click)="set_modal_for_create('events')"  data-toggle="modal" data-target="#create_incident_modal">
+          <div class="card-header card_headerCustom">
+            <h2 class="pull-left text-dark titleDashBox">Events Log</h2>
+
+          </div>
+          <div class="card_bodyCustom">
+            <!-- <ngx-spinner bdColor = "" name="events" size = "default" color = "black" type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner> -->
+        <!-- <mat-progress-spinner mode="indeterminate" diameter='30' strokeWidth='10' [hidden]="event_logs"></mat-progress-spinner> -->
+            <!-- <mat-list id="eventsloglist" *ngIf="get_events_status!=''">
+              <mat-list-item id="first-eventslog" ></mat-list-item>
+              <mat-list-item id="second-eventslog" class='mt-2'></mat-list-item>
+              <mat-list-item  id="third-eventslog" ></mat-list-item>
+           </mat-list> -->
+           <div id="eventsloglist" *ngIf="get_events_status!=''">
+            <h3 _ngcontent-alt-c211="" id="first-item"></h3>
+            <mat-spinner [hidden]="event_logs" class='mx-auto' diameter="30"></mat-spinner>
+            <ul class="listDashboard">
+             <!-- <li id="first-eventslog"></li>
+             <li id="second-eventslog"></li>
+             <li id="third-eventslog"></li> -->
+             <li><strong>Resource Assigned: </strong> {{resource_assigned}}</li>
+             <li><strong>Time: </strong> {{event_time}}</li>
+             <li><strong>Situation Status: </strong> {{situation_status}}</li>
+
+
+           </ul>
+           </div>
+
+
+          </div>
+        </div>
+
+       </div>
+      </div>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+<!-- For Create Incident Status-->
+<div class="modal modalCustomeBoard fade" id="create_incident_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal_dialogCustomeBoard modal-dialog-centered modal-dialog-zoom  modal-xl" role="document">
+      <div class="modal-content">
+                                <!--Modal header -->
+        <!-- Incident Status -->
+        <div class="modal-header" *ngIf="this.id_create=='inc_create'">
+          <h3 class="modal-title" id="exampleModalLabel"><b *ngIf="get_incident_details !=''">{{Inc_name}}({{Inc_id}})</b></h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <!-- VESSEL Status -->
+        <div class="modal-header" *ngIf="this.id_create=='vessel_create'">
+          <h3 class="modal-title" id="exampleModalLabel">Create Vessel Status</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+         <!-- Helicopter Status -->
+         <div class="modal-header" *ngIf="this.id_create=='hel_create'">
+          <h3 class="modal-title" id="exampleModalLabel">Create Helicopter Status</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <!-- Pob Status -->
+        <div class="modal-header" *ngIf="this.id_create=='pob'">
+        <h3 class="modal-title" id="exampleModalLabel">Create Pob Status</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+       </div>
+        <!-- Cauality Status -->
+        <div class="modal-header" *ngIf="this.id_create=='casual'">
+          <h3 class="modal-title" id="exampleModalLabel">Create Casualty Status</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+          <!-- Evacuation Status -->
+          <div class="modal-header" *ngIf="this.id_create=='evacuation'">
+            <h3 class="modal-title" id="exampleModalLabel">Create Evacuation Status</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <!-- EVENTS Log -->
+          <div class="modal-header" *ngIf="this.id_create=='events'">
+          <h3 class="modal-title" id="exampleModalLabel">Create Events Log</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+                           <!-- End -->
+
+                           <!-- Modal Body -->
+        <form #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
+          <!-- For INCIDENT STATUS -->
+          <div class="modal-body" id="inc_create" *ngIf="this.id_create=='inc_create'">
+
+             <!-- Installation Co-ordinates -->
+             <div class="row">
+              <div class="col-6">
+                <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+                  <label>Installation</label>
+                  <input class="form-control" type="text" name="installation" id="ins_id" ngModel #installation="ngModel" readonly>
+              </div>
+              <div class="col-6">
+              <label>COORDINATES:</label>
+              <input class="form-control" type="text" name="coordinates" id="coordinate_id" ngModel #coordinates="ngModel" readonly>
+          </div>
+          </div>
+           <!--SUMMARY OF INCIDENT  STATUS OF EMERGENCY RESPONSE -->
+           <div class="row mt-2">
+            <div class="col-6"><label>Summary Of Incident</label>
+                <textarea cols="30" rows="4" class="form-control" name="summary" id="incidentsummary" ngModel #summary="ngModel"></textarea>
+            </div>
+            <div class="col-6"><label>Status Of Emergency Response</label>
+                <textarea cols="30" rows="4" class="form-control" name="status" id="emergencyresponse" ngModel #status="ngModel"></textarea>
+                </div>
+         </div>
+
+         <table class="table" style="margin-top:10px" width="100%">
+                  <thead>
+                      <tr>
+                          <th class="text-center">Time</th>
+                          <th class="text-center">Visibility</th>
+                          <th class="text-center">Sea State</th>
+                          <th class="text-center">Temparature(C/F)</th>
+                          <th class="text-center">Wind Speed (km/h)</th>
+                          <th class="text-center">Wind Direction</th>
+                          <th class="text-center" (click)="addRow()">
+                            <i class="fa fa-plus fa-2x"></i>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                       <tr *ngFor="let dynamic of dynamicArray; let i = index;">
+                          <td>
+                            <input readonly [(ngModel)]="dynamicArray[i].time_inc" class="form-control" type="text" [ngModelOptions]="{standalone: true}"/>
+                          </td>
+                          <td>
+                            <input [(ngModel)]="dynamicArray[i].visibility" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                          </td>
+                          <td>
+                            <input [(ngModel)]="dynamicArray[i].sea_state" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                          </td>
+                          <td>
+                            <input [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                          </td>
+                          <td>
+                            <input [(ngModel)]="dynamicArray[i].wind_speed" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                          </td>
+                          <td>
+                            <input [(ngModel)]="dynamicArray[i].wind_direc" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                          </td>
+                          <td class="text-center">
+                            <a class="customIcon" type="button"
+                            #tooltip="matTooltip"
+                            matTooltip="Delete"
+                            (click)="deleteRow(i)"><i class="fa fa-trash fa-2x"></i></a>
+                          </td>
+                    </tr>
+                  </tbody>
+          </table>
+
+
+
+          <!-- Wind Direction Wind Speed -->
+          <!-- <div class="row mt-2">
+              <div class="col-6"><label>Wind Speed</label>
+                <input type="text" class="form-control" name="wind_speed" id="windspeed" ngModel #wind_speed="ngModel">
+              </div>
+              <div class="col-6"><label>Wind Direction</label>
+                  <input type="text" class="form-control" name="wind_direction" id="winddirection" ngModel #wind_direction="ngModel">
+                  </div>
+          </div> -->
+
+          </div>
+          <!-- For VESSEL STATUS -->
+          <div class="modal-body" id="inc_create" *ngIf="this.id_create=='vessel_create'">
+            <div class="row">
+              <!-- Vessel Name -->
+              <div class="col-6">
+                <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+
+              </div>
+            </div>
+            <table class="table" style="margin-top:10px" width="100%">
+              <thead>
+                  <tr>
+                      <th class="text-center">Name</th>
+                      <th class="text-center">Type</th>
+                      <th class="text-center">FROM</th>
+                      <th class="text-center">ETD</th>
+                      <th class="text-center">TO</th>
+                      <th class="text-center">ETA</th>
+                      <th class="text-center">Remarks</th>
+                     <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                   <tr *ngFor="let vesselarray of vesselArray; let i = index;">
+                      <td >
+                        <input [(ngModel)]="vesselArray[i].vessel_name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].vessel_type" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <textarea [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
+                      </td>
+                      <td  class="text-center">
+                       <a class="customIcon" type="button"
+                       #tooltip="matTooltip"
+                       matTooltip="Delete"
+                       (click)="deleteRow(i)"
+                       ><i class="fa fa-trash fa-2x"></i></a>
+                      </td>
+                </tr>
+              </tbody>
+           </table>
+
+
+
+          </div>
+          <!-- For HELICOPTER STATUS -->
+          <div class="modal-body" id="inc_create" *ngIf="this.id_create=='hel_create'">
+            <div class="row">
+              <!-- Vessel Name -->
+              <div class="col-6">
+                <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+
+              </div>
+            </div>
+            <table class="table" style="margin-top:10px" width="100%">
+              <thead>
+                  <tr>
+                      <th class="text-center">Call Sign</th>
+                      <th class="text-center">Type</th>
+                      <th class="text-center">FROM</th>
+                      <th class="text-center">ETD</th>
+                      <th class="text-center">TO</th>
+                      <th class="text-center">ETA</th>
+                      <th class="text-center">Remarks</th>
+                     <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                   <tr *ngFor="let vessel_array of vesselArray; let i = index;">
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].call_sign" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].heli_type" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <textarea [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
+                      </td>
+                      <td  class="text-center">
+                        <a class="customIcon" type="button"
+                        #tooltip="matTooltip"
+                        matTooltip="Delete"
+                        (click)="deleteRow(i)"
+                        ><i class="fa fa-trash fa-2x"></i></a>
+                      </td>
+                </tr>
+              </tbody>
+           </table>
+          </div>
+          <!-- For POB STATUS -->
+          <div class="modal-body" id="inc_create" *ngIf="this.id_create=='pob'">
+            <div class="row">
+              <div class="col-6">
+                <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel" >
+
+              </div>
+            </div>
+            <table class="table" style="margin-top:10px" width="100%">
+              <thead>
+                  <tr>
+                      <!-- <th class="text-center">Date</th> -->
+                      <th class="text-center">Category</th>
+                      <th class="text-center">Time</th>
+                      <th class="text-center">Value</th>
+                     <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                   <tr *ngFor="let vessel_array of vesselArray; let i = index;">
+                      <!-- <td>
+                        <input type="date" class="form-control" type="date" [(ngModel)]="vesselArray[i].date"  [ngModelOptions]="{standalone: true}"/>
+                      </td> -->
+                      <td>
+
+                        <select class="form-control" [(ngModel)]="vesselArray[i].prob_cat_id"  [ngModelOptions]="{standalone: true}" required>
+                          <option value="">Select</option>
+                          <option value="{{pob_cat.id}}" *ngFor="let pob_cat of get_pob_category">{{pob_cat.name}}</option>
+
+                        </select>
+                      </td>
+                      <td>
+                        <input  class="form-control" type="time"  [(ngModel)]="vesselArray[i].Time" [ngModelOptions]="{standalone: true}" required/>
+                        <!-- <div *ngIf="vesselArray[i].Time==''"> <p class="text-danger">Please Provide Time</p></div> -->
+                      </td>
+                      <td>
+                        <input class="form-control" type="text"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+
+
+                      <td  class="text-center">
+                        <a class="customIcon" type="button"
+                       #tooltip="matTooltip"
+                       matTooltip="Delete"
+                       (click)="deleteRow(i)"
+                       ><i class="fa fa-trash fa-2x"></i></a>
+                      </td>
+                </tr>
+              </tbody>
+           </table>
+          </div>
+          <!-- For CASUALITY STATUS -->
+          <div class="modal-body" id="inc_create" *ngIf="this.id_create=='casual'">
+            <div class="row">
+              <!-- Vessel Name -->
+              <div class="col-6">
+                <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+
+              </div>
+            </div>
+            <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
+
+            <table class="table" style="margin-top:10px" width="100%">
+              <thead>
+                  <tr>
+                      <th class="text-center">FULL NAME</th>
+                      <th class="text-center">EMPLOYER</th>
+                      <th class="text-center">CONDITION</th>
+                      <th class="text-center">LOCATION</th>
+                      <th class="text-center">TIME</th>
+                     <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                   <tr *ngFor="let vessel_array of vesselArray; let i = index;">
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].full_name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].employer" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <!-- <select [(ngModel)]="vesselArray[i].employer" class="form-control" [ngModelOptions]="{standalone: true}">
+                          <option value="">Select</option>
+                          <option *ngFor="let employee of employee_list" value="{{employee.id}}">{{employee.emp_name}}</option>
+                        </select> -->
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].condition" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <select [(ngModel)]="vesselArray[i].location" class="form-control" [ngModelOptions]="{standalone: true}" required>
+                          <option value="">Select</option>
+                          <option *ngFor="let location of offshore_list" value="{{location.id}}">{{location.offshore_name}}</option>
+
+                        </select>
+                        <!-- <input [(ngModel)]="vesselArray[i].location" class="form-control" type="time" [ngModelOptions]="{standalone: true}"/> -->
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].time" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+
+                      <td  class="text-center">
+                        <a class="customIcon" type="button"
+                       #tooltip="matTooltip"
+                       matTooltip="Delete"
+                       (click)="deleteRow(i)"
+                       ><i class="fa fa-trash fa-2x"></i></a>
+                      </td>
+                </tr>
+              </tbody>
+           </table>
+          </div>
+          <!-- For EVACUATION STATUS -->
+          <div class="modal-body" id="inc_create" *ngIf="this.id_create=='evacuation'">
+
+            <div class="row">
+              <!-- Vessel Name -->
+              <div class="col-6">
+                <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+
+              </div>
+            </div>
+            <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
+
+            <table class="table" style="margin-top:10px" width="100%">
+              <thead>
+                  <tr>
+                      <th class="text-center">TIME</th>
+                      <th class="text-center">DESTINATION</th>
+                      <th class="text-center">MODE OF TRANSPORT</th>
+                      <th class="text-center">POB REMAINING</th>
+                      <th class="text-center">REMARKS</th>
+                       <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+                   <tr *ngFor="let vessel_array of vesselArray; let i = index;">
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly/>
+                      </td>
+
+                      <td>
+                        <select [(ngModel)]="vesselArray[i].destination" class="form-control" [ngModelOptions]="{standalone: true}" required>
+                          <option value="">Select</option>
+                          <option *ngFor="let location of offshore_list" value="{{location.id}}">{{location.offshore_name}}</option>
+
+                        </select>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].mode_of_transport" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].pob_remaining" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
+                      <td>
+                        <textarea [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
+                      </td>
+
+                      <td  class="text-center">
+                        <a class="customIcon" type="button"
+                        #tooltip="matTooltip"
+                        matTooltip="Delete"
+                        (click)="deleteRow(i)"
+                        ><i class="fa fa-trash fa-2x"></i></a>
+                      </td>
+                </tr>
+              </tbody>
+           </table>
+          </div>
+            <!-- For EventsLog -->
+            <div class="modal-body" id="inc_create" *ngIf="this.id_create=='events'">
+              <div class="row">
+                <!-- Vessel Name -->
+                <div class="col-6">
+                  <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+
+                </div>
+              </div>
+              <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
+
+              <table class="table" style="margin-top:10px" width="100%">
+                <thead>
+                    <tr>
+                        <th class="text-center">TIME</th>
+                        <th class="text-center" rowspan="3">SITUATION STATUS</th>
+                        <th class="text-center">RESOURCE ASSIGNED</th>
+                       <th class="text-center" (click)="addRow()">
+                          <i class="fa fa-plus fa-2x"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr *ngFor="let vessel_array of vesselArray; let i = index;">
+                        <td> <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly size="5"/></td>
+                        <td><textarea [(ngModel)]="vesselArray[i].situation_status"  class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
+                        </td>
+                        <td><input [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
+                        <td  class="text-center">
+                          <a class="customIcon" type="button"
+                        #tooltip="matTooltip"
+                        matTooltip="Delete"
+                        (click)="deleteRow(i)"
+                        ><i class="fa fa-trash fa-2x"></i></a>
+                        </td>
+                  </tr>
+                </tbody>
+             </table>
+            </div>
+                                      <!-- End -->
+        <div class="modal-footer">
+          <div class="btnSubmitSec ">
+          <input  type="submit" class="btn btn-info" id="incident_status" value="Save">
+        </div>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <!-- For view Incident Status-->
+<div class="modal modalCustomeBoard fade" id="view_incident_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog modal_dialogCustomeBoard modal-dialog-centered modal-dialog-zoom  modal-xl" role="document">
+      <div class="modal-content">
+                                       <!--Modal Header  -->
+          <!--Incident Status View  -->
+        <div class="modal-header" *ngIf="this.id_create=='inc_view'">
+          <h3 class="modal-title" id="exampleModalLabel">View Incident Status</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+         <!--VESSEL Status View  -->
+         <div class="modal-header" *ngIf="this.id_create=='vessel_view'">
+          <h3 class="modal-title" id="exampleModalLabel">View Vessel Status</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+         <!--Helicopter Status View  -->
+         <div class="modal-header" *ngIf="this.id_create=='hel_create'">
+          <h3 class="modal-title" id="exampleModalLabel">View Helicopter Status</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+          <!--Pob Status View  -->
+          <div class="modal-header" *ngIf="this.id_create=='pob'">
+            <h3 class="modal-title" id="exampleModalLabel">View Pob Status</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <!--Pob Status View  -->
+          <div class="modal-header" *ngIf="this.id_create=='casual'">
+          <h3 class="modal-title" id="exampleModalLabel">View Casuality Status</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+         </div>
+          <!--Evacuation Status View  -->
+          <div class="modal-header" *ngIf="this.id_create=='evacuation'">
+            <h3 class="modal-title" id="exampleModalLabel">View Evacuation Status</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+           </div>
+               <!-- EVENTS Log -->
+          <div class="modal-header" *ngIf="this.id_create=='events'">
+            <h3 class="modal-title" id="exampleModalLabel">View Events Log</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+                         <!-- End -->
+
+                       <!-- Modal Body -->
+          <!--Incident Status View  -->
+        <div class="modal-body" *ngIf="this.id_create=='inc_view'">
+            <table width="100%" cellspacing="15">
+                <!-- INCIDENT STATUS -->
+                <tr>
+                    <th scope="col">INSTALLATION:</th>
+                    <th scope="col">XXX</th>
+                </tr>
+                <!-- COORDINATES -->
+                <tr bgcolor="#fff" align="center">
+                    <td bgcolor="#f1f1f1"> COORDINATES: </td>
+                    <td>XXX</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr style="background: white;"><th colspan="12" class="text-center">WEATHER</th></tr>
+                <!-- Visibility Wind speed -->
+                <tr style="background:rgb(240, 239, 239)" align="center">
+                   <td>VISIBILITY:</td>
+                    <td>8777528909</td>
+                    <td>WIND SPEED:</td>
+                    <td>54RPM</td>
+                 </tr>
+                 <!-- Sea State Wind direction -->
+                 <tr>
+                    <th scope="col">SEA STATE: </th>
+                    <th scope="col">XXX</th>
+                    <th scope="col">WIND DIRECTION: </th>
+                    <th scope="col">XXX</th>
+                </tr>
+                <!-- Temparature -->
+                <tr bgcolor="#fff" align="center"><td>TEMEPRATURE:</td><td colspan="8">XXX</td></tr>
+                  <!-- SUMMARY OF INCIDENT:  -->
+                <tr bgcolor="#fff" align="center"><th>SUMMARY OF INCIDENT:</th></tr>
+                <tr bgcolor="#fff" align="center"><td scope="col" colspan="12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium assumenda blanditiis, accusamus nobis modi cum quisquam quis ut! Repellat architecto maxime omnis, nihil eos reiciendis deleniti repellendus itaque vitae iste. Cum fugiat nostrum sequi eius aliquid beatae iste quo nesciunt ut minima, consequuntur, earum repudiandae provident explicabo hic molestiae odit?</td></tr>
+
+                  <!-- STATUS OF EMERGENCY RESPONSE:  -->
+                  <tr bgcolor="#fff" align="center"><th>STATUS OF EMERGENCY RESPONSE:</th></tr>
+                  <tr bgcolor="#fff" align="center"><td scope="col" colspan="12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium assumenda blanditiis, accusamus nobis modi cum quisquam quis ut! Repellat architecto maxime omnis, nihil eos reiciendis deleniti repellendus itaque vitae iste. Cum fugiat nostrum sequi eius aliquid beatae iste quo nesciunt ut minima, consequuntur, earum repudiandae provident explicabo hic molestiae odit?</td></tr>
+            </table>
+
+        </div>
+        <!-- VESSEL STatus View -->
+        <div class="modal-body" *ngIf="this.id_create=='vessel_view'">
+          <mat-form-field appearance="outline">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+          </mat-form-field>
+
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+              <!-- NAME  Column -->
+              <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> NAME </th>
+                <td mat-cell *matCellDef="let row" class="text-center"></td>
+              </ng-container>
+
+              <!-- Type Column -->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef  class="text-center">TYPE</th>
+                <td mat-cell *matCellDef="let row"  class="text-center"></td>
+              </ng-container>
+
+              <!-- From/At Column -->
+              <ng-container matColumnDef="from">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> FROM/AT </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"></td>
+              </ng-container>
+
+              <!-- ETD  Column -->
+              <ng-container matColumnDef="etd">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> ETD </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+              </ng-container>
+
+              <!-- TO  Column -->
+              <ng-container matColumnDef="to">
+              <th mat-header-cell *matHeaderCellDef  class="text-center"> TO </th>
+              <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+            </ng-container>
+
+            <!-- ETD  Column -->
+            <ng-container matColumnDef="eta">
+              <th mat-header-cell *matHeaderCellDef  class="text-center"> ETA </th>
+              <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+            </ng-container>
+
+              <!-- REMARKS   Column -->
+              <ng-container matColumnDef="remarks">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+         <!-- Helicopter Status View -->
+          <div class="modal-body" *ngIf="this.id_create=='hel_create'">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- NAME  Column -->
+                <ng-container matColumnDef="Call-Sign">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> CALL SIGN </th>
+                  <td mat-cell *matCellDef="let row" class="text-center"></td>
+                </ng-container>
+
+                <!-- Type Column -->
+                <ng-container matColumnDef="type">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center">TYPE</th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- From/At Column -->
+                <ng-container matColumnDef="from">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> FROM/AT </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- ETD  Column -->
+                <ng-container matColumnDef="etd">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> ETD </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+                </ng-container>
+
+                <!-- TO  Column -->
+                <ng-container matColumnDef="to">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> TO </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+              </ng-container>
+
+              <!-- ETD  Column -->
+              <ng-container matColumnDef="eta">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> ETA </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+              </ng-container>
+
+                <!-- REMARKS   Column -->
+                <ng-container matColumnDef="remarks">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+         <!-- Pob Status View -->
+          <div class="modal-body" *ngIf="this.id_create=='pob'">
+            <mat-form-field appearance="outline">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- NAME  Column -->
+                <ng-container matColumnDef="Call-Sign">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> CALL SIGN </th>
+                  <td mat-cell *matCellDef="let row" class="text-center"></td>
+                </ng-container>
+
+                <!-- Type Column -->
+                <ng-container matColumnDef="type">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center">TYPE</th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- From/At Column -->
+                <ng-container matColumnDef="from">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> FROM/AT </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- ETD  Column -->
+                <ng-container matColumnDef="etd">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> ETD </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+                </ng-container>
+
+                <!-- TO  Column -->
+                <ng-container matColumnDef="to">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> TO </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+              </ng-container>
+
+              <!-- ETD  Column -->
+              <ng-container matColumnDef="eta">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> ETA </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+              </ng-container>
+
+                <!-- REMARKS   Column -->
+                <ng-container matColumnDef="remarks">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+          <!-- Casuality Status View -->
+          <div class="modal-body" *ngIf="this.id_create=='casual'">
+            <mat-form-field appearance="outline">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- FULLNAME  Column -->
+                <ng-container matColumnDef="FULLNAME">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> FULL NAME</th>
+                  <td mat-cell *matCellDef="let row" class="text-center"></td>
+                </ng-container>
+
+                <!-- EMPLOYER Column -->
+                <ng-container matColumnDef="EMPLOYER">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center">EMPLOYER </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- CONDITION Column -->
+                <ng-container matColumnDef="CONDITION">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> CONDITION  </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- LOCATION  Column -->
+                <ng-container matColumnDef="LOCATION">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> LOCATION  </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+                </ng-container>
+
+                <!-- TIME  Column -->
+                <ng-container matColumnDef="TIME">
+                <th mat-header-cell *matHeaderCellDef  class="text-center"> TIME  </th>
+                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+              </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+          <!-- Evacuation Status View -->
+          <div class="modal-body" *ngIf="this.id_create=='evacuation'">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Time  Column -->
+                <ng-container matColumnDef="TIME">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> TIME</th>
+                  <td mat-cell *matCellDef="let row" class="text-center"></td>
+                </ng-container>
+                   <!-- Time  Column -->
+                   <ng-container matColumnDef="DESTINATION">
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> DESTINATION</th>
+                    <td mat-cell *matCellDef="let row" class="text-center"></td>
+                  </ng-container>
+
+                <!-- modoftransport Column -->
+                <ng-container matColumnDef="MODEOFTRANSPORT">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center">MODE OF TRANSPORT </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- pobremaining Column -->
+                <ng-container matColumnDef="POBREMAINING">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> POB REMAINING  </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+                <!-- Remarks  Column -->
+                <ng-container matColumnDef="REMARKS">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS  </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+          <!-- Events Log View -->
+          <div class="modal-body" *ngIf="this.id_create=='events'">
+            <mat-form-field appearance="outline">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Time  Column -->
+                <ng-container matColumnDef="TIME">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> TIME</th>
+                  <td mat-cell *matCellDef="let row" class="text-center"></td>
+                </ng-container>
+                   <!-- Time  Column -->
+                   <ng-container matColumnDef="SITUATIONSTATUS">
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> SITUATION STATUS </th>
+                    <td mat-cell *matCellDef="let row" class="text-center"></td>
+                  </ng-container>
+
+                <!-- modoftransport Column -->
+                <ng-container matColumnDef="RESOURCEASSIGNED">
+                  <th mat-header-cell *matHeaderCellDef  class="text-center">RESOURCE ASSIGNED </th>
+                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
+            </div>
+          </div>
+          <!-- End -->
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="snackbar">Submitted Successfully</div>

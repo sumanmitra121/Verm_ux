@@ -1,0 +1,103 @@
+.file-man-box {
+    padding: 20px;
+    border: 1px solid #e3eaef;
+    border-radius: 5px;
+    position: relative;
+    margin-bottom: 20px
+}
+
+.file-man-box .file-close {
+    /* color: #f1556c; */
+    position: absolute;
+    line-height: 24px;
+    font-size: 24px;
+    right: 10px;
+    top: 10px;
+    visibility: hidden
+}
+
+.file-man-box .file-img-box {
+    line-height: 120px;
+    text-align: center
+}
+
+.file-man-box .file-img-box img {
+    height: 64px
+}
+
+.file-man-box .file-download {
+    font-size: 20px!important;
+    color: #98a6ad!important;
+    position: absolute!important;
+    right: 10px!important
+}
+.file-download:hover {
+    color: #000000
+}
+
+.file-man-box .file-man-title {
+    padding-right: 25px
+}
+
+.file-man-box:hover {
+    -webkit-box-shadow: 0 0 24px 0 rgba(0, 0, 0, .06), 0 1px 0 0 rgba(0, 0, 0, .02);
+    box-shadow: 0 0 24px 0 rgba(0, 0, 0, .06), 0 1px 0 0 rgba(0, 0, 0, .02)
+}
+
+/* .file-man-box:hover .customIcon {
+    visibility: visible
+}
+.customIcon{visibility: hidden;} */
+.Customtextoverflow {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+h5 {
+    font-size: 15px;
+}
+
+.e-empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 3rem auto;
+}
+/* .e-empty div i{font-size:80px;margin-bottom:5px} */
+
+
+
+select{
+    /* border:1px solid #ccc;height: 34px;width: 250px; padding: 6px 12px;line-height: 1.42857143; */
+    padding: 9px; 
+    border: solid 1px #517B97; 
+    outline: 0; 
+    background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #CAD9E3), to(#FFFFFF)); 
+    background: -moz-linear-gradient(top, #FFFFFF, #CAD9E3 1px, #FFFFFF 25px); 
+    box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+    -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+    -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+}
+/* 
+.selectwrap{position: relative;float: left;}
+.selectwrap:after{content:"↓";border-left:1px solid gray;text-align: center;line-height:32px;position: absolute;width: 32px;height: 32px;background: #fff;right: 1px;top: 1px;pointer-events: none;} */
+
+
+.table td,th{
+  border-top:none!important;
+  vertical-align: middle!important;
+}
+
+.ng-autocomplete {
+    width:100%;
+    max-width: 600px;
+    display: table;
+    margin: 0 auto;
+  }
+  
+  
+.mat-cell{text-align: center;}
+th.mat-header-cell{text-align: center;}

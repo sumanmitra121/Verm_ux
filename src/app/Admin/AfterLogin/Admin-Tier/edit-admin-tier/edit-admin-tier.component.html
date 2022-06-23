@@ -1,0 +1,44 @@
+<app-adminheader></app-adminheader>
+<div class="page-body-wrapper">
+<app-adminsidebar class="sidebarMain"></app-adminsidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="card">
+         <div class="card-body">
+            <div class="titleSec"><h2>Update Tier</h2></div>
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+            <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
+            <div class="row">
+                <!-- <div class="col-1"></div> -->
+                <input type="hidden" name="user" #user="ngModel" ngModel id="default_user">
+                <div class="col-6">
+                    <b>Sl No.</b>
+                    <input  type="text" readonly name="id" id="sl_no" class="form-control" ngModel #id="ngModel" >
+                </div>
+                </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <b>Tier Type</b>
+                    <input  type="text" name="tier_type" id="Tier_type" class="form-control" ngModel #Tier_type="ngModel" required>
+                    <div *ngIf="Tier_type.errors?.required && (Tier_type.touched || Tier_type.dirty)" class="text-danger">
+                        *Please Provide Tier Type 
+                      </div>
+                </div>
+                </div>
+                <div class="row mt-3">
+                <div class="col-6">
+                    <div class="btnSubmitSec "> 
+                    <input type="submit" class="btn btn-info" name="submit" id="submit" value="Save" [disabled]="logForm.invalid">
+                    <!-- <input type="reset" (click)="logForm.reset()" class="btn btn-info" value="Cancel" > -->
+                    </div>
+                </div>
+
+            </div>
+             </form> 
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

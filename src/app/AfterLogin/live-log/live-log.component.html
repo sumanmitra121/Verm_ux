@@ -1,0 +1,138 @@
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+      
+        <div class="card">
+         <div class="card-body">
+
+            <div class="titleSec">
+             <!-- <h2>Live Log</h2>  -->
+             </div>
+             <div class="row bootstrap snippets">
+               <div class="col-md-3">
+
+                <div class="whiteBox">
+
+                  <div class="chat-messages-show-container_for_members">
+                  <ngx-spinner bdColor = "" size = "small" color = "black" type = "line-spin-clockwise-fade" [fullScreen] = "false"></ngx-spinner>
+
+                    <ul   *ngFor="let empname of emp_list">
+                    <!-- <ul> -->
+
+                      <li style="padding: 4px auto; margin: 10px;position:relative;" >
+                        <img src="assets/images/no-user.png" alt="profile" class="listImg" *ngIf="empname.img==null"> 
+                        <img src="{{url}}/{{empname.img}}" alt="profile" class="listImg" *ngIf="empname.img!=null"> 
+
+                        <span class="customSpan">{{empname.emp_name}}</span>
+                       <div class="dot-ring"></div>
+                       <div class="dot"></div>         
+                      </li>
+                      <!-- <hr class="m-0"/> -->
+                      <!-- <li style="padding: 4px auto; margin: 6px;position:relative;">
+                        <img src="assets/images/thum.png" alt="profile" class="listImg" > 
+                        <span class="customSpan">Suman Mitra</span>
+                        <div class="dot-ring"></div>
+                        <div class="dot"></div>
+
+                                     
+                      </li> -->
+                    
+                      <!-- <mat-divider></mat-divider> -->
+                    </ul>
+                    <!-- <h1 class='text-center' *ngIf='emp_list==""'>No member online</h1> -->
+
+                    <!-- <p *ngIf="emp_list==''" class="text-center p-auto m-auto">No Member Online</p> -->
+                  </div>
+
+               </div>
+               </div>
+              <div class="col-md-9">
+                <div class="whiteBox">
+						  <!-- <ngx-spinner bdColor = ""  size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"></ngx-spinner> -->
+
+                  <div class="chat-messages-show-container" (scroll)="scrolled($event)" >
+
+                    <ul class="chat-messages-show-list" id="message-list">
+                    </ul>
+
+                  </div>
+
+                  <form #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
+                    <emoji-mart  *ngIf="isEmojiPickerVisible" [style]="{ position: 'absolute', top: '20px',width:'701px'}" (emojiSelect)="addEmoji($event)" title="Choose your emoji"></emoji-mart>
+                    
+                  <div class="chat-messages-create-container"> 
+                    <a  #tooltip="matTooltip"
+                    matTooltip="Send Emoji"  (click)="isEmojiPickerVisible = !isEmojiPickerVisible;" type="button"  class="btn btn-light-sm m-auto" style="font-size: 20px;"> <i class="fa fa-smile-o" aria-hidden="true"></i></a>
+                    <input placeholder="Write Something..." class="chat-messages-create-input" type="text" id="inp" name="txt" #txt="ngModel" ngModel>
+                    <a type="button"  #tooltip="matTooltip"
+                    matTooltip="Send Attachment" (click)="active_input_file()" class="btn btn-light-sm m-auto" style="font-size: 20px;"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+                    <button #tooltip="matTooltip" 
+                    matTooltip="Send Messages" type="submit" class="btn btn-light-sm m-auto" ><i class="fa fa-paper-plane" aria-hidden="true" style="font-size: 20px;"></i></button> 
+                  </div>
+                </form>
+                <!-- {{file_url}}
+                <iframe id="myFrame" src="{{file_url}}"></iframe> -->
+                <input type="file" name="file_upload" accept =".jpeg,.jpg,.png,.doc,.docx,.pdf" id="File_Upload" hidden class="form-control" (change)="upload_file($event)" >
+                <div class="filePreview" *ngIf="this.uploaded_file!=''">
+                  <div class="row">
+                    <div class="col-2">
+                      <img src="assets/images/pdf.svg" class="img-fluid m-1" width="60" height="60" *ngIf="file_type=='pdf'" (click)="previewFile('pdf')"/> 
+                      <img src="assets/images/docx-file.png" class="img-fluid m-1" width="60" height="60" *ngIf="file_type=='docx'" (click)="previewFile('docx')"/>
+                      <img src="assets/images/doc.svg" class="img-fluid m-1" width="60" height="60" *ngIf="file_type=='doc'" (click)="previewFile('doc')"/> 
+                      <img src="assets/images/png.svg" class="img-fluid m-1" width="60" height="60" *ngIf="file_type=='png'" (click)="previewFile('png')"/>
+                      <img src="assets/images/jpg.svg" class="img-fluid m-1" width="60" height="60" *ngIf="file_type=='jpg'" (click)="previewFile('jpg')"/>
+                      <img src="assets/images/jpeg_logo.svg" class="img-fluid m-1" width="60" height="60" *ngIf="file_type=='jpeg'" (click)="previewFile('jpeg')"/>
+                    </div>
+                    <div class="col-9">
+                      <h4 class="customh4">{{this.uploaded_file.name}} </h4></div>
+                    <div class="col-1"><i class="fa fa-times crossIcon" aria-hidden="true" (click)="emptyFile()"></i></div>
+
+                  </div>
+                 
+                
+                 
+              
+                </div>
+
+               </div>
+            
+
+           </div>
+     
+
+           
+        </div>
+</div>  
+</div>
+</div>
+</div>
+
+<button id="show_modal" hidden data-toggle="modal" data-target="#show_image"></button>
+ <!-- The Modal -->
+ <div class="modal fade" id="show_image">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Image</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        <!-- {{file_url}} -->
+       <img src="{{file_url}}" class="img-fluid" height="100%" width="100%" />
+      </div> 
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+

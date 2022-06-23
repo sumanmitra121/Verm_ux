@@ -1,0 +1,4 @@
+
+mat-form-field{width:100%} 
+input.ng-touched.ng-invalid {border: none!important;border-left:none!important;}
+ input:required.ng-touched.ng-valid {border: none!important;border-left:none!important;}

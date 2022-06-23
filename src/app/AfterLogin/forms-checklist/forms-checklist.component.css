@@ -1,0 +1,17 @@
+
+.mat-radio-button ~ .mat-radio-button {margin-left: 16px;}
+table {width: 100%;}
+.form-control{padding: 8px!important;}
+.table th, .table td {text-align: center;vertical-align: middle!important;}
+
+select{
+  /* border:1px solid #ccc;height: 34px;width: 250px; padding: 6px 12px;line-height: 1.42857143; */
+  padding: 9px; 
+  border: solid 1px #517B97; 
+  outline: 0; 
+  background: -webkit-gradient(linear, left top, left 25, from(#FFFFFF), color-stop(4%, #CAD9E3), to(#FFFFFF)); 
+  background: -moz-linear-gradient(top, #FFFFFF, #CAD9E3 1px, #FFFFFF 25px); 
+  box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+  -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+  -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px; 
+}

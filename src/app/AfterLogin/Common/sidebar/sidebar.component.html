@@ -1,0 +1,146 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <div class="verticalScroll scrollLeftMenu">
+    <ul class="nav">
+        
+      <!-- Dashboard -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/dashboard" >
+          <i class="fa fa-tachometer" aria-hidden="true"></i>
+          <span class="menu-title">Dashboard</span>
+            <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+      <!--End -->
+
+      <!-- Incident Module -->
+      <li class="nav-item"  id="team1">
+        <a class="nav-link" data-toggle="collapse" data-target="#team2">
+          <i class="fa fa-users" aria-hidden="true"></i>  
+          <span class="menu-title">
+            Incident Module</span>
+            <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i>
+        </a>
+        <ul id="team2"  class="collapse" routerLinkActive="show in">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink='/AddIncident' routerLinkActive="true">Create Incident</a></li>
+            <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink="/IncidentModule" routerLinkActive="true">Manage Incident</a></li>
+            <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink="/Editinc" routerLinkActive="true">Close Incident</a></li>
+            <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink="/EditApprove" routerLinkActive="true">Approve Incident</a></li>
+
+          </ul>
+        </ul>
+    </li>
+    <!-- End -->
+    
+    <!--Activation Module -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/ActivationModule">
+         <i class="fa fa-database" aria-hidden="true"></i>
+          <span class="menu-title">Activation Module</span>
+            <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+       </a>
+      </li>
+      <!--End -->
+
+        
+      <!--Live Log -->
+      <li class="nav-item" routerLinkActive="active" [matBadgeHidden]="message_count == 0"  matBadge="{{this.message_count}}" matBadgeOverlap="false" matBadgeSize="small" >
+        <a class="nav-link" routerLink='/livelog' >
+          <i class="fa fa-television" aria-hidden="true"></i>
+          <span class="menu-title">Live Log </span>
+         <!-- {{this.message_count}} -->
+            <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+             <!-- <span *ngIf='this.message_count > 0' id='badge_shake' class="badge badge-pill badge-dark shake_badge ml-auto">{{this.message_count}}</span> -->
+             <!-- <span *ngIf='this.message_count <"100" && this.message_count > "0"' id='badge_shake' class="badge badge-pill badge-dark shake_badge ml-auto">{{this.message_count}}</span>
+             <span *ngIf='this.message_count >= "100" ' id='badge_shake' class="badge badge-pill badge-dark shake_badge ml-auto">99+</span> -->
+
+
+        </a>
+      </li>
+      <!--End -->
+
+ 
+
+      <!--Boards -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/Board">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span class="menu-title">Boards</span>
+          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+      <!-- End -->
+
+      <!--Repository -->
+      <li class="nav-item" routerLinkActive="active">
+        <!-- <a class="nav-link" routerLink="/Repository" > -->
+        <a class="nav-link" routerLink="/addRepository" >
+         <i class="fa fa-pie-chart" aria-hidden="true"></i>
+          <span class="menu-title">Repository</span>
+          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+      <!-- End -->
+
+     <!--Form & Checklist -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/FormsCheckList">
+         <i class="fa fa-list-ul" aria-hidden="true"></i>
+          <span class="menu-title">Form & Checklist</span>
+          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+      <!-- End -->
+
+     <!--Audio / Video Conference -->
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/Audio_Video">
+         <!-- <i class="fa fa-file-video-o" aria-hidden="true"></i> -->
+         <i class="fa fa-video-camera" aria-hidden="true"></i>
+          <span class="menu-title">Audio / Video Conference</span>
+          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+     <!-- End -->
+    <!-- User Info -->
+     <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/userinfo" >
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span class="menu-title">User Info</span>
+        </a>
+      </li>
+      <!-- End -->
+     <!-- Log Sheet -->
+    <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/Log_Sheet">
+         <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+          <span class="menu-title">Log Sheet</span>
+          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+      <!-- End -->
+
+      <!-- Call Logger   -->
+    <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/Call-Logger">
+         <i class="fa fa-phone" aria-hidden="true"></i>
+          <span class="menu-title">Call Logger</span>
+          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+      <!-- End -->
+
+      <!-- Report Date Pool   -->
+    <li class="nav-item"  routerLinkActive="active" hidden>
+        <a class="nav-link" routerLink="/Report_Data_Pool">
+         <i class="fa fa-calendar" aria-hidden="true"></i>
+          <span class="menu-title">Report Data Pool</span>
+          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+        </a>
+      </li>
+      <!-- End -->
+
+    
+  </ul>
+</div>
+  </nav>

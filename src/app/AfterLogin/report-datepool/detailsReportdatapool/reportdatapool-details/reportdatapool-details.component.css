@@ -1,0 +1,8 @@
+th {
+    text-align: center;
+    width: 14.7%;
+}
+td{padding: 7px;}
+.dashed-line{
+    border-top: 1px dashed gray
+}

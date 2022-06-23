@@ -1,0 +1,62 @@
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="card">
+         <div class="card-body">
+            <div class="titleSec"> 
+             <h2>Add Log Sheet</h2> 
+             </div>
+             <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+            <form #logForm="ngForm">
+             <div class="row mb-2">
+                 <div class="col-6">
+                     <input type="hidden" name="user" [(ngModel)]="user" class="form-control">
+                     <input type="hidden" name="id" [(ngModel)]="id" class="form-control">
+
+                   <label>Action By</label>{{action_by}}
+                   <input type="text" name="action_by" id="Action_by"  [(ngModel)]="action_by" class="form-control" [readonly]="flag=='A' || flag=='R'" required>
+                   <div *ngIf="action_by == ''" class="text-danger">
+                       *Please Provide Action By
+                   </div>
+                   
+                 </div>
+                 <div class="col-6">
+                    <label>Date & Time</label>
+                    <input type="datetime-local" name="action_datetime" id="Action_datetime"  [(ngModel)]="action_datetime" step="1"  class="form-control"  [readonly]="flag=='A' || flag=='R'" required>
+                    <div *ngIf="action_datetime==''" class="text-danger">
+                        *Please Provide  Date & Time
+                    </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-12 mt-2">
+                     <label>Action Detail</label>
+                     <textarea rows="5" cols="20" class="form-control" name="Action_dtls" [(ngModel)]="action_dtls"  [readonly]="flag=='A' || flag=='R'" required></textarea>
+                     <div *ngIf="action_dtls==''" class="text-danger">
+                        *Please Provide Action Details
+                    </div>
+                 </div>
+                 <div class="col-6 mt-3">
+                    <div class="btnSubmitSec" *ngIf="flag=='R' && (user_status=='I' || user_status=='A')">  
+                        <input type="submit" class="btn btn-info"  value="Approve" (click)="submit_logsheet('A')">
+                    </div>
+                    <div class="btnSubmitSec" *ngIf="flag=='A' &&  (user_status=='I' || user_status=='A')">  
+                        <input type="submit" class="btn btn-info"  value="Reject"  (click)="submit_logsheet('R')">
+                    </div>
+                    <div class="btnSubmitSec" *ngIf="flag=='U'">  
+                        <input type="submit" class="btn btn-info" *ngIf="user_status=='I' || user_status=='A'" value="Approve"  (click)="submit_logsheet('A')"  [disabled]="action_by=='' || action_datetime=='' || action_dtls==''">
+                        <input type="submit" class="btn btn-info" *ngIf="user_status=='I' || user_status=='A'"  value="Reject"  (click)="submit_logsheet('R')"  [disabled]="action_by=='' || action_datetime=='' || action_dtls==''">
+                        <input type="submit" class="btn btn-info"  value="Save"  (click)="submit_logsheet('N')" [disabled]="action_by=='' || action_datetime=='' || action_dtls==''">
+                    </div>
+                 </div>
+             </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

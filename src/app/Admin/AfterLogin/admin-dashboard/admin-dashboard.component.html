@@ -1,0 +1,356 @@
+<app-adminheader></app-adminheader>
+<div class="page-body-wrapper">
+
+<app-adminsidebar class="sidebarMain"></app-adminsidebar>
+<div class="main-panel">
+  <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner> -->
+  <ngx-spinner bdColor="#fff" template="<img src='/assets/images/Gif/loader.gif'>"><h3>Loading...</h3>
+</ngx-spinner>
+<ng-template [ngIf]="get_current_incident.length == 0" [ngIfElse]="productDetails">
+    <div class="content-wrapper" id="conent1">
+        <div class="row">
+            <div class="col-4">
+                 <div class="incidentActiveClose">
+                   <h2 class="customTextHeader">Closed Incident</h2>
+                   <p class="customTextcontent">{{closed_incident}}</p>
+                 </div>
+                 <!-- <div class="whiteBox2">
+                    <ul class="watherRepoort">
+                        <li>
+                            <h3>Closed Incident</h3>
+                            <span>{{closed_incident}}</span>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+            <div class="col-4">
+             <div class="incidentActiveClose">
+                <h2 class="customTextHeader">No. Of Teams</h2>
+                <p class="customTextcontent">{{total_teams}}</p>
+
+             </div>
+            </div>
+            <div class="col-4">
+                <div class="incidentActiveClose">
+                <h2 class="customTextHeader">Approved Incident</h2>
+                <p class="customTextcontent">{{approved_inc}}</p>
+
+                </div>
+               </div>
+        </div>
+        <hr/>
+        <!-- Team On Roaster -->
+            <div class="row">
+                <div class="col-12" (click)="expandDiv()" style="cursor:pointer">
+                    <h3>Team On Roster (Click to expand)</h3>
+                </div>
+                <div class="col-12" id="toggleDiv" >
+                <div class="tabs-container clearfix">
+
+                    <table>
+                        <tr>
+                            <th colspan="4" class="text-center" id="team_Roster">
+                               <!-- {{team_roster[0].team_name}} <small><i>{{team_roster[0].team_type}} (From: {{team_roster[0].from_date}} To:{{team_roster[0].to_date}}) </i></small> -->
+                            </th>
+                        </tr>
+                        <tr>
+                        <th>Employee Name</th>
+                        <th>Designation</th>
+                        <th>Personal No.</th>
+                        <th>ER No.</th>
+                        </tr>
+                        <tr *ngFor="let rosterteam of team_roster">
+                        <td>{{rosterteam.emp_name}}</td>
+                        <td>
+                            <!-- {{rosterteam.user_type}} -->
+                            <div id="container"  *ngIf="rosterteam.user_type=='I'">
+                              <div class="Dot"></div>
+                              <div class="pulse"></div>
+                            </div>
+                            <span *ngIf="rosterteam.user_type=='I'" class="text-danger"> Incident Commandar</span>
+                            <span *ngIf="rosterteam.user_type=='U'"> User</span>
+                            <span *ngIf="rosterteam.user_type=='M'"> Approver</span>
+                            <span *ngIf="rosterteam.user_type=='A'"> Admin</span>
+
+                        </td>
+                        <td>{{rosterteam.per_no}}</td>
+                        <td>{{rosterteam.er_no}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+                </div>
+
+            </div>
+        <hr/>
+        <!-- Incident Details -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h3>
+                        Incidents Details
+                    </h3>
+
+                </div>
+        <div class="col-12">
+        <div class="tabs-container clearfix">
+            <ul class="tabs-menu">
+            <li id="active_{{i}}" [ngClass]="i==0 ? 'active' : ''" *ngFor="let inc of all_incident; let i=index" (click)="get_incident_details(inc.id,i)"><a>{{inc.inc_name}} ({{inc.inc_no}})</a></li>
+
+        </ul>
+        <div class="tab">
+                <div class="pane" *ngIf="inc_details.length > 0">
+                <div class="tab-content">
+                        <ul *ngFor="let incDetails of inc_details; let i=index">
+                        <li ><span>Date:</span>  {{incDetails.inc_dt | date:'dd-MM-YYYY'}}
+                            <li><span>Incident No:</span>  {{incDetails.inc_no}}
+                                <li><span>Incident Name:</span>  {{incDetails.inc_name}}
+                                    <li><span>Incident Type:</span>  {{incDetails.inc_type}}
+                                        <li><span>Incident Location:</span>  {{incDetails.offshore_name}} ({{incDetails.o_latt}} : {{incDetails.o_long}})
+                                            <li><span> Initial Tier:</span>  {{incDetails.initial_tier}}
+                                                <li><span>Event Description:</span>  {{incDetails.brief_desc}}
+
+                        </li>
+
+                        </ul>
+                </div>
+                </div>
+                <div class="pane" *ngIf="inc_details.length == 0">
+                    <div class="tab-content">
+                          <h2 class="text-center">No Data Available</h2>
+                    </div>
+                </div>
+        </div>
+
+        </div>
+        </div>
+    <!-- </div>
+
+            </div> -->
+            </div>
+        <hr/>
+        <!-- For Chart.js -->
+            <div class="row">
+                <div class="col-12">
+                    <h3>Overall Incidents Status</h3>
+                </div>
+                <!-- Pie Chart.js -->
+                <div class="col-6">
+                    <div  id="container" style="width:400px;height:400px;">
+                        <canvas id="ctx"></canvas>
+                    </div>
+                </div>
+                <!-- Bubble chart.js -->
+                <div class="col-6">
+                    <!-- <div  id="container" style="width:400px;height:400px;">
+                        <canvas id="bubble"></canvas>
+                    </div> -->
+                </div>
+            </div>
+
+    </div>
+    </ng-template>
+    <ng-template #productDetails>
+    <div class="content-wrapper" id="conent2">
+          <!-- For Incident Header -->
+          <div class="row">
+           <div class="col-12">
+            <div class="headerIncident">
+                <div class="headerIncidentbody">
+                <ul class="topinsidentData2 topinsidentData2_1">
+                <li class="nameCl"><strong>Name:</strong> {{Inc_Name}}</li>
+                <li class="typeCl"><strong>Type:</strong> {{Inc_type}}</li>
+                </ul>
+                <ul class="topinsidentData2 topinsidentData2_2">
+                <li class="tierCl"><strong>Tier:</strong> {{tier}}</li>
+                <li class="locationCl"><strong>Location:</strong> {{Inc_location}}</li>
+                </ul>
+                <ul class="topinsidentData2 topinsidentData2_3">
+                <li class="casualtyCl"><strong>Casualty:</strong> {{tot_casualty}}</li>
+                <li class="timeCl"><strong>Time Elapsed:</strong> {{hours}}h 
+                    <i class="fa fa-circle text-danger Blink ml-1"></i>
+
+                </li>
+                </ul>
+            </div>
+
+            </div>
+           </div>
+
+          </div>
+     <hr class="m-0"/>
+          <!-- Second Column -->
+              <div class="row mt-3">
+                <div class="rowCustomFlex">
+                <div class="col-2 mb-5">
+                    <div class="whiteBox2">
+                        <ul class="watherRepoort">
+                            <li><span>{{inc_visibility == '' ? 'N/A' : inc_visibility}}</span>
+                                <h3>Visibility</h3>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="whiteBox2">
+                        <ul class="watherRepoort">
+                            <li><span>{{inc_sea_state == '' ? 'N/A' : inc_sea_state}}</span>
+                                <h3>Sea State</h3>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="whiteBox2">
+                        <ul class="watherRepoort">
+                            <li>
+                                <!-- <span>{{inc_temparature}}</span> -->
+                                <span>{{temp =='' ? 'N/A' : temp+ '°' +deg}}</span>
+                                <h3>Temperature</h3>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="whiteBox2 mb-0">
+                        <ul class="watherRepoort">
+                            <li><span>{{wind_speed =='' ? 'N/A' : wind_speed+ 'km/h'}}</span>
+                                <h3>Wind Speed</h3>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-10 mb-5">
+                    <div class="whiteBox">
+                        <div class="card-header card_headerCustom">
+                            <h2 class="pull-left text-dark titleDashBox" id="card_heading">Team Members</h2>
+                            <br clear="all">
+                        </div>
+                        <div class="card_bodyCustom scroll">
+                            <div class="verticalScroll scrollTableData">
+                         <table border="1">
+                                <thead>
+                                    <tr><th></th><th>Name</th><th>Position</th><th>Team</th><th>Personel No.</th><th>ER No.</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let activeEmp of get_active_emp">
+                                       <td>
+                                         <div id="container"  *ngIf="activeEmp.user_type=='I'">
+                                          <div class="Dot"></div>
+                                          <div class="pulse"></div>
+                                      </div>
+                                      </td>
+                                        <td>{{activeEmp.emp_name}}</td>
+                                        <td><span *ngIf="activeEmp.user_type=='I'" class="customSpan">Incident Commandar</span>
+                                            <span *ngIf="activeEmp.user_type=='U'"> User</span>
+                                            <span *ngIf="activeEmp.user_type=='M'"> Approver</span>
+                                            <span *ngIf="activeEmp.user_type=='A'"> Admin</span>
+
+                                        </td>
+                                        <td>{{activeEmp.team_name}}</td>
+                                        <td>{{activeEmp.per_no}}</td>
+                                        <td>{{activeEmp.er_no}}</td>
+                                    </tr>
+
+                                </tbody>
+                             </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+              </div>
+              </div>
+
+            <hr/>
+            <!-- Vessel Details -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h3>Vessel Details</h3>
+                </div>
+                <div class="col-12">
+                <div class="tabs-container clearfix">
+                    <ul class="tabs-menu">
+                    <li [ngClass]="status_mode=='2' ? 'active' : ''" (click)="status_type('2')"><a>Vessel Status</a></li>
+                    <li [ngClass]="status_mode=='3' ? 'active' : ''" (click)="status_type('3')"><a>Helicopter Status</a></li>
+                    <li [ngClass]="status_mode=='4' ? 'active' : ''" (click)="status_type('4')"><a>Pob Status</a></li>
+                    <li [ngClass]="status_mode=='5' ? 'active' : ''" (click)="status_type('5')"><a>Casualty Status</a></li>
+                    <li [ngClass]="status_mode=='6' ? 'active' : ''" (click)="status_type('6')"><a>Evacuation Status</a></li>
+                    <li [ngClass]="status_mode=='7' ? 'active' : ''" (click)="status_type('7')"><a>Events Log</a></li>
+
+                    </ul>
+                    <div class="tab" >
+                            <div class="pane">
+                            <div class="tab-content" *ngIf="this.status_mode=='2'" id="tabContentanimation">
+                                    <ul *ngFor="let statustype of statusType; let i=index">
+
+                                      <li> <h4 class="customHeader">{{statustype.vessel_name}} ({{statustype.vessel_type}})</h4>
+                                         <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                         <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
+                                         <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
+                                         <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
+                                        </li>
+                                      <!-- <li><span>Vessel Name (Type) :</span> {{statustype.vessel_name}} ({{statusType.vessel_type}})</li> -->
+
+                                    </ul>
+                             </div>
+
+                             <div class="tab-content" *ngIf="this.status_mode=='3'" id="tabContentanimation">
+                                <ul *ngFor="let statustype of statusType; let i=index">
+
+                                  <li> <h4 class="customHeader">{{statustype.call_sign}} ({{statustype.heli_type}})</h4>
+                                     <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                     <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
+                                     <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
+                                     <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
+                                    </li>
+                                  <!-- <li><span>Vessel Name (Type) :</span> {{statustype.vessel_name}} ({{statusType.vessel_type}})</li> -->
+
+                                </ul>
+                              </div>
+
+                            <div class="tab-content" *ngIf="this.status_mode=='4'" id="tabContentanimation">
+                                <ul>
+                                    <li *ngFor="let statustype of statusType; let i=index"><span>{{statustype.prob_cat}}:</span>{{statustype.value}}</li>
+
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" *ngIf="this.status_mode=='5'" id="tabContentanimation">
+                                <ul *ngFor="let statustype of statusType; let i=index">
+                                    <li> <h4 class="customHeader">{{statustype.full_name}} ({{statustype.employer}})</h4>
+                                        <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                        <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
+                                        <h5><label class="customLabel">Time: </label> {{statustype.time}} </h5>
+                                        <h5><label class="customLabel">Condition: </label> {{statustype.emp_condition}} </h5>
+                                       </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" *ngIf="this.status_mode=='6'" id="tabContentanimation">
+                                <ul *ngFor="let statustype of statusType; let i=index">
+                                    <li> <h4 class="customHeader">{{statustype.mode_of_transport}}</h4>
+                                        <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                        <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
+                                        <h5><label class="customLabel">Pob Remaining: </label> {{statustype.pob_remaining}} </h5>
+                                        <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}} </h5>
+                                       </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" *ngIf="this.status_mode=='7'" id="tabContentanimation">
+                                <ul *ngFor="let statustype of statusType; let i=index">
+                                    <li>
+                                        <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                        <h5><label class="customLabel">Resource Assigned: </label> {{statustype.resource_assigned}}</h5>
+                                        <h5><label class="customLabel">Situation Status: </label> {{statustype.situation_status}} </h5>
+                                        <!-- <h5><label class="text-primary">Remarks: </label> {{statustype.remarks}} </h5> -->
+                                       </li>
+
+                                </ul>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+      </div>
+    </ng-template>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+         <div class="card">
+         <div class="card-body">
+
+          <div class="container-m-nx container-m-ny bg-lightest mb-3" >
+           <div class="row">
+             <div class="col-1">
+              <a class='customIcon'
+              #toolTip="matTooltip"
+              matTooltip="List View"
+              (click)="change_view('L')"
+              ><i class="fa fa-list" aria-hidden="true"></i></a>
+                <a class='customIcon float-right'
+                #toolTip="matTooltip"
+                matTooltip="Grid View"
+                (click)="change_view('G')"
+                ><i class="fa fa-th" aria-hidden="true"></i></a>
+             </div> 
+             <div class="col-6"></div>
+             <div class="col-5 mb-2">
+              <select class="float-right" #sort (change)="sorting(sort.value)">
+                <option value="">-------Sort by latest-------</option>
+                <option value="N">Sort by Name</option>
+                <option value="D">Sort by Date</option>
+
+              </select>
+             </div>
+           </div>
+            <hr class="m-0" />
+        </div>
+        <ngx-spinner bdColor = ""  size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"></ngx-spinner>
+    
+        <div class="file-manager-container file-manager-col-view" *ngIf="view_type=='G' && get_category!=''">
+            <div class="file-item" *ngFor="let cat of get_category" [routerLink]="['/formchecklist/files',cat.id]">
+                <!-- <div class="file-item-select-bg bg-primary"></div> -->
+                <!-- <a class="customIcon w-100" type="button" [matMenuTriggerFor]="menu"><i class="fa fa-ellipsis-v float-right mr-3" aria-hidden="true"></i></a>
+                  <mat-menu #menu="matMenu"> </mat-menu> -->
+                <div class="file-item-icon fa fa-folder text-secondary" ></div>
+                <a>
+                   {{cat.catg_name}}
+                </a>
+                <!-- <div class="file-item-changed">02/13/2018</div> -->
+              
+            </div>
+  
+
+        </div>
+      
+        <div class="container-m-nx" *ngIf="view_type=='L' && get_category!=''"> 
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-3">
+
+            <ng-container matColumnDef="icon">
+              <th mat-header-cell *matHeaderCellDef > </th>
+              <td mat-cell *matCellDef="let element" class="p-0"  [routerLink]="['/formchecklist/files',element.id]">
+                <i class="fa fa-folder" style="color:gray;font-size:30px;padding:5px"></i>          
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef > Name </th>
+              <td mat-cell *matCellDef="let element"  [routerLink]="['/formchecklist/files',element.id]">
+                {{element.catg_name}} 
+              </td>
+            </ng-container>
+          
+         
+            <ng-container matColumnDef="Date">
+              <th mat-header-cell *matHeaderCellDef > Date </th>
+              <td mat-cell *matCellDef="let element" >{{element.created_at}} </td>
+            </ng-container>
+          
+     
+            <ng-container matColumnDef="Type">
+              <th mat-header-cell *matHeaderCellDef > Type </th>
+              <td mat-cell *matCellDef="let element" >file Folder</td>
+            </ng-container>
+          
+         
+            <ng-container matColumnDef="Created_by">
+              <th mat-header-cell *matHeaderCellDef > Created By </th>
+              <td mat-cell *matCellDef="let element" >{{element.created_by}}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      
+        <div class="text-center" *ngIf="(view_type=='G' || view_type=='L') && get_category==''">
+          <div><i class="fa fa-folder-o" aria-hidden="true" style="font-size: 72px; color:rgb(171, 167, 167);"></i></div>
+          <div><h2>No Folders Available</h2></div>
+      </div>
+
+      
+      </div>
+             
+        </div>
+        </div> 
+    </div>
+
+ </div>
+

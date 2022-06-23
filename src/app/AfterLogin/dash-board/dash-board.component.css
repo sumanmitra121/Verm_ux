@@ -1,0 +1,10 @@
+
+
+table{width:100%;}
+td, th {border: 1px solid #dddddd;text-align: center;padding: 15px;font-size: 15px;}
+th{color:black;}
+table tr td p{font-size:12px; width: 100px; overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.mat-tooltip {white-space: pre-line;}
+::ng-deep .mat-tooltip {white-space: pre-line;}
+.customLabel{color:#464ed0;}
+

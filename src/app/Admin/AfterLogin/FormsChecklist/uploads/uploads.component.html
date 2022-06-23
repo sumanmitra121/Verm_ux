@@ -1,0 +1,81 @@
+<app-adminheader></app-adminheader>
+<div class="page-body-wrapper">
+
+<app-adminsidebar class="sidebarMain"></app-adminsidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="card">
+         <div class="card-body">
+            <div class="titleSec">
+                <h2 >Upload Form</h2>
+             </div>
+
+             <form #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)"  size = "medium" color = "#fff"   type = "ball-clip-rotate"  [fullScreen] = "true"><p style="color: rgb(255, 255, 255)" > Please Wait.... </p></ngx-spinner>
+
+             <div class="row">
+                 <div class="col-5">
+                     <input type="hidden" name="user" [(ngModel)]="user">
+                     <b>Category</b>
+                     <select class="form-control mt-1" name="catg_id" #catg_id="ngModel"  ngModel (change)="select_category()" required>
+                         <option value="">--Select--</option>
+                         <option  *ngFor="let cat of get_category" value="{{cat.id}}">{{cat.catg_name}}</option>
+                     </select>
+                     <div *ngIf="catg_id.errors?.required && (catg_id.touched || catg_id.dirty)" class="text-danger">
+                        *Please Provide Category
+                    </div>
+                     
+                    <input type="hidden" name="catg_name" id="catg_name" #catg_name="ngModel" ngModel>
+                 </div>
+                 <div class="col-1"></div>
+                 <div class="col-5">
+                    <b>Type</b>
+                    <select class="form-control mt-1" name="form_type" #form_type="ngModel" ngModel required>
+                        <option value="">--Select--</option>
+                        <option value="F">Forms</option>
+                        <option value="C">Checklists</option>
+                    </select>
+                    <div *ngIf="form_type.errors?.required && (form_type.touched || form_type.dirty)" class="text-danger">
+                        *Please Provide Form Type
+                    </div>
+                </div>
+             </div>    
+             <div class="row mt-4">
+                <div class="col-5">
+                    <b>Form Name</b>
+                    <input type="text" name="form_name" id="form" class="form-control"  #form_name="ngModel" ngModel required>
+                    <div *ngIf="form_name.errors?.required && (form_name.touched || form_name.dirty)" class="text-danger">
+                        *Please Provide Form Name
+                    </div>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                   <b>Select File</b>
+                   <input type="file" class="form-control" (change)="select_file($event)" name="file" id="file" class="form-control"  #file="ngModel" ngModel required>
+                   <!-- <input type="hidden" name="file" id="file" class="form-control" #file="ngModel" ngModel> -->
+                   <div *ngIf="file.errors?.required && (file.touched || file.dirty)" class="text-danger">
+                    *Please Select A File
+                </div>
+               </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-4">
+                    <div class="btnSubmitSec "> 
+                    <input type="submit" class="btn btn-info" name="submit" id="submit" value="Save" [disabled]="logForm.invalid">
+                    <!-- <input type="reset" (click)="logForm.reset()" class="btn btn-info" value="Cancel" > -->
+                    </div>
+                </div>
+            </div>
+          </form>
+
+          </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,51 @@
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="card">
+         <div class="card-body">
+            <div class="titleSec"> 
+             <h2>Add Log Sheet</h2> 
+             </div>
+             <form #logForm="ngForm" (ngSubmit)="submitdata(logForm.value)">
+             <div class="row">
+                 <div class="col-6">
+                     <input type="hidden" name="user" [(ngModel)]="user" class="form-control">
+                     <input type="hidden" name="id" value="{{id}}" class="form-control">
+
+                   <label>Action By</label>
+                   <input type="text" name="action_by" id="Action_by" #action_by="ngModel" ngModel class="form-control" required>
+                   <div *ngIf="action_by.errors?.required && (action_by.touched || action_by.dirty)" class="text-danger">
+                    *Please Provide This Field
+                  </div>
+                 </div>
+                 <div class="col-6">
+                    <label>Date & Time</label>
+                    <input type="datetime-local" name="action_datetime" id="Action_datetime" #action_datetime="ngModel" ngModel class="form-control" required>
+                    <div *ngIf="action_datetime.errors?.required && (action_datetime.touched || action_datetime.dirty)" class="text-danger">
+                        *Please Provide Date & Time
+                      </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-12 mt-2">
+                     <label>Action Detail</label>
+                     <textarea rows="5" cols="20" class="form-control" name="Action_dtls" #action_dtls="ngModel" ngModel required></textarea>
+                     <div *ngIf="action_dtls.errors?.required && (action_dtls.touched || action_dtls.dirty)" class="text-danger">
+                        *Please Provide This Field
+                      </div>
+                 </div>
+                 <div class="col-6 mt-3">
+                    <div class="btnSubmitSec">  
+                        <input type="submit" class="btn btn-info"  value="Save" [disabled]="logForm.invalid">
+                    </div>
+                 </div>
+             </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+

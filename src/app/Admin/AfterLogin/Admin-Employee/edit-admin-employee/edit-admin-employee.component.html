@@ -1,0 +1,124 @@
+<app-adminheader></app-adminheader>
+<div class="page-body-wrapper">
+<app-adminsidebar class="sidebarMain"></app-adminsidebar>
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="card">
+         <div class="card-body">
+            <div class="titleSec"><h2>Update Employee</h2></div>
+            <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+            <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
+            <div class="row">
+                <!-- <div class="col-1"></div> -->
+                <input type="hidden" name="user" #user="ngModel" ngModel id="default_user">   
+                <input type="hidden" name="id" #id="ngModel" ngModel id="default_id">
+                <div class="col-5">
+                    <b>Employee ID </b>
+                    <input  type="text" name="employee_id" id="emp_id" class="form-control" ngModel #employee_id="ngModel" required>
+                    <div *ngIf="employee_id.errors?.required && (employee_id.touched || employee_id.dirty)" class="text-danger">
+                        *Please Provide Employee Id
+                      </div>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <b>Name</b>
+                    <input type="text" name="name" id="Emp_name" class="form-control" #name="ngModel" ngModel required>
+                    <div *ngIf="name.errors?.required && (name.touched || name.dirty)" class="text-danger">
+                        *Please Provide Name
+                      </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <!-- <div class="col-1"></div> -->
+                <div class="col-5">
+                    <b>Department</b>
+                    <select name="department" id="department" #department="ngModel" ngModel class="form-control">
+                        <option value="">Select</option>
+                        <option *ngFor="let department of get_department" value="{{department.id}}">{{department.department_name}}</option>
+
+
+                    </select>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <b>Position</b>
+                    <select name="position" id="position" #position="ngModel" ngModel class="form-control">
+                        <option value="">Select</option>
+                        <option *ngFor="let position of get_position" value="{{position.id}}">{{position.position}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <!-- <div class="col-1"></div> -->
+                <div class="col-5">
+                    <b>Email</b>
+                    <input type="email" name="email" id="Email" class="form-control" #email="ngModel" ngModel readonly>
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <b>Contact No.(Personal)</b>
+                    <input type="text" name="p_contact" id="p_contact" class="form-control" #p_contact="ngModel" ngModel required (change)="chk_contact_no($event,'P')">
+                    <div *ngIf="p_contact.errors?.required && (p_contact.touched || p_contact.dirty)" class="text-danger">
+                        *Please Provide Contact No.
+                      </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <!-- <div class="col-1"></div> -->
+                <div class="col-5">
+                    <b>Contact No.(ER)</b>
+                    <input type="text" name="er_contact" id="ER_Contact" class="form-control" #er_Contact="ngModel" ngModel (change)="chk_contact_no($event,'E')">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <b>Employee Status</b>
+                    <select name="emp_status" id="Status" #emp_status="ngModel" ngModel  class="form-control">
+                        <option    value="">Select</option>
+                        <option value="A" >Active</option>
+                        <option  value="I">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-5">
+                    <b>User Type</b>
+                    <select class="form-control" name="user_type" id="User_type" #user_type="ngModel" ngModel>
+                        <option value="">Select</option>
+                        <option value="I"> incident commander</option>
+                        <option value="A">Admin</option>
+                        <option value="U">User</option>
+                        </select>
+                 </div>
+
+                 <div class="col-1"></div>
+                 <div class="col-5"> <br>
+                        <b>Do you want the user to be an approver?</b><br>
+                        <input type="radio" name="approval_flag" #approval_flag="ngModel" ngModel id="yes" value="Y" required class="m-1">Yes
+                        <input type="radio" name="approval_flag" id="no" value="N" #approval_flag="ngModel" ngModel required class="m-1">No
+    
+                        <div *ngIf="approval_flag.errors?.required && (approval_flag.touched || approval_flag.dirty)" class="text-danger">
+                            *This Field Is Mandatory.
+                          </div>     
+                 </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col-1"></div> -->
+                <div class="col-4">
+                <div class="form-group row">
+                        <b>&nbsp;</b><br>
+                        <div class="col-sm-12 btnSubmitSec mt-2">      
+                        <input type="submit" class="btn btn-info" id="submit" name="submit" value="Save" [disabled]="logForm.invalid">
+                        <!-- <input type="reset" (click)="logForm.reset()" class="btn btn-info" value="Cancel" > -->
+                        </div>
+                        </div>
+                </div>
+            </div>
+             </form> 
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

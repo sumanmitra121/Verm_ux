@@ -1,0 +1,112 @@
+
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+            <!--Dashboard  -->
+            <li class="nav-item"  routerLinkActive="active">
+                <a class="nav-link" routerLink="/admin/dashboard">
+                  <i class="fa fa-tachometer" aria-hidden="true"></i>
+                  <span class="menu-title">Dashboard</span>
+                    <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+                </a>
+              </li>
+              <!-- End -->
+              <!--Masters  -->
+              <li class="nav-item" id="submenu1">
+                <a class="nav-link"  data-toggle="collapse" data-target="#submenu2">
+                  <i class="fa fa-database" aria-hidden="true"></i>
+                  <span class="menu-title">Masters</span>
+                    <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i>
+                </a>
+                <ul class="collapse" id="submenu2" routerLinkActive="show in" >
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/offshore">Offshore</a></li>
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/incident">Incident</a></li>
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/tier">Tier</a></li>
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/position">Position</a></li>
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/department">Department</a></li>
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/employee">Employee</a></li>
+                    <!-- <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/team">Team</a></li> -->
+                  </ul>
+                </ul>
+              </li>
+                <!--End  -->
+              <!-- Team -->
+                <li class="nav-item"  id="team1">
+                    <a class="nav-link" data-toggle="collapse" data-target="#team2">
+                      <i class="fa fa-users" aria-hidden="true"></i>  
+                      <span class="menu-title">
+                        Team</span>
+                        <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i>
+                    </a>
+                    <ul id="team2"  class="collapse" routerLinkActive="show in" >
+                      <ul class="nav flex-column sub-menu">
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/admin/team">Create Team</a></li>
+
+                        <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink='/admin/Team/assignteam' >Assign Team</a></li>
+                        <!-- <li class="nav-item"> <a class="nav-link" routerLink='/admin/Team/Status' >Team Status</a></li> -->
+                        <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink='/admin/Team/Status/add' >Team Roster</a></li>
+
+
+                      </ul>
+                    </ul>
+                </li>
+                <!-- End -->
+                 
+                 <!--Masters  -->
+              <li class="nav-item" id="submenu3">
+                <a class="nav-link"  data-toggle="collapse" data-target="#submenu_forms-checklist">
+                  <i class="fa fa-list-ul" aria-hidden="true"></i>
+                  <span class="menu-title">Forms & Checklists</span>
+                    <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i>
+                </a>
+                <ul class="collapse" id="submenu_forms-checklist" routerLinkActive="show in" >
+                  <ul class="nav flex-column sub-menu">
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/category">Category</a></li>
+                    <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/UploadDashBoard">Upload Form</a></li>
+                  </ul>
+                </ul>
+              </li>
+
+                <!--Masters  -->
+                <li class="nav-item" id="submenu4">
+                  <a class="nav-link"  data-toggle="collapse" data-target="#submenu_repository">
+                    <i class="fa fa-list-ul" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                      <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i>
+                  </a>
+                  <ul class="collapse" id="submenu_repository" routerLinkActive="show in" >
+                    <ul class="nav flex-column sub-menu">
+                      <li class="nav-item" routerLinkActive="active" > <a class="nav-link" routerLink="/Repo_dashboard">Create Folder</a></li>
+                  
+                    </ul>
+                  </ul>
+                </li>
+                <!-- Report Data Pool -->
+                <li class="nav-item "  routerLinkActive="active">
+                  <a class="nav-link" routerLink="/admin/reportdatapoolDashboard">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <span class="menu-title">Reports</span>
+                      <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+                  </a>
+                </li>
+                
+                <!--User Status -->
+            <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" routerLink="/admin/User_Status" >
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span class="menu-title">User Status</span>
+                  <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+              </a>
+            </li>
+            <!-- End -->
+            <li class="nav-item ">
+              <a class="nav-link" (click)="signout()">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span class="menu-title">Sign Out</span>
+                  <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+              </a>
+            </li>
+        </ul>
+        <!--End  -->
+  </nav>
+

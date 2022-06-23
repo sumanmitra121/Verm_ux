@@ -1,0 +1,9 @@
+.mat-radio-button ~ .mat-radio-button {margin-left: 30px;}
+table {width: 100%;}
+th.mat-header-cell {font-size: 15px;color: #181818;background: #d3d4d54a;}
+td{width:17.5%;}
+mat-form-field{width:100%} 
+/* .mat-menu-content {padding: 1rem}
+.mat-menu-item:focus {outline:0 !important;} */
+
+

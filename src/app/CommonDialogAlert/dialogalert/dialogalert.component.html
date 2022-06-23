@@ -1,0 +1,7 @@
+
+<div mat-dialog-content >{{ data.name=='Category' ? 'All files residing within the folder will be deleted.Do you want to continue?' : 'Are you sure you want to delete?'}}</div>
+
+<div mat-dialog-actions>
+    <button mat-dialog-close mat-stroked-button tab-index="-1">Cancel</button>
+    <button mat-stroked-button tab-index="-1" (click)="delete()">Ok</button>
+</div>

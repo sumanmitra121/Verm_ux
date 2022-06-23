@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~angular2-multiselect-dropdown/themes/default.theme.css"; */
+@import url('https://fonts.googleapis.com/css?family=Spectral+SC:700');
+@import '~ngx-sharebuttons/themes/material.scss';
+/* @import '~ngx-sharebuttons/themes/modern.scss'; */
+/* @import '~@ngx-share/button/styles/themes/default/default-theme.css'; */
+/* @import url(https://weloveiconfonts.com/api/?family=entypo);     */
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap'); */
+/* html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { padding-right: 0 !important }
+label{color:black;}
+mat-form-field{width:38%} 
+table {width: 100%;}
+th.mat-header-cell {font-size: 15px;color: #181818;background: #d3d4d54a;}
+
+
+
+
+

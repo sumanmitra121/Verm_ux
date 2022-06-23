@@ -1,0 +1,1033 @@
+
+<app-header [headername]="headername" [icon]="icon"></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="card">
+     <div class="card-body">
+         <form #logForm="ngForm" (ngSubmit)="form_submit(logForm.value)" *ngIf="Inc_type!='B'">
+             <div class="row" *ngIf="Inc_type=='L'">
+                 <div class="col-6">
+                     <input type="radio" name="logTypes"  #logTypes="ngModel" ngModel value="1"> Auto Log
+                     <input type="radio" name="logTypes"  #logTypes="ngModel" ngModel value="2" class="m-1"> Manual Log
+                 </div>
+             </div>
+         <div class="row mt-4">
+             <div class="col-3">
+                 <label>Start Date</label>
+                 <input type="date" name="frm_date" id="From_date" #frm_date="ngModel" ngModel class="form-control" required>
+                 <div *ngIf="frm_date.errors?.required && (frm_date.touched || frm_date.dirty)" class="text-danger">
+                    *Please Provide Start Date
+                  </div>
+             </div>
+             <div class="col-3">
+                <label>End Date</label>
+                <input type="date" name="to_date" id="To_date" #to_date="ngModel" ngModel class="form-control" required >
+                <div *ngIf="to_date.errors?.required && (to_date.touched || to_date.dirty)" class="text-danger">
+                    *Please Provide End Date
+                  </div>
+                
+             </div>
+             <div class="col-3" *ngIf="Inc_type=='C' || Inc_type=='L' || Inc_type=='CL'">
+             <label>Incident Name</label>
+             <select class="form-control" name="inc_name" #inc_name="ngModel" ngModel>
+                 <option value="">Select</option>
+                 <option value="{{inc.id}}" *ngFor="let inc of  get_allIncident">{{inc.inc_name}} ({{inc.inc_no}})</option> 
+             </select>
+             </div>
+             <div class="col-2">
+                 <label>&nbsp;</label>
+                <div class="btnSubmitSec text-center"> 
+                     <input type="submit" value="Submit" class="btn btn-info" [disabled]="logForm.invalid">
+                </div>
+             </div>
+         </div>
+        </form>
+        <form #LogForm="ngForm" (ngSubmit)="board_submit(LogForm.value)" *ngIf="Inc_type=='B' ">
+            <div class="row">
+                <div class="col-5">
+                    <label>Incident Name</label>
+                    <select class="form-control" name="inc_name" #inc_name="ngModel" ngModel required>
+                        <option value="">Select</option>
+                        <option value="{{inc.id}}" *ngFor="let inc of  get_allIncident">{{inc.inc_name}} ({{inc.inc_no}})</option>
+
+                       
+                    </select>
+                    <div *ngIf="inc_name.errors?.required && (inc_name.touched || inc_name.dirty)" class="text-danger">
+                        *Please Provide Incident Name
+                      </div>
+                </div>
+                <div class="col-5">
+                    <label>Board Type</label>
+                    <select class="form-control" name="board_type" #board_type="ngModel" ngModel required>
+                        <option value="">Select</option>
+                        <option value="1">Incident Status</option>
+                        <option value="2">Vessel Status</option>
+                        <option value="3">Helicopter Status</option>
+                        <option value="4">Pob Status</option>
+                        <option value="5">Casualty Status</option>
+                        <option value="6">Evacuation Status</option>
+                        <option value="7">Events Log</option>
+                    </select>
+                    <div *ngIf="board_type.errors?.required && (board_type.touched || board_type.dirty)" class="text-danger">
+                        *Please Provide Board Type
+                      </div>
+                </div>
+                <div class="col-2">
+                    <label>&nbsp;</label>
+                   <div class="btnSubmitSec text-center"> 
+                        <input type="submit" value="Submit" class="btn btn-info" [disabled]="LogForm.invalid">
+                   </div>
+                </div>
+            </div>
+           </form>
+    </div>
+    </div>
+    <div class="card mt-4" *ngIf="this.get_incident_details.length > 0">
+        <div class="card-body">
+         
+            <div class="mat-elevation-z8" >
+                <div id="IncidentdivToPrint">
+                    <table style="display:none;"  mat-table [dataSource]="dataSource" matSort *ngIf="Inc_type=='I'"   matTableExporter #exporter="matTableExporter">
+                
+                    <ng-container matColumnDef="Incident_no" >
+                        <th mat-header-cell *matHeaderCellDef class="text-center">  No. </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.inc_no}} </td>
+                      
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="Incident_type">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Type </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.inc_type_name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Incident_name">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Name </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.inc_name}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="Incident_location">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Location </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.location_name}}<small>({{row.latt}}:{{row.o_long}})</small></td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="Initial_tier">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Initial Tier </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.initial_tier}}
+                        </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="Status">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Status </th>
+                        <td mat-cell *matCellDef="let row" [ngClass]="row.inc_status=='O' ? 'text-success' : 'text-danger'" >
+                            <p *ngIf="row.inc_status=='O'">Open</p>
+                            <p *ngIf="row.inc_status=='C'" >Close</p>
+                        </td>
+                    </ng-container> -->
+
+                    <ng-container matColumnDef="Final_tier">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Final Tier </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.final_tier}}
+                        </td>
+                    </ng-container>
+
+           
+                    
+                    <ng-container matColumnDef="event_description">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">  Description </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.brief_desc}}</td>
+
+                    </ng-container>
+                             
+                    <ng-container matColumnDef="remarks">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Remarks </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.closing_remarks}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="created_at">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> created at </th>
+                        <td mat-cell *matCellDef="let row" class="text-center customtd">
+                            {{row.created_at}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Created_By">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Created By </th>
+                        <td mat-cell *matCellDef="let row" class="text-center customtd">
+                            {{row.created_by}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="close_date">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> close date </th>
+                        <td mat-cell *matCellDef="let row" class="text-center customtd">
+                            {{row.close_date}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Closed_by">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Closed By</th>
+                        <td mat-cell *matCellDef="let row" class="text-center customtd">
+                            {{row.closed_by}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Closed_at" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Closed At</th>
+                        <td mat-cell *matCellDef="let row" class="text-center customtd">
+                            {{row.closed_at}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="approved_by">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Approved By</th>
+                        <td mat-cell *matCellDef="let row" class="text-center customtd">
+                            {{row.approved_by}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="approved_at" stickyEnd>
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Approved At</th>
+                        <td mat-cell *matCellDef="let row" class="text-center customtd">
+                            {{row.approved_at}}
+                        </td>
+                    </ng-container>
+              
+
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                    </table>
+                    <table width="100%" border="1" *ngIf="Inc_type=='I'">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>No.</th>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Initial Tier</th>
+                                <th>Final Tier</th>
+                                <!-- <th>Info</th> -->
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let inc of get_incident_details">
+                            <tr>
+                              <td>{{inc.inc_dt}}</td>
+                              <td>{{inc.inc_no}}</td>
+                              <td>{{inc.inc_type_name}}</td>
+                              <td>{{inc.inc_name}}</td>
+                              <td>{{inc.location_name}}<small>({{inc.latt}}:{{inc.o_long}})</small></td>
+                              <td>{{inc.initial_tier}}</td>
+                              <td>{{inc.final_tier}}</td>
+                            </tr>
+                            <!-- <tr>
+                                <td colspan="4"><label>Description: </label>&nbsp;{{inc.brief_desc}}</td>
+                                <td colspan="3"><label>Closing Remarks: </label>{{inc.closing_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr> -->
+                            <tr>
+                                <td colspan="7" class="dashed-line"><label>Description: </label>&nbsp;{{inc.brief_desc}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" class="dashed-line"><label>Closing Remarks: </label>&nbsp;{{inc.closing_remarks}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" class="dashed-line">
+                                    <label>Created By: </label>&nbsp;{{inc.created_by}} At {{inc.created_at}}<br>
+                                    <label>Closed By: </label>&nbsp;{{inc.closed_by}} At {{inc.closed_at}}<br>
+                                    <label>Approved By: </label>&nbsp;{{inc.approved_by}} At {{inc.approved_at}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <th>No.</th>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Initial Tier</th>
+                                <th>Final Tier</th>
+                                <!-- <th>Info</th> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="BoarddivToPrint_1">
+                    <table mat-table style="display:none" [dataSource]="dataSource" matSort *ngIf="Inc_type=='B' && board_stats=='1'"  matTableExporter #exporter="matTableExporter">
+                
+                        <ng-container matColumnDef="inc_no">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Incident No </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.inc_no}} </td>
+                        </ng-container>
+                    
+    
+                        <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Date </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.date}}</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="installation">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Installation </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.installation}}</td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="coordinates">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Coordinates </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.coordinates}}</td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="visibility">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Visibility </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.visibility}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="wind_speed">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Wind Speed </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.wind_speed}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="wind_direc">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Wind Direction </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.wind_direc}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="sea_state">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Sea state </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.sea_state}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="summary">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Summary </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.summary}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="temp">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Temparature </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.temp}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Status </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.status}}
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" border="1"  *ngIf="Inc_type=='B' && board_stats=='1'" >
+                        <thead>
+                            <tr>
+                                <th>Incident No</th>
+                                <th>Date </th>
+                                <th>Installation</th>
+                                <th>Coordinates</th>
+                                <th>Visibility</th>
+                                <th>Wind speed</th>
+                                <th>Sea State</th>
+                                <th>Temperature</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let inc of get_incident_details">
+                            <tr>
+                              <td>{{inc.inc_no}}</td>
+                              <td>{{inc.date}}</td>
+                              <td>{{inc.installation}}</td>
+                              <td>{{inc.coordinates}}</td>
+                              <td>{{inc.visibility}}</td>
+                              <td>{{inc.wind_speed}}</td>
+                              <td>{{inc.sea_state}}</td>
+                              <td>{{inc.temp}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" class="dashed-line"><label>Summary: </label>&nbsp;{{inc.summary}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" class="dashed-line"><label>Status: </label>&nbsp;{{inc.status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="BoarddivToPrint_2">
+                    <table mat-table [dataSource]="dataSource" matSort style="display:none" *ngIf="Inc_type=='B' && board_stats=='2'"  matTableExporter #exporter="matTableExporter">
+                
+                        <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Vessel Name </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.vessel_name}} </td>
+                        </ng-container>
+                    
+    
+                        <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Vessel Type </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.vessel_type}}</td>
+                        </ng-container>
+    
+                        <ng-container matColumnDef="from">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> From </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.form_at}}</td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="etd">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> ETD </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.etd}}</td>
+                        </ng-container>
+        
+                        <ng-container matColumnDef="to">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> To </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.to_at}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="eta">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> ETA </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.eta}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="remarks">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Remarks </th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.remarks}}
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" border="1"  *ngIf="Inc_type=='B' && board_stats=='2'"  >
+                        <thead>
+                            <tr>
+                                <th>Vessel Name</th>
+                                <th>Vessel Type </th>
+                                <th>From</th>
+                                <th>ETD</th>
+                                <th>To</th>
+                                <th>ETA</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let inc of get_incident_details">
+                            <tr>
+                              <td>{{inc.vessel_name}}</td>
+                              <td>{{inc.vessel_type}}</td>
+                              <td>{{inc.form_at}}</td>
+                              <td>{{inc.etd}}</td>
+                              <td>{{inc.to_at}}</td>
+                              <td>{{inc.eta}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="dashed-line"><label>Remarks: </label>&nbsp;{{inc.remarks}}</td>
+                            </tr>
+                         
+                        </tbody>
+                    </table>
+                </div>
+                <div id="BoarddivToPrint_3">
+                    <table mat-table [dataSource]="dataSource" matSort style="display:none" *ngIf="Inc_type=='B' && board_stats=='3'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="call Sign">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Call Sign </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.call_sign}} </td>
+                    </ng-container>
+                
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Helicopter Type </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.heli_type}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="from">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> From </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.form_at}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="etd">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> ETD </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.etd}}</td>
+                    </ng-container>
+        
+                        <ng-container matColumnDef="to">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> To </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.to_at}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="eta">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> ETA </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.eta}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="remarks">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Remarks </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                                {{row.remarks}}
+                            </td>
+                        </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                    </table>
+
+                    <table width="100%" border="1"  *ngIf="Inc_type=='B' && board_stats=='3'"  >
+                        <thead>
+                            <tr>
+                                <th>Call Sign</th>
+                                <th>Helicopter Type </th>
+                                <th>From</th>
+                                <th>ETD</th>
+                                <th>To</th>
+                                <th>ETA</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let inc of get_incident_details">
+                            <tr>
+                              <td>{{inc.call_sign}}</td>
+                              <td>{{inc.heli_type}}</td>
+                              <td>{{inc.form_at}}</td>
+                              <td>{{inc.etd}}</td>
+                              <td>{{inc.to_at}}</td>
+                              <td>{{inc.eta}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="dashed-line"><label>Remarks: </label>&nbsp;{{inc.remarks}}</td>
+                            </tr>
+                         
+                        </tbody>
+                    </table>
+                </div>
+                <div id="BoarddivToPrint_5">
+                    <table mat-table [dataSource]="dataSource" style="display:none" matSort *ngIf="Inc_type=='B' && board_stats=='5'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="full_name">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Full Name </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.full_name}} </td>
+                    </ng-container>
+                
+
+                    <ng-container matColumnDef="employer">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Employer </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.employer}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="emp_condition">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Condition </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.emp_condition}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="location_name">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Loaction </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.location_name}}</td>
+                    </ng-container>
+        
+                        <ng-container matColumnDef="time">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Time </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.time}}
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                    </table>
+
+                    <table width="100%" border="1"  *ngIf="Inc_type=='B' && board_stats=='5'"  >
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Employer </th>
+                                <th>Condition</th>
+                                <th>Loaction</th>
+                                <th>Time</th>
+                              
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let inc of get_incident_details">
+                            <tr>
+                              <td>{{inc.full_name}}</td>
+                              <td>{{inc.employer}}</td>
+                              <td>{{inc.emp_condition}}</td>
+                              <td>{{inc.location_name}}</td>
+                              <td>{{inc.time}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="BoarddivToPrint_6">
+                    <table mat-table [dataSource]="dataSource" style="display:none" matSort *ngIf="Inc_type=='B' && board_stats=='6'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="time">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Time </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.date }} </td>
+                    </ng-container>
+                
+
+                    <ng-container matColumnDef="destination">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Destination </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.offshore_name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mode_of_transport">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Mode Of Transport </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.mode_of_transport}}</td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="pob_remaining">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Pob Remaining </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.pob_remaining}}</td>
+                    </ng-container>
+        
+                        <ng-container matColumnDef="remarks">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Remarks </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">
+                            {{row.remarks}}
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                    </table>
+
+                    <table width="100%" border="1"  *ngIf="Inc_type=='B' && board_stats=='6'"  >
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Destination </th>
+                                <th>Mode Of Transport</th>
+                                <th>Pob Remaining</th>
+                              
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let inc of get_incident_details">
+                            <tr>
+                              <td>{{inc.date}}</td>
+                              <td>{{inc.offshore_name}}</td>
+                              <td>{{inc.mode_of_transport}}</td>
+                              <td>{{inc.pob_remaining}}</td>
+                            </tr>
+                   
+                                <tr>
+                                    <td colspan="4" class="dashed-line"><label>Remarks: </label>&nbsp;{{inc.remarks}}</td>
+                                </tr>
+           
+                        </tbody>
+                    </table>
+                </div>
+                <div id="BoarddivToPrint_7">
+                    <table mat-table [dataSource]="dataSource" style="display:none" matSort *ngIf="Inc_type=='B' && board_stats=='7'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="time">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Time </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.date}} </td>
+                    </ng-container>
+                
+
+                    <ng-container matColumnDef="situation_status">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Situation Status </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.situation_status}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="resource_assigned">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Resource Assigned </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.resource_assigned}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                    </table>
+
+                    <table width="100%" border="1"  *ngIf="Inc_type=='B' && board_stats=='7'"  >
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th> Situation Status </th>
+                                <th>Resource Assigned</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let inc of get_incident_details">
+                            <tr>
+                              <td>{{inc.date}}</td>
+                              <td>{{inc.situation_status}}</td>
+                              <td>{{inc.resource_assigned}}</td>
+                            </tr>  
+                        </tbody>
+                    </table>
+                </div>
+                <div id="ActivationdivToPrint">
+                  <table mat-table style="display:none" [dataSource]="dataSource" matSort *ngIf="Inc_type=='A'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Date </th>
+                      <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.created_at}} </td>
+                    </ng-container>
+                
+  
+                    <ng-container matColumnDef="incident_name">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Incident Name </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.inc_name}} ({{row.inc_no}})</td>
+                    </ng-container>
+  
+                    <ng-container matColumnDef="team_name">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Team Name </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.team_name}} ({{row.team_short_code}})</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Status">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Status </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                            <span *ngIf="row.active_flag=='Y'">Activated</span>
+                            <span *ngIf="row.active_flag=='N'">De-Activated</span>
+                        </td>
+               
+                      </ng-container>
+
+                      <ng-container matColumnDef="created_by">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Acted By </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.created_by}}</td>
+                    
+                      </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                  </table>
+                  <table width="100%" border="1" *ngIf="Inc_type=='A'">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Incident Name</th>
+                            <th>Team Name</th>
+                            <th>Status</th>
+                            <th>Acted By</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let inc of get_incident_details">
+                        <tr>
+                          <td>{{inc.created_at}}</td>
+                          <td>{{inc.inc_name}} ({{inc.inc_no}})</td>
+                          <td>{{inc.team_name}} ({{inc.team_short_code}})</td>
+                          <td><span *ngIf="inc.active_flag=='Y'">Activated</span><span *ngIf="inc.active_flag=='N'">De-Activated</span></td>
+                          <td>{{inc.created_by}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div id="LiveLogdivToPrint">
+                  <table mat-table [dataSource]="dataSource" style="display:none" matSort *ngIf="Inc_type=='C'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Date </th>
+                      <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.chat_dt}} </td>
+                    </ng-container>
+                
+  
+                    <ng-container matColumnDef="emp_name">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Employee Name </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.emp_name}} </td>
+                    </ng-container>
+  
+                    <ng-container matColumnDef="chat">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Chat </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.chat}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="file">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> File </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                          {{row.file}}
+                        </td>
+               
+                      </ng-container>
+
+                      <ng-container matColumnDef="created_by">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Acted By </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.created_by}}</td>
+                    
+                      </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                  </table>
+
+                  <table width="100%" border="1" *ngIf="Inc_type=='C'">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Employee Name</th>
+                            <th>Chat</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let inc of get_incident_details">
+                        <tr>
+                          <td>{{inc.chat_dt}}</td>
+                          <td>{{inc.emp_name}}</td>
+                          <td>{{inc.chat}}</td>
+                          <td>{{inc.file}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div id="LogSheetdivToPrint_1">
+                  <table mat-table [dataSource]="dataSource" style="display:none" matSort *ngIf="Inc_type=='L' && this.logform.form.value.logTypes=='1'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Date </th>
+                      <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.act_at}} </td>
+                    </ng-container>
+                
+  
+                    <ng-container matColumnDef="emp_name">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Employee Name </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.emp_name}} </td>
+                    </ng-container>
+  
+                    <ng-container matColumnDef="act_type">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Act Type </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.act_type}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="activity">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Activity </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                          {{row.activity}}
+                        </td>
+               
+                      </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                  </table>
+                  <table width="100%" border="1" *ngIf="Inc_type=='L' && this.logform.form.value.logTypes=='1'">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Employee Name</th>
+                            <th>Act Type</th>
+                            <th>Activity</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let inc of get_incident_details">
+                        <tr>
+                          <td>{{inc.act_at}}</td>
+                          <td>{{inc.emp_name}}</td>
+                          <td>{{inc.act_type}}</td>
+                          <td>{{inc.activity}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div id="LogSheetdivToPrint_2">
+                  <table mat-table [dataSource]="dataSource" style="display:none" matSort *ngIf="Inc_type=='L' && this.logform.form.value.logTypes=='2'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Date </th>
+                      <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.act_at}} </td>
+                    </ng-container>
+                
+  
+                    <ng-container matColumnDef="emp_name">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Employee Name </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.act_by}} </td>
+                    </ng-container>
+  
+                    <ng-container matColumnDef="activity">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Activity </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                          {{row.activity}}
+                        </td>
+               
+                      </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                  </table>
+
+                  <table width="100%" border="1" *ngIf="Inc_type=='L' && this.logform.form.value.logTypes=='2'">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Employee Name</th>
+                            <th>Activity</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let inc of get_incident_details">
+                        <tr>
+                          <td>{{inc.act_at}}</td>
+                          <td>{{inc.act_by}}</td>
+                          <td>{{inc.activity}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div id="CalldivToPrint">
+                  <table mat-table style="display:none" [dataSource]="dataSource" matSort *ngIf="Inc_type=='CL'"  matTableExporter #exporter="matTableExporter">
+            
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Date </th>
+                      <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.call_datetime}} </td>
+                    </ng-container>
+                
+  
+                    <ng-container matColumnDef="ref_no">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Ref No </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.ref_no}} </td>
+                    </ng-container>
+  
+                    <ng-container matColumnDef="made_by">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Made By </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                          {{row.made_by}}
+                        </td>
+               
+                      </ng-container>
+
+                      <ng-container matColumnDef="made_to">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Made To </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                          {{row.made_to}}
+                        </td>
+               
+                      </ng-container>
+
+                      <ng-container matColumnDef="received_by">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Received By </th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                          {{row.received_by}}
+                        </td>
+               
+                      </ng-container>
+
+                      <ng-container matColumnDef="call_details">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Call Details</th>
+                        <td mat-cell *matCellDef="let row" class="text-center" >
+                          {{row.call_details}}
+                        </td>
+               
+                      </ng-container>
+    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                  </table>
+                  <table width="100%" border="1" *ngIf="Inc_type=='CL'">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Ref No </th>
+                            <th>Made By</th>
+                            <th>Made To</th>
+                            <th>Received By</th>
+                            <th>Call Details</th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let inc of get_incident_details">
+                        <tr>
+                          <td>{{inc.call_datetime}}</td>
+                          <td>{{inc.ref_no}}</td>
+                          <td>{{inc.made_by}}</td>
+                          <td>{{inc.made_to}}</td>
+                          <td>{{inc.received_by}}</td>
+                          <td>{{inc.call_details}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+              <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users" showFirstLastButtons></mat-paginator> -->
+           
+        </div>
+
+        <div class="titleSec mt-3">
+            <div class="btnSubmitSec ">
+            <input type="submit" class="btn btn-info float-right" value="Print" (click)="export()">
+            <input type="submit" class="btn btn-info float-right" value="Excel" (click)="importAsXlsx()">
+            <!-- <button mat-button (click)="importAsXlsx()" >Excel</button> -->
+            </div>
+        </div>
+       </div>
+    </div>
+</div> 
+</div>
+</div>
+
+
