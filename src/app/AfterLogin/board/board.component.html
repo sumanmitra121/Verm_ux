@@ -33,7 +33,7 @@
               <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
             </div>
             <div class="card_bodyCustom">
-              <ul class="listDashboard" *ngIf="get_in_status!=''">
+              <ul class="listDashboard" *ngIf="get_in_status.length > 0">
                 <li><strong>Visibility:</strong> {{inc_visibility}}</li>
                 <li><strong>Sea State:</strong> {{inc_sea_state}}</li>
                 <li><strong>Temparature:</strong>
@@ -42,13 +42,6 @@
                 </li>
                 <li><strong>Wind Speed:</strong> {{wind_speed}}</li>
               </ul>
-                <!-- <mat-list *ngIf="get_in_status!=''">
-              <mat-list-item ><b>Visibility:&nbsp;{{inc_visibility}}</b></mat-list-item>
-              <mat-list-item ><b>Sea State:&nbsp;{{inc_sea_state}}</b></mat-list-item>
-              <mat-list-item ><b>Temparature:&nbsp;{{inc_temparature}}</b></mat-list-item>
-              <mat-list-item ><b>Wind Speed:&nbsp;{{wind_speed}}</b></mat-list-item>
-            </mat-list> -->
-            <!-- </marquee> -->
             </div>
           </div>
          </div>
@@ -119,7 +112,7 @@
 
             </div> -->
             <div class="card-header card_headerCustom">
-              <h2 class="pull-left text-dark titleDashBox">Pob Status</h2> 
+              <h2 class="pull-left text-dark titleDashBox">Pob Status</h2>
               <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
             </div>
             <div class="card_bodyCustom" *ngIf="get_prob_status!=''">
@@ -531,7 +524,7 @@
                         <!-- <div *ngIf="vesselArray[i].Time==''"> <p class="text-danger">Please Provide Time</p></div> -->
                       </td>
                       <td>
-                        <input class="form-control" type="text"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
+                        <input type="number" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
                       </td>
 
 
