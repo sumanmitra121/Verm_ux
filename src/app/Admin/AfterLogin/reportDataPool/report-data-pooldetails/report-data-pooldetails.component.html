@@ -1,7 +1,11 @@
 
-<app-adminheader></app-adminheader>
+<app-adminheader *ngIf="_u_type == 'A'"></app-adminheader>
+<app-header [headername]="headername" [icon]="icon" *ngIf="_u_type != 'A'"></app-header>
+
 <div class="page-body-wrapper">
-<app-adminsidebar class="sidebarMain"></app-adminsidebar>
+<app-adminsidebar class="sidebarMain" *ngIf="_u_type == 'A'"></app-adminsidebar>
+<app-sidebar class="sidebarMain" *ngIf="_u_type != 'A'"></app-sidebar>
+
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="card">

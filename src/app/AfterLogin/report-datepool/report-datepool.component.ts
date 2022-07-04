@@ -14,7 +14,7 @@ constructor(private router:Router) { }
   ngOnInit(): void {
   }
   routetoreportdatapool(mode:any){
-    this.router.navigate(['/admin/reportdatapoolDetails',mode]);
+    this.router.navigate(['/admin/reportdatapoolDetails/',mode]);
   }
 
 }

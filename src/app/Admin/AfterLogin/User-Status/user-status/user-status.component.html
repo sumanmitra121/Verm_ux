@@ -43,9 +43,10 @@
                                 <th mat-header-cell *matHeaderCellDef class='text-center'>Status</th>
                                 <td mat-cell *matCellDef="let row" class='text-center'>
                                   <strong *ngIf="row.user_status=='O' || row.user_status==null" class='text-danger'>Logged Out</strong>
+                                  <strong *ngIf="row.user_status=='M'" class='text-success'>In a Meeting</strong>
+                                  <strong *ngIf="row.user_status=='C'" class='text-success'>On a call</strong>
+                                  <strong *ngIf="row.user_status=='S'" class='text-success'>Stand down</strong>
                                   <strong *ngIf="row.user_status=='L'" class='text-success'>Logged In</strong>
-                                  <!-- <strong *ngIf="row.user_status==null"></strong> -->
-
                                 </td>
                               </ng-container>
 
@@ -63,11 +64,11 @@
                                       <i class="fa fa-caret-down activeDropCUs" aria-hidden="true"></i></a>
                                   <div class="dropdown-menu dropdown-menu-end dropdownActive" aria-labelledby="navbarDropdown">
                                      
-                                    <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='M' ? 'customBackground' : ''" (click)="select_mode('M')"><i class="fa fa-meetup" [ngStyle]="{'color' : row.user_status=='M' ? '#fff' : 'black'}" aria-hidden="true"></i>In a meeting</a>
-                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='C' ? 'customBackground' : ''" (click)="select_mode('C')"><i class="fa fa-phone" [ngStyle]="{'color' : row.user_status=='C' ? '#fff' : 'black'}" aria-hidden="true"></i>On a call</a>
-                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='L' ? 'customBackground' : ''" (click)="select_mode('L')"><i class="fa  fa-circle" [ngStyle]="{'color' : row.user_status=='L' ? '#fff' : 'black'}" aria-hidden="true"></i>Logged In</a>
-                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='S' ? 'customBackground' : ''" (click)="select_mode('S')"><i class="fa fa-circle" [ngStyle]="{'color' : row.user_status=='S' ? '#fff' : 'black'}" aria-hidden="true"></i>Stand down</a>
-                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='O' || row.user_status==null ? 'customBackground' : ''" (click)="select_mode('O')"><i class="fa fa-circle" [ngStyle]="{'color' : row.user_status=='O' || row.user_status==null ? '#fff' : 'black'}" aria-hidden="true"></i>Logged Out</a>
+                                    <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='M' ? 'customBackground' : ''" (click)="select_mode('M',row.user_status,row.employee_id,row.emp_name)"><i class="fa fa-meetup" [ngStyle]="{'color' : row.user_status=='M' ? '#fff' : 'black'}" aria-hidden="true"></i>In a meeting</a>
+                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='C' ? 'customBackground' : ''" (click)="select_mode('C',row.user_status,row.employee_id,row.emp_name)"><i class="fa fa-phone" [ngStyle]="{'color' : row.user_status=='C' ? '#fff' : 'black'}" aria-hidden="true"></i>On a call</a>
+                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='L' ? 'customBackground' : ''" (click)="select_mode('L',row.user_status,row.employee_id,row.emp_name)"><i class="fa  fa-circle" [ngStyle]="{'color' : row.user_status=='L' ? '#fff' : 'black'}" aria-hidden="true"></i>Logged In</a>
+                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='S' ? 'customBackground' : ''" (click)="select_mode('S',row.user_status,row.employee_id,row.emp_name)"><i class="fa fa-circle" [ngStyle]="{'color' : row.user_status=='S' ? '#fff' : 'black'}" aria-hidden="true"></i>Stand down</a>
+                                      <a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="row.user_status=='O' || row.user_status==null ? 'customBackground' : ''" (click)="select_mode('O',row.user_status,row.employee_id,row.emp_name)"><i class="fa fa-circle" [ngStyle]="{'color' : row.user_status=='O' || row.user_status==null ? '#fff' : 'black'}" aria-hidden="true"></i>Logged Out</a>
 
 
                                     </div>

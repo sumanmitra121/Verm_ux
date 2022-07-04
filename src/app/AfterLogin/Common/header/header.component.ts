@@ -3,6 +3,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Observable } from 'rxjs';
+import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
 
@@ -39,9 +41,13 @@ export class HeaderComponent implements OnInit {
   img_src:any;
   tot_casualty:any;
   hidden = false;
+  currInc$!:Observable<IncDetails>;
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
+    // this.currInc$ = this.emergencyservice.currentIncdents$;
+    // console.log(this.currInc$);
+    
 
    }
 

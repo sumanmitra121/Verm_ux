@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 declare var $:any;
 @Component({
@@ -9,6 +10,7 @@ declare var $:any;
 export class SidebarComponent implements OnInit {
    message_count:any=0;
    badge:any;
+   _inc_details:IncDetails[] =[];
   constructor(private emergencyservice:VirtualEmergencyService) { }
 
   ngOnInit(): void {
@@ -29,7 +31,16 @@ export class SidebarComponent implements OnInit {
       }
       localStorage.setItem('message_come',this.message_count);
     })  
+    
+    this.getIncidentDetails()
+  }
+  getIncidentDetails(){
+  // this.emergencyservice.global_service('0','/get_active_inc',null).subscribe((data:any)=>{
+  //         //  this._inc_details = data;
+  //         this.emergencyservice.setcurrInc(data);
 
+      
+  // })
   }
 
 }

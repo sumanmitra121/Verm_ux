@@ -16,6 +16,7 @@ declare var XLSX : any;
   styleUrls: ['./report-data-pooldetails.component.css']
 })
 export class ReportDataPooldetailsComponent implements OnInit {
+  _u_type = localStorage.getItem('User_type');
   ctx:any="";
  workbookXML:any= "";
  worksheetsXML:any= "";

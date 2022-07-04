@@ -355,7 +355,7 @@
                             <a class="customIcon" type="button"
                             #tooltip="matTooltip"
                             matTooltip="Delete"
-                            (click)="deleteRow(i)"><i class="fa fa-trash fa-2x"></i></a>
+                            (click)="deleteRow(i,1,dynamicArray[i].id)"><i class="fa fa-trash fa-2x"></i></a>
                           </td>
                     </tr>
                   </tbody>
@@ -425,7 +425,7 @@
                        <a class="customIcon" type="button"
                        #tooltip="matTooltip"
                        matTooltip="Delete"
-                       (click)="deleteRow(i)"
+                       (click)="deleteRow(i,2,vesselArray[i].id)"
                        ><i class="fa fa-trash fa-2x"></i></a>
                       </td>
                 </tr>
@@ -486,7 +486,7 @@
                         <a class="customIcon" type="button"
                         #tooltip="matTooltip"
                         matTooltip="Delete"
-                        (click)="deleteRow(i)"
+                        (click)="deleteRow(i,3,vesselArray[i].id)"
                         ><i class="fa fa-trash fa-2x"></i></a>
                       </td>
                 </tr>
@@ -539,7 +539,7 @@
                         <a class="customIcon" type="button"
                        #tooltip="matTooltip"
                        matTooltip="Delete"
-                       (click)="deleteRow(i)"
+                       (click)="deleteRow(i,4,vesselArray[i].id)"
                        ><i class="fa fa-trash fa-2x"></i></a>
                       </td>
                 </tr>
@@ -601,7 +601,7 @@
                         <a class="customIcon" type="button"
                        #tooltip="matTooltip"
                        matTooltip="Delete"
-                       (click)="deleteRow(i)"
+                       (click)="deleteRow(i,5,vesselArray[i].id)"
                        ><i class="fa fa-trash fa-2x"></i></a>
                       </td>
                 </tr>
@@ -660,7 +660,7 @@
                         <a class="customIcon" type="button"
                         #tooltip="matTooltip"
                         matTooltip="Delete"
-                        (click)="deleteRow(i)"
+                        (click)="deleteRow(i,6,vesselArray[i].id)"
                         ><i class="fa fa-trash fa-2x"></i></a>
                       </td>
                 </tr>
@@ -699,7 +699,7 @@
                           <a class="customIcon" type="button"
                         #tooltip="matTooltip"
                         matTooltip="Delete"
-                        (click)="deleteRow(i)"
+                        (click)="deleteRow(i,7,vesselArray[i].id)"
                         ><i class="fa fa-trash fa-2x"></i></a>
                         </td>
                   </tr>

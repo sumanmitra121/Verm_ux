@@ -10,11 +10,16 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 })
 export class DialogalertComponent implements OnInit {
   check_respond:any='';
+  _u_type:any;
   constructor(public dialogRef:MatDialogRef<DialogalertComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private toastr:ToastrManager,private emergencyservice:VirtualEmergencyService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(localStorage.getItem('User_type'))
+    this._u_type = localStorage.getItem('User_type');
+  }
 
   delete(){
+    if(this._u_type == 'A'){
     this.emergencyservice.global_service('0',this.data.api_name,'id='+this.data.id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
       this.check_respond=data;
       if(this.check_respond.suc==1){
@@ -25,6 +30,10 @@ export class DialogalertComponent implements OnInit {
           this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
           }
     })
+   }
+   else{
+        this.dialogRef.close(1)
+   }
   }
 
 }

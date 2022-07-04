@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import  { io, Socket }  from 'socket.io-client';//For Socket.io-client implementation
-import { observable, Observable } from 'rxjs';
+import { observable, Observable, ReplaySubject } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogalertComponent } from '../CommonDialogAlert/dialogalert/dialogalert.component';
+import { IncDetails } from '../Model/IncDetails';
 @Injectable({
   providedIn: 'root'
 })
 export class VirtualEmergencyService {
+  public _incDetails= new ReplaySubject<IncDetails>(1); 
+  currentIncdents$ = this._incDetails.asObservable();
   private socket: Socket;
   public url = 'http://192.168.1.244:3000'; 
   // public url = 'https://vermapi.opentech4u.co.in';
@@ -147,6 +150,8 @@ export class VirtualEmergencyService {
     localStorage.setItem('chats', JSON.stringify(data));
   }
 
+
+  setcurrInc(_inc:IncDetails){return this._incDetails.next(_inc);}
  
   }
 
