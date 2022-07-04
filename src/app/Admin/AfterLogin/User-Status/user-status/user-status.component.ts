@@ -13,7 +13,7 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 export class UserStatusComponent implements OnInit {
   // Material datatable
   
-  displayedColumns: string[] = ['User_Name','Position','Team','Status'];
+  displayedColumns: string[] = ['User_Name','Position','Team','Status','mode'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource();
@@ -45,5 +45,9 @@ export class UserStatusComponent implements OnInit {
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
+    }
+    select_mode(_mode:any){
+           console.log(_mode);
+           
     }
 }

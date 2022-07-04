@@ -518,21 +518,24 @@ default_user:any=localStorage.getItem('Email');
            this.emergencyservice.global_service('1','/prob_board',dt4).subscribe(data=>{
             this.check_respond=data;
             if(this.check_respond.suc==1){
+              this.spinner.show("pob");
               if(this.get_incident_details_after_save.length==this.vesselArray.length){this.mode='updated pob board';}
               else{this.mode='added pob board';}
               var post_notification=global_url_test.getboardStatus(localStorage.getItem('Email'),'BP',this.mode,this.datePipe.transform(new Date(),'dd/MM/YYYY hh:mma'))
                // For Notification
                 this.emergencyservice.global_service('1','/post_notification',post_notification).subscribe(data=>{
                 }) 
-              this.myFunction();
-              this.emergencyservice.global_service('0','/prob_board_dashboard','inc_id=' +this.get_incident_details[0].id).subscribe(data=>{
-                this.spinner.show("pob");
-                this.get_prob_status.length=0;
-                this.get_prob_status=data;
-                this.get_incident_details_after_save=this.get_prob_status.msg;
-                this.get_prob_status=this.get_prob_status.msg;
-                this.spinner.hide("pob");
-              })
+              setTimeout(() => {
+                this.emergencyservice.global_service('0','/prob_board_dashboard','inc_id=' +this.get_incident_details[0].id).subscribe(data=>{
+                  this.myFunction();
+                  this.get_prob_status.length=0;
+                  this.get_prob_status=data;
+                  this.get_incident_details_after_save=this.get_prob_status.msg;
+                  this.get_prob_status=this.get_prob_status.msg;
+                  this.spinner.hide("pob");
+                })
+              }, 2000);
+             
             }
             else{
 
@@ -787,13 +790,16 @@ default_user:any=localStorage.getItem('Email');
         }
       }
       else{
-this.vesselDynamic =  {id:"0",prob_cat_id:"",Time:"",value:""};
+        this.vesselDynamic =  {id:"0",prob_cat_id:"",Time:"",value:""};
         this.vesselArray.push(this.vesselDynamic);
         
 
       }
       })
+
     })
+    console.log(this.get_prob_status);
+
     }
 
   }

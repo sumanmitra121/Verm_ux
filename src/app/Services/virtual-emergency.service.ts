@@ -9,8 +9,8 @@ import { DialogalertComponent } from '../CommonDialogAlert/dialogalert/dialogale
 })
 export class VirtualEmergencyService {
   private socket: Socket;
-  // public url = 'http://localhost:3000'; 
-  public url = 'https://vermapi.opentech4u.co.in';
+  public url = 'http://192.168.1.244:3000'; 
+  // public url = 'https://vermapi.opentech4u.co.in';
 
 
 
