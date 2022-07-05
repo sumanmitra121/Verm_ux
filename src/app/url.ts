@@ -5,8 +5,8 @@ export class global_url_test{
   static project_URL="https://verm.opentech4u.co.in/#/Conference";
    //For Create Update closed & approved incident
   static  get_dt(id:any,mode:any,name:any,type:any,user:any,action_type:any,date:any){
-     var dt=action_type=='IC' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is created by '+user+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id')} 
-     :(action_type=='IU' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is updated by '+user+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id')} 
+     var dt=action_type=='IC' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is created by '+user+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id')}
+     :(action_type=='IU' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is updated by '+user+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id')}
      :(action_type=='ICL' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is closed by '+user+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id')}
      :{id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is approved by '+user+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id')}));
      return dt;
@@ -22,5 +22,5 @@ export class global_url_test{
       var dt={id:'0',activity:status_type,narration:user+' has '+mode+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id')};
       return dt;
     }
-   
+
   }

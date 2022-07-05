@@ -4,6 +4,7 @@ import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
@@ -20,11 +21,11 @@ export class HeaderComponent implements OnInit {
   @Input() headername!:string;
   @Input() icon!:string;
   get_incident_details:any=[];
-  Inc_Name:any;
+  Inc_Name:any='';
   active_flag:any=localStorage.getItem('active_flag');
-  Inc_location:any=[];
-  tier:any;
-  hours:any;
+  Inc_location:any= '';
+  tier:any='';
+  hours:any='';
   name:any;
   email:any;
   Inc_type:any;
@@ -41,38 +42,42 @@ export class HeaderComponent implements OnInit {
   img_src:any;
   tot_casualty:any;
   hidden = false;
-  currInc$!:Observable<IncDetails>;
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
-    // this.currInc$ = this.emergencyservice.currentIncdents$;
-    // console.log(this.currInc$);
-    
-
+     this.emergencyservice.currentIncdents$.subscribe((res:any) => {
+       if(res != '' || res!=undefined || res != null){
+       this.Inc_Name = res?.inc_name+" ("+res?.inc_no +")";
+       this.Inc_location=res?.offshore_name+" ("+res?.lat+" : "+res?.lon+ ")";
+       this.tier=res?.tier_type;
+        this.hours=res?.dif_time;
+         this.Inc_type=res?.incident_type;
+         this.tot_casualty=res?.tot_casualty ;
+        }
+     })
    }
 
   ngOnInit(): void {
      this.get_details();
-    this.emergencyservice.global_service('0','/get_active_inc',null).subscribe(data=>{
-      // console.log(data)
-      this.get_incident_details=data;
-      this.get_incident_details=this.get_incident_details.msg;
-        if(this.get_incident_details!=''){
-              this.Inc_Name= this.get_incident_details[0].inc_name+" ("+this.get_incident_details[0].inc_no +")";
-              this.Inc_location=this.get_incident_details[0].offshore_name+" ("+this.get_incident_details[0].lat+" : "+this.get_incident_details[0].lon+ ")";
-              this.tier=this.get_incident_details[0].tier_type;
-              this.hours=this.get_incident_details[0].dif_time;
-              this.Inc_type=this.get_incident_details[0].incident_type;
-              this.tot_casualty=this.get_incident_details[0].tot_casualty ;
-        }
-        else{
-          this.Inc_Name='';
-          this.Inc_location='';
-          this.hours='';
-          this.tier='';
+    // this.emergencyservice.global_service('0','/get_active_inc',null).subscribe(data=>{
+    //   this.get_incident_details=data;
+    //   this.get_incident_details=this.get_incident_details.msg;
+    //     if(this.get_incident_details!=''){
+    //           this.Inc_Name= this.get_incident_details[0].inc_name+" ("+this.get_incident_details[0].inc_no +")";
+    //           this.Inc_location=this.get_incident_details[0].offshore_name+" ("+this.get_incident_details[0].lat+" : "+this.get_incident_details[0].lon+ ")";
+    //           this.tier=this.get_incident_details[0].tier_type;
+    //           this.hours=this.get_incident_details[0].dif_time;
+    //           this.Inc_type=this.get_incident_details[0].incident_type;
+    //           this.tot_casualty=this.get_incident_details[0].tot_casualty ;
+    //     }
+    //     else{
+    //       this.Inc_Name='';
+    //       this.Inc_location='';
+    //       this.hours='';
+    //       this.tier='';
 
-        }
-      })
+    //     }
+    //   })
       //For Getting Department
       this.emergencyservice.global_service('0','/department',"null").subscribe(data=>{
         // console.log(data);
@@ -122,7 +127,7 @@ export class HeaderComponent implements OnInit {
             $('.toggle-confpassword').addClass("fa-eye-slash");
           }
       });
-      
+
       // For Getting Notification
       // this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
       // this.emergencyservice.listen('get_notification').subscribe(data=>{

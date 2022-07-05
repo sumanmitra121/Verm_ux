@@ -11,14 +11,14 @@
 						<li class="active dropdown">
 							<a  id="activId"  data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
 								<span ><i class="fa fa-circle activeStatus" aria-hidden="true"></i>Inc Name</span>
-							
+
 							</a>
-				
+
 							<div class="dropdown-menu dropdown-menu-end dropdownActive" aria-labelledby="navbarDropdown">
 								<a class="dropdown-item subLink" style="cursor: pointer;" *ngFor="let incident of get_incident_details" (click)="select_mode(incident.inc_no)">{{incident.inc_name}}</a>
-								
+
 							  </div>
-				
+
 							</li>
 						</ul>
 					</div>
@@ -173,7 +173,7 @@
 							<div class="card_bodyCustom scroll">
 								<h3 class="customLine"></h3>
 
-								<table *ngIf="get_prob_status!=''">
+								<table *ngIf="get_prob_status.length > 0">
 									<tr>
 										<th>Category</th>
 										<th>Value</th>
@@ -188,7 +188,7 @@
 										</td>
 									</tr>
 								</table>
-								<h5 class="NoBoardStatusAvailable">No Pob Status available</h5>
+								<h5 *ngIf="get_prob_status.length == 0" class="NoBoardStatusAvailable">No Pob Status available</h5>
 							</div>
 						</div>
 					</div>
@@ -239,39 +239,44 @@
 										</tbody>
 									</table>
 								</div> -->
-								<ul class="boardStatus" *ngIf="get_casualty_status.length > 0">
-									<li *ngIf="get_casualty_status.length > 0"
-										matTooltip="{{get_casualty_status[0]?.full_name}}">
-										<strong class="customLabel">Name :</strong>
-										{{get_casualty_status[0]?.full_name}}
-									</li>
-									<li *ngIf="get_casualty_status.length > 0"
-										matTooltip="{{get_casualty_status[0]?.employer}}">
-										<strong class="customLabel">Employer :</strong>
-										{{get_casualty_status[0]?.employer}}
-									</li>
-									<li *ngIf="get_casualty_status.length > 0"
-										matTooltip="{{get_casualty_status[0]?.emp_condition}}">
-										<strong class="customLabel">Condition :</strong>
-										{{get_casualty_status[0]?.emp_condition}}
-									</li>
-									<hr />
-									<li *ngIf="get_casualty_status.length > 1"
-										matTooltip="{{get_casualty_status[1]?.full_name}}">
-										<strong class="customLabel">Name :</strong>
-										{{get_casualty_status[1]?.full_name}}
-									</li>
-									<li *ngIf="get_casualty_status.length > 1"
-										matTooltip="{{get_casualty_status[1]?.employer}}">
-										<strong class="customLabel">Employer :</strong>
-										{{get_casualty_status[1]?.employer}}
-									</li>
-									<li *ngIf="get_casualty_status.length > 1"
-										matTooltip="{{get_casualty_status[1]?.emp_condition}}">
-										<strong class="customLabel">Condition :</strong>
-										{{get_casualty_status[1]?.emp_condition}}
-									</li>
-								</ul>
+                <ng-container *ngIf="get_casualty_status.length > 0">
+
+                  <ul class="boardStatus" *ngFor = "let casualty of get_casualty_status">
+                    <li
+                      matTooltip="{{casualty?.full_name}}">
+                      <strong class="customLabel">Name :</strong> {{casualty?.full_name}}
+
+                    </li>
+                    <li
+                      matTooltip="{{casualty?.employer}}">
+                      <strong class="customLabel">Employer :</strong>
+                      {{casualty?.employer}}
+                    </li>
+                    <li
+                      matTooltip="{{casualty?.emp_condition}}">
+                      <strong class="customLabel">Condition :</strong>
+                      {{casualty?.emp_condition}}
+                    </li>
+                    <hr />
+                    <!-- <li *ngIf="get_casualty_status.length > 1"
+                      matTooltip="{{get_casualty_status[1]?.full_name}}">
+                      <strong class="customLabel">Name :</strong>
+                      {{get_casualty_status[1]?.full_name}}
+                    </li>
+                    <li *ngIf="get_casualty_status.length > 1"
+                      matTooltip="{{get_casualty_status[1]?.employer}}">
+                      <strong class="customLabel">Employer :</strong>
+                      {{get_casualty_status[1]?.employer}}
+                    </li>
+                    <li *ngIf="get_casualty_status.length > 1"
+                      matTooltip="{{get_casualty_status[1]?.emp_condition}}">
+                      <strong class="customLabel">Condition :</strong>
+                      {{get_casualty_status[1]?.emp_condition}}
+                    </li> -->
+                  </ul>
+
+                </ng-container>
+
 								<ul class="boardStatus" *ngIf="get_casualty_status.length == 0">
 									<li>
 										<h5 class="NoBoardStatusAvailable">No Casualty Status Available</h5>
@@ -326,21 +331,23 @@
 									</table>
 								</div> -->
 								<h3 class="customLine"></h3>
-								<ul class="boardStatus" *ngIf="get_evacuation_status.length > 0">
-									<li *ngIf="get_evacuation_status.length > 0"
-										matTooltip="{{get_evacuation_status[0]?.mode_of_transport}}">
+                <ng-container *ngIf="get_evacuation_status.length > 0">
+
+								<ul class="boardStatus" *ngFor="let evacuationStatus of get_evacuation_status">
+									<li
+										matTooltip="{{evacuationStatus?.mode_of_transport}}">
 										<strong class="customLabel">Transportation Mode :</strong>
-										{{get_evacuation_status[0]?.mode_of_transport}}
+										{{evacuationStatus?.mode_of_transport}}
 									</li>
-									<li *ngIf="get_evacuation_status.length > 0">
-										<strong class="customLabel">Time :</strong> {{get_evacuation_status[0]?.time}}
+									<li>
+										<strong class="customLabel">Time :</strong> {{evacuationStatus?.time}}
 									</li>
-									<li *ngIf="get_evacuation_status.length > 0">
+									<li >
 										<strong class="customLabel">Pob Remaining :</strong>
-										{{get_evacuation_status[0]?.pob_remaining}}
+										{{evacuationStatus?.pob_remaining}}
 									</li>
 									<hr />
-									<li *ngIf="get_evacuation_status.length > 1"
+									<!-- <li *ngIf="get_evacuation_status.length > 1"
 										matTooltip="{{get_evacuation_status[1]?.mode_of_transport}}">
 										<strong class="customLabel">Transportation Mode :</strong>
 										{{get_evacuation_status[1]?.mode_of_transport}}
@@ -351,8 +358,9 @@
 									<li *ngIf="get_evacuation_status.length > 1">
 										<strong class="customLabel">Pob Remaining :</strong>
 										{{get_evacuation_status[1]?.pob_remaining}}
-									</li>
+									</li> -->
 								</ul>
+              </ng-container>
 								<ul class="boardStatus" *ngIf="get_evacuation_status.length == 0">
 									<li>
 										<h5 class="NoBoardStatusAvailable">No Evacuation Status Available</h5>
@@ -409,25 +417,21 @@
 									</table>
 								</div> -->
 								<h3 class="customLine"></h3>
-								<ul class="boardStatus" *ngIf="get_events_status.length > 0">
-									<li *ngIf="get_events_status.length > 0"
-										matTooltip="{{get_events_status[0]?.resource_assigned}}">
-										<strong class="customLabel">Resource Assigned :</strong>
-										{{get_events_status[0]?.resource_assigned}}
-									</li>
-									<li *ngIf="get_events_status.length > 0">
-										<strong class="customLabel">Time :</strong> {{get_events_status[0]?.time}}
-									</li>
-									<hr />
-									<li *ngIf="get_events_status.length > 1"
-										matTooltip="{{get_events_status[1]?.resource_assigned}}">
-										<strong class="customLabel">Resource Assigned :</strong>
-										{{get_events_status[1]?.resource_assigned}}
-									</li>
-									<li *ngIf="get_events_status.length > 1">
-										<strong class="customLabel">Time :</strong> {{get_events_status[1]?.time}}
-									</li>
-								</ul>
+                <ng-container *ngIf="get_events_status.length > 0">
+                  <ul class="boardStatus" *ngFor="let event of get_events_status">
+                    <li
+                      matTooltip="{{event?.resource_assigned}}">
+                      <strong class="customLabel">Resource Assigned :</strong>
+                      {{event?.resource_assigned}}
+                    </li>
+                    <li>
+                      <strong class="customLabel">Time :</strong> {{event?.time}}
+                    </li>
+                    <hr />
+                  </ul>
+
+                </ng-container>
+
 								<ul class="boardStatus" *ngIf="get_events_status.length == 0">
 									<li>
 										<h5 class="NoBoardStatusAvailable">No Events Log Available</h5>

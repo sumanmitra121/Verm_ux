@@ -4,7 +4,7 @@
 	<div class="navbar-menu-wrapper d-flex align-items-center">
 		<div class="breadCamp" *ngIf='active_flag!=0'>
 			<!--<a><i class="fa {{icon}}" aria-hidden="true"></i></a>  <strong>{{headername}}</strong> -->
-			<div class="insidentDataCont" *ngIf="get_incident_details!=''">
+			<div class="insidentDataCont" *ngIf="Inc_Name!= ''">
 			<ul class="topinsidentData2 topinsidentData2_1">
 			<li class="typeCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_type}}"><strong>Type:</strong> {{Inc_type}}</li>
 			<li class="nameCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_Name}}"><strong>Name:</strong> {{Inc_Name}}</li>
@@ -16,23 +16,21 @@
 			</ul>
 			<ul class="topinsidentData2 topinsidentData2_3">
 			<li class="casualtyCl"><strong>Casualty:</strong> {{tot_casualty}}</li>
-			<li class="timeCl"><strong>Time Elapsed:</strong> {{hours}}h 				
+			<li class="timeCl"><strong>Time Elapsed:</strong> {{hours}}h
 				<i class="fa fa-circle text-danger ml-1 Blink"></i>
-				<!-- <div class="dot1"></div>
-				<div class="pulse1"></div> -->
       			</li>
 			</ul>
 	     	</div>
 		</div>
-         
+
 		<ul class="topMenuRight">
 		<li class="userDrop dropdown">
-			<a  class="nav-link"  matBadge="4" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="hidden" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>	
+			<a  class="nav-link"  matBadge="4" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="hidden" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
 			<div class="dropdown-menu logoutPopup">
 				<div class="user">
 				</div>
-			</div>	
-		</li>	
+			</div>
+		</li>
 		<li class="active dropdown">
 			<a  id="activId"  data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
 				<span *ngIf="user_status=='L'"><i class="fa fa-circle activeStatus" aria-hidden="true"></i>Logged In</span>
@@ -88,7 +86,7 @@
 			<a (click)="logout()" class="signOut">Sign Out</a>
 			<label class="or">Or</label>
 			<a class="handOver">Hand Over</a>
-			
+
 			</div>
 
 			</li>
