@@ -1023,7 +1023,6 @@ setStatus(vesselArray:any[]){
   else if(this.id_create == 'evacuation'){this.display_evacuation_status(0,vesselArray)}
   else if(this.id_create == 'events'){this.display_events_status(0,vesselArray)}
   else if(this.id_create == 'pob'){
-
     this.emergencyservice.global_service('0','/prob_board_dashboard','inc_id=' +this.get_incident_details[0].id).subscribe(data=>{
       this.get_prob_status.length=0;
       this.get_prob_status=data;
