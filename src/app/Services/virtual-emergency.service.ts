@@ -9,11 +9,11 @@ import { IncDetails } from '../Model/IncDetails';
   providedIn: 'root'
 })
 export class VirtualEmergencyService {
-  public _incDetails= new ReplaySubject<IncDetails>(1); 
+  public _incDetails= new ReplaySubject<IncDetails>(1);
   currentIncdents$ = this._incDetails.asObservable();
   private socket: Socket;
-  public url = 'http://192.168.1.244:3000'; 
-  // public url = 'https://vermapi.opentech4u.co.in';
+  // public url = 'http://192.168.1.244:3000';
+  public url = 'https://vermapi.opentech4u.co.in';
 
 
 
@@ -24,11 +24,11 @@ export class VirtualEmergencyService {
   // this.socket = io(this.url);
   this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
  }
- 
-  //For Adding new Offshore 
+
+  //For Adding new Offshore
   add_new_offshore(dt:any){
       return this.http.post(this.url+'/offshore',dt);
-   } 
+   }
    //For Getting Offshore details
    get_offshore(flag:any){
      return this.http.get(this.url+'/offshore?flag=' +flag);
@@ -37,11 +37,11 @@ export class VirtualEmergencyService {
    get_offshore_depend_on_id(Id:any){
      return this.http.get(this.url+'/offshore?id=' +Id)
    }
-  //For Adding new Incident 
+  //For Adding new Incident
   add_new_Incident(dt:any){
     return this.http.post(this.url+'/incident',dt);
- } 
- //For getting Incident 
+ }
+ //For getting Incident
  get_incident(){
   return this.http.get(this.url+'/incident');
 }
@@ -67,7 +67,7 @@ export class VirtualEmergencyService {
   //    return new Observable((observer)=>{
   //      this.socket.on('news',(news:Observable<any>)=>{
   //            observer.next(news);
-              
+
   //      })
   //    })
   //  }
@@ -78,7 +78,7 @@ export class VirtualEmergencyService {
       return new Observable((observer)=>{
         this.socket.on(eventname,(news:Observable<any>)=>{
               observer.next(news);
-              //  console.log(news);     
+              //  console.log(news);
         })
       })
     }
@@ -89,7 +89,7 @@ export class VirtualEmergencyService {
   //       this.socket.listen('oldMessage',(data:Observable<any>)=>{
   //         console.log(data)
   //         observer.next(data);
-             
+
   //       })
   //     })
   //   }
@@ -97,11 +97,11 @@ export class VirtualEmergencyService {
 
   //For Listening api for chats
    listen(eventname:any){
-    //  console.log(eventname);   
+    //  console.log(eventname);
     return new Observable((observer)=>{
       this.socket.on(eventname,(news:Observable<any>)=>{
             observer.next(news);
-             // console.log(news);     
+             // console.log(news);
       })
     })
    }
@@ -112,17 +112,17 @@ export class VirtualEmergencyService {
 
    joinRoom(data:any): void {
     //  console.log(data);
-     
+
     this.socket.emit('join', data);
   }
 
   newUserJoin(){
-  
+
       this.socket.on('newUserJoined', (data:any) => {
         // console.log(data);
-      
+
       })
-   
+
   }
 
   sendMessage(data:any): void {
@@ -152,6 +152,6 @@ export class VirtualEmergencyService {
 
 
   setcurrInc(_inc:IncDetails){return this._incDetails.next(_inc);}
- 
+
   }
 
