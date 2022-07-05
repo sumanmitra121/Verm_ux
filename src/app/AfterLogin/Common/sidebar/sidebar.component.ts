@@ -42,6 +42,9 @@ export class SidebarComponent implements OnInit,OnDestroy {
   this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
           this._obser  = from(data).subscribe((res:any) =>{
             this.emergencyservice.setcurrInc(res);
+            localStorage.setItem('Inc_name',res.inc_name);
+            localStorage.setItem('Inc_No',res.inc_no);
+            localStorage.setItem('Inc_id',res.id);
           })
 
 
