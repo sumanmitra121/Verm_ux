@@ -12,6 +12,7 @@ export class VirtualEmergencyService {
   public _incDetails= new ReplaySubject<IncDetails>(1);
   currentIncdents$ = this._incDetails.asObservable();
   private socket: Socket;
+
   // public url = 'http://192.168.1.244:3000';
   public url = 'https://vermapi.opentech4u.co.in';
 

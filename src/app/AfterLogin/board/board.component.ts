@@ -131,6 +131,8 @@ default_user:any=localStorage.getItem('Email');
   }, 1);
 
    this.emergencyservice.currentIncdents$.subscribe((res:any) =>{
+    console.log(res);
+    
      this.get_incident_details = res;
      console.log(res);
      this.act_Inc_id = res?.id;
@@ -560,28 +562,28 @@ deleteRow(index:any,_b_type:any,details:any) {
   const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
   dialogref.afterClosed().subscribe(dt=>{
       if(dt ==1){
-         console.log(index);
-        console.log({"vesselArray":this.vesselArray,"ActualDATA":this.get_in_status});
-        this.dynamicArray.splice(index, 1);
-        this.SetIncStatus(localStorage.getItem('Inc_id'))
+        //  console.log(index);
+        // console.log({"vesselArray":this.vesselArray,"ActualDATA":this.get_in_status});
+        // this.dynamicArray.splice(index, 1);
+        // this.SetIncStatus(localStorage.getItem('Inc_id'))
         // this.setStatus(index,_b_type);
-        //   this.emergencyservice.global_service('0','/delete_board','board_id='+_b_type+'&id='+details).subscribe(res=>{
-        //   console.log(res);
-        //   this.check_respond = res;
-        //   if(this.check_respond.suc > 0){
-        //     if(_b_type > 1){
-        //       this.vesselArray.splice(index, 1);
-        //       this.setStatus(this.vesselArray);
+          this.emergencyservice.global_service('0','/delete_board','board_id='+_b_type+'&id='+details).subscribe(res=>{
+          console.log(res);
+          this.check_respond = res;
+          if(this.check_respond.suc > 0){
+            if(_b_type > 1){
+              this.vesselArray.splice(index, 1);
+              this.setStatus(index,_b_type);
 
-        //     }
-        //     else{
-        //       this.dynamicArray.splice(index, 1);
-        //       this.SetIncStatus(localStorage.getItem('Inc_id'))
-        //     }
-        //     this.toastr.successToastr(this.check_respond.msg);
-        //   }
+            }
+            else{
+              this.dynamicArray.splice(index, 1);
+              this.SetIncStatus(localStorage.getItem('Inc_id'))
+            }
+            this.toastr.successToastr(this.check_respond.msg);
+          }
 
-        // })
+        })
       }
   })
 
@@ -726,7 +728,6 @@ setStatus(index:any,_b_type:any){
     case 6:this.get_evacuation_status.splice(index,1);break;
     case 7:this.get_events_status.splice(index,1);break;
     default:break;
-
   }
   console.log({"vesselArray":this.vesselArray,"ActualDATA":this.get_vessel_status});
 
@@ -747,8 +748,6 @@ SetIncStatus(_id:any){
           }
 
        })
-    // console.log(data);
-
   })
 }
 SetVesselStatus(_id:any){

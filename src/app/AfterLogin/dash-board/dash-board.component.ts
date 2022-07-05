@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subscription } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 
@@ -13,6 +13,10 @@ declare var $:any;
   styleUrls: ['./dash-board.component.css']
 })
 export class DashBoardComponent implements OnInit {
+  _casualty_observeable!:Subscription;
+  _evacuation_observeable!:Subscription;
+  _event_observable!:Subscription;
+
   headername:any='Dashboard';
   active_flag:any=localStorage.getItem('active_flag');
   icon:any='fa-tachometer';
@@ -106,9 +110,12 @@ getHelicopterStatus(_id:any){
 }
 getCasualtyStatus(_id:any){
  //For Showing Casualty Status
+    this.get_casualty_status.length=0;
       this.spinner.show('casualty_stats');
       this.emergencyservice.global_service('0','/casualty_board','inc_id=' +_id).pipe(map((x:any) => x.msg),take(2)).subscribe(res=>{
-       this.get_casualty_status = res;
+       this._casualty_observeable =  from(res).pipe(take(2)).subscribe(dt =>{
+        this.get_casualty_status.push(dt)
+       }) 
        this.spinner.hide('casualty_stats');
       },err =>{
         this.spinner.hide('casualty_stats');
@@ -116,15 +123,21 @@ getCasualtyStatus(_id:any){
 }
 getEvacuationStatus(_id:any){
   this.spinner.show('evacuations');
-  this.emergencyservice.global_service('0','/evacuation_board','inc_id=' +_id).pipe(map((x:any) => x.msg),take(2)).subscribe(res=>{
-    this.get_evacuation_status = res
+  this.get_evacuation_status.length = 0;
+  this.emergencyservice.global_service('0','/evacuation_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
+    this._evacuation_observeable =  from(res).pipe(take(2)).subscribe(dt =>{
+    this.get_evacuation_status.push(dt)
+     }) 
     this.spinner.hide('evacuations');
   },err => {this.spinner.hide('evacuations');})
 }
 getEventStatus(_id:any){
       this.spinner.show('events');
-      this.emergencyservice.global_service('0','/event_log_board','inc_id=' +_id).pipe(map((x:any) => x.msg),take(2)).subscribe(res=>{
-        this.get_events_status=res;
+      this.get_events_status.length=0;
+      this.emergencyservice.global_service('0','/event_log_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
+      this._event_observable = from(res).pipe(take(2)).subscribe(dt =>{
+        this.get_events_status.push(dt);
+      })
          this.spinner.hide('events');
       },error=>{this.spinner.hide('events')})
 
@@ -136,6 +149,8 @@ getProbStatus(_id:any){
 }
 ngOnDestroy(){
  this._observer.unsubscribe();
+ this._casualty_observeable.unsubscribe();
+ this._evacuation_observeable.unsubscribe();
 }
 
 }
