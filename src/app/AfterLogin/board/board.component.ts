@@ -127,13 +127,14 @@ default_user:any=localStorage.getItem('Email');
   prob_time:any;
   mode:any;
   constructor(public dialog: MatDialog,private datePipe:DatePipe,private emergencyservice:VirtualEmergencyService,private toastr:ToastrManager,private spinner:NgxSpinnerService) { setInterval(() => {
-   this.spinner.show()
+  //  this.spinner.show()
     this.now = new Date();
     $('#Time').val(this.datePipe.transform(this.now,'hh:mma'));
   }, 1);
 
    this.emergencyservice.currentIncdents$.subscribe((res:any) =>{
       ;
+      //.log(res)
      this.get_incident_details = res;
      this.act_Inc_id = res?.id;
      this.Inc_id=res?.inc_no;
@@ -417,11 +418,14 @@ default_user:any=localStorage.getItem('Email');
    this.id_create=flag;
    this.get_incident_details.length=0;
      if(this.id_create=='inc_create'){
+      console.log("inc_create");
+      
     //For Incident Status
         // this.get_incident_details_after_save.length=0;
         this.get_incident_details_after_save=this.get_in_status;
         //.log(this.get_incident_details);
-
+        console.log(this.get_in_status);
+        
         if(this.get_incident_details_after_save.length > 0){
           this.dynamicArray.length=0;
           this.newDynamic='';
@@ -807,14 +811,21 @@ setEventStatus(_id:any){
           if( this.get_events_status.length > 0){
             this.display_events_status(0,this.get_events_status);
           }
+         
+        })
+        // this.spinner.hide()
+        setTimeout(()=>{
           if('id_create' in localStorage){
+            //.log("SS");
+             console.log("openModal")
             this.id_create=localStorage.getItem('id_create');
             var modal='#'+this.id_create
             $(modal).click();
             localStorage.removeItem('id_create')
           }
-          this.spinner.hide()
-        })
+        },500)
+       
+
 }
 
 Post_notification(_pNotification:any){

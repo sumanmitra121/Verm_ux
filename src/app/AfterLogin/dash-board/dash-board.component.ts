@@ -49,7 +49,7 @@ export class DashBoardComponent implements OnInit,OnDestroy {
   _observer!:Subscription;
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
    this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-     console.log();
+     //.log();
 
      this.getIncStatus(res.id);
      this.getVesselStatus(res.id);
@@ -124,13 +124,13 @@ getCasualtyStatus(_id:any){
 getEvacuationStatus(_id:any){
   this.spinner.show('evacuations');
   this.emergencyservice.global_service('0','/evacuation_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
-    console.log(res);
+    //.log(res);
     this.get_evacuation_status.length = 0;
 
     this._evacuation_observeable =  from(res).pipe(take(2)).subscribe(dt =>{
-      console.log(dt)
+      //.log(dt)
     this.get_evacuation_status.push(dt)
-     console.log(this.get_evacuation_status)
+     //.log(this.get_evacuation_status)
 
      })
     this.spinner.hide('evacuations');
@@ -155,11 +155,11 @@ getProbStatus(_id:any){
       })
 }
 ngOnDestroy(){
-  console.log("destroy");
+  //.log("destroy");
  this._observer.unsubscribe();
- this._casualty_observeable.unsubscribe();
- this._evacuation_observeable.unsubscribe();
- console.log("SS");
+//  this._casualty_observeable.unsubscribe();
+//  this._evacuation_observeable.unsubscribe();
+ //.log("SS");
 
 
 }
