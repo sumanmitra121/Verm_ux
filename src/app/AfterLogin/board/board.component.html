@@ -6,23 +6,6 @@
 <app-sidebar class="sidebarMain"></app-sidebar>
 <div class="main-panel">
   <div class="content-wrapper">
-    <!-- <div class="row" *ngIf="get_incident_details!=''">
-      <div class="col-4">
-        <h3 class="text-dark"><strong>Incident Name: {{inc_name}}</strong></h3>
-      </div>
-      <div class="col-4">
-        <h3 class="text-dark"><strong>Location: {{Inc_location}}</strong></h3>
-
-      </div>
-      <div class="col-2">
-      <h3 class="text-dark"><strong>Initial tier:&nbsp;Tier1</strong></h3>
-      </div>
-      <div class="col-2">
-      <h3 class="text-dark"><strong>Days Elapsed:&nbsp;7</strong></h3>
-
-      </div>
-     </div> -->
-
     <div class="card whiteBoxComon_cardCus">
 
      <div class="card-body">
@@ -37,6 +20,8 @@
               <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
             </div>
             <div class="card_bodyCustom">
+             <!-- <h3 id="first-item"></h3> -->
+
               <ul class="listDashboard" *ngIf="get_in_status.length > 0">
                 <li><strong>Visibility:</strong> {{inc_visibility}}</li>
                 <li><strong>Sea State:</strong> {{inc_sea_state}}</li>
@@ -46,6 +31,13 @@
                 </li>
                 <li><strong>Wind Speed:</strong> {{wind_speed!='' ? wind_speed+'km/h' : 'N/A'}}</li>
               </ul>
+              <ng-container *ngIf="get_in_status.length == 0">
+                <ul class="boardStatus">
+									<li>
+										<h5 class="NoBoardStatusAvailable">No Incident Status Available</h5>
+									</li>
+								</ul>
+              </ng-container>
             </div>
           </div>
          </div>
@@ -64,13 +56,20 @@
                 <mat-list-item  ></mat-list-item>
 
              </mat-list> -->
-             <div *ngIf="get_vessel_status!=''">
+             <ng-container *ngIf="get_vessel_status.length > 0">
             <h3 id="first-item">{{this.ves_name}}</h3>
              <ul class="listDashboard">
               <li id="second-item" ><strong>From:</strong> {{this.form_at}}</li>
               <li id="third-item" ><strong>To:</strong > {{this.to_at}}</li>
             </ul>
-            </div>
+          </ng-container>
+          <ng-container *ngIf="get_vessel_status.length == 0">
+            <ul class="boardStatus">
+              <li>
+                <h5 class="NoBoardStatusAvailable">No Vessel Status Available</h5>
+              </li>
+            </ul>
+          </ng-container>
             </div>
         </div>
          </div>
@@ -81,20 +80,20 @@
               <h2 class="pull-left text-dark titleDashBox">Helicopter Status</h2>
             </div>
             <div class="card_bodyCustom">
-              <!-- <mat-list *ngIf="get_helicopter_status!=''">
-                <mat-list-item id="first-helicopter" class="text-center"><h2>{{call_sign}}</h2></mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item id="second-helicopter" ><b>From:</b>&nbsp;&nbsp;{{hel_from}}</mat-list-item>
-                <mat-list-item  id="third-helicopter" ><b>To:</b>&nbsp;&nbsp;{{hel_to}}</mat-list-item>
-                <mat-list-item  ></mat-list-item>
-              </mat-list> -->
-              <div *ngIf="get_helicopter_status!=''">
+              <ng-container *ngIf="get_helicopter_status.length > 0">
               <h3 id="first-helicopter">{{call_sign}}</h3>
              <ul class="listDashboard">
               <li id="second-helicopter" ><strong>From:</strong> {{hel_from}}</li>
               <li id="third-helicopter" ><strong>To:</strong > {{hel_to}}</li>
             </ul>
-            </div>
+            </ng-container>
+            <ng-container *ngIf="get_helicopter_status.length == 0">
+              <ul class="boardStatus">
+                <li>
+                  <h5 class="NoBoardStatusAvailable">No Helicopter Status Available</h5>
+                </li>
+              </ul>
+            </ng-container>
 
             </div>
           </div>
@@ -102,28 +101,25 @@
          <div class="col-3">
           <!-- POB status -->
           <div class="whiteBoxComon" type="button" id="pob" (click)="set_modal_for_create('pob')"  data-toggle="modal" data-target="#create_incident_modal">
-            <!-- <div class="card-header card_headerCustom">
-              <h2 class="pull-left text-dark titleDashBox"> Pob Status</h2>
-
-            </div>
-            <div class="card_bodyCustom">
-            <ngx-spinner bdColor = ""  name="pob" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Loading.... </p></ngx-spinner>
-            <div *ngIf="get_prob_status!=''">
-              <ul class="listDashboard">
-               <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
-             </ul>
-             </div>
-
-            </div> -->
             <div class="card-header card_headerCustom">
               <h2 class="pull-left text-dark titleDashBox">Pob Status</h2>
               <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
             </div>
-            <div class="card_bodyCustom" *ngIf="get_prob_status!=''">
+            <div class="card_bodyCustom" >
               <h3 id="first-item"></h3>
-              <ul class="listDashboard" >
-                <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
-              </ul>
+              <ng-container *ngIf="get_prob_status.length > 0">
+                <ul class="listDashboard" >
+                  <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
+                </ul>
+              </ng-container>
+              <ng-container *ngIf="get_prob_status.length == 0">
+                <ul class="boardStatus">
+                  <li>
+                    <h5 class="NoBoardStatusAvailable">No Pob Status Available</h5>
+                  </li>
+                </ul>
+              </ng-container>
+
             </div>
 
           </div>
@@ -140,25 +136,23 @@
 
           </div>
         <div class="card_bodyCustom">
-
-          <!-- <mat-list *ngIf="get_casualty_status!=''">
-            <mat-list-item id="full_name"><b>Total:</b>{{total}}</mat-list-item>
-            <mat-list-item id="location" ><b>Location:</b>{{Location}}</mat-list-item>
-            <mat-list-item  id="location" ><b>Lat:</b>{{this.lat}}</mat-list-item>
-            <mat-list-item  id="location" ><b>Long:</b>{{this.long}}</mat-list-item>
-         </mat-list> -->
-
-         <div *ngIf="get_casualty_status!=''">
         <h3 id="first-item"></h3>
 
+         <ng-container *ngIf="get_casualty_status.length > 0">
          <ul class="listDashboard">
           <li id="full_name"><strong>Total:</strong> {{total}}</li>
           <li id="location" ><strong>Location:</strong> {{Location}}</li>
           <li id="location" ><strong>Lat:</strong> {{this.lat}}</li>
           <li id="location" ><strong>Long:</strong> {{this.long}}</li>
         </ul>
-        </div>
-
+        </ng-container>
+        <ng-container *ngIf="get_casualty_status.length == 0">
+          <ul class="boardStatus">
+            <li>
+              <h5 class="NoBoardStatusAvailable">No Casualty Status Available</h5>
+            </li>
+          </ul>
+        </ng-container>
         </div>
       </div>
          </div>
@@ -169,22 +163,21 @@
         <h2 class="pull-left text-dark titleDashBox">Evacuation Status</h2>
       </div>
       <div class="card_bodyCustom">
-        <ngx-spinner bdColor = ""  name="evacuation" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner>
-        <!-- <mat-list *ngIf="get_evacuation_status!=''">
-          <mat-list-item id="first-evacuation"><b>Transport:</b>{{transport_mode}}</mat-list-item>
-          <mat-list-item id="second-evacuation" ><b>Time:</b>{{evacuation_time}}</mat-list-item>
-          <mat-list-item  id="third-evacuation" ></mat-list-item>
-       </mat-list> -->
-
-       <div *ngIf="get_evacuation_status!=''">
         <h3 _ngcontent-alt-c211="" id="first-item"></h3>
+        <ngx-spinner bdColor = ""  name="evacuation" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner>
+        <ng-container *ngIf="get_evacuation_status.length > 0">
         <ul class="listDashboard">
          <li id="first-evacuation"><strong>Transport:</strong> {{transport_mode}}</li>
          <li id="second-evacuation"><strong>Time:</strong> {{evacuation_time}}</li>
        </ul>
-       </div>
-
-
+       </ng-container>
+       <ng-container *ngIf="get_evacuation_status.length == 0">
+        <ul class="boardStatus">
+          <li>
+            <h5 class="NoBoardStatusAvailable">No Evacuation Status Available</h5>
+          </li>
+        </ul>
+      </ng-container>
       </div>
     </div>
          </div>
@@ -196,27 +189,22 @@
 
           </div>
           <div class="card_bodyCustom">
-            <!-- <ngx-spinner bdColor = "" name="events" size = "default" color = "black" type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner> -->
-        <!-- <mat-progress-spinner mode="indeterminate" diameter='30' strokeWidth='10' [hidden]="event_logs"></mat-progress-spinner> -->
-            <!-- <mat-list id="eventsloglist" *ngIf="get_events_status!=''">
-              <mat-list-item id="first-eventslog" ></mat-list-item>
-              <mat-list-item id="second-eventslog" class='mt-2'></mat-list-item>
-              <mat-list-item  id="third-eventslog" ></mat-list-item>
-           </mat-list> -->
-           <div id="eventsloglist" *ngIf="get_events_status!=''">
-            <h3 _ngcontent-alt-c211="" id="first-item"></h3>
+           <h3 id="first-item"></h3>
+           <ng-container id="eventsloglist" *ngIf="get_events_status.length > 0">
             <mat-spinner [hidden]="event_logs" class='mx-auto' diameter="30"></mat-spinner>
             <ul class="listDashboard">
-             <!-- <li id="first-eventslog"></li>
-             <li id="second-eventslog"></li>
-             <li id="third-eventslog"></li> -->
              <li><strong>Resource Assigned: </strong> {{resource_assigned}}</li>
              <li><strong>Time: </strong> {{event_time}}</li>
              <li><strong>Situation Status: </strong> {{situation_status}}</li>
-
-
            </ul>
-           </div>
+           </ng-container>
+           <ng-container *ngIf="get_events_status.length == 0">
+            <ul class="boardStatus">
+              <li>
+                <h5 class="NoBoardStatusAvailable">No Event Status Available</h5>
+              </li>
+            </ul>
+          </ng-container>
 
 
           </div>
@@ -314,7 +302,7 @@
                 </div>
          </div>
 
-         <table class="table" style="margin-top:10px" width="100%">
+         <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
                   <thead>
                       <tr>
                           <th class="text-center">Time</th>
@@ -343,7 +331,7 @@
                             <input [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                           </td>
                           <td>
-                            <input [(ngModel)]="dynamicArray[i].wind_speed" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <input [(ngModel)]="dynamicArray[i].wind_speed" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required maxlength="3" (keypress)="PreventNonNumeric($event)">
                           </td>
                           <td>
                             <input [(ngModel)]="dynamicArray[i].wind_direc" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
@@ -380,7 +368,7 @@
 
               </div>
             </div>
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">Name</th>
@@ -441,7 +429,7 @@
 
               </div>
             </div>
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">Call Sign</th>
@@ -498,7 +486,7 @@
 
               </div>
             </div>
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <!-- <th class="text-center">Date</th> -->
@@ -528,7 +516,7 @@
                         <!-- <div *ngIf="vesselArray[i].Time==''"> <p class="text-danger">Please Provide Time</p></div> -->
                       </td>
                       <td>
-                        <input type="number" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
+                        <input type="text" (keypress)="PreventNonNumeric($event)" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
                       </td>
 
 
@@ -554,7 +542,7 @@
             </div>
             <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
 
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">FULL NAME</th>
@@ -585,7 +573,7 @@
                       <td>
                         <select [(ngModel)]="vesselArray[i].location" class="form-control" [ngModelOptions]="{standalone: true}" required>
                           <option value="">Select</option>
-                          <option *ngFor="let location of offshore_list" value="{{location.id}}">{{location.offshore_name}}</option>
+                          <option *ngFor="let location of offshore_list" value="{{location.id}}" [selected]="vesselArray[i].location == location.id">{{location.offshore_name}}</option>
 
                         </select>
                         <!-- <input [(ngModel)]="vesselArray[i].location" class="form-control" type="time" [ngModelOptions]="{standalone: true}"/> -->
@@ -617,7 +605,7 @@
             </div>
             <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
 
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">TIME</th>
@@ -647,7 +635,7 @@
                         <input [(ngModel)]="vesselArray[i].mode_of_transport" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].pob_remaining" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input (keypress)="PreventNonNumeric($event)"  [(ngModel)]="vesselArray[i].pob_remaining" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
                         <textarea [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
@@ -675,7 +663,7 @@
               </div>
               <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
 
-              <table class="table" style="margin-top:10px" width="100%">
+              <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
                 <thead>
                     <tr>
                         <th class="text-center">TIME</th>
@@ -691,7 +679,7 @@
                         <td> <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly size="5"/></td>
                         <td><textarea [(ngModel)]="vesselArray[i].situation_status"  class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
                         </td>
-                        <td><input [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
+                        <td><input (keypress)="PreventNonNumeric($event)" [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
                         <td  class="text-center">
                           <a class="customIcon" type="button"
                         #tooltip="matTooltip"

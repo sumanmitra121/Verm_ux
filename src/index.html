@@ -13,7 +13,7 @@
    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> -->
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">	
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/apps.css">
   <link rel="stylesheet" type="text/css" href="/assets/css/apps_inner.css">
@@ -42,74 +42,74 @@
 <body class="mat-typography" id="body">
   <app-root></app-root>
   <script src="assets/js/table2excel.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="/assets/js/main_javascript.js"></script>
-<script src="/assets/js/main_jquery.js"></script>
+<script src="/assets/js/main_jquery.js"></script> -->
 
 <!-- For Google Recaptcha -->
 <script>
 
-var importmultiplesheet = (function() 
-{
-    var uri = 'data:application/vnd.ms-excel;base64,'
-    , tmplWorkbookXML = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
-      + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"><Author>Axel Richter</Author><Created>{created}</Created></DocumentProperties>'
-      + '<Styles>'
-      + '<Style ss:ID="Currency"><NumberFormat ss:Format="Currency"></NumberFormat></Style>'
-      + '<Style ss:ID="Date"><NumberFormat ss:Format="Medium Date"></NumberFormat></Style>'
-      + '</Styles>' 
-      + '{worksheets}</Workbook>'
-    , tmplWorksheetXML = '<Worksheet ss:Name="{nameWS}"><Table>{rows}</Table></Worksheet>'
-    , tmplCellXML = '<Cell{attributeStyleID}{attributeFormula}><Data ss:Type="{nameType}">{data}</Data></Cell>'
-    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-	return function(tables, wsnames, wbname, appname)
-	{
-		var ctx 			= "";
-		var workbookXML 	= "";
-		var worksheetsXML 	= "";
-		var rowsXML 		= "";
+// var importmultiplesheet = (function()
+// {
+//     var uri = 'data:application/vnd.ms-excel;base64,'
+//     , tmplWorkbookXML = '<?xml version="1.0"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+//       + '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office"><Author>Axel Richter</Author><Created>{created}</Created></DocumentProperties>'
+//       + '<Styles>'
+//       + '<Style ss:ID="Currency"><NumberFormat ss:Format="Currency"></NumberFormat></Style>'
+//       + '<Style ss:ID="Date"><NumberFormat ss:Format="Medium Date"></NumberFormat></Style>'
+//       + '</Styles>'
+//       + '{worksheets}</Workbook>'
+//     , tmplWorksheetXML = '<Worksheet ss:Name="{nameWS}"><Table>{rows}</Table></Worksheet>'
+//     , tmplCellXML = '<Cell{attributeStyleID}{attributeFormula}><Data ss:Type="{nameType}">{data}</Data></Cell>'
+//     , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+//     , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+// 	return function(tables, wsnames, wbname, appname)
+// 	{
+// 		var ctx 			= "";
+// 		var workbookXML 	= "";
+// 		var worksheetsXML 	= "";
+// 		var rowsXML 		= "";
 
-	for (var i = 0; i < tables.length; i++)
-	{
-    	if (!tables[i].nodeType) tables[i] = document.getElementById(tables[i]);
-			for (var j = 0; j < tables[i].rows.length; j++)
-			{
-          		rowsXML += '<Row>'
-				for (var k = 0; k < tables[i].rows[j].cells.length; k++)
-				{
-					var dataType = tables[i].rows[j].cells[k].getAttribute("data-type");
-					var dataStyle = tables[i].rows[j].cells[k].getAttribute("data-style");
-					var dataValue = tables[i].rows[j].cells[k].getAttribute("data-value");
-					dataValue = (dataValue)?dataValue:tables[i].rows[j].cells[k].innerHTML;
-					var dataFormula = tables[i].rows[j].cells[k].getAttribute("data-formula");
-					dataFormula = (dataFormula)?dataFormula:(appname=='Calc' && dataType=='DateTime')?dataValue:null;
-					ctx = {  attributeStyleID: (dataStyle=='Currency' || dataStyle=='Date')?' ss:StyleID="'+dataStyle+'"':''
-					, nameType: (dataType=='Number' || dataType=='DateTime' || dataType=='Boolean' || dataType=='Error')?dataType:'String'
-					, data: (dataFormula)?'':dataValue
-					, attributeFormula: (dataFormula)?' ss:Formula="'+dataFormula+'"':''
-                };
-            	rowsXML += format(tmplCellXML, ctx);
-  			}
-          		rowsXML += '</Row>'
-        }
-        ctx = {rows: rowsXML, nameWS: wsnames[i] || 'Sheet' + i};
-        worksheetsXML += format(tmplWorksheetXML, ctx);
-        rowsXML = "";
-    }
+// 	for (var i = 0; i < tables.length; i++)
+// 	{
+//     	if (!tables[i].nodeType) tables[i] = document.getElementById(tables[i]);
+// 			for (var j = 0; j < tables[i].rows.length; j++)
+// 			{
+//           		rowsXML += '<Row>'
+// 				for (var k = 0; k < tables[i].rows[j].cells.length; k++)
+// 				{
+// 					var dataType = tables[i].rows[j].cells[k].getAttribute("data-type");
+// 					var dataStyle = tables[i].rows[j].cells[k].getAttribute("data-style");
+// 					var dataValue = tables[i].rows[j].cells[k].getAttribute("data-value");
+// 					dataValue = (dataValue)?dataValue:tables[i].rows[j].cells[k].innerHTML;
+// 					var dataFormula = tables[i].rows[j].cells[k].getAttribute("data-formula");
+// 					dataFormula = (dataFormula)?dataFormula:(appname=='Calc' && dataType=='DateTime')?dataValue:null;
+// 					ctx = {  attributeStyleID: (dataStyle=='Currency' || dataStyle=='Date')?' ss:StyleID="'+dataStyle+'"':''
+// 					, nameType: (dataType=='Number' || dataType=='DateTime' || dataType=='Boolean' || dataType=='Error')?dataType:'String'
+// 					, data: (dataFormula)?'':dataValue
+// 					, attributeFormula: (dataFormula)?' ss:Formula="'+dataFormula+'"':''
+//                 };
+//             	rowsXML += format(tmplCellXML, ctx);
+//   			}
+//           		rowsXML += '</Row>'
+//         }
+//         ctx = {rows: rowsXML, nameWS: wsnames[i] || 'Sheet' + i};
+//         worksheetsXML += format(tmplWorksheetXML, ctx);
+//         rowsXML = "";
+//     }
 
-		ctx = {created: (new Date()).getTime(), worksheets: worksheetsXML};
-		workbookXML = format(tmplWorkbookXML, ctx);
-		console.log(workbookXML);
-		var link = document.createElement("A");
-		link.href = uri + base64(workbookXML);
-		link.download = wbname || 'Workbook.xls';
-		link.target = '_blank';
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-    }
-})();
+// 		ctx = {created: (new Date()).getTime(), worksheets: worksheetsXML};
+// 		workbookXML = format(tmplWorkbookXML, ctx);
+// 		console.log(workbookXML);
+// 		var link = document.createElement("A");
+// 		link.href = uri + base64(workbookXML);
+// 		link.download = wbname || 'Workbook.xls';
+// 		link.target = '_blank';
+// 		document.body.appendChild(link);
+// 		link.click();
+// 		document.body.removeChild(link);
+//     }
+// })();
 </script>
 <!-- For Captcha -->
 <!-- <script>
@@ -138,9 +138,9 @@ var importmultiplesheet = (function()
   };
 </script> -->
 <!-- End -->
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+<!-- <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
     async defer>
-</script>
+</script> -->
 
 
 <!-- End -->

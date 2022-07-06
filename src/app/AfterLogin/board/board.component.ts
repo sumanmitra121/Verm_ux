@@ -12,6 +12,7 @@ import { map, take, takeWhile } from 'rxjs/operators';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
+import { validations } from 'src/app/utilitY/validation';
 // import { saveAs } from 'file-saver';
 declare var $:any;
 export class DynamicGrid{
@@ -155,23 +156,7 @@ default_user:any=localStorage.getItem('Email');
     }
 
   ngOnInit(): void {
-    //.log(this.get_incident_details);
-
-    //after clicking on particular board item from dashboard,route on this page and open the particular modal of clicked item.
-
     this.getOffShoreLocation();
-    // setTimeout(() => {
-     //.log(this.get_incident_details?.id)
-
-
-    // }, 2000);
-    ////////////////End///////////////////
-
-
-  }
-  ngAfterViewInit(){
-
-
   }
   submit(v:Form){
     var counter=0;
@@ -234,7 +219,6 @@ default_user:any=localStorage.getItem('Email');
                 this.SetVesselStatus(localStorage.getItem('Inc_id'));
                 this.get_incident_details_after_save=this.get_vessel_status;
                 this.toastr.successToastr('Submitted SuccessFully','');
-
             }
             else{
               this.toastr.errorToastr('Failed to submit','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:5000})
@@ -292,7 +276,6 @@ default_user:any=localStorage.getItem('Email');
         this.emergencyservice.global_service('1','/casualty_board',dt3).subscribe(data=>{
            this.check_respond=data;
           if(this.check_respond.suc==1){
-
                   if(this.get_incident_details_after_save.length==this.vesselArray.length){this.mode='updated casualty board';}
                   else{this.mode='added casualty board';}
                   var post_notification=global_url_test.getboardStatus(localStorage.getItem('Email'),'BC',this.mode,this.datePipe.transform(new Date(),'dd/MM/YYYY hh:mma'))
@@ -302,6 +285,7 @@ default_user:any=localStorage.getItem('Email');
                   this.setCasualtyStatus(this.act_Inc_id);
                   this.get_incident_details_after_save=this.get_casualty_status;
                   this.toastr.successToastr('Submitted Successfully','');
+
           }
           else{
              this.toastr.errorToastr('Failed to submit','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:5000})
@@ -419,13 +403,13 @@ default_user:any=localStorage.getItem('Email');
    this.get_incident_details.length=0;
      if(this.id_create=='inc_create'){
       console.log("inc_create");
-      
+
     //For Incident Status
         // this.get_incident_details_after_save.length=0;
         this.get_incident_details_after_save=this.get_in_status;
         //.log(this.get_incident_details);
         console.log(this.get_in_status);
-        
+
         if(this.get_incident_details_after_save.length > 0){
           this.dynamicArray.length=0;
           this.newDynamic='';
@@ -483,7 +467,7 @@ default_user:any=localStorage.getItem('Email');
     this.LogForm.form.patchValue({
         "inc_id":  localStorage.getItem('Inc_id')
       })
-        this.getOffShoreLocation();
+        // this.getOffShoreLocation();
         this.getCasualtyStatus(localStorage.getItem('Inc_id'));
     }
     else if(this.id_create=='evacuation'){
@@ -560,6 +544,7 @@ default_user:any=localStorage.getItem('Email');
     }
   }
 deleteRow(index:any,_b_type:any,details:any) {
+  console.log({"Index":index,"_b_type":_b_type,'details':details});
   const disalogConfig=new MatDialogConfig();
   disalogConfig.disableClose=false;
   disalogConfig.autoFocus=true;
@@ -568,22 +553,32 @@ deleteRow(index:any,_b_type:any,details:any) {
   const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
   dialogref.afterClosed().subscribe(dt=>{
       if(dt ==1){
-          this.emergencyservice.global_service('0','/delete_board','board_id='+_b_type+'&id='+details).subscribe(res=>{
-          this.check_respond = res;
-          if(this.check_respond.suc > 0){
-            if(_b_type > 1){
-              this.vesselArray.splice(index, 1);
-              this.setStatus(index,_b_type);
-            }
-            else{
-              this.dynamicArray.splice(index, 1);
-              this.SetIncStatus(localStorage.getItem('Inc_id'))
-            }
-            this.toastr.successToastr(this.check_respond.msg);
-          }
+        console.log(this.vesselArray);
 
-        })
+        if(details != '0'){
+          this.emergencyservice.global_service('0','/delete_board','board_id='+_b_type+'&id='+details).subscribe(res=>{
+            this.check_respond = res;
+            if(this.check_respond.suc > 0){
+              if(_b_type > 1){
+                this.vesselArray.splice(index, 1);
+                this.setStatus(index,_b_type);
+              }
+              else{
+                this.dynamicArray.splice(index, 1);
+                this.SetIncStatus(localStorage.getItem('Inc_id'))
+              }
+              this.toastr.successToastr(this.check_respond.msg);
+            }
+
+          })
+        }
+        else{
+          console.log('SS');
+           _b_type > 1 ?  this.vesselArray.splice(index, 1) : this.dynamicArray.splice(index, 1);
+        }
+
       }
+
   })
 
 }
@@ -634,9 +629,12 @@ display_vessel_status(i:any,data1:any){
 if(i>=data1.length){
      i=0;
     }
-    this.ves_name=data1[i].vessel_name;
-    this.form_at=data1[i].form_at+" ("+data1[i].etd+")";
-    this.to_at=data1[i].to_at+" ("+data1[i].eta+")";
+    if(data1!=''){
+      this.ves_name=data1[i].vessel_name;
+      this.form_at=data1[i].form_at+" ("+data1[i].etd+")";
+      this.to_at=data1[i].to_at+" ("+data1[i].eta+")";
+    }
+
   this.vessel_status = setTimeout(()=>{
    i=i+1;
    if(!this.alive){return;}
@@ -649,9 +647,12 @@ display_helicopter_status(j:any,data:any){
   if(j>=data.length){
     j=0;
   }
+  if(data!=''){
+
     this.call_sign=data[j].call_sign;
     this.hel_from=data[j].form_at+" ("+data[j].etd+")";
     this.hel_to=data[j].to_at+" ("+data[j].eta+")";
+  }
   this.helicopter_status = setTimeout(()=>{
    j=j+1;
    if(!this.alive){return;}
@@ -663,8 +664,11 @@ display_evacuation_status(j:any,data:any){
 if(j>=data.length){
     j=0;
   }
+  if(data!=''){
     this.evacuation_time=data[j].time;
     this.transport_mode=data[j].mode_of_transport;
+  }
+
  this.evacuation_status =  setTimeout(()=>{
    j=j+1;
    if(!this.alive){return;}
@@ -678,9 +682,11 @@ display_events_status(j:any,data:any){
   if(j>=data.length){
     j=0;
   }
+  if(data!=''){
     this.resource_assigned=data[j].resource_assigned;
-     this.event_time=data[j].time;
-     this.situation_status=data[j].situation_status;
+    this.event_time=data[j].time;
+    this.situation_status=data[j].situation_status;
+  }
    this.events_status =  setTimeout(()=>{
     j=j+1;
     if(!this.alive){return;}
@@ -693,10 +699,12 @@ display_casualty_status(j:any,data:any){
   if(j>=data.length){
     j=0;
   }
+  if(data!=''){
     this.total=data[j].tot_cas;
     this.Location=data[j].offshore_name;
     this.lat=data[j].latt;
     this.long=data[j].lon;
+  }
    this.casualy_status =  setTimeout(()=>{
    j=j+1;
    if(!this.alive){return;}
@@ -714,7 +722,6 @@ ngOnDestroy(){
 }
 setStatus(index:any,_b_type:any){
   //.log({"Index":index,"Type":_b_type});
-
   switch(_b_type){
     case 2:this.get_vessel_status.splice(index,1);break;
     case 3:this.get_helicopter_status.splice(index,1);break;
@@ -811,7 +818,7 @@ setEventStatus(_id:any){
           if( this.get_events_status.length > 0){
             this.display_events_status(0,this.get_events_status);
           }
-         
+
         })
         // this.spinner.hide()
         setTimeout(()=>{
@@ -824,7 +831,7 @@ setEventStatus(_id:any){
             localStorage.removeItem('id_create')
           }
         },500)
-       
+
 
 }
 
@@ -844,6 +851,7 @@ getOffShoreLocation(){
 getCasualtyStatus(_id:any){
   this.emergencyservice.global_service('0','/casualty_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(data=>{
     ;
+
     this.vesselArray.length=0;
     this.get_incident_details_after_save=data;
     if(this.get_incident_details_after_save.length > 0){
@@ -853,6 +861,7 @@ getCasualtyStatus(_id:any){
        this.vesselDynamic = {id:this.get_incident_details_after_save[i].id,full_name:this.get_incident_details_after_save[i].full_name,employer:this.get_incident_details_after_save[i].employer,condition:this.get_incident_details_after_save[i].emp_condition,location:this.get_incident_details_after_save[i].location,time:this.get_incident_details_after_save[i].time};
       this.vesselArray.push(this.vesselDynamic);
     }
+
   }
   else{
      this.vesselDynamic =  {id:"0",full_name:"",employer:"",condition:"",location:"",time:""};
@@ -887,5 +896,11 @@ setFormvalue(){
       "status":this.get_in_status.length > 0 ?this.get_in_status[0]?.status : ""
     })
   },500);
+  console.log(this.get_in_status);
+
+}
+//For Non Numeric Validations
+PreventNonNumeric(_event:any){
+   validations._preventnonNumeric(_event)
 }
 }

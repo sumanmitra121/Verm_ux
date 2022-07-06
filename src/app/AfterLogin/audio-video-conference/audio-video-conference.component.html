@@ -10,29 +10,10 @@
               <h2>Audio / Video Conferencing</h2>
              </div>
              <hr />
-             <!-- <div id="meetingSDKElement">
-           
-             </div> -->
-             <!-- <div class="row">
-                 <div class="col-6">
-                      <button class="btn btn-light" data-toggle="modal" data-target="#host_modal" (click)="host('1')">Host A Meeting</button>
-                    <button class="btn btn-light" data-toggle="modal" data-target="#join_modal" (click)="host('0')">Join Meeting</button>
-
-                 </div>
-             </div> -->
-
-             <!-- For Jitsi -->
-             <!-- <div class="row mb-2">
-                 <div class="col-4">
-                    <input type="text" class="form-control" #join_room>
-                 </div>
-                 <div class="col-3"><button class="btn btn-light" (click)="join_video(join_room.value)">Join</button>
-                 <button class="btn btn-light" (click)="Host_video()">Host</button></div>
-             </div> -->
              <ngx-spinner bdColor = "" size = "medium" color = "black" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: rgb(0, 0, 0)" > Loading... </p></ngx-spinner>
              <div id="jist-iframe"></div>
              <div id="jist-iframe_join"></div>
-               
+
              <div class="row mt-5">
               <div class="col-3"></div>
               <div class="col-3"  style="cursor:poiner">
@@ -61,7 +42,7 @@
                  <div class="file-man-title">
                    <p>Join Meeting</p>
                  </div>
-             </div> -->     
+             </div> -->
              <div class="whiteBox2"  #Tooltip="matTooltip" matTooltip="Join meeting"  data-toggle="modal" data-target="#join_modal" style="cursor: pointer;">
               <ul class="watherRepoort">
                 <li><img src="assets/images/join_video.png"  height="70px" width="70px"></li>
@@ -71,11 +52,11 @@
             </div>
               <div class="col-3"></div>
             </div>
-       
-       
+
+
           </div>
         </div>
-    </div> 
+    </div>
 </div>
 </div>
 
@@ -85,7 +66,7 @@
   <div class="modal fade" id="join_modal">
     <div class="modal-dialog  modal-dialog-centered">
       <div class="modal-content">
-      
+
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Join Meeting</h4>
@@ -96,7 +77,7 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-12">
-    
+
                     <!-- <label>User Name</label> -->
                     <!-- <input type="text" name="meet_url" id="meet_url" #meet_url="ngModel" ngModel > -->
                     <mat-form-field class="example-full-width" appearance="outline">
@@ -108,24 +89,21 @@
                     </mat-form-field>
                 </div>
                 <div class="col-12 mt-2">
-                  <!-- <label>Name</label> -->
-                    <!-- <label>Name.</label>
-                    <input type="text" name="meet_no" id="meetNo" #meet_no="ngModel" ngModel class="form-control"> -->
                     <mat-form-field class="example-full-width" appearance="outline">
                       <mat-label>Name</mat-label>
-                      <input type="text" matInput  name="user_name" id="user_name" #user_name="ngModel" ngModel>
+                      <input type="text"  matInput  name="user_name" id="user_name" #user_name="ngModel" ngModel>
                     </mat-form-field>
                 </div>
             </div>
         </div>
-        
+
         <!-- Modal footer -->
         <div class="modal-footer">
-          <div class="btnSubmitSec"> 
+          <div class="btnSubmitSec">
           <input type="submit" class="btn btn-info" value="Join" [disabled]="logForm.invalid">
           </div>
         </div>
-     </form> 
+     </form>
       </div>
     </div>
   </div>
