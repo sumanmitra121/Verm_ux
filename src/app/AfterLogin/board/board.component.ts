@@ -150,7 +150,6 @@ default_user:any=localStorage.getItem('Email');
       this.setCasualtyStatus( res?.id);
       this.setEvacuationStatus( res?.id);
       this.setEventStatus( res?.id);
-
    })
 
     }

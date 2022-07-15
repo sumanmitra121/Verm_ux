@@ -1,6 +1,11 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
 	<div class="text-left navbar-brand-wrapper d-flex logo">
-        <img src="assets/images/logoWhit.png" alt=""/>
+          <img src="assets/images/logoWhit.png" alt=""/>
+
+		   <!-- Changes Need to be removed-->
+		   <small style="margin: auto;
+		   "><strong>{{_date}}</strong></small>
+		   <!--End  -->
 
     </div>
 	<div class="navbar-menu-wrapper d-flex align-items-center">
@@ -95,7 +100,104 @@
 
 		<!-- Modal body -->
 		<div class="modal-body">
-		<div class="container">
+			<mat-tab-group mat-stretch-tabs dynamicHeight >
+				<mat-tab label="Profile" >
+				  <div class="example-large-box">
+					<form #logForm="ngForm" (ngSubmit)="Submit(logForm.value)">
+						<div class="row mt-3">
+							<div class="col-6">
+								<input type="hidden" name="user" [(ngModel)]="Email" class="form-control">
+								<input type="hidden" name="emp_id" [(ngModel)]="Emp_id" class="form-control">
+								<label>Name</label>
+								 <input type="text" name="emp_name" id="Name" #emp_name="ngModel" ngModel required class="form-control">
+								 <div *ngIf="emp_name.errors?.required && (emp_name.touched || emp_name.dirty)" class="text-danger">
+									<small>*Please provide Name</small>
+								  </div>
+							</div>
+							<div class="col-6">
+								<label>Email</label>
+								 <input type="email" name="email" id="email" #email="ngModel" ngModel  class="form-control" readonly>
+
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-6">
+								<label>Contact No.(Personal)</label>
+								 <input type="text" maxlength="10" minlength="10" name="per_cnct_no" id="Per_cnct_no" #per_cnct_no="ngModel" required ngModel class="form-control" (keypress)="PreventNonNumeric($event)">
+								 <div *ngIf="per_cnct_no.errors?.required && (per_cnct_no.touched || per_cnct_no.dirty)" class="text-danger">
+									<small>*Please provide personal contact no</small>
+								  </div>
+							</div>
+							<div class="col-6">
+								<label>Contact No.(ER)</label>
+								 <input type="text" maxlength="10" minlength="10" name="er_cnct_no" id="Er_cnct_no" #er_cnct_no="ngModel" ngModel  class="form-control" (keypress)="PreventNonNumeric($event)">
+
+							</div>
+						</div>
+
+						<div class="row mt-3">
+							<div class="col-6">
+								<label>User Type</label>
+								 <input type="text" name="user_type" id="user_type" #user_type="ngModel" ngModel class="form-control" readonly>
+
+							</div>
+
+						</div>
+						<div class="btnSubmitSec mt-4 mb-3 float-right">
+							<input type="submit" value="Save" class="btn btn-info" [disabled]="logForm.invalid">
+
+						</div>
+					</form>
+				  </div>
+				</mat-tab>
+				<mat-tab label="Change Password" >
+				  <div class="example-large-box">
+					<form #LogForm="ngForm" (ngSubmit)="Submit_password(LogForm.value)">
+						<div class="row mb-2">
+
+							<div class="col-6 ">
+			                   <input type="hidden" name="user" [(ngModel)]="Email" class="form-control">
+			                   <input type="hidden" name="emp_id" [(ngModel)]="Emp_id" class="form-control">
+
+								<label>Old Password</label>
+								<input  type="password"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
+								<i class="toggle-password fa fa-eye-slash" style="cursor:pointer"></i>
+								<div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger">
+									<small>*Please provide old password</small>
+								  </div>
+							</div>
+							<div class="col-6"></div>
+							<div class="col-6 mt-3">
+								<label>New Password</label>
+								<input  type="password" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
+								<i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer"></i>
+
+								<div *ngIf="pass.errors?.required && (pass.touched || pass.dirty)" class="text-danger">
+									<small>*Please provide new password</small>
+								  </div>
+							</div>
+							<div class="col-6"></div>
+							<div class="col-6 mt-3">
+								<label>Confirm Password</label>
+								<input  type="password" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
+								<i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer"></i>
+								<div *ngIf="conf_pass.errors?.required && (conf_pass.touched || conf_pass.dirty)" class="text-danger">
+									<small>*Please provide confirm password</small>
+								  </div>
+							</div>
+						</div>
+						<div class="btnSubmitSec mt-4 mb-3 float-right">
+							<input type="submit" value="Save" class="btn btn-info"  [disabled]="LogForm.invalid">
+							<input type="RESET" value="RESET" class="btn btn-light">
+
+						</div>
+					 </form>
+				  </div>
+				</mat-tab>
+			  </mat-tab-group>
+
+		
+		<!-- <div class="container">
 			<div class="row">
 			  <div class="col-12 ">
 				<nav>
@@ -105,7 +207,6 @@
 
 				  </div>
 				</nav>
-				<!-- <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent"> -->
 				<div class="tab-content py-3 px-3" id="nav-tabContent">
 				  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 					<form #logForm="ngForm" (ngSubmit)="Submit(logForm.value)">
@@ -150,7 +251,6 @@
 						</div>
 						<div class="btnSubmitSec mt-4 mb-3 float-right">
 							<input type="submit" value="Save" class="btn btn-info" [disabled]="logForm.invalid">
-							<!-- <input type="RESET" value="RESET" class="btn btn-light"> -->
 
 						</div>
 					</form>
@@ -158,8 +258,6 @@
 				  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 					<form #LogForm="ngForm" (ngSubmit)="Submit_password(LogForm.value)">
 						<div class="row mb-2">
-							<!-- <input type="hidden" name="user" [(ngModel)]="user" class="form-control">
-							<input type="hidden" name="emp_id" [(ngModel)]="Emp_id" class="form-control"> -->
 
 							<div class="col-6">
 			                   <input type="hidden" name="user" [(ngModel)]="Email" class="form-control">
@@ -204,7 +302,7 @@
 
 			  </div>
 			</div>
-		</div>
+		</div> -->
 		</div>
 		</div>
 	</div>

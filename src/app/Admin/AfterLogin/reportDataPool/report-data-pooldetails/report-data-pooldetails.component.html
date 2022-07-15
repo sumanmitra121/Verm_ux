@@ -31,12 +31,15 @@
                 <div *ngIf="to_date.errors?.required && (to_date.touched || to_date.dirty)" class="text-danger">
                     *Please Provide End Date
                   </div>
-
              </div>
-             <div class="col-3" *ngIf="Inc_type=='C' || Inc_type=='L' || Inc_type=='CL'">
+
+             <!-- <div class="col-3" *ngIf="Inc_type=='C' || Inc_type=='L' || Inc_type=='CL'"> -->
+             <div class="col-3" >
+
              <label>Incident Name</label>
              <select class="form-control" name="inc_name" #inc_name="ngModel" ngModel required>
                  <option value="">Select</option>
+                 <option value="0"  *ngIf="Inc_type=='I' || Inc_type=='A'">--All--</option>
                  <option value="{{inc.id}}" *ngFor="let inc of  get_allIncident">{{inc.inc_name}} ({{inc.inc_no}})</option>
              </select>
              <div *ngIf="inc_name.errors?.required && (inc_name.touched || inc_name.dirty)" class="text-danger">
@@ -841,7 +844,7 @@
                 <div id="BoarddivToPrint_Consolidated">
                     <div *ngIf="Inc_type=='B' && board_stats=='Consolidated'" >
                     <table width="100%" border="1" style="display: none;" id="tbl2">
-                            
+
                             <thead>
                                 <tr>
                                     <th>Incident No</th>
@@ -871,7 +874,7 @@
                                 <td>{{inc.summary}}</td>
                                 <td>{{inc.status}}</td>
                                 </tr>
-                                
+
                             </tbody>
                         </table>
 
@@ -974,7 +977,7 @@
                     </div>
                     <div *ngIf="Inc_type=='B' && board_stats=='Consolidated'" class="mt-2">
                         <table width="100%" border="1" id="tbl3">
-                           
+
                             <thead>
                                 <tr>
                                     <th>Call Sign</th>
@@ -1127,7 +1130,7 @@
                     </div>
                     <div *ngIf="Inc_type=='B' && board_stats=='Consolidated'" class="mt-2">
                         <table width="100%" border="1" style="display:none" id="tbl4">
-                            
+
                             <thead>
                                 <tr>
                                     <th>Full Name</th>
@@ -1176,7 +1179,7 @@
                         </table>
                     </div>
                     <div *ngIf="Inc_type=='B' && board_stats=='Consolidated'" class="mt-2">
-                  
+
                      <table width="100%" border="1" style="display:none" id="tbl5">
                             <thead>
                                 <tr>

@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
+import { validations } from 'src/app/utilitY/validation';
 declare var $ :any;
 @Component({
   selector: 'app-adminheader',
@@ -13,8 +15,10 @@ declare var $ :any;
 export class AdminheaderComponent implements OnInit {
   @ViewChild('LogForm') LogForm!:NgForm;
   @ViewChild('logForm') profile!:NgForm;
+  @ViewChild('MatTabGroup') tabGroup!: MatTabGroup;
    Email:any=localStorage.getItem("Email");
   //  Name:any=localStorage.getItem('Emp_name');
+   _select_tab:any = 0;
    classList:any='';
    Name:any='';
    Emp_id:any=localStorage.getItem('Employee_id');
@@ -23,7 +27,12 @@ export class AdminheaderComponent implements OnInit {
    Emp_name:any;
    notifications:any=[];
    url=global_url_test.URL;
-  constructor(private emergencyservice:VirtualEmergencyService,private toastr:ToastrManager,private router:Router) {}
+   _date:any;
+  constructor(private emergencyservice:VirtualEmergencyService,private toastr:ToastrManager,private router:Router) {
+   var d = new Date();
+   var _timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+   this._date = d.toLocaleString('en-Us',{timeZone:_timeZone});
+  }
   // hidden:boolean=false;
   i:any=0;
   ngOnInit(): void {
@@ -129,4 +138,8 @@ export class AdminheaderComponent implements OnInit {
       })
     }
   }
+  //For Non Numeric Validations
+PreventNonNumeric(_event:any){
+  validations._preventnonNumeric(_event)
+}
 }

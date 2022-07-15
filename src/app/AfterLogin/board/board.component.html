@@ -679,7 +679,7 @@
                         <td> <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly size="5"/></td>
                         <td><textarea [(ngModel)]="vesselArray[i].situation_status"  class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
                         </td>
-                        <td><input (keypress)="PreventNonNumeric($event)" [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
+                        <td><input  [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
                         <td  class="text-center">
                           <a class="customIcon" type="button"
                         #tooltip="matTooltip"

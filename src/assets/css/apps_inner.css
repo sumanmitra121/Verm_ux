@@ -324,10 +324,16 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 
 /* ------------------------------------------------USER----------------------------------------------------- */
 /* User Landing Page */
-.mainContainer{display: flex;min-height: 100%;flex-direction: column; display: grid; flex: 1 0 auto; align-items: center; padding: 0 15px;
+.mainContainer{
+  display: flex!important;min-height: 100%;flex-direction: column; display: grid; flex: 1 0 auto;
+  align-items: center; padding: 0 15px;
   /* background-image: url("/assets/images/breakfast_bg_image.jpg"); */
 }
-.bgimg {background-image: url('/assets/images/sunrise-view.jpg');min-height: 100%;background-position: center;background-size: cover;}
+.bgimg {
+  /* background-image: url('/assets/images/sunrise-view.jpg'); */
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;}
 .header {padding: 10px;text-align: center;background: #00477E;color: white;font-size: 20px;}
 .footer {position: fixed;left: 0;bottom: 0;width: 100%;background-color: #00477E;color: white;text-align: center;}
 .rowCustom{margin: 0 -15px;}
@@ -802,7 +808,7 @@ input.ng-touched.ng-invalid {
 .scroll {overflow: hidden;}
 .scroll::-webkit-scrollbar {display: none;}
 .customScroll{margin: 4px, 4px;padding: 4px;width: 100%;height: 176px;overflow-x: auto;overflow-y: auto;text-align: justify;scrollbar-color: #bfc1c0 #d7d9d8;transition: all 0.3s;transition: all 500ms ease-in-out;}
-.btn:hover {color: #ffffff;}
+/* .btn:hover {color: #ffffff;} */
 .Blink {font-size: 7px;margin-top: 2px;animation: zoom-in-zoom-out 2s linear infinite;}
   @keyframes zoom-in-zoom-out {
     0%{

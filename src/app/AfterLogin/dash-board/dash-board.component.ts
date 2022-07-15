@@ -49,8 +49,7 @@ export class DashBoardComponent implements OnInit,OnDestroy {
   _observer!:Subscription;
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
    this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-     //.log();
-
+        console.log(res.id);
      this.getIncStatus(res.id);
      this.getVesselStatus(res.id);
      this.getHelicopterStatus(res.id);
@@ -80,14 +79,17 @@ getTooltipText(v:any,v1:any,v2:any,v3:any,v4:any,v5:any,mode:any){
 }
 getIncStatus(_id:any){
   this.spinner.show('inc_status');
+  console.log(_id);
+
   this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
-    if(res.length > 0){
-      this.inc_visibility = res[0].visibility;
-      this.inc_sea_state=res[0].sea_state;
-      this.deg=res[0].temp.charAt(res[0].temp.length-1);
-      this.temp=res[0].temp.split(this.deg)[0];
-      this.wind_speed=res[0].wind_speed;
-      }
+    console.log(res);
+
+
+      this.inc_visibility = res.length > 0 ? res[0].visibility : '';
+      this.inc_sea_state=res.length > 0 ? res[0].sea_state : "";
+      this.deg=res.length > 0 ? res[0].temp.charAt(res[0].temp.length-1): '';
+      this.temp=res.length > 0 ? res[0].temp.split(this.deg)[0] : '';
+      this.wind_speed=res.length > 0 ? res[0].wind_speed : '';
       this.spinner.hide('inc_status');
   },error => {this.spinner.hide('inc_status');})
 

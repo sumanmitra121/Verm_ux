@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
        this.tier=res?.tier_type;
         this.hours=res?.dif_time;
          this.Inc_type=res?.incident_type;
-         this.tot_casualty=res?.tot_casualty ;
+         this.tot_casualty=res?.tot_casualty;
         }
      })
    }
@@ -134,7 +134,7 @@ export class HeaderComponent implements OnInit {
       //   console.log(data);
       // })
   }
-  logout(){
+  public logout(){
     var dt={
       id:localStorage.getItem('Employee_id'),
       user:localStorage.getItem('Email')

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatTableExporterDirective } from 'mat-table-exporter';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 declare var $:any;
 declare var XLSX : any;
@@ -15,12 +16,12 @@ declare var XLSX : any;
   templateUrl: './report-data-pooldetails.component.html',
   styleUrls: ['./report-data-pooldetails.component.css']
 })
-export class ReportDataPooldetailsComponent implements OnInit {
+export class ReportDataPooldetailsComponent implements OnInit , AfterViewInit{
   _u_type = localStorage.getItem('User_type');
   ctx:any="";
  workbookXML:any= "";
  worksheetsXML:any= "";
-  rowsXML:any="";	
+  rowsXML:any="";
   link:any;
   show:boolean=true;
   @ViewChild(MatTableExporterDirective) matTableExporter!: MatTableExporterDirective;
@@ -56,7 +57,7 @@ dataSource6= new MatTableDataSource();
   get_incident_details4:any=[];
   get_incident_details5:any=[];
   get_incident_details6:any=[];
- 
+
 
   board_stats:any='';
   WindowObject:any;
@@ -75,17 +76,24 @@ dataSource6= new MatTableDataSource();
       this.now_to=new Date().toISOString().substring(0,10);
   }
 
+
   ngOnInit(): void {
     this.Inc_type=this.route.snapshot.params['inc_type'];
-    this.Report_type = this.Inc_type=='I' ? 'Incident Reports' : (this.Inc_type=='A' ? 'Activation Reports' : (this.Inc_type=='C' ? 'Live Logs' : (this.Inc_type=='B' ? 'Boards' : (this.Inc_type=='L' ? 'Log Sheets' : (this.Inc_type=='CL' ? 'Call Logger' : '')))))
-    if(this.Inc_type=='B' || this.Inc_type=='C' || this.Inc_type=='L' || this.Inc_type=='CL'){
-      this.emergencyservice.global_service('0','/get_all_incident',null).subscribe(data=>{
-        // console.log(data);
-         this.get_allIncident=data;
-         this.get_allIncident=this.get_allIncident.msg;
 
+
+    this.Report_type = this.Inc_type=='I' ? 'Incident Reports' : (this.Inc_type=='A' ? 'Activation Reports' : (this.Inc_type=='C' ? 'Live Logs' : (this.Inc_type=='B' ? 'Boards' : (this.Inc_type=='L' ? 'Log Sheets' : (this.Inc_type=='CL' ? 'Call Logger' : '')))))
+    if(this.Inc_type=='B' || this.Inc_type=='C' || this.Inc_type=='L' || this.Inc_type=='CL' || this.Inc_type=='I' || this.Inc_type=='A'){
+      this.emergencyservice.global_service('0','/get_all_incident',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
+         this.get_allIncident=data;
       })
     }
+  }
+  ngAfterViewInit(): void {
+    setTimeout(()=>{
+      this.Inc_type == 'I' || this.Inc_type == 'A' ?
+      this.logform.controls["inc_name"].patchValue('0') :this.logform.controls["inc_name"].patchValue('');
+    },300)
+
   }
   form_submit(logForm:Form){
     //  console.log(this.logform.form.value.logTypes );
@@ -94,7 +102,7 @@ dataSource6= new MatTableDataSource();
      var api_url=this.Inc_type=='A' ? '/activation_report' : (this.Inc_type=='I' ? '/incident_report': (this.Inc_type=='C' ? '/chat_report' : (this.Inc_type=='CL' ? '/call_log_report' : (this.Inc_type=='L' && this.logform.form.value.logTypes=='1') ? '/autolog_report' :'/manuallog_report')))
      this.displayedColumns=this.Inc_type=='A' ? ['Date','incident_name','team_name','Status','created_by'] : (this.Inc_type=='I' ?  ['Incident_no','Incident_type','Incident_name', 'Incident_location','Initial_tier','Final_tier','event_description','remarks','created_at','Created_By','close_date','Closed_by','Closed_at','approved_by','approved_at'] : (this.Inc_type=='C' ? ['Date','emp_name','chat','file'] : (this.Inc_type=='CL' ? ['Date','ref_no','made_by','made_to','received_by','call_details'] : [])))
     if(this.Inc_type=='I' || this.Inc_type=='A' ){
-     this.emergencyservice.global_service('0',api_url,'frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date).subscribe(data=>{
+     this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date).subscribe(data=>{
       this.get_incident_details=data;
       this.get_incident_details=this.get_incident_details.msg;
       this.dataSource=new MatTableDataSource(this.get_incident_details);
@@ -149,10 +157,10 @@ dataSource6= new MatTableDataSource();
   board_submit(board_logForm:Form){
     this.get_incident_details.length=0;
     this.multi.length=0;
-    
+
       // this.board_form.form.value.board_type = lalala_board[i]
       // console.log(this.board_form.form.value.board_type);
-      
+
   //  switch(this.board_form.form.value.board_type)
    switch(this.board_form.form.value.board_type)
     {
@@ -247,7 +255,7 @@ dataSource6= new MatTableDataSource();
   loadAllData (id:any) {
     switch(id)
   {
-    case "1": 
+    case "1":
               this.displayedColumns1=['inc_no','date','installation','coordinates','visibility','wind_speed','wind_direc','sea_state','temp','summary','status'];
               this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe(data=>{
                 this.get_incident_details1=data;
@@ -256,7 +264,7 @@ dataSource6= new MatTableDataSource();
                 })
                break;
 
-    case "2": 
+    case "2":
               this.displayedColumns2=['Name','type','from','etd','to','eta','remarks'];
               this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe(data=>{
               this.get_incident_details2=data;
@@ -265,7 +273,7 @@ dataSource6= new MatTableDataSource();
             })
              break;
 
-    case "3": 
+    case "3":
                 this.displayedColumns3=['call Sign','type','from','etd','to','eta','remarks'];
                 this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe(data=>{
                 this.get_incident_details3=data;
@@ -276,7 +284,7 @@ dataSource6= new MatTableDataSource();
 
   case "4":
           this.spinner.show();
-            
+
               // this.displayedColumns=['Date','category','Time','value'];
               this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe((data)=>{
                 // this.spinner.show();
@@ -298,7 +306,7 @@ dataSource6= new MatTableDataSource();
              })
             break;
 
-    case "5": 
+    case "5":
               this.displayedColumns4=['full_name','employer','emp_condition','location_name','time'];
               this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe(data=>{
               this.get_incident_details4=data;
@@ -308,7 +316,7 @@ dataSource6= new MatTableDataSource();
              })
             break;
 
-    case "6": 
+    case "6":
             this.displayedColumns5=['time','destination','mode_of_transport','pob_remaining','remarks'];
             this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe(data=>{
             this.get_incident_details5=data;
@@ -316,7 +324,7 @@ dataSource6= new MatTableDataSource();
             this.dataSource5=new MatTableDataSource(this.get_incident_details5);
            })
           break;
-    case "7": 
+    case "7":
           this.displayedColumns6=['time','situation_status','resource_assigned'];
           this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe(data=>{
           this.get_incident_details6=data;
