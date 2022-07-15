@@ -114,13 +114,19 @@ export class ActivationModuleComponent implements OnInit {
       this._team_id = team_id;
     this.selection.clear();
     this.emergencyservice.global_service('0','/assign_team','id=' +team_id).subscribe(data=>{
+
       this.get_employee_roaster=data;
       this.get_employee_roaster=this.get_employee_roaster.msg;
       for(let i=0;i<this.get_employee_roaster.length;i++){
-         this.get_employee_roaster[i].emp_status=this.get_employee_roaster[i].emp_status=='O'?'ON':'OFF';
+        //  this.get_employee_roaster[i].emp_status=this.get_employee_roaster[i].emp_status=='O'?'ON':'OFF';
          this.get_employee_roaster[i].user_type=this.get_employee_roaster[i].user_type=='A'?'Admin':(this.get_employee_roaster[i].user_type=='M'?'Approver':(this.get_employee_roaster[i].user_type=='U'?'User':'Incident Commander'))
       }
       this.putdata_employee(this.get_employee_roaster);
+      // this.get_employee_roaster.forEach((element:any) => {
+
+      //  this.selection
+
+      // });
     })
   }
   else{
@@ -133,6 +139,16 @@ export class ActivationModuleComponent implements OnInit {
   }
   putdata_employee(v:any){
     this.dataSource_employee_roaster=new MatTableDataSource(v);
+    console.log(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
+
+    // this.selection = new SelectionModel<any>(true, this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
+    // this.selection.select(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'))
+    this.dataSource_employee_roaster.data.forEach((element:any) =>{
+      if(element.active_flag == 'Y'){
+        this.selection.toggle(element)
+      }
+    })
+    // this.selection.toggle(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
   }
 
   isAllSelected() {
@@ -162,27 +178,29 @@ export class ActivationModuleComponent implements OnInit {
 
 
   Active_member(){
-    if(this._is_activeIncident!= ''){
-    var res = {
-        inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
-        team_id:this._team_id,
-        team_name:this.selection.selected[0].team_name,
-        inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
-        user:localStorage.getItem('Email'),
-        flag:'Y',
-        emp_dt:this.selection.selected
-    }
-    this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
-      this.check_activity='';
-      this.check_activity=data;
-      if(this.check_activity.suc==1){
-        this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
-      }
-     })
-    }
-    else{
-      this.toaster.errorToastr('There is no active incident, you can not active members untill an incident is created');
-    }
+    console.log(this.selection.selected);
+
+    // if(this._is_activeIncident!= ''){
+    // var res = {
+    //     inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+    //     team_id:this._team_id,
+    //     team_name:this.selection.selected[0].team_name,
+    //     inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
+    //     user:localStorage.getItem('Email'),
+    //     flag:'Y',
+    //     emp_dt:this.selection.selected
+    // }
+    // this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
+    //   this.check_activity='';
+    //   this.check_activity=data;
+    //   if(this.check_activity.suc==1){
+    //     this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
+    //   }
+    //  })
+    // }
+    // else{
+    //   this.toaster.errorToastr('There is no active incident, you can not active members untill an incident is created');
+    // }
 
   }
 

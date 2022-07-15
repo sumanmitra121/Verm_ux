@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { userStatus } from 'src/app/Model/userStatus';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 @Component({
   selector: 'app-user-info',
