@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import  { io, Socket }  from 'socket.io-client';//For Socket.io-client implementation
-import { observable, Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, observable, Observable, ReplaySubject } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogalertComponent } from '../CommonDialogAlert/dialogalert/dialogalert.component';
 import { IncDetails } from '../Model/IncDetails';

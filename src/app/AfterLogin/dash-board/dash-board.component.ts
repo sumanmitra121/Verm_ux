@@ -50,7 +50,7 @@ export class DashBoardComponent implements OnInit,OnDestroy {
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
    this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
      //.log();
-
+     if(res){
      this.getIncStatus(res.id);
      this.getVesselStatus(res.id);
      this.getHelicopterStatus(res.id);
@@ -58,6 +58,7 @@ export class DashBoardComponent implements OnInit,OnDestroy {
      this.getEvacuationStatus(res.id);
       this.getEventStatus(res.id);
       this.getProbStatus(res.id);
+    }
     })
   }
   ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc});}

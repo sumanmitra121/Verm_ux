@@ -15,7 +15,7 @@ declare var $:any
 export class ActivationModuleComponent implements OnInit {
    //Angular Material Data Table//
   displayedColumns: string[] = ['Name', 'employees_no','Action','View'];
-  displayedColumns_employee: string[] = ['Employee_name','Employee_designation','Employee_status'];
+  displayedColumns_employee: string[] = ['Employee_name','Employee_designation'];
   displayedColumns_history: string[] = ['From_date', 'To_date'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   get_employee_roaster:any=[];
@@ -25,7 +25,7 @@ export class ActivationModuleComponent implements OnInit {
 
     ///END////
   temp1:any=[];
-  temp:any=[];                                   
+  temp:any=[];
   public endorsementIds: string[] = [];
   Row:any=[];
   headername:any='Activation Module';
@@ -74,11 +74,11 @@ export class ActivationModuleComponent implements OnInit {
     // this.putdata(this.team_on_duity_data);
     // }
     // else{
-   
+
     // }
     });
   }
-  
+
   putdata(v:any){
     this.dataSource= new MatTableDataSource(v);
     this.dataSource.paginator=this.paginator;
@@ -104,16 +104,16 @@ export class ActivationModuleComponent implements OnInit {
       inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
       user:localStorage.getItem('Email'),
       flag:event.checked==true?'Y':'N'
-    }    
+    }
     this.emergencyservice.global_service('1','/activation ',dt).subscribe(data=>{
-   
+
       this.check_activity='';
       this.check_activity=data;
       if(this.check_activity.suc==1){
       // $('#act_'+index).show();
       // $('#act_'+index).removeAttr('hidden');
       // $('#toggle_'+index).hide();
-      var dt={id:'0',activity:'A',narration:localStorage.getItem('Email')+' has activated '+team_name+' at '+new Date().toISOString().substring(0,10)}; 
+      var dt={id:'0',activity:'A',narration:localStorage.getItem('Email')+' has activated '+team_name+' at '+new Date().toISOString().substring(0,10)};
       this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{
       })
       this.fetchdata();
@@ -123,7 +123,7 @@ export class ActivationModuleComponent implements OnInit {
       }
       })
   }
-  
+
   //For FilterData from data table
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

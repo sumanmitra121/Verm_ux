@@ -16,6 +16,10 @@ declare var $:any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  _c_pass:boolean = true;
+  _n_pass:boolean = true;
+  _o_pass:boolean = true;
+
   @ViewChild('LogForm') LogForm!:NgForm;
   @ViewChild('logForm') profile!:NgForm;
   @Input() headername!:string;
@@ -92,41 +96,41 @@ export class HeaderComponent implements OnInit {
         this.get_position=this.get_position.msg;
       })
          //For toggling eye and eye-slash for old password
-         $(".toggle-password").click(()=>{
-          if ($('#old_pass').attr("type") == "password") {
-            $('#old_pass').attr("type", "text");
-            $('.toggle-password').removeClass("fa-eye-slash");
-            $('.toggle-password').addClass("fa-eye");
-          } else {
-            $('#old_pass').attr("type", "password");
-            $('.toggle-password').removeClass("fa-eye");
-            $('.toggle-password').addClass("fa-eye-slash");
-          }
-      });
+      //    $(".toggle-password").click(()=>{
+      //     if ($('#old_pass').attr("type") == "password") {
+      //       $('#old_pass').attr("type", "text");
+      //       $('.toggle-password').removeClass("fa-eye-slash");
+      //       $('.toggle-password').addClass("fa-eye");
+      //     } else {
+      //       $('#old_pass').attr("type", "password");
+      //       $('.toggle-password').removeClass("fa-eye");
+      //       $('.toggle-password').addClass("fa-eye-slash");
+      //     }
+      // });
       //For toggling eye and eye-slash for new password
-      $(".toggle-newpassword").click(()=>{
-        if ($('#pass').attr("type") == "password") {
-          $('#pass').attr("type", "text");
-        $('.toggle-newpassword').removeClass("fa-eye-slash");
-        $('.toggle-newpassword').addClass("fa-eye");
-        } else {
-          $('#pass').attr("type", "password");
-          $('.toggle-newpassword').removeClass("fa-eye");
-          $('.toggle-newpassword').addClass("fa-eye-slash");
-        }
-    });
+    //   $(".toggle-newpassword").click(()=>{
+    //     if ($('#pass').attr("type") == "password") {
+    //       $('#pass').attr("type", "text");
+    //     $('.toggle-newpassword').removeClass("fa-eye-slash");
+    //     $('.toggle-newpassword').addClass("fa-eye");
+    //     } else {
+    //       $('#pass').attr("type", "password");
+    //       $('.toggle-newpassword').removeClass("fa-eye");
+    //       $('.toggle-newpassword').addClass("fa-eye-slash");
+    //     }
+    // });
       //For toggling eye and eye-slash for confirm password
-     $(".toggle-confpassword").click(()=>{
-          if ($('#conf_pass').attr("type") == "password") {
-            $('#conf_pass').attr("type", "text");
-          $('.toggle-confpassword').removeClass("fa-eye-slash");
-          $('.toggle-confpassword').addClass("fa-eye");
-          } else {
-            $('#conf_pass').attr("type", "password");
-            $('.toggle-confpassword').removeClass("fa-eye");
-            $('.toggle-confpassword').addClass("fa-eye-slash");
-          }
-      });
+    //  $(".toggle-confpassword").click(()=>{
+    //       if ($('#conf_pass').attr("type") == "password") {
+    //         $('#conf_pass').attr("type", "text");
+    //       $('.toggle-confpassword').removeClass("fa-eye-slash");
+    //       $('.toggle-confpassword').addClass("fa-eye");
+    //       } else {
+    //         $('#conf_pass').attr("type", "password");
+    //         $('.toggle-confpassword').removeClass("fa-eye");
+    //         $('.toggle-confpassword').addClass("fa-eye-slash");
+    //       }
+    //   });
 
       // For Getting Notification
       // this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
@@ -134,7 +138,7 @@ export class HeaderComponent implements OnInit {
       //   console.log(data);
       // })
   }
-  logout(){
+  public logout(){
     var dt={
       id:localStorage.getItem('Employee_id'),
       user:localStorage.getItem('Email')
@@ -144,7 +148,14 @@ export class HeaderComponent implements OnInit {
     })
     this.router.navigate(['/login']);
   }
-
+  show_pass(_type:any){
+    switch(_type){
+      case 'O':this._o_pass =!this._o_pass;break;
+      case 'C':this._c_pass =!this._c_pass;break;
+      case 'N':this._n_pass =!this._n_pass;break;
+      default:break;
+    }
+  }
   get_details(){
     this.emergencyservice.global_service('0','/employee','flag=A&emp_id='+localStorage.getItem('Employee_id')).subscribe(data=>{
      this.get_profile.length=0;
@@ -156,7 +167,7 @@ export class HeaderComponent implements OnInit {
      localStorage.removeItem('Emp_name');
      localStorage.setItem('Emp_name',this.get_profile[0].emp_name);
      this.name=localStorage.getItem('Emp_name');
-     this.profile.setValue({
+     this.profile.control.patchValue({
        user:this.email,
        emp_id:localStorage.getItem('Employee_id'),
        emp_name:this.get_profile[0].emp_name,
@@ -165,7 +176,6 @@ export class HeaderComponent implements OnInit {
        er_cnct_no:this.get_profile[0].er_cnct_no,
        depart_id:this.get_profile[0].emp_depart_id,
        pos_id:this.get_profile[0].emp_pos_id
-
      })
     })
   }

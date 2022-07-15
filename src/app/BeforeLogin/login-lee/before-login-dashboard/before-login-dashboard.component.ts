@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BeforeLoginDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    var d = new Date().toLocaleString('en-US', { timeZone: timeZone });
+    console.log(d.split(',')[1]);
+  }
+
 
   ngOnInit(): void {
   }

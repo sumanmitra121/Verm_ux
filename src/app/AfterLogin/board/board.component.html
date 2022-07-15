@@ -48,14 +48,6 @@
               <h2 class="pull-left text-dark titleDashBox">Vessel Status</h2>
             </div>
             <div class="card_bodyCustom">
-              <!-- <mat-list *ngIf="get_vessel_status!=''">
-                <mat-list-item id="first-item" class="text-center"><h2 >{{this.ves_name}}</h2></mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item id="second-item" ><b >From:</b >&nbsp;&nbsp;{{this.form_at}}</mat-list-item>
-                <mat-list-item  id="third-item" ><b>To:</b >&nbsp;&nbsp;{{this.to_at}}</mat-list-item>
-                <mat-list-item  ></mat-list-item>
-
-             </mat-list> -->
              <ng-container *ngIf="get_vessel_status.length > 0">
             <h3 id="first-item">{{this.ves_name}}</h3>
              <ul class="listDashboard">
@@ -679,7 +671,7 @@
                         <td> <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly size="5"/></td>
                         <td><textarea [(ngModel)]="vesselArray[i].situation_status"  class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
                         </td>
-                        <td><input (keypress)="PreventNonNumeric($event)" [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
+                        <td><input  [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
                         <td  class="text-center">
                           <a class="customIcon" type="button"
                         #tooltip="matTooltip"
