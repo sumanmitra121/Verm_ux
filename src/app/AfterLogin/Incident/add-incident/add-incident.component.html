@@ -1,4 +1,4 @@
-<app-header [headername]="headername" [icon]="icon"></app-header>
+<app-header [headername]="headername" [icon]="icon" [IncID]="incId"></app-header>
 <div class="page-body-wrapper">
 <app-sidebar class="sidebarMain"></app-sidebar>
 <div class="main-panel">
@@ -9,7 +9,7 @@
               </div>
          <div class="card-body">
             <div class="titleSec" >
-             <h2 >Create Incident</h2> 
+             <h2 >Create Incident</h2>
              </div>
              <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
             <div class="row">
@@ -28,7 +28,7 @@
                         <option *ngFor="let incident of get_incident" value="{{incident.id}}">{{incident.incident_name}}</option>
                     </select>
                     <div *ngIf="inc_type_id.errors?.required && (inc_type_id.touched || inc_type_id.dirty)" class="text-danger">
-                        Please Provide Incident Type 
+                        Please Provide Incident Type
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                   <div class="col-sm-12">
                     <input type="text" class="form-control"  name="inc_name" #inc_name="ngModel" ngModel required>
                     <div *ngIf="inc_name.errors?.required && (inc_name.touched || inc_name.dirty)" class="text-danger">
-                        Please Provide Incident Name 
+                        Please Provide Incident Name
                       </div>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
 
                        </select>
                         <div *ngIf="inc_location_id.errors?.required && (inc_location_id.touched || inc_location_id.dirty)" class="text-danger">
-                            Please Provide Incident Location 
+                            Please Provide Incident Location
                           </div>
                     </div>
                     </div>
@@ -80,7 +80,7 @@
                         (onDeSelectAll)="onDeSelectAll($event)"
                         required
                         #type="ngModel"
-                      
+
                     >
                     </angular2-multiselect
                     >
@@ -98,16 +98,16 @@
                         <select name="initial_tier_id" #initial_tier_id="ngModel" ngModel class="form-control" required>
                             <option value="">Select Tier</option>
                             <option *ngFor="let tier of initial_tier" value="{{tier.id}}">{{tier.tier_type}}</option>
- 
+
                         </select>
                         <div *ngIf="initial_tier_id.errors?.required && (initial_tier_id.touched || initial_tier_id.dirty)" class="text-danger">
-                            Please Provide Initial Tier 
+                            Please Provide Initial Tier
                           </div>
                     </div>
                 </div>
                 </div>
             </div>
-      
+
             <div class="row ">
                 <div class="col-12">
                     <div class="form-group row">
@@ -115,20 +115,20 @@
                         <div class="col-sm-12">
                             <textarea #brief_desc="ngModel" required class="form-control" rows="5" cols="5" name="brief_desc" ngModel></textarea>
                             <div *ngIf="brief_desc.errors?.required && (brief_desc.touched || brief_desc.dirty)" class="text-danger">
-                                Please Provide Event Description 
+                                Please Provide Event Description
                               </div>
                         </div>
                     </div>
                 </div>
-             
+
             </div>
-  
-       
-            <div class="row"> 
+
+
+            <div class="row">
                 <div class="col-3">
             <div class="form-group row" [hidden]="check_active=='N'">
                 <label>&nbsp;</label><br>
-                <div class="col-sm-12 btnSubmitSec mt-2">      
+                <div class="col-sm-12 btnSubmitSec mt-2">
                 <input type="submit" class="btn btn-info" id="submit" name="submit" value="Save" [disabled]="logForm.invalid">
                 <input type="reset" onclick="" class="btn btn-info" value="Cancel" (click)="logForm.reset();logForm.value.id=0;">
                 </div>

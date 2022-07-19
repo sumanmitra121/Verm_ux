@@ -40,9 +40,9 @@ ul.topinsidentData2 li{font-size: 15px;
     float: left; margin-bottom: 0; width: 100%; line-height: 24px;
 
     /* Css Adding */
-   white-space: nowrap;
+   /* white-space: nowrap;
    overflow: hidden;
-   text-overflow: ellipsis;
+   text-overflow: ellipsis; */
 }
 ul.topinsidentData2 li strong{color: #464ed0;}
 ul.topinsidentData2_1{width: 31%;}
@@ -916,3 +916,10 @@ b{font-size: 14px;color:black;}
 .mat-toolbar {background: #424242!important;color: rgb(255 255 255 / 87%)!important;}
 .mat-dialog-content {font-size: 16px;font-weight: 400;text-align: center; margin: 9px 0 9px 0!important;}
 .mat-dialog-actions {justify-content: flex-end;}
+.customArrow{
+  font-size: 14px!important;
+  text-align: center;
+  font-weight: 800!important;
+  color: #cf2525;
+  cursor:pointer;
+}

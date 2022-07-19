@@ -1,18 +1,48 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
 	<div class="text-left navbar-brand-wrapper d-flex logo"><img src="assets/images/logoWhit.png" alt=""/>
+    <!-- <b class="m-auto Blink text-success" style="font-size: 10px;">{{_ActiveIncNum}} Incident Activated</b> -->
+
 	</div>
 	<div class="navbar-menu-wrapper d-flex align-items-center">
 		<div class="breadCamp" *ngIf='active_flag!=0'>
 			<!--<a><i class="fa {{icon}}" aria-hidden="true"></i></a>  <strong>{{headername}}</strong> -->
 			<div class="insidentDataCont" *ngIf="Inc_Name!= ''">
 			<ul class="topinsidentData2 topinsidentData2_1">
-			<li class="typeCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_type}}"><strong>Type:</strong> {{Inc_type}}</li>
-			<li class="nameCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_Name}}"><strong>Name:</strong> {{Inc_Name}}</li>
+			<li class="typeCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_type}}"><strong>Type:</strong>
+        {{(Inc_type.length > 20 ) ? (Inc_type | slice:0:18)+'..':(Inc_type)}}
+
+      </li>
+			<li class="nameCl locationCl active dropdown"  >
+        <strong >Name:</strong>
+        <span #tooltip="matTooltip" matTooltip="{{Inc_Name}}">{{(Inc_Name.length > 20 )? (Inc_Name | slice:0:18)+'..':(Inc_Name)}}</span>
+
+        <a #tooltip="matTooltip" matTooltip="click to preview all incident list"  data-toggle="dropdown" *ngIf="_activeIncBackup.length > 1" aria-haspopup="true" role="button" aria-expanded="false"><mat-icon class="customArrow">arrow_downward</mat-icon></a>
+        <div class="dropdown-menu dropdown-menu-end dropdownActive p-3" aria-labelledby="navbarDropdown">
+         <ul class="list-unstyled" *ngIf="_selected_Inc !=''">
+          <li  class="text-success d-flex">
+            <mat-icon>done</mat-icon>
+            <small class="fs-5">{{_selected_Inc}}</small>
+          <hr/>
+
+          </li>
+         </ul>
+
+          <ul class="list-unstyled " *ngFor="let activeInc of _activeInc;let i=index">
+            <li #tooltip="matTooltip" matTooltip="Select {{activeInc.inc_name}} " role="button" class="p-2" (click)="active_incident(activeInc.inc_name,activeInc.inc_no,activeInc.id)">
+              <small >{{activeInc.inc_name}} ({{activeInc.inc_no}})</small>
+              <hr *ngIf="i!= (_activeInc.length-1)"/>
+            </li>
+          </ul>
+          </div>
+      </li>
 			</ul>
 			<ul class="topinsidentData2 topinsidentData2_2">
 			<li class="tierCl locationCl" #tooltip="matTooltip" matTooltip="{{tier}}"><strong>Tier:</strong> {{tier}}</li>
 			<li class="locationCl" #tooltip="matTooltip"
-			matTooltip="{{Inc_location}}"><strong>Location:</strong> {{Inc_location}}</li>
+			matTooltip="{{Inc_location}}"><strong>Location:</strong>
+      {{(Inc_location.length > 20 )? (Inc_location | slice:0:30)+'..':(Inc_location)}}
+
+    </li>
 			</ul>
 			<ul class="topinsidentData2 topinsidentData2_3">
 			<li class="casualtyCl"><strong>Casualty:</strong> {{tot_casualty}}</li>
@@ -28,6 +58,7 @@
 			<a  class="nav-link"  matBadge="4" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="hidden" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
 			<div class="dropdown-menu logoutPopup">
 				<div class="user">
+
 				</div>
 			</div>
 		</li>
@@ -51,9 +82,9 @@
 			</li>
 
 
-		<li class="userDrop dropdown"><a class="nav-link" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-            <img src="{{img_src}}" alt="profile" class="thumImg">
-            <!-- <span class="nav-profile-name">{{name}}</span> -->
+		<li class="userDrop dropdown">
+      <a  class="nav-link" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"
+     ><img src="{{img_src}}" alt="profile" class="thumImg">
           </a>
 		<div class="dropdown-menu logoutPopup">
 			<a  class="profileEditPopup" data-toggle="modal" data-target="#Employee_profile" ><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</a>
@@ -61,40 +92,17 @@
 			<div class="thumLogout"><img src="{{img_src}}" alt="profile" class="thumImg"></div>
 			<div class="user">
 			{{name}}
-			<!-- <a >{{email}}</a> -->
-			<!-- <ng-template [ngIf]="user_type=='I'" [ngIfElse]="loggedOut">
-				<a >Incident Commander</a>
-			  </ng-template>
-
-			  <ng-template #loggedOut>
-				<a >User</a>
-
-			  </ng-template> -->
 			  <p *ngIf="user_type=='I'" class="text-success	">Incident Commander</p>
 			  <p *ngIf="user_type=='U'">User</p>
 
 			</div>
-			<!-- <ul class="portfolioStatus">
-				<li><a href=""><i class="fa fa-meetup activeStatus" aria-hidden="true"></i>In a meeting</a></li>
-				<li><a href=""><i class="fa fa-phone activeStatus" aria-hidden="true"></i>on a call</a></li>
-				<li><a href=""><i class="fa fa-times-circle-o activeStatus" aria-hidden="true"></i>Time out</a></li>
-				<li><a href=""><i class="fa fa-circle activeStatus" aria-hidden="true"></i>Standown</a></li>
-			</ul> -->
-
-
-
 			<a (click)="logout()" class="signOut">Sign Out</a>
-			<label class="or">Or</label>
-			<a class="handOver">Hand Over</a>
 
 			</div>
 
 			</li>
 
 		</ul>
-		<!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-          <span class="fa fa-bars"></span>
-      </button> -->
 
 	</div>
 

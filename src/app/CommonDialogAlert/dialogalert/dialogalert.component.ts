@@ -14,6 +14,8 @@ export class DialogalertComponent implements OnInit {
   constructor(public dialogRef:MatDialogRef<DialogalertComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private toastr:ToastrManager,private emergencyservice:VirtualEmergencyService) { }
 
   ngOnInit(): void {
+
+
     console.log(localStorage.getItem('User_type'))
     this._u_type = localStorage.getItem('User_type');
   }
@@ -34,6 +36,10 @@ export class DialogalertComponent implements OnInit {
    else{
         this.dialogRef.close(1)
    }
+  }
+
+  ok(){
+    this.dialogRef.close(1);
   }
 
 }

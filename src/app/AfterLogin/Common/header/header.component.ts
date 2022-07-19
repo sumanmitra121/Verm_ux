@@ -1,9 +1,8 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
@@ -16,6 +15,9 @@ declare var $:any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  @Input() IncID!:string;
+  @Output() IncStatus= new EventEmitter<IncDetails>();
   @ViewChild('LogForm') LogForm!:NgForm;
   @ViewChild('logForm') profile!:NgForm;
   @Input() headername!:string;
@@ -41,43 +43,114 @@ export class HeaderComponent implements OnInit {
   user_status:any;
   img_src:any;
   tot_casualty:any;
+  // _ActiveIncNum:any=0;
+  _activeInc:any=[];
+  _activeIncBackup:any=[]
+  _selected_Inc:any='';
   hidden = false;
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
-     this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-       if(res != '' || res!=undefined || res != null){
-       this.Inc_Name = res?.inc_name+" ("+res?.inc_no +")";
-       this.Inc_location=res?.offshore_name+" ("+res?.lat+" : "+res?.lon+ ")";
-       this.tier=res?.tier_type;
-        this.hours=res?.dif_time;
-         this.Inc_type=res?.incident_type;
-         this.tot_casualty=res?.tot_casualty;
-        }
-     })
+
+    // this._activeInc.length = 0
+
+    //  this.emergencyservice.currentIncdents$.subscribe((res:any) => {
+    //   console.log(res)
+    //   this._ActiveIncNum = res.length
+    //   if(res.length > 0){
+    //     var local_sel_id = 0
+    //     if(local_sel_id > 0){
+
+    //     }else{
+    //       this.Inc_Name = res[this._ActiveIncNum-1].inc_name+" ("+res[this._ActiveIncNum-1].inc_no +")";
+    //       this.Inc_location=res[this._ActiveIncNum-1].offshore_name+" ("+res[this._ActiveIncNum-1].lat+" : "+res[this._ActiveIncNum-1].lon+ ")";
+    //       this.tier=res[this._ActiveIncNum-1].tier_type;
+    //       this.hours=res[this._ActiveIncNum-1].dif_time;
+    //       this.Inc_type=res[this._ActiveIncNum-1].incident_type;
+    //       this.tot_casualty=res[this._ActiveIncNum-1].tot_casualty;
+    //     }
+    //   }else{
+    //       this.Inc_Name = data[0].inc_name+" ("+res[0].inc_no +")";
+    //       this.Inc_location=res[0].offshore_name+" ("+res[0].lat+" : "+res[0].lon+ ")";
+    //       this.tier=res[0].tier_type;
+    //       this.hours=res[0].dif_time;
+    //       this.Inc_type=res[0].incident_type;
+    //       this.tot_casualty=res[0].tot_casualty;
+    //   }
+    //   //   this._ActiveIncNum =this._ActiveIncNum +1;
+    //   //  if(res != '' || res!=undefined || res != null){
+    //   //  this.Inc_Name = res?.inc_name+" ("+res?.inc_no +")";
+    //   //  this.Inc_location=res?.offshore_name+" ("+res?.lat+" : "+res?.lon+ ")";
+    //   //  this.tier=res?.tier_type;
+    //   //   this.hours=res?.dif_time;
+    //   //    this.Inc_type=res?.incident_type;
+    //   //    this.tot_casualty=res?.tot_casualty;
+    //   //   }
+    //     // this._activeInc.push(res);
+    //     // console.log(this._activeInc);
+    //  })
+
+    this.getCurrentIncident()
+
    }
+   getCurrentIncident(){
+    this._activeInc.length=0;
+    this._activeIncBackup.length = 0;
+      this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
+        this._activeIncBackup = data;
+        console.log(data);
 
-  ngOnInit(): void {
+        if(data.length > 1){
+        var local_sel_id = Number(localStorage.getItem('_local_sel_id'));
+          if(local_sel_id > 0){
+                 this.getDetails(Number(localStorage.getItem('Inc_No')))
+          }else{
+            this.Inc_Name = data[data.length-1].inc_name+" ("+data[data.length-1].inc_no +")";
+            this.Inc_location=data[data.length-1].offshore_name+" ("+data[data.length-1].lat+" : "+data[data.length-1].lon+ ")";
+            this.tier=data[data.length-1].tier_type;
+            this.hours=data[data.length-1].dif_time;
+            this.Inc_type=data[data.length-1].incident_type;
+            this.tot_casualty=data[data.length-1].tot_casualty;
+            this._selected_Inc = data[data.length-1].inc_name+'('+data[data.length-1].inc_no+')';
+            localStorage.setItem('Inc_name',data[data.length-1].inc_name);
+            localStorage.setItem('Inc_No',data[data.length-1].inc_no);
+            localStorage.setItem('Inc_id',data[data.length-1].id);
+            this.IncStatus.emit(data[data.length-1]);
+            this._activeInc = data.filter((x:any) => x.id != localStorage.getItem('Inc_id'));
+
+          }
+        }else if(data.length == 1){
+            this.Inc_Name = data[0].inc_name+" ("+data[0].inc_no +")";
+            this.Inc_location=data[0].offshore_name+" ("+data[0].lat+" : "+data[0].lon+ ")";
+            this.tier=data[0].tier_type;
+            this.hours=data[0].dif_time;
+            this.Inc_type=data[0].incident_type;
+            this.tot_casualty=data[0].tot_casualty;
+            this._selected_Inc = data[0].inc_name+'('+data[0].inc_no+')';
+            localStorage.setItem('Inc_name',data[0].inc_name);
+            localStorage.setItem('Inc_No',data[0].inc_no);
+            localStorage.setItem('Inc_id',data[0].id);
+            this.IncStatus.emit(data[0]);
+            this._activeInc = data.filter((x:any) => x.id != localStorage.getItem('Inc_id'));
+
+        }
+        else{
+          this.Inc_Name = '';
+          this.Inc_location='';
+          this.tier='';
+          this.hours='';
+          this.Inc_type='';
+          this.tot_casualty='';
+          this._selected_Inc = '';
+          localStorage.setItem('Inc_name','');
+          localStorage.setItem('Inc_No','');
+          localStorage.setItem('Inc_id','');
+        }
+      })
+  }
+
+  ngOnInit() {
      this.get_details();
-    // this.emergencyservice.global_service('0','/get_active_inc',null).subscribe(data=>{
-    //   this.get_incident_details=data;
-    //   this.get_incident_details=this.get_incident_details.msg;
-    //     if(this.get_incident_details!=''){
-    //           this.Inc_Name= this.get_incident_details[0].inc_name+" ("+this.get_incident_details[0].inc_no +")";
-    //           this.Inc_location=this.get_incident_details[0].offshore_name+" ("+this.get_incident_details[0].lat+" : "+this.get_incident_details[0].lon+ ")";
-    //           this.tier=this.get_incident_details[0].tier_type;
-    //           this.hours=this.get_incident_details[0].dif_time;
-    //           this.Inc_type=this.get_incident_details[0].incident_type;
-    //           this.tot_casualty=this.get_incident_details[0].tot_casualty ;
-    //     }
-    //     else{
-    //       this.Inc_Name='';
-    //       this.Inc_location='';
-    //       this.hours='';
-    //       this.tier='';
-
-    //     }
-    //   })
       //For Getting Department
       this.emergencyservice.global_service('0','/department',"null").subscribe(data=>{
         // console.log(data);
@@ -133,7 +206,10 @@ export class HeaderComponent implements OnInit {
       // this.emergencyservice.listen('get_notification').subscribe(data=>{
       //   console.log(data);
       // })
+
   }
+
+
   public logout(){
     var dt={
       id:localStorage.getItem('Employee_id'),
@@ -260,4 +336,38 @@ export class HeaderComponent implements OnInit {
 
    })
   }
+
+  active_incident(_inc_name:any,_inc_no:any,_inc_id:any){
+    this._activeInc.length =0;
+    localStorage.setItem('_local_sel_id','1');
+     this._selected_Inc = _inc_name+ '('+_inc_no+')';
+     this._activeInc = this._activeIncBackup.filter((x:any) => x.inc_no != _inc_no);
+     this.getDetails(Number(_inc_no));
+      this.IncStatus.emit(this._activeIncBackup.filter((x:any) => x.inc_no == _inc_no)[0]);
+  }
+
+  getDetails(_inc_no:number){
+    var incStatus = this._activeIncBackup.find((x:any) => x.inc_no == _inc_no);
+    this.Inc_Name = incStatus.inc_name + '(' +incStatus.inc_no +')';
+    this._selected_Inc = this.Inc_Name;
+    this.Inc_location=incStatus.offshore_name+" ("+incStatus.lat+" : "+incStatus.lon+ ")";
+    this.tier=incStatus.tier_type;
+    this.hours=incStatus.dif_time;
+    this.Inc_type=incStatus.incident_type;
+    this.tot_casualty=incStatus.tot_casualty;
+    localStorage.setItem('Inc_name',incStatus.inc_name);
+    localStorage.setItem('Inc_No',incStatus.inc_no);
+    localStorage.setItem('Inc_id',incStatus.id);
+    this.IncStatus.emit(incStatus);
+    this._activeInc = this._activeIncBackup.filter((x:any) => x.id != localStorage.getItem('Inc_id'));
+
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+    if(changes?.IncID?.currentValue){
+      this.getCurrentIncident();
+    }
+}
 }

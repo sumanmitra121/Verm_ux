@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { from, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 
 declare var $:any;
@@ -12,7 +13,7 @@ declare var $:any;
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.css']
 })
-export class DashBoardComponent implements OnInit,OnDestroy {
+export class DashBoardComponent implements OnInit {
   _casualty_observeable!:Subscription;
   _evacuation_observeable!:Subscription;
   _event_observable!:Subscription;
@@ -48,16 +49,16 @@ export class DashBoardComponent implements OnInit,OnDestroy {
   deg:any='';
   _observer!:Subscription;
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
-   this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-        console.log(res.id);
-     this.getIncStatus(res.id);
-     this.getVesselStatus(res.id);
-     this.getHelicopterStatus(res.id);
-     this.getCasualtyStatus(res.id);
-     this.getEvacuationStatus(res.id);
-      this.getEventStatus(res.id);
-      this.getProbStatus(res.id);
-    })
+  //  this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
+        // console.log(res.id);
+    //  this.getIncStatus(localStorage.getItem('Inc_id'));
+    //  this.getVesselStatus(localStorage.getItem('Inc_id'));
+    //  this.getHelicopterStatus(localStorage.getItem('Inc_id'));
+    //  this.getCasualtyStatus(localStorage.getItem('Inc_id'));
+    //  this.getEvacuationStatus(localStorage.getItem('Inc_id'));
+    //   this.getEventStatus(localStorage.getItem('Inc_id'));
+    //   this.getProbStatus(localStorage.getItem('Inc_id'));
+    // })
   }
   ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc});}
   go_to_boards(v:any){localStorage.setItem('id_create',v); this.router.navigate(['/Board']);}
@@ -156,14 +157,16 @@ getProbStatus(_id:any){
       this.get_prob_status=res;
       })
 }
-ngOnDestroy(){
-  //.log("destroy");
- this._observer.unsubscribe();
-//  this._casualty_observeable.unsubscribe();
-//  this._evacuation_observeable.unsubscribe();
- //.log("SS");
 
+getIncDetails(e:IncDetails){
 
+    this.getIncStatus(e.id);
+    this.getVesselStatus(e.id);
+    this.getHelicopterStatus(e.id);
+    this.getCasualtyStatus(e.id);
+    this.getEvacuationStatus(e.id);
+     this.getEventStatus(e.id);
+     this.getProbStatus(e.id);
 }
 
 }

@@ -1,5 +1,5 @@
 
-<app-header [headername]="headername" [icon]="icon"></app-header>
+<app-header [headername]="headername" [icon]="icon" (IncStatus)="getIncDetails($event)"></app-header>
 <div class="page-body-wrapper">
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)"  size = "default" color = "#fff"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(255, 255, 255)" class="mt-5"> Loading.... </p></ngx-spinner>
 
@@ -344,6 +344,20 @@
                           </td>
                     </tr>
                   </tbody>
+
+                  <tfoot>
+                    <tr>
+                      <th class="text-center">Time</th>
+                      <th class="text-center">Visibility</th>
+                      <th class="text-center">Sea State</th>
+                      <th class="text-center">Temparature(C/F)</th>
+                      <th class="text-center">Wind Speed (km/h)</th>
+                      <th class="text-center">Wind Direction</th>
+                      <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+                  </tfoot>
           </table>
 
 
@@ -415,6 +429,20 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th class="text-center">Name</th>
+                  <th class="text-center">Type</th>
+                  <th class="text-center">FROM</th>
+                  <th class="text-center">ETD</th>
+                  <th class="text-center">TO</th>
+                  <th class="text-center">ETA</th>
+                  <th class="text-center">Remarks</th>
+                 <th class="text-center" (click)="addRow()">
+                    <i class="fa fa-plus fa-2x"></i>
+                  </th>
+              </tr>
+              </tfoot>
            </table>
 
 
@@ -476,6 +504,20 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                    <th class="text-center">Call Sign</th>
+                    <th class="text-center">Type</th>
+                    <th class="text-center">FROM</th>
+                    <th class="text-center">ETD</th>
+                    <th class="text-center">TO</th>
+                    <th class="text-center">ETA</th>
+                    <th class="text-center">Remarks</th>
+                   <th class="text-center" (click)="addRow()">
+                      <i class="fa fa-plus fa-2x"></i>
+                    </th>
+                </tr>
+            </tfoot>
            </table>
           </div>
           <!-- For POB STATUS -->
@@ -529,6 +571,16 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th class="text-center">Category</th>
+                  <th class="text-center">Time</th>
+                  <th class="text-center">Value</th>
+                 <th class="text-center" (click)="addRow()">
+                    <i class="fa fa-plus fa-2x"></i>
+                  </th>
+              </tr>
+              </tfoot>
            </table>
           </div>
           <!-- For CASUALITY STATUS -->
@@ -591,6 +643,19 @@
                       </td>
                 </tr>
               </tbody>
+
+              <tfoot>
+                <tr>
+                    <th class="text-center">FULL NAME</th>
+                    <th class="text-center">EMPLOYER</th>
+                    <th class="text-center">CONDITION</th>
+                    <th class="text-center">LOCATION</th>
+                    <th class="text-center">TIME</th>
+                   <th class="text-center" (click)="addRow()">
+                      <i class="fa fa-plus fa-2x"></i>
+                    </th>
+                </tr>
+            </tfoot>
            </table>
           </div>
           <!-- For EVACUATION STATUS -->
@@ -650,6 +715,18 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                    <th class="text-center">TIME</th>
+                    <th class="text-center">DESTINATION</th>
+                    <th class="text-center">MODE OF TRANSPORT</th>
+                    <th class="text-center">POB REMAINING</th>
+                    <th class="text-center">REMARKS</th>
+                     <th class="text-center" (click)="addRow()">
+                      <i class="fa fa-plus fa-2x"></i>
+                    </th>
+                </tr>
+            </tfoot>
            </table>
           </div>
             <!-- For EventsLog -->
@@ -689,6 +766,16 @@
                         </td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                      <th class="text-center">TIME</th>
+                      <th class="text-center" rowspan="3">SITUATION STATUS</th>
+                      <th class="text-center">RESOURCE ASSIGNED</th>
+                     <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+              </tfoot>
              </table>
             </div>
                                       <!-- End -->
