@@ -1,9 +1,8 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
@@ -20,7 +19,10 @@ export class HeaderComponent implements OnInit {
   _c_pass:boolean = true;
   _n_pass:boolean = true;
   _o_pass:boolean = true;
-
+  _max_id!:any;
+  localStorageAlice = localStorage;
+  @Input() IncID!:string;
+  @Output() IncStatus= new EventEmitter<IncDetails>();
   @ViewChild('LogForm') LogForm!:NgForm;
   @ViewChild('logForm') profile!:NgForm;
   @Input() headername!:string;
@@ -46,57 +48,53 @@ export class HeaderComponent implements OnInit {
   user_status:any;
   img_src:any;
   tot_casualty:any;
+  // _ActiveIncNum:any=0;
+  _activeInc:any=[];
+  _activeIncBackup:any=[]
+  _selected_Inc:any='';
   hidden = false;
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
-    this.getactiveIncident()
    }
+   getCurrentIncident(){
+    //  console.log(this.localStorageAlice.getItem('Inc_No'));
 
-  getactiveIncident(){
-    this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
-      // console.log(data);
+    this._activeInc.length=0;
+    this._activeIncBackup.length = 0;
+      this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
+        this._activeIncBackup = data;
+        // console.log(data.sort((a:any, b:any) => (a.id < b.id ? -1 : 1)));
 
-      var local = localStorage.getItem('_local_set_val');
-      if(data.length > 1){
-        if(Number(local)>0){
-
+        if(data.length > 1){
+        var local_sel_id = Number(localStorage.getItem('_local_sel_id'));
+          if(local_sel_id > 0){
+                 this.getDetails(Number(localStorage.getItem('Inc_No')))
+          }else{
+            var dt = data.sort((a:any, b:any) => (a.id < b.id ? -1 : 1));//for sorting incident by their Id
+            this.getDetails(Number(dt[dt.length-1].inc_no))
+          }
+        }else if(data.length == 1){
+            this.getDetails(Number(data[0].inc_no))
         }
         else{
-          this.Inc_Name = data[data.length -1].inc_name+" ("+data[data.length -1].inc_no +")";
-          this.Inc_location=data[data.length -1].offshore_name+" ("+data[data.length -1].lat+" : "+data[data.length -1].lon+ ")";
-           this.tier=data[data.length -1].tier_type;
-          this.hours=data[data.length -1].dif_time;
-           this.Inc_type=data[data.length -1].incident_type;
-           this.tot_casualty=data[data.length -1].tot_casualty;
-           localStorage.setItem('Inc_name',data[data.length -1].inc_name);
-          localStorage.setItem('Inc_No',data[data.length -1].inc_no);
-          localStorage.setItem('Inc_id',data[data.length -1].id);
-          this.incDetails.emit(data[data.length -1]);
+          this.Inc_Name = '';
+          this.Inc_location='';
+          this.tier='';
+          this.hours='';
+          this.Inc_type='';
+          this.tot_casualty='';
+          this._selected_Inc = '';
+          localStorage.setItem('Inc_name','');
+          localStorage.setItem('Inc_No','');
+          localStorage.setItem('Inc_id','');
         }
-      }
-      else if(data.length == 1) {
-        this.Inc_Name = data[0].inc_name+" ("+data[0].inc_no +")";
-        this.Inc_location=data[0].offshore_name+" ("+data[0].lat+" : "+data[0].lon+ ")";
-        this.tier=data[0].tier_type;
-         this.hours=data[0].dif_time;
-          this.Inc_type=data[0].incident_type;
-          this.tot_casualty=data[0].tot_casualty;
-          localStorage.setItem('Inc_name',data[0].inc_name);
-          localStorage.setItem('Inc_No',data[0].inc_no);
-          localStorage.setItem('Inc_id',data[0].id);
-          this.incDetails.emit(data[0]);
-      }
-      else{
-        localStorage.setItem('Inc_name','' );
-        localStorage.setItem('Inc_No','');
-        localStorage.setItem('Inc_id','');
-      }
-
-    })
+      })
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getCurrentIncident()
+
      this.get_details();
       //For Getting Department
       this.emergencyservice.global_service('0','/department',"null").subscribe(data=>{
@@ -116,7 +114,10 @@ export class HeaderComponent implements OnInit {
       // this.emergencyservice.listen('get_notification').subscribe(data=>{
       //   console.log(data);
       // })
+
   }
+
+
   public logout(){
     var dt={
       id:localStorage.getItem('Employee_id'),
@@ -249,4 +250,37 @@ export class HeaderComponent implements OnInit {
 
    })
   }
+
+  active_incident(_inc_name:any,_inc_no:any,_inc_id:any){
+    this._activeInc.length =0;
+    localStorage.setItem('_local_sel_id','1');
+     this._selected_Inc = _inc_name+ '('+_inc_no+')';
+     this._activeInc = this._activeIncBackup.filter((x:any) => x.inc_no != _inc_no);
+     this.getDetails(Number(_inc_no));
+      // this.IncStatus.emit(this._activeIncBackup.filter((x:any) => x.inc_no == _inc_no)[0]);
+  }
+
+  getDetails(_inc_no:number){
+    var incStatus = this._activeIncBackup.find((x:any) => x.inc_no == _inc_no);
+    this.Inc_Name = incStatus.inc_name + '(' +incStatus.inc_no +')';
+    this._selected_Inc = this.Inc_Name;
+    this.Inc_location=incStatus.offshore_name+" ("+incStatus.lat+" : "+incStatus.lon+ ")";
+    this.tier=incStatus.tier_type;
+    this.hours=incStatus.dif_time;
+    this.Inc_type=incStatus.incident_type;
+    this.tot_casualty=incStatus.tot_casualty;
+    localStorage.setItem('Inc_name',incStatus.inc_name);
+    localStorage.setItem('Inc_No',incStatus.inc_no);
+    localStorage.setItem('Inc_id',incStatus.id);
+    this.IncStatus.emit(incStatus);
+    this._activeInc = this._activeIncBackup.filter((x:any) => x.id != localStorage.getItem('Inc_id'));
+    //For Getting Current Incident As the cuurent incident has the latest Id;
+    this._max_id = this._activeIncBackup.reduce((prev:any, current:any) => (+prev.id > +current.id) ? prev : current);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes?.IncID?.currentValue){
+      this.getCurrentIncident();
+    }
+}
 }

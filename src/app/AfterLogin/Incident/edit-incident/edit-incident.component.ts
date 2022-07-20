@@ -26,14 +26,14 @@ export class EditIncidentComponent implements OnInit {
 
    }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     this.spinner.show();
     if('edit_incidents' in localStorage){localStorage.removeItem('edit_incidents')}
   //For Incident names in dropdown
    this.emergencyservice.global_service('0','/incident',null).subscribe(data=>{
     // console.log(data);
     this.get_incident=data;
-    this.get_incident=this.get_incident.msg;   
+    this.get_incident=this.get_incident.msg;
   })
   //For getting location in dropdown
   this.emergencyservice.global_service('0','/offshore','flag='+'A').subscribe(data=>{
@@ -50,7 +50,7 @@ export class EditIncidentComponent implements OnInit {
   //  Getting Id from Url
   this.id=this.route.snapshot.params['id'];
     this.emergencyservice.global_service('0','/get_incident','id='+this.id).subscribe(data=>{
-     console.log(data); 
+     console.log(data);
      this.getIncident=data;
      this.getIncident=this.getIncident.msg;
      this.inc_status=this.getIncident[0].inc_status;
@@ -76,7 +76,7 @@ export class EditIncidentComponent implements OnInit {
           $('#closed_date').val(closed_date);
           $('#close_reamrks').val(this.getIncident[0].closing_remarks);
           $('#closed_at').val(closed_at);
-          $('#closed_by').val(this.getIncident[0].closed_by); 
+          $('#closed_by').val(this.getIncident[0].closed_by);
         }
         this.spinner.hide();
     })
@@ -90,14 +90,12 @@ export class EditIncidentComponent implements OnInit {
            if(this.check_respond.suc==1){
              localStorage.setItem('edit_incidents','1');
               var dt=global_url_test.get_dt(this.LogForm.form.value.id,'I',this.LogForm.form.value.inc_name,$('#type option:selected').text(),localStorage.getItem('Email'),'IU',this.datePipe.transform(new Date(),'dd/MM/YYYY hh:mma'));
-              this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{
-                console.log(data);
-               })
-            this.spinner.hide();             
-            this.router.navigate(["/IncidentModule"]);
+              this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{})
+              this.spinner.hide();
+              this.router.navigate(["/IncidentModule"]);
            }
            else{
-            this.spinner.hide();             
+            this.spinner.hide();
             this.toastr.errorToastr('Updation Failed,Please Try Again After Some Time','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:20000});
            }
         })

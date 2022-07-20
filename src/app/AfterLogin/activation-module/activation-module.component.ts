@@ -177,29 +177,27 @@ export class ActivationModuleComponent implements OnInit {
 
 
   Active_member(){
-    console.log(this.selection.selected);
-
-    // if(this._is_activeIncident!= ''){
-    // var res = {
-    //     inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
-    //     team_id:this._team_id,
-    //     team_name:this.selection.selected[0].team_name,
-    //     inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
-    //     user:localStorage.getItem('Email'),
-    //     flag:'Y',
-    //     emp_dt:this.selection.selected
-    // }
-    // this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
-    //   this.check_activity='';
-    //   this.check_activity=data;
-    //   if(this.check_activity.suc==1){
-    //     this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
-    //   }
-    //  })
-    // }
-    // else{
-    //   this.toaster.errorToastr('There is no active incident, you can not active members untill an incident is created');
-    // }
+    if(this._is_activeIncident!= ''){
+    var res = {
+        inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+        team_id:this._team_id,
+        team_name:this.selection.selected[0].team_name,
+        inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
+        user:localStorage.getItem('Email'),
+        flag:'Y',
+        emp_dt:this.selection.selected
+    }
+    this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
+      this.check_activity='';
+      this.check_activity=data;
+      if(this.check_activity.suc==1){
+        this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
+      }
+     })
+    }
+    else{
+      this.toaster.errorToastr('There is no active incident, you can not active members untill an incident is created');
+    }
 
   }
 

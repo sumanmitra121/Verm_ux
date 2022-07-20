@@ -47,7 +47,18 @@ export class DashBoardComponent implements OnInit {
   global_inc:any=1;
   temp:any='';
   deg:any='';
+  _observer!:Subscription;
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
+  //  this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
+        // console.log(res.id);
+    //  this.getIncStatus(localStorage.getItem('Inc_id'));
+    //  this.getVesselStatus(localStorage.getItem('Inc_id'));
+    //  this.getHelicopterStatus(localStorage.getItem('Inc_id'));
+    //  this.getCasualtyStatus(localStorage.getItem('Inc_id'));
+    //  this.getEvacuationStatus(localStorage.getItem('Inc_id'));
+    //   this.getEventStatus(localStorage.getItem('Inc_id'));
+    //   this.getProbStatus(localStorage.getItem('Inc_id'));
+    // })
   }
   ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc});}
   go_to_boards(v:any){localStorage.setItem('id_create',v); this.router.navigate(['/Board']);}
@@ -147,13 +158,15 @@ getProbStatus(_id:any){
       })
 }
 
-getincDetails(event:IncDetails){
-this.getIncStatus(event.id);
-this.getVesselStatus(event.id);
-this.getHelicopterStatus(event.id);
-this.getCasualtyStatus(event.id);
-this.getEvacuationStatus(event.id);
-this.getEventStatus(event.id);
-this.getProbStatus(event.id);
+getIncDetails(e:IncDetails){
+
+    this.getIncStatus(e.id);
+    this.getVesselStatus(e.id);
+    this.getHelicopterStatus(e.id);
+    this.getCasualtyStatus(e.id);
+    this.getEvacuationStatus(e.id);
+     this.getEventStatus(e.id);
+     this.getProbStatus(e.id);
 }
+
 }

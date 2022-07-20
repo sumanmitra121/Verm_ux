@@ -1,7 +1,7 @@
 export class global_url_test{
-    // static URL="http://192.168.1.244:3000/";
+  //static URL="http://192.168.1.244:3000/";
+  //static project_URL="http://localhost:4200/#/Conference"
   static URL="https://vermapi.opentech4u.co.in/";
-  // static project_URL="http://localhost:4200/#/Conference"
   static project_URL="https://verm.opentech4u.co.in/#/Conference";
    //For Create Update closed & approved incident
   static  get_dt(id:any,mode:any,name:any,type:any,user:any,action_type:any,date:any){
