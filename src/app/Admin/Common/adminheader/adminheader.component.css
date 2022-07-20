@@ -1,4 +1,13 @@
-.example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
+
+  .example-large-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+    border-radius: 8px;
   }
+  form{
+    width:100%;
+  }
+

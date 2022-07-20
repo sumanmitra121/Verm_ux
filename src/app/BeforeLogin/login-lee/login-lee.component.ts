@@ -32,6 +32,7 @@ export class LoginLEEComponent implements OnInit {
         localStorage.setItem('User_type',this.check_response.msg[0].user_type);
         localStorage.setItem('active_flag',this.check_response.active_flag);
         // localStorage.setItem('emp_id',this.check_response.id);
+        localStorage.setItem('_local_set_val','0');
         this.spinner.hide();
         this.router.navigate(['/dashboard']);
         }

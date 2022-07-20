@@ -1,3 +1,4 @@
+import { ToastrManager } from 'ng6-toastr-notifications';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -14,31 +15,26 @@ declare var $:any
 })
 export class ActivationModuleComponent implements OnInit {
    //Angular Material Data Table//
+   checkBox_color:any='primary'
+   selection = new SelectionModel<any>(true, []);
+   _is_activeIncident:any= localStorage.getItem('Inc_id');
   displayedColumns: string[] = ['Name', 'employees_no','Action','View'];
-  displayedColumns_employee: string[] = ['Employee_name','Employee_designation'];
+  displayedColumns_employee: string[] = ['select','Employee_name','Employee_designation'];
   displayedColumns_history: string[] = ['From_date', 'To_date'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   get_employee_roaster:any=[];
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource();
   dataSource_employee_roaster= new MatTableDataSource();
-
+  _team_id:any;
     ///END////
-  temp1:any=[];
-  temp:any=[];
-  public endorsementIds: string[] = [];
-  Row:any=[];
   headername:any='Activation Module';
   icon:any='fa-database';
   approval_flag:any=0;
   team_on_duity_data:any=[];
-  team_data:any=[];
-  length:any;
    check_activity:any;
-   check:any=[];
   active_flag:any=localStorage.getItem('active_flag');
-  constructor(private emergencyservice:VirtualEmergencyService,private datePipe:DatePipe) { }
-
+  constructor(private emergencyservice:VirtualEmergencyService,private datePipe:DatePipe,private toaster:ToastrManager) { }
   ngOnInit(): void {
     this.fetchdata();
   }
@@ -52,30 +48,6 @@ export class ActivationModuleComponent implements OnInit {
     this.team_on_duity_data=data;
     this.team_on_duity_data=this.team_on_duity_data.msg;
     this.putdata(this.team_on_duity_data);
-
-    // if(this.team_on_duity_data!=''){
-    // var frm_dt=this.datePipe.transform(this.team_on_duity_data[0].from_date,'YYYY-MM-dd');
-    // var to_dt=this.datePipe.transform(this.team_on_duity_data[0].to_date,'YYYY-MM-dd');
-    // this.emergencyservice.global_service('0','/get_active_status','frm_dt='+frm_dt+'&to_dt='+to_dt+'&inc_id='+localStorage.getItem('Inc_id')+'&team_id='+this.team_on_duity_data[0].team_id).subscribe(data=>{
-    //   console.log(data);
-    //   this.check=data;
-    //   this.check=this.check.msg;
-    //   for(let i=0;i<this.check.length;i++)
-    //   if(this.check[i].active_flag=='N'){
-    //       $('#act_'+i).hide();
-    //       $('#toggle_'+i).show();
-    //   }
-    //   else{
-    //     $('#act_'+i).show();
-    //     $('#act_'+i).removeAttr('hidden');
-    //     $('#toggle_'+i).hide();
-    //   }
-    // })
-    // this.putdata(this.team_on_duity_data);
-    // }
-    // else{
-
-    // }
     });
   }
 
@@ -89,39 +61,41 @@ export class ActivationModuleComponent implements OnInit {
   this.approval_flag=event.value;
   if(event.value=='1'){
     this.displayedColumns=['Name', 'employees_no','View'];
+    this.displayedColumns_employee= ['Employee_name','Employee_designation'];
   }
   else{
     this.displayedColumns=['Name', 'employees_no','Action','View'];
+    this.displayedColumns_employee= ['select','Employee_name','Employee_designation'];
   }
    this.fetchdata();
   }
   //For activate or deactive team
   team_active_deactive(event:any,team_name:any,team_id:any,index:any){
-    var dt={
-      inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
-      team_id:team_id,
-      team_name:team_name,
-      inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
-      user:localStorage.getItem('Email'),
-      flag:event.checked==true?'Y':'N'
+
+    if(localStorage.getItem('Inc_id') != ''){
+      var res={
+        inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+        team_id:team_id,
+        team_name:team_name,
+        inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
+        user:localStorage.getItem('Email'),
+        flag:event.checked==true?'Y':'N'
+      }
+      this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
+        this.check_activity='';
+        this.check_activity=data;
+        if(this.check_activity.suc==1){
+        var dt={id:'0',activity:'A',narration:localStorage.getItem('Email')+' has activated '+team_name+' at '+new Date().toISOString().substring(0,10)};
+        this.push_notfication(dt);
+        this.fetchdata();
+        }
+        else{}
+        })
     }
-    this.emergencyservice.global_service('1','/activation ',dt).subscribe(data=>{
+    else{
+      this.toaster.errorToastr('No Active Incident Available')
+    }
 
-      this.check_activity='';
-      this.check_activity=data;
-      if(this.check_activity.suc==1){
-      // $('#act_'+index).show();
-      // $('#act_'+index).removeAttr('hidden');
-      // $('#toggle_'+index).hide();
-      var dt={id:'0',activity:'A',narration:localStorage.getItem('Email')+' has activated '+team_name+' at '+new Date().toISOString().substring(0,10)};
-      this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{
-      })
-      this.fetchdata();
-      }
-      else{
-
-      }
-      })
   }
 
   //For FilterData from data table
@@ -135,15 +109,24 @@ export class ActivationModuleComponent implements OnInit {
   }
   show_employee_roaster(team_id:any,states:any){
     this.get_employee_roaster.length=0;
+    this._team_id = '';
     if(states=='employee'){
+      this._team_id = team_id;
+    this.selection.clear();
     this.emergencyservice.global_service('0','/assign_team','id=' +team_id).subscribe(data=>{
+
       this.get_employee_roaster=data;
       this.get_employee_roaster=this.get_employee_roaster.msg;
       for(let i=0;i<this.get_employee_roaster.length;i++){
-         this.get_employee_roaster[i].emp_status=this.get_employee_roaster[i].emp_status=='O'?'ON':'OFF';
+        //  this.get_employee_roaster[i].emp_status=this.get_employee_roaster[i].emp_status=='O'?'ON':'OFF';
          this.get_employee_roaster[i].user_type=this.get_employee_roaster[i].user_type=='A'?'Admin':(this.get_employee_roaster[i].user_type=='M'?'Approver':(this.get_employee_roaster[i].user_type=='U'?'User':'Incident Commander'))
       }
       this.putdata_employee(this.get_employee_roaster);
+      // this.get_employee_roaster.forEach((element:any) => {
+
+      //  this.selection
+
+      // });
     })
   }
   else{
@@ -156,28 +139,69 @@ export class ActivationModuleComponent implements OnInit {
   }
   putdata_employee(v:any){
     this.dataSource_employee_roaster=new MatTableDataSource(v);
+    console.log(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
+
+    // this.selection = new SelectionModel<any>(true, this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
+    // this.selection.select(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'))
+    this.dataSource_employee_roaster.data.forEach((element:any) =>{
+      if(element.active_flag == 'Y'){
+        this.selection.toggle(element)
+      }
+    })
   }
 
-//   masterToggle() {
-//     this.isAllSelected() ?
-//         this.selection.clear() :
-//         this.dataSource.data.forEach((row:any) =>
-//           this.selection.select(row))
-//   }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource_employee_roaster.data.length;
+    return numSelected === numRows;
+  }
 
-//   logSelection() {
-//     this.temp1.length=0;
-//     this.temp=this.selection.selected;
-//     console.log(this.temp);
-//     console.log(this.temp.length,this.selection.selected.length)
-//     for(let i=0;i<this.temp.length;i++){
-//       this.temp1[i]={id:this.temp[i].id,name:this.temp[i].contact_name}
-//     }
-//    console.log(this.temp1)
-//   }
-//  isAllSelected() {
-//    const numSelected = this.selection.selected.length;
-//     const numRows = this.dataSource.data.length;
-//     return numSelected === numRows;
-//  }
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.dataSource_employee_roaster.data);
+    console.log(this.selection);
+
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+
+  Active_member(){
+    console.log(this.selection.selected);
+
+    // if(this._is_activeIncident!= ''){
+    // var res = {
+    //     inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+    //     team_id:this._team_id,
+    //     team_name:this.selection.selected[0].team_name,
+    //     inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
+    //     user:localStorage.getItem('Email'),
+    //     flag:'Y',
+    //     emp_dt:this.selection.selected
+    // }
+    // this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
+    //   this.check_activity='';
+    //   this.check_activity=data;
+    //   if(this.check_activity.suc==1){
+    //     this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
+    //   }
+    //  })
+    // }
+    // else{
+    //   this.toaster.errorToastr('There is no active incident, you can not active members untill an incident is created');
+    // }
+
+  }
+
+push_notfication(dt:any){this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{})}
 }

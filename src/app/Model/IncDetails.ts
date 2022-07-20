@@ -1,5 +1,5 @@
 export class IncDetails{
-
+  public id!: number;
   public Inc_Name!: string;
   public Inc_location!:string;
   public tier!:string;
@@ -8,5 +8,6 @@ export class IncDetails{
   public tot_casualty!:string;
   public lat!:string;
   public lon!:string;
+  public offshore_name!:string;
 
 }

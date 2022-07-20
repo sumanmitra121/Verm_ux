@@ -1,5 +1,5 @@
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
@@ -16,6 +16,7 @@ declare var $:any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Output() incDetails = new EventEmitter<IncDetails>();
   _c_pass:boolean = true;
   _n_pass:boolean = true;
   _o_pass:boolean = true;
@@ -49,39 +50,54 @@ export class HeaderComponent implements OnInit {
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
-     this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-       if(res != '' || res!=undefined || res != null){
-       this.Inc_Name = res?.inc_name+" ("+res?.inc_no +")";
-       this.Inc_location=res?.offshore_name+" ("+res?.lat+" : "+res?.lon+ ")";
-       this.tier=res?.tier_type;
-        this.hours=res?.dif_time;
-         this.Inc_type=res?.incident_type;
-         this.tot_casualty=res?.tot_casualty ;
-        }
-     })
+    this.getactiveIncident()
    }
+
+  getactiveIncident(){
+    this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
+      // console.log(data);
+
+      var local = localStorage.getItem('_local_set_val');
+      if(data.length > 1){
+        if(Number(local)>0){
+
+        }
+        else{
+          this.Inc_Name = data[data.length -1].inc_name+" ("+data[data.length -1].inc_no +")";
+          this.Inc_location=data[data.length -1].offshore_name+" ("+data[data.length -1].lat+" : "+data[data.length -1].lon+ ")";
+           this.tier=data[data.length -1].tier_type;
+          this.hours=data[data.length -1].dif_time;
+           this.Inc_type=data[data.length -1].incident_type;
+           this.tot_casualty=data[data.length -1].tot_casualty;
+           localStorage.setItem('Inc_name',data[data.length -1].inc_name);
+          localStorage.setItem('Inc_No',data[data.length -1].inc_no);
+          localStorage.setItem('Inc_id',data[data.length -1].id);
+          this.incDetails.emit(data[data.length -1]);
+        }
+      }
+      else if(data.length == 1) {
+        this.Inc_Name = data[0].inc_name+" ("+data[0].inc_no +")";
+        this.Inc_location=data[0].offshore_name+" ("+data[0].lat+" : "+data[0].lon+ ")";
+        this.tier=data[0].tier_type;
+         this.hours=data[0].dif_time;
+          this.Inc_type=data[0].incident_type;
+          this.tot_casualty=data[0].tot_casualty;
+          localStorage.setItem('Inc_name',data[0].inc_name);
+          localStorage.setItem('Inc_No',data[0].inc_no);
+          localStorage.setItem('Inc_id',data[0].id);
+          this.incDetails.emit(data[0]);
+      }
+      else{
+        localStorage.setItem('Inc_name','' );
+        localStorage.setItem('Inc_No','');
+        localStorage.setItem('Inc_id','');
+      }
+
+    })
+  }
 
   ngOnInit(): void {
      this.get_details();
-    // this.emergencyservice.global_service('0','/get_active_inc',null).subscribe(data=>{
-    //   this.get_incident_details=data;
-    //   this.get_incident_details=this.get_incident_details.msg;
-    //     if(this.get_incident_details!=''){
-    //           this.Inc_Name= this.get_incident_details[0].inc_name+" ("+this.get_incident_details[0].inc_no +")";
-    //           this.Inc_location=this.get_incident_details[0].offshore_name+" ("+this.get_incident_details[0].lat+" : "+this.get_incident_details[0].lon+ ")";
-    //           this.tier=this.get_incident_details[0].tier_type;
-    //           this.hours=this.get_incident_details[0].dif_time;
-    //           this.Inc_type=this.get_incident_details[0].incident_type;
-    //           this.tot_casualty=this.get_incident_details[0].tot_casualty ;
-    //     }
-    //     else{
-    //       this.Inc_Name='';
-    //       this.Inc_location='';
-    //       this.hours='';
-    //       this.tier='';
-
-    //     }
-    //   })
       //For Getting Department
       this.emergencyservice.global_service('0','/department',"null").subscribe(data=>{
         // console.log(data);
@@ -95,43 +111,6 @@ export class HeaderComponent implements OnInit {
         this.get_position=data;
         this.get_position=this.get_position.msg;
       })
-         //For toggling eye and eye-slash for old password
-      //    $(".toggle-password").click(()=>{
-      //     if ($('#old_pass').attr("type") == "password") {
-      //       $('#old_pass').attr("type", "text");
-      //       $('.toggle-password').removeClass("fa-eye-slash");
-      //       $('.toggle-password').addClass("fa-eye");
-      //     } else {
-      //       $('#old_pass').attr("type", "password");
-      //       $('.toggle-password').removeClass("fa-eye");
-      //       $('.toggle-password').addClass("fa-eye-slash");
-      //     }
-      // });
-      //For toggling eye and eye-slash for new password
-    //   $(".toggle-newpassword").click(()=>{
-    //     if ($('#pass').attr("type") == "password") {
-    //       $('#pass').attr("type", "text");
-    //     $('.toggle-newpassword').removeClass("fa-eye-slash");
-    //     $('.toggle-newpassword').addClass("fa-eye");
-    //     } else {
-    //       $('#pass').attr("type", "password");
-    //       $('.toggle-newpassword').removeClass("fa-eye");
-    //       $('.toggle-newpassword').addClass("fa-eye-slash");
-    //     }
-    // });
-      //For toggling eye and eye-slash for confirm password
-    //  $(".toggle-confpassword").click(()=>{
-    //       if ($('#conf_pass').attr("type") == "password") {
-    //         $('#conf_pass').attr("type", "text");
-    //       $('.toggle-confpassword').removeClass("fa-eye-slash");
-    //       $('.toggle-confpassword').addClass("fa-eye");
-    //       } else {
-    //         $('#conf_pass').attr("type", "password");
-    //         $('.toggle-confpassword').removeClass("fa-eye");
-    //         $('.toggle-confpassword').addClass("fa-eye-slash");
-    //       }
-    //   });
-
       // For Getting Notification
       // this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
       // this.emergencyservice.listen('get_notification').subscribe(data=>{

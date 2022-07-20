@@ -139,6 +139,7 @@ import { ResetPasswordComponent } from './Admin/BeforeLogin/reset-password/reset
 import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/forgot-password/forgot-password.component';
 import { UserInfoComponent } from './AfterLogin/user-info/user-info.component';
 import { DialogalertComponent } from './CommonDialogAlert/dialogalert/dialogalert.component';
+
 // End////////
 @NgModule({
   declarations: [

@@ -23,7 +23,9 @@ export class VirtualEmergencyService {
 //  readonly url:any='https://vermapi.opentech4u.co.in';
  constructor(public dialog:MatDialog,private http:HttpClient) {
   // this.socket = io(this.url);
-  this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
+  // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
+  this.socket = io(this.url, {transports: ['polling']});
+
  }
 
   //For Adding new Offshore

@@ -18,7 +18,7 @@ export class UserInfoComponent implements OnInit {
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource<userDtls>();
   get_user_status:any=[];
-  constructor(private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService) { }
+  constructor(private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.spinner.show();
@@ -37,10 +37,8 @@ export class UserInfoComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  get_users(_e:userDtls[]){
-      console.log(_e);
-      this.putdata(_e);
-      this.spinner.hide();
-
+  getUsers(_e:any){
+    this.putdata(_e);
   }
+
 }

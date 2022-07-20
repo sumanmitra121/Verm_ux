@@ -7,9 +7,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import {NgxSpinnerService } from 'ngx-spinner';
-import { from, pipe, timer } from 'rxjs';
+import { from} from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
+import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
 import { validations } from 'src/app/utilitY/validation';
@@ -132,27 +133,15 @@ default_user:any=localStorage.getItem('Email');
     this.now = new Date();
     $('#Time').val(this.datePipe.transform(this.now,'hh:mma'));
   }, 1);
-
-   this.emergencyservice.currentIncdents$.subscribe((res:any) =>{
       ;
-      //.log(res)
-     this.get_incident_details = res;
-     this.act_Inc_id = res?.id;
-     this.Inc_id=res?.inc_no;
-     this.Inc_name=res?.inc_name;
-     this.inc_name=res?.inc_name+" ("+res?.inc_no +" )";
-     this.Inc_location=res?.offshore_name+" ("+res?.lat+" : "+res?.lon+ ")";
-
-      this.SetIncStatus(res?.id);
-      this.SetVesselStatus( res?.id);
-      this.setHelicopterStatus( res?.id);
-      this.setPobStatus( res?.id);
-      this.setCasualtyStatus( res?.id);
-      this.setEvacuationStatus( res?.id);
-      this.setEventStatus( res?.id);
-
-   })
-
+      this.act_Inc_id = localStorage.getItem('Inc_id')
+      this.SetIncStatus(this.act_Inc_id);
+      this.SetVesselStatus(this.act_Inc_id);
+      this.setHelicopterStatus(this.act_Inc_id);
+      this.setPobStatus(this.act_Inc_id);
+      this.setCasualtyStatus(this.act_Inc_id);
+      this.setEvacuationStatus(this.act_Inc_id);
+      this.setEventStatus(this.act_Inc_id);
     }
 
   ngOnInit(): void {
@@ -400,10 +389,10 @@ default_user:any=localStorage.getItem('Email');
   }
   set_modal_for_create(flag:any){
    this.id_create=flag;
-   this.get_incident_details.length=0;
+  //  this.get_incident_details.length=0;
      if(this.id_create=='inc_create'){
-      console.log("inc_create");
-
+      // console.log("inc_create");
+       console.log(this.get_incident_details)
     //For Incident Status
         // this.get_incident_details_after_save.length=0;
         this.get_incident_details_after_save=this.get_in_status;
@@ -430,28 +419,31 @@ default_user:any=localStorage.getItem('Email');
       this.LogForm.form.patchValue({
         "inc_id":localStorage.getItem('Inc_id')
       })
-         //.log(this.get_vessel_status.length)
+         this.vesselArray.length=0;
          this.get_incident_details_after_save=this.get_vessel_status;
         if(this.get_incident_details_after_save.length > 0){
-        this.vesselArray.length=0;
-          this.vesselDynamic=''
+        // this.vesselArray.length=0;
+        this.vesselDynamic=''
         for(let i=0;i<this.get_incident_details_after_save.length;i++){
           this.vesselDynamic = {id:this.get_incident_details_after_save[i].id,vessel_name:this.get_incident_details_after_save[i].vessel_name,vessel_type:this.get_incident_details_after_save[i].vessel_type,form_at:this.get_incident_details_after_save[i].form_at,etd:this.get_incident_details_after_save[i].etd,to_at:this.get_incident_details_after_save[i].to_at,eta:this.get_incident_details_after_save[i].eta,remarks:this.get_incident_details_after_save[i].remarks};
           this.vesselArray.push(this.vesselDynamic);
         }
-      }
-      else{
-        this.vesselDynamic = {id:'0',vessel_name:"",vessel_type: "",form_at:"",etd:"",to_at:"",eta:"",remarks:""};
-        this.vesselArray.push(this.vesselDynamic);
-      }
+        }
+        else{
+          this.vesselDynamic = {id:'0',vessel_name:"",vessel_type: "",form_at:"",etd:"",to_at:"",eta:"",remarks:""};
+          this.vesselArray.push(this.vesselDynamic);
+          console.log(this.vesselArray);
+
+
+        }
      }
      else if(this.id_create=='hel_create'){
       this.LogForm.form.patchValue({
         "inc_id":  localStorage.getItem('Inc_id')
       })
+       this.vesselArray.length=0;
         this.get_incident_details_after_save=this.get_helicopter_status;
         if(this.get_incident_details_after_save.length > 0){
-          this.vesselArray.length=0;
           this.vesselDynamic=''
         for(let i=0;i<this.get_incident_details_after_save.length;i++){
           this.vesselDynamic = {id:this.get_incident_details_after_save[i].id,call_sign:this.get_incident_details_after_save[i].call_sign ,heli_type:this.get_incident_details_after_save[i].heli_type,form_at:this.get_incident_details_after_save[i].form_at,etd:this.get_incident_details_after_save[i].etd,to_at:this.get_incident_details_after_save[i].to_at,eta:this.get_incident_details_after_save[i].eta,remarks:this.get_incident_details_after_save[i].remarks};
@@ -739,7 +731,11 @@ setStatus(index:any,_b_type:any){
 }
 
 SetIncStatus(_id:any){
+  console.log(_id);
+
   this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(data=>{
+    console.log(data);
+
     this.get_in_status = data;
        from(data).pipe(take(1)).subscribe((res:any) =>{
            //.log(res);
@@ -888,19 +884,27 @@ getSetPobStatuc(_id:any){
 }
 setFormvalue(){
   setTimeout(() => {
-    this.LogForm.form.patchValue({
-      "inc_id":this.get_incident_details.id,
+    console.log(this.get_incident_details);
+
+    this.LogForm.form.patchValue
+    ({
+      "inc_id":localStorage.getItem('Inc_id'),
       "installation":this.get_incident_details.offshore_name,
       "coordinates":this.get_incident_details.lat+":"+this.get_incident_details.lon,
       "summary":this.get_in_status.length > 0 ? this.get_in_status[0]?.summary : "",
       "status":this.get_in_status.length > 0 ?this.get_in_status[0]?.status : ""
     })
   },500);
-  console.log(this.get_in_status);
 
 }
 //For Non Numeric Validations
 PreventNonNumeric(_event:any){
    validations._preventnonNumeric(_event)
+}
+getincDetails(event:any){
+     console.log(event)
+    this.get_incident_details = event;
+    this.Inc_name= event.inc_name;
+    this.Inc_id= event.id;
 }
 }

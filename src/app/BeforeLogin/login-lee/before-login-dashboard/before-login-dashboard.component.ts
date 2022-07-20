@@ -6,16 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./before-login-dashboard.component.css']
 })
 export class BeforeLoginDashboardComponent implements OnInit {
-
   constructor() {
-    var timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
-    var d = new Date().toLocaleString('en-US', { timeZone: timeZone });
-    console.log(d.split(',')[1]);
-  }
 
+
+   }
 
   ngOnInit(): void {
   }
-
 }

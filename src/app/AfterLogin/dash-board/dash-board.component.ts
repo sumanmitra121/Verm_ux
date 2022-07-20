@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { from, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 
 declare var $:any;
@@ -12,7 +13,7 @@ declare var $:any;
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.css']
 })
-export class DashBoardComponent implements OnInit,OnDestroy {
+export class DashBoardComponent implements OnInit {
   _casualty_observeable!:Subscription;
   _evacuation_observeable!:Subscription;
   _event_observable!:Subscription;
@@ -46,20 +47,7 @@ export class DashBoardComponent implements OnInit,OnDestroy {
   global_inc:any=1;
   temp:any='';
   deg:any='';
-  _observer!:Subscription;
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
-   this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-     //.log();
-     if(res){
-     this.getIncStatus(res.id);
-     this.getVesselStatus(res.id);
-     this.getHelicopterStatus(res.id);
-     this.getCasualtyStatus(res.id);
-     this.getEvacuationStatus(res.id);
-      this.getEventStatus(res.id);
-      this.getProbStatus(res.id);
-    }
-    })
   }
   ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc});}
   go_to_boards(v:any){localStorage.setItem('id_create',v); this.router.navigate(['/Board']);}
@@ -81,14 +69,17 @@ getTooltipText(v:any,v1:any,v2:any,v3:any,v4:any,v5:any,mode:any){
 }
 getIncStatus(_id:any){
   this.spinner.show('inc_status');
+  console.log(_id);
+
   this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
-    if(res.length > 0){
-      this.inc_visibility = res[0].visibility;
-      this.inc_sea_state=res[0].sea_state;
-      this.deg=res[0].temp.charAt(res[0].temp.length-1);
-      this.temp=res[0].temp.split(this.deg)[0];
-      this.wind_speed=res[0].wind_speed;
-      }
+    console.log(res);
+
+
+      this.inc_visibility = res.length > 0 ? res[0].visibility : '';
+      this.inc_sea_state=res.length > 0 ? res[0].sea_state : "";
+      this.deg=res.length > 0 ? res[0].temp.charAt(res[0].temp.length-1): '';
+      this.temp=res.length > 0 ? res[0].temp.split(this.deg)[0] : '';
+      this.wind_speed=res.length > 0 ? res[0].wind_speed : '';
       this.spinner.hide('inc_status');
   },error => {this.spinner.hide('inc_status');})
 
@@ -155,14 +146,14 @@ getProbStatus(_id:any){
       this.get_prob_status=res;
       })
 }
-ngOnDestroy(){
-  //.log("destroy");
- this._observer.unsubscribe();
-//  this._casualty_observeable.unsubscribe();
-//  this._evacuation_observeable.unsubscribe();
- //.log("SS");
 
-
+getincDetails(event:IncDetails){
+this.getIncStatus(event.id);
+this.getVesselStatus(event.id);
+this.getHelicopterStatus(event.id);
+this.getCasualtyStatus(event.id);
+this.getEvacuationStatus(event.id);
+this.getEventStatus(event.id);
+this.getProbStatus(event.id);
 }
-
 }

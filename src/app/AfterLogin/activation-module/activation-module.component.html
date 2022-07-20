@@ -5,13 +5,6 @@
     <div class="content-wrapper">
         <div class="card">
          <div class="card-body" *ngIf='active_flag!=0'>
-
-<!--
-             <div class="titleSec">
-
-             <h2>Activation Module</h2>
-             </div> -->
-
             <div class="row ">
                 <div class="col-sm-6 m-auto">
                     <mat-radio-group aria-label="Select an option">
@@ -79,12 +72,18 @@
                            <ng-container matColumnDef="Action" >
                             <th mat-header-cell *matHeaderCellDef  > Action</th>
                             <td mat-cell *matCellDef="let row;let i=index"  >
-                             <mat-slide-toggle id='toggle_{{i}}' *ngIf="row.active_flag=='N' || row.active_flag==null || row.active_flag==''" (change)='team_active_deactive($event,row.team_name,row.team_id,i)'
-                             #tooltip="matTooltip"
-                             matTooltip="Slide to activate team"
-                               class="example-margin" color="primary">
-                              </mat-slide-toggle>
-                              <span class='text-primary fs-5' *ngIf="row.active_flag=='Y'"  id='act_{{i}}'>Activated</span>
+                              <ng-container *ngIf="_is_activeIncident != ''">
+                                <mat-slide-toggle id='toggle_{{i}}' *ngIf="row.active_flag=='N' || row.active_flag==null || row.active_flag==''" (change)='team_active_deactive($event,row.team_name,row.team_id,i)'
+                                #tooltip="matTooltip"
+                                matTooltip="Slide to activate team"
+                                  class="example-margin" color="primary">
+                                 </mat-slide-toggle>
+                                 <span class='text-primary fs-5' *ngIf="row.active_flag=='Y'"  id='act_{{i}}'>Activated</span>
+                              </ng-container >
+                              <ng-container *ngIf="_is_activeIncident == ''">
+                                        <b class="text-danger">There is no active incident</b>
+                              </ng-container>
+
                               </td>
                           </ng-container>
 
@@ -145,6 +144,11 @@
       </div>
 </div>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 0ae58acf08e16e99003c2438deae4c5cc1e7b659
 <!-- For View Employees-->
 <div class="modal fade zoom-in" id="exampleModal2"  role="dialog" >
   <div class="modal-dialog modal-dialog-centered   modal-xl" role="document">
@@ -156,8 +160,37 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="mat-elevation-z8">
+        <div class="row mb-2">
+          <div class="col-12 btnSubmitSec" [hidden]="approval_flag > 0">
+            <b [ngClass]="_is_activeIncident != '' ? 'text-success' : 'text-danger'">Note:   {{_is_activeIncident == '' ? 'There is no active incident ' : 'You can either active all members or particular mamber of this team'}}</b>
+            <input type="submit" #active_member value="Active Member/s" [disabled]="selection.selected.length == 0 || _is_activeIncident == ''"  class="btn btn-info float-right" (click)="Active_member()">
+          </div>
+        </div>
+          <div class="mat-elevation-z4">
               <table mat-table [dataSource]="dataSource_employee_roaster" matSort>
+
+
+                      <ng-container matColumnDef="select">
+                                <th mat-header-cell *matHeaderCellDef>
+                                  <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [disabled]="this._is_activeIncident == ''"
+                                  [aria-label]="checkboxLabel()"
+                                  [color]="checkBox_color"
+                                  >
+                                 </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                  <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)"
+                                  [aria-label]="checkboxLabel(row)"
+                                  [color]="checkBox_color"
+                                  [disabled]="this._is_activeIncident == ''"
+                                  >
+                                  </mat-checkbox>
+                                </td>
+                              </ng-container>
 
                 <ng-container matColumnDef="Employee_name">
                   <th mat-header-cell *matHeaderCellDef class="text-center"> Name </th>
@@ -170,15 +203,18 @@
                   <td mat-cell *matCellDef="let row" class="text-center"><span [ngClass]="{'text-style':row.user_type=='Incident Commander'}">{{row.user_type}}</span></td>
               </ng-container>
 
-
-
                 <tr mat-header-row *matHeaderRowDef="displayedColumns_employee"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns_employee;"></tr>
 
 
 
               </table>
+
+
+
+
       </div>
+
 
       </div>
 
@@ -197,31 +233,18 @@
         </button>
       </div>
       <div class="modal-body">
-       <div class="mat-elevation-z8">
+       <div class="mat-elevation-z4">
           <table mat-table [dataSource]="dataSource_employee_roaster" matSort>
-              <!-- Name Column -->
+
             <ng-container matColumnDef="From_date">
               <th mat-header-cell *matHeaderCellDef class="text-center"> From Date </th>
               <td mat-cell *matCellDef="let row" class="text-center">{{row.from_date | date:'dd/MM/YYYY'}}</td>
             </ng-container>
 
-            <!-- Fruit Column -->
             <ng-container matColumnDef="To_date">
               <th mat-header-cell *matHeaderCellDef class="text-center"> To Date </th>
               <td mat-cell *matCellDef="let row" class="text-center">{{row.to_date | date:'dd/MM/YYYY'}}</td>
             </ng-container>
-
-
-            <!-- <ng-container matColumnDef="created_at">
-              <th mat-header-cell *matHeaderCellDef class="text-center"> Created At </th>
-              <td mat-cell *matCellDef="let row" class="text-center">{{row.created_at}}</td>
-            </ng-container>
-
-
-              <ng-container matColumnDef="created_by" >
-                <th mat-header-cell *matHeaderCellDef class="text-center"> Created By </th>
-                <td mat-cell *matCellDef="let row" class="text-center">{{row.created_by}}</td>
-              </ng-container> -->
             <tr mat-header-row *matHeaderRowDef=" displayedColumns_history"></tr>
             <tr mat-row *matRowDef="let row; columns:  displayedColumns_history;"></tr>
 
