@@ -51,51 +51,12 @@ export class HeaderComponent implements OnInit {
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
-
-    // this._activeInc.length = 0
-
-    //  this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-    //   console.log(res)
-    //   this._ActiveIncNum = res.length
-    //   if(res.length > 0){
-    //     var local_sel_id = 0
-    //     if(local_sel_id > 0){
-
-    //     }else{
-    //       this.Inc_Name = res[this._ActiveIncNum-1].inc_name+" ("+res[this._ActiveIncNum-1].inc_no +")";
-    //       this.Inc_location=res[this._ActiveIncNum-1].offshore_name+" ("+res[this._ActiveIncNum-1].lat+" : "+res[this._ActiveIncNum-1].lon+ ")";
-    //       this.tier=res[this._ActiveIncNum-1].tier_type;
-    //       this.hours=res[this._ActiveIncNum-1].dif_time;
-    //       this.Inc_type=res[this._ActiveIncNum-1].incident_type;
-    //       this.tot_casualty=res[this._ActiveIncNum-1].tot_casualty;
-    //     }
-    //   }else{
-    //       this.Inc_Name = data[0].inc_name+" ("+res[0].inc_no +")";
-    //       this.Inc_location=res[0].offshore_name+" ("+res[0].lat+" : "+res[0].lon+ ")";
-    //       this.tier=res[0].tier_type;
-    //       this.hours=res[0].dif_time;
-    //       this.Inc_type=res[0].incident_type;
-    //       this.tot_casualty=res[0].tot_casualty;
-    //   }
-    //   //   this._ActiveIncNum =this._ActiveIncNum +1;
-    //   //  if(res != '' || res!=undefined || res != null){
-    //   //  this.Inc_Name = res?.inc_name+" ("+res?.inc_no +")";
-    //   //  this.Inc_location=res?.offshore_name+" ("+res?.lat+" : "+res?.lon+ ")";
-    //   //  this.tier=res?.tier_type;
-    //   //   this.hours=res?.dif_time;
-    //   //    this.Inc_type=res?.incident_type;
-    //   //    this.tot_casualty=res?.tot_casualty;
-    //   //   }
-    //     // this._activeInc.push(res);
-    //     // console.log(this._activeInc);
-    //  })
-
-    this.getCurrentIncident()
-
    }
    getCurrentIncident(){
     this._activeInc.length=0;
     this._activeIncBackup.length = 0;
+    console.log("SSADA");
+
       this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
         this._activeIncBackup = data;
         console.log(data);
@@ -147,9 +108,13 @@ export class HeaderComponent implements OnInit {
           localStorage.setItem('Inc_id','');
         }
       })
+      console.log(this._selected_Inc);
+
   }
 
   ngOnInit() {
+    this.getCurrentIncident()
+
      this.get_details();
       //For Getting Department
       this.emergencyservice.global_service('0','/department',"null").subscribe(data=>{
@@ -343,7 +308,7 @@ export class HeaderComponent implements OnInit {
      this._selected_Inc = _inc_name+ '('+_inc_no+')';
      this._activeInc = this._activeIncBackup.filter((x:any) => x.inc_no != _inc_no);
      this.getDetails(Number(_inc_no));
-      this.IncStatus.emit(this._activeIncBackup.filter((x:any) => x.inc_no == _inc_no)[0]);
+      // this.IncStatus.emit(this._activeIncBackup.filter((x:any) => x.inc_no == _inc_no)[0]);
   }
 
   getDetails(_inc_no:number){
@@ -360,12 +325,9 @@ export class HeaderComponent implements OnInit {
     localStorage.setItem('Inc_id',incStatus.id);
     this.IncStatus.emit(incStatus);
     this._activeInc = this._activeIncBackup.filter((x:any) => x.id != localStorage.getItem('Inc_id'));
-
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
     if(changes?.IncID?.currentValue){
       this.getCurrentIncident();
     }
