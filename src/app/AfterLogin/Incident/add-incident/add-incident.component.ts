@@ -95,6 +95,7 @@ export class AddIncidentComponent implements OnInit {
       this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{})
       localStorage.setItem('_local_sel_id','0');
       this.incId = this.check_respond.inc_no;
+
       this.LogForm.reset();
       this.spinner.hide();
       this.myFunction();

@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { userDtls } from 'src/app/Model/userDtls';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 @Component({
   selector: 'app-user-info',
@@ -15,19 +16,18 @@ export class UserInfoComponent implements OnInit {
   displayedColumns: string[] = ['User_Name','Position','Team','Status'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) matsort!: MatSort;
-  dataSource= new MatTableDataSource();
+  dataSource= new MatTableDataSource<userDtls>();
   get_user_status:any=[];
-  constructor(private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService) { }
+  constructor(private spinner:NgxSpinnerService) { }
 
-  ngOnInit(): void {this.spinner.show();}
-  fetchdata(){
-
+  ngOnInit(): void {
+    this.spinner.show();
   }
-  putdata(user_details:any[]){
+  putdata(user_details:userDtls[]){
     this.dataSource=new MatTableDataSource(user_details);
     this.dataSource.paginator=this.paginator;
     this.dataSource.sort=this.matsort;
-    this.spinner.hide();
+    // this.spinner.hide();
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -37,7 +37,6 @@ export class UserInfoComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
   getUsers(_e:any){
     this.putdata(_e);
   }

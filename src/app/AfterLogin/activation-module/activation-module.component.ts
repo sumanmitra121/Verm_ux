@@ -18,7 +18,7 @@ export class ActivationModuleComponent implements OnInit {
    checkBox_color:any='primary'
    selection = new SelectionModel<any>(true, []);
    _is_activeIncident:any= localStorage.getItem('Inc_id');
-  displayedColumns: string[] = ['Name', 'employees_no','Action','View'];
+  displayedColumns: string[] = ['Name', 'employees_no','Action','Status','View'];
   displayedColumns_employee: string[] = ['select','Employee_name','Employee_designation'];
   displayedColumns_history: string[] = ['From_date', 'To_date'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -64,7 +64,7 @@ export class ActivationModuleComponent implements OnInit {
     this.displayedColumns_employee= ['Employee_name','Employee_designation'];
   }
   else{
-    this.displayedColumns=['Name', 'employees_no','Action','View'];
+    this.displayedColumns=['Name', 'employees_no','Action','Status','View'];
     this.displayedColumns_employee= ['select','Employee_name','Employee_designation'];
   }
    this.fetchdata();
@@ -93,7 +93,7 @@ export class ActivationModuleComponent implements OnInit {
         })
     }
     else{
-      this.toaster.errorToastr('No Active Incident Available')
+      this.toaster.errorToastr('No Active Incident Available');
     }
 
   }
@@ -148,7 +148,6 @@ export class ActivationModuleComponent implements OnInit {
         this.selection.toggle(element)
       }
     })
-    // this.selection.toggle(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
   }
 
   isAllSelected() {

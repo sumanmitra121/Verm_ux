@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BeforeLoginDashboardComponent implements OnInit {
   constructor() {
-    
-   
+
+
    }
 
   ngOnInit(): void {

@@ -20,17 +20,19 @@
         <div class="dropdown-menu dropdown-menu-end dropdownActive p-3" aria-labelledby="navbarDropdown">
          <ul class="list-unstyled" *ngIf="_selected_Inc !=''">
           <li  class="text-success d-flex">
-            <mat-icon>done</mat-icon>
-            <small class="fs-5">{{_selected_Inc}}</small>
-          <hr/>
+            <mat-icon class="d-flex align-items-center selectedIcon">done</mat-icon>
+            <small >{{_selected_Inc}}</small>
+            <mat-icon class="d-flex align-items-center text-danger selectedIcon" *ngIf="_max_id.inc_no == localStorageAlice.getItem('Inc_No')">beenhere</mat-icon>
 
+          <hr/>
           </li>
          </ul>
 
           <ul class="list-unstyled " *ngFor="let activeInc of _activeInc;let i=index">
-            <li #tooltip="matTooltip" matTooltip="Select {{activeInc.inc_name}} " role="button" class="p-2" (click)="active_incident(activeInc.inc_name,activeInc.inc_no,activeInc.id)">
-              <small >{{activeInc.inc_name}} ({{activeInc.inc_no}})</small>
-              <hr *ngIf="i!= (_activeInc.length-1)"/>
+            <li #tooltip="matTooltip" matTooltip="Select {{activeInc.inc_name}} " role="button" class="d-flex pt-3" (click)="active_incident(activeInc.inc_name,activeInc.inc_no,activeInc.id)">
+              <mat-icon class="d-flex align-items-center selectedIcon text-danger" *ngIf='_max_id.inc_no == activeInc.inc_no'>beenhere</mat-icon>
+              <small class="fs-5" [ngClass]="_max_id.inc_no == activeInc.inc_no ? 'fs-5 font-weight-bold text-danger': 'fs-5 font-weight-bold text-center'">
+                {{activeInc.inc_name}} ({{activeInc.inc_no}})</small>
             </li>
           </ul>
           </div>
@@ -215,16 +217,16 @@
 			                   <input type="hidden" name="emp_id" [(ngModel)]="Emp_id" class="form-control">
 
 								<label>Old Password</label>
-								<input  type="password"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
-								<i class="toggle-password fa fa-eye-slash" style="cursor:pointer"></i>
+								<input  [type]="_o_pass ? 'password' : 'text'"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
+							<i class="toggle-password fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('O')"></i>
 								<div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger">
 									<small>*Please provide old password</small>
 								  </div>
 							</div>
 							<div class="col-6">
 								<label>New Password</label>
-								<input  type="password" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
-								<i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer"></i>
+								<input  [type]="_n_pass ? 'password' : 'text'" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
+							<i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('N')"></i>
 
 								<div *ngIf="pass.errors?.required && (pass.touched || pass.dirty)" class="text-danger">
 									<small>*Please provide new password</small>
@@ -233,8 +235,10 @@
 
 							<div class="col-6 mt-3">
 								<label>Confirm Password</label>
-								<input  type="password" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
-								<i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer"></i>
+								<input   [type]="_c_pass ? 'password' : 'text'" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
+
+							<i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('C')"></i>
+
 								<div *ngIf="conf_pass.errors?.required && (conf_pass.touched || conf_pass.dirty)" class="text-danger">
 									<small>*Please provide confirm password</small>
 								  </div>

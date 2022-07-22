@@ -8,12 +8,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import {NgxSpinnerService } from 'ngx-spinner';
-import { from, pipe, timer } from 'rxjs';
+import { from} from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
 import { validations } from 'src/app/utilitY/validation';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 // import { saveAs } from 'file-saver';
 declare var $:any;
 export class DynamicGrid{
@@ -23,7 +24,8 @@ export class DynamicGrid{
   sea_state:any;
   temp:any;
   wind_speed:any;
-  wind_direc:any
+  wind_direc:any;
+  temp_type!:string;
 }
 export class vesselGrid{
   call_sign:any;
@@ -54,7 +56,13 @@ export class vesselGrid{
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.css']
+  styleUrls: ['./board.component.css'],
+  //For Radio button color//
+  providers: [{
+    provide: MAT_RADIO_DEFAULT_OPTIONS,
+    useValue: { color: 'primary' },
+}]
+  //End//
 })
 export class BoardComponent implements OnInit , OnDestroy{
  alive = true;
@@ -162,7 +170,7 @@ default_user:any=localStorage.getItem('Email');
     this.check_respond='';
       if(this.id_create=='inc_create'){
         for(let i=0;i<this.dynamicArray.length;i++){
-          if(this.dynamicArray[i].time_inc=='' || this.dynamicArray[i].visibility=='' || this.dynamicArray[i].sea_state=='' || this.dynamicArray[i].temp=='' || this.dynamicArray[i].wind_speed=='' || this.dynamicArray[i].wind_direc==''){}
+          if(this.dynamicArray[i].time_inc=='' || this.dynamicArray[i].visibility=='' || this.dynamicArray[i].sea_state=='' || this.dynamicArray[i].temp=='' || this.dynamicArray[i].wind_speed=='' || this.dynamicArray[i].wind_direc=='' ||  this.dynamicArray[i].temp_type==''){}
           else{counter++;}
         }
         if(counter==this.dynamicArray.length){
@@ -414,8 +422,8 @@ default_user:any=localStorage.getItem('Email');
    this.id_create=flag;
   //  this.get_incident_details.length=0;
      if(this.id_create=='inc_create'){
-      console.log("inc_create");
-
+      // //"inc_create");
+       //this.get_incident_details)
     //For Incident Status
         // this.get_incident_details_after_save.length=0;
         this.get_incident_details_after_save=this.get_in_status;
@@ -449,16 +457,20 @@ default_user:any=localStorage.getItem('Email');
           this.vesselDynamic = {id:this.get_incident_details_after_save[i].id,vessel_name:this.get_incident_details_after_save[i].vessel_name,vessel_type:this.get_incident_details_after_save[i].vessel_type,form_at:this.get_incident_details_after_save[i].form_at,etd:this.get_incident_details_after_save[i].etd,to_at:this.get_incident_details_after_save[i].to_at,eta:this.get_incident_details_after_save[i].eta,remarks:this.get_incident_details_after_save[i].remarks};
           this.vesselArray.push(this.vesselDynamic);
         }
-      }
-      else{
-        this.vesselDynamic = {id:'0',vessel_name:"",vessel_type: "",form_at:"",etd:"",to_at:"",eta:"",remarks:""};
-        this.vesselArray.push(this.vesselDynamic);
-      }
+        }
+        else{
+          this.vesselDynamic = {id:'0',vessel_name:"",vessel_type: "",form_at:"",etd:"",to_at:"",eta:"",remarks:""};
+          this.vesselArray.push(this.vesselDynamic);
+          //this.vesselArray);
+
+
+        }
      }
      else if(this.id_create=='hel_create'){
       this.LogForm.form.patchValue({
         "inc_id":  localStorage.getItem('Inc_id')
       })
+       this.vesselArray.length=0;
         this.get_incident_details_after_save=this.get_helicopter_status;
         this.vesselArray.length=0;
         if(this.get_incident_details_after_save.length > 0){
@@ -554,7 +566,7 @@ default_user:any=localStorage.getItem('Email');
     }
   }
 deleteRow(index:any,_b_type:any,details:any) {
-  console.log({"Index":index,"_b_type":_b_type,'details':details});
+  //{"Index":index,"_b_type":_b_type,'details':details});
   const disalogConfig=new MatDialogConfig();
   disalogConfig.disableClose=false;
   disalogConfig.autoFocus=true;
@@ -563,7 +575,7 @@ deleteRow(index:any,_b_type:any,details:any) {
   const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
   dialogref.afterClosed().subscribe(dt=>{
       if(dt ==1){
-        console.log(this.vesselArray);
+        //this.vesselArray);
 
         if(details != '0'){
           this.emergencyservice.global_service('0','/delete_board','board_id='+_b_type+'&id='+details).subscribe(res=>{
@@ -583,7 +595,7 @@ deleteRow(index:any,_b_type:any,details:any) {
           })
         }
         else{
-          console.log('SS');
+          //'SS');
            _b_type > 1 ?  this.vesselArray.splice(index, 1) : this.dynamicArray.splice(index, 1);
         }
 
@@ -749,12 +761,14 @@ setStatus(index:any,_b_type:any){
 }
 
 SetIncStatus(_id:any){
-  console.log(_id)
+  //_id)
   this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(data=>{
+    //data);
+
     this.get_in_status = data;
     this.get_incident_details_after_save = data;
 
-    console.log(data);
+    //data);
 
        from(data).pipe(take(1)).subscribe((res:any) =>{
            //.log(res);
@@ -845,7 +859,7 @@ setEventStatus(_id:any){
         setTimeout(()=>{
           if('id_create' in localStorage){
             //.log("SS");
-             console.log("openModal")
+             //"openModal")
             this.id_create=localStorage.getItem('id_create');
             var modal='#'+this.id_create
             $(modal).click();
@@ -909,26 +923,31 @@ getSetPobStatuc(_id:any){
 }
 setFormvalue(){
   setTimeout(() => {
-    this.LogForm.form.patchValue({
-      "inc_id":this.get_incident_details.id,
+    //this.get_incident_details);
+
+    this.LogForm.form.patchValue
+    ({
+      "inc_id":localStorage.getItem('Inc_id'),
       "installation":this.get_incident_details.offshore_name,
       "coordinates":this.get_incident_details.lat+":"+this.get_incident_details.lon,
       "summary":this.get_in_status.length > 0 ? this.get_in_status[0]?.summary : "",
       "status":this.get_in_status.length > 0 ?this.get_in_status[0]?.status : ""
     })
   },500);
-  console.log(this.get_in_status);
 
 }
 //For Non Numeric Validations
 PreventNonNumeric(_event:any){
    validations._preventnonNumeric(_event)
 }
+preventNumber(_event:any){
+  validations._preventNumber(_event)
+}
 getIncDetails(e:any){
-    this.get_incident_details = e;
-    this.Inc_name = e.inc_name;
-    this.Inc_id = e.id;
-   this.ngOnDestroy();
+      this.get_incident_details = e;
+      this.Inc_name = e.inc_name;
+      this.Inc_id = e.inc_no;
+      this.ngOnDestroy();
       this.SetIncStatus(localStorage.getItem('Inc_id'));
       this.SetVesselStatus(localStorage.getItem('Inc_id'));
       this.setHelicopterStatus(localStorage.getItem('Inc_id'));
@@ -937,6 +956,6 @@ getIncDetails(e:any){
       this.setEvacuationStatus(localStorage.getItem('Inc_id'));
       this.setEventStatus(localStorage.getItem('Inc_id'));
       this.alive = true;
-
 }
+
 }

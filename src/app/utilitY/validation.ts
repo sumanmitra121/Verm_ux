@@ -10,5 +10,11 @@ export class validations{
     if (!charStr.match(/^[0-9]+$/))
       e.preventDefault();
   }
+  //For Prevent Non Number input
+  static _preventNumber(e:any){
+    if (e.keyCode >= 48 && e.keyCode <= 57) {
+      e.preventDefault();
+     }
+  }
 
 }

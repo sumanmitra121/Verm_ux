@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import  { io, Socket }  from 'socket.io-client';//For Socket.io-client implementation
-import { BehaviorSubject, observable, Observable, ReplaySubject, Subject } from 'rxjs';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DialogalertComponent } from '../CommonDialogAlert/dialogalert/dialogalert.component';
+import {Observable, Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { IncDetails } from '../Model/IncDetails';
 @Injectable({
   providedIn: 'root'
