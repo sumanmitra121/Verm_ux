@@ -14,6 +14,7 @@ declare var $:any;
   styleUrls: ['./dash-board.component.css']
 })
 export class DashBoardComponent implements OnInit {
+  _temp_unit:any;
   _casualty_observeable!:Subscription;
   _evacuation_observeable!:Subscription;
   _event_observable!:Subscription;
@@ -47,20 +48,8 @@ export class DashBoardComponent implements OnInit {
   global_inc:any=1;
   temp:any='';
   deg:any='';
-  _observer!:Subscription;
-  constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
-  //  this._observer = this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-        // console.log(res.id);
-    //  this.getIncStatus(localStorage.getItem('Inc_id'));
-    //  this.getVesselStatus(localStorage.getItem('Inc_id'));
-    //  this.getHelicopterStatus(localStorage.getItem('Inc_id'));
-    //  this.getCasualtyStatus(localStorage.getItem('Inc_id'));
-    //  this.getEvacuationStatus(localStorage.getItem('Inc_id'));
-    //   this.getEventStatus(localStorage.getItem('Inc_id'));
-    //   this.getProbStatus(localStorage.getItem('Inc_id'));
-    // })
-  }
-  ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc});}
+  constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {}
+  ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc,emp_code:localStorage.getItem('Employee_id')});}
   go_to_boards(v:any){localStorage.setItem('id_create',v); this.router.navigate(['/Board']);}
 
 getTooltipText(v:any,v1:any,v2:any,v3:any,v4:any,v5:any,mode:any){
@@ -88,10 +77,11 @@ getIncStatus(_id:any){
 
       this.inc_visibility = res.length > 0 ? res[0].visibility : '';
       this.inc_sea_state=res.length > 0 ? res[0].sea_state : "";
-      this.deg=res.length > 0 ? res[0].temp.charAt(res[0].temp.length-1): '';
-      this.temp=res.length > 0 ? res[0].temp.split(this.deg)[0] : '';
+      // this.deg=res.length > 0 ? res[0].temp.charAt(res[0].temp.length-1): '';
+      this.temp=res.length > 0 ? res[0].temp : '';
       this.wind_speed=res.length > 0 ? res[0].wind_speed : '';
       this.spinner.hide('inc_status');
+      this._temp_unit = res.length > 0 ?  res[0].temp_unit : '';
   },error => {this.spinner.hide('inc_status');})
 
 

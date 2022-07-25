@@ -24,10 +24,11 @@ export class UserInfoComponent implements OnInit {
     this.spinner.show();
   }
   putdata(user_details:userDtls[]){
+    console.log(user_details);
     this.dataSource=new MatTableDataSource(user_details);
     this.dataSource.paginator=this.paginator;
     this.dataSource.sort=this.matsort;
-    // this.spinner.hide();
+    this.spinner.hide();
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -30,8 +30,9 @@
                                       <ng-container matColumnDef="Status">
                                           <th mat-header-cell *matHeaderCellDef class='text-center'>Status</th>
                                           <td mat-cell *matCellDef="let row" class='text-center'>
-                                            <strong *ngIf="row.user_status=='O' || row.user_status==null" class='text-danger'>Logged Out</strong>
-                                            <strong *ngIf="row.user_status=='L'" class='text-success'>Logged In</strong>
+                                            <!-- <strong *ngIf="row.user_status=='O' || row.user_status==null" class='text-danger'>Logged Out</strong>
+                                            <strong *ngIf="row.user_status=='L'" class='text-success'>Logged In</strong> -->
+                                            <strong [ngClass]="row.user_status == 'O' ||  row.user_status==null ? 'text-danger' : 'text-success'">{{row.user_status == 'O' || row.user_status==null ? 'Logged out' : row.user_status == 'L' ? 'Logged In' : row.user_status == 'C' ? 'On a Call' : row.user_status == 'S' ? 'Stand Down' : 'In a meeting'}} </strong>
                                          </td>
                                         </ng-container>
 

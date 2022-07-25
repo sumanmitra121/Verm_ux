@@ -51,6 +51,7 @@
                                  </mat-slide-toggle> -->
                                  <mat-slide-toggle id='toggle_{{i}}'  (change)='team_active_deactive($event,row.team_name,row.team_id,i)'
                                  #tooltip="matTooltip"
+                                 [checked]="row.active_flag=='Y'"
                                  matTooltip="Slide to activate team"
                                    class="example-margin" color="primary">
                                   </mat-slide-toggle>
@@ -74,8 +75,8 @@
                            <!-- Fruit Column -->
                            <ng-container matColumnDef="View">
                             <th mat-header-cell *matHeaderCellDef > More </th>
-                            <td mat-cell *matCellDef="let row" >
-                              <a type='button' [matMenuTriggerFor]="menu"><i class="fa fa-ellipsis-v text-dark" aria-hidden="true"></i></a>
+                            <td mat-cell *matCellDef="let row;">
+                              <a type='button' [matMenuTriggerFor]="menu" (click)="getTeamName(row.team_name)"><i class="fa fa-ellipsis-v text-dark" aria-hidden="true"></i></a>
 
                               <mat-menu #menu="matMenu" >
                                 <button mat-menu-item (click)='show_employee_roaster(row.team_id,"employee")' data-toggle="modal" data-target="#exampleModal2">
@@ -128,11 +129,8 @@
       </div>
 </div>
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 0ae58acf08e16e99003c2438deae4c5cc1e7b659
 <!-- For View Employees-->
 <div class="modal fade zoom-in" id="exampleModal2"  role="dialog" >
   <div class="modal-dialog modal-dialog-centered   modal-xl" role="document">
@@ -147,7 +145,7 @@
         <div class="row mb-2">
           <div class="col-12 btnSubmitSec" [hidden]="approval_flag > 0">
             <b [ngClass]="_is_activeIncident != '' ? 'text-success' : 'text-danger'">Note:   {{_is_activeIncident == '' ? 'There is no active incident ' : 'You can either active all members or particular mamber of this team'}}</b>
-            <input type="submit" #active_member value="Active Member/s" [disabled]="selection.selected.length == 0 || _is_activeIncident == ''"  class="btn btn-info float-right" (click)="Active_member()">
+            <input type="submit" #active_member value="Active / De-Active" [disabled]="_is_activeIncident == ''"  class="btn btn-info float-right" (click)="Active_member()">
           </div>
         </div>
           <div class="mat-elevation-z4">

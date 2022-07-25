@@ -26,6 +26,7 @@ export class AdminDashboardComponent implements OnInit {
   get_current_incident:any=[];
   get_current_incident_status:any=[];
   inc_visibility:any='';
+  _temp_unit:any = '';
   inc_sea_state:any='';
   inc_temparature:any='';
   wind_speed:any='';
@@ -65,11 +66,12 @@ export class AdminDashboardComponent implements OnInit {
         if(this.get_current_incident_status!=''){
           this.inc_visibility = this.get_current_incident_status[0].visibility;
           this.inc_sea_state=this.get_current_incident_status[0].sea_state;
-         this.deg=this.get_current_incident_status[0].temp.charAt(this.get_current_incident_status[0].temp.length-1);
-          this.temp=this.get_current_incident_status[0].temp.split(this.deg)[0];
+        //  this.deg=this.get_current_incident_status[0].temp.charAt(this.get_current_incident_status[0].temp.length-1);
+          this.temp=this.get_current_incident_status[0].temp;
           this.wind_speed=this.get_current_incident_status[0].wind_speed;
+          this._temp_unit = this.get_current_incident_status[0].temp_unit;
         }
-       
+
 
       })
       this.emergencyservice.global_service('0','/active_emp_dashboard',null).subscribe(data=>{
