@@ -108,7 +108,7 @@ img {
 
 .loginContainer {
     width: 100%; background: url("../images/bg.jpg") no-repeat center center; background-size: cover;
-    padding:0;
+    padding:35px 0;
     display:flex; align-items: center;
     flex: 1 0 auto; height: 100%;
 }
@@ -217,7 +217,7 @@ img {
 }
 .sidebar ul.nav li.nav-item a i.arowRight{margin-left: auto; font-size: 11px; line-height: 18px; margin-right: 0;}
 
-.main-panel {
+/* .main-panel {
     transition: width 0.25s ease, margin 0.25s ease;
     width: calc(100% - 260px);
     min-height: calc(100vh - 87px);
@@ -225,8 +225,16 @@ img {
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
+} */
+.main-panel {
+  transition: width 0.25s ease, margin 0.25s ease;
+  width: calc(100% - 260px);
+  min-height: calc(100vh - 87px);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column; margin-left: 250px;
 }
-
 .content-wrapper {
     background: #eee;
     padding: 1.75rem 1.312rem;

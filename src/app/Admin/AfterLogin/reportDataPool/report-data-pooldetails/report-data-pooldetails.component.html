@@ -17,7 +17,7 @@
                      <input type="radio" name="logTypes"  #logTypes="ngModel" ngModel value="2" class="m-1"> Manual Log
                  </div>
              </div>
-         <div class="row mt-4">
+          <div class="row mt-4">
              <div class="col-3">
                  <label>Start Date</label>
                  <input type="date" name="frm_date" id="From_date" #frm_date="ngModel" [(ngModel)]="now" class="form-control" required [max]="getToday()">
@@ -91,7 +91,7 @@
                    </div>
                 </div>
             </div>
-           </form>
+        </form>
     </div>
     </div>
     <div class="card mt-4" *ngIf="get_incident_details.length > 0 || multi.length > 0">

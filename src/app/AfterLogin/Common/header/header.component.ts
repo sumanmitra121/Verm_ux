@@ -5,6 +5,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 // import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
+import { Notifiactions } from 'src/app/Model/Notifiactions';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
 
@@ -52,18 +53,16 @@ export class HeaderComponent implements OnInit {
   _activeInc:any=[];
   _activeIncBackup:any=[]
   _selected_Inc:any='';
+  _notification:Notifiactions[]=[];
   hidden = false;
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
    }
    getCurrentIncident(){
-    //  //(this.localStorageAlice.getItem('Inc_No'));
 
     this._activeInc.length=0;
     this._activeIncBackup.length = 0;
-    //("SSADA");
-
       this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
         this._activeIncBackup = data;
         // //(data.sort((a:any, b:any) => (a.id < b.id ? -1 : 1)));
@@ -92,11 +91,12 @@ export class HeaderComponent implements OnInit {
           localStorage.setItem('Inc_id','');
         }
       })
-      //(this._selected_Inc);
 
+      //For Getting notifications
   }
 
   ngOnInit() {
+
     this.getCurrentIncident()
 
      this.get_details();
@@ -118,10 +118,17 @@ export class HeaderComponent implements OnInit {
       // this.emergencyservice.listen('get_notification').subscribe(data=>{
       //   //(data);
       // })
+    this.getNotifications();
 
   }
 
+ getNotifications(){
+  this.emergencyservice.get_logged_employee('notification').subscribe((res:any) =>{
+    console.log(res);
+   this._notification = res;
+  })
 
+ }
   public logout(){
     var dt={
       id:localStorage.getItem('Employee_id'),

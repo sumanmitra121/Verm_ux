@@ -74,29 +74,31 @@ export class VirtualEmergencyService {
 
   //For getting employee list for showing in side pannel in live log
     get_logged_employee(eventname:any){
+       console.log(eventname)
       return new Observable((observer)=>{
         this.socket.on(eventname,(news:Observable<any>)=>{
+          console.log(eventname);
               observer.next(news);
               //  console.log(news);
         })
       })
     }
 
-
-  // public  get_old_messages(){
-  //     return new Observable((observer)=>{
-  //       this.socket.listen('oldMessage',(data:Observable<any>)=>{
-  //         console.log(data)
-  //         observer.next(data);
-
-  //       })
-  //     })
-  //   }
+    //For Getting notifications
+    get_notifications(eventname:any){
+      console.log(eventname)
+     return new Observable((observer)=>{
+       this.socket.on(eventname,(news:Observable<any>)=>{
+         console.log(news);
+         observer.next(news);
+       })
+     })
+   }
 
 
   //For Listening api for chats
    listen(eventname:any){
-    //  console.log(eventname);
+     console.log(eventname);
     return new Observable((observer)=>{
       this.socket.on(eventname,(news:Observable<any>)=>{
             observer.next(news);
@@ -147,6 +149,13 @@ export class VirtualEmergencyService {
     localStorage.setItem('chats', JSON.stringify(data));
   }
 
+  // getNotifications(eventname:any){
+  //   return new Observable((observer)=>{
+  //     this.socket.on(eventname,(news:Observable<any>)=>{
+  //           observer.next(news);
+  //     })
+  //   })
+  // }
 
   setcurrInc(_inc:IncDetails){this._incDetails.next(_inc);}
 

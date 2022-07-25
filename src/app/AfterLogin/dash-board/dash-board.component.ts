@@ -6,8 +6,6 @@ import { from, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
-
-declare var $:any;
 @Component({
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',

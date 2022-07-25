@@ -10,6 +10,12 @@
   padding: 16px;
   border-radius: 8px;
 } */
+.logoutPopup .NotificationContent{
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+}
 
 
 

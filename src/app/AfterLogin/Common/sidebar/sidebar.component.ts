@@ -19,6 +19,7 @@ export class SidebarComponent implements OnInit,OnDestroy {
   @Output() _u_status = new EventEmitter<userStatus>();
   incArr:any=[];
    message_count:any=0;
+   _notification:any=[];
    badge:any;
    _inc_details:IncDetails[] =[];
    _obser!:Subscription;
@@ -39,7 +40,6 @@ export class SidebarComponent implements OnInit,OnDestroy {
       localStorage.setItem('message_come',this.message_count);
     })
 
-    this.getIncidentDetails();
     this.checkStatus();
   }
   checkStatus(){
@@ -50,14 +50,7 @@ export class SidebarComponent implements OnInit,OnDestroy {
             }
       })
   }
-  getIncidentDetails(){
-  // this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
-  //   localStorage.setItem('Inc_name',data.length > 0 ? data[data.length -1].inc_name : '' );
-  //   localStorage.setItem('Inc_No',data.length > 0 ? data[data.length -1].inc_no : '' );
-  //   localStorage.setItem('Inc_id',data.length > 0 ?  data[data.length -1].id  : '');
 
-  // })
-  }
   ngOnDestroy(): void {
     // this._obser.unsubscribe();
   }

@@ -57,11 +57,23 @@
 
 		<ul class="topMenuRight">
 		<li class="userDrop dropdown">
-			<a  class="nav-link"  matBadge="4" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="hidden" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
+			<a  class="nav-link"  [matBadge]="_notification.length" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="hidden" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
 			<div class="dropdown-menu logoutPopup">
-				<div class="user">
-
+        <ng-container *ngIf="_notification.length > 0">
+          <div class="NotificationContent" *ngFor="let notify of _notification;let i=index">
+            <ng-container *ngIf="i < 4">
+              {{notify.narration}}
+            </ng-container>
+            <hr *ngIf="i < 4"/>
 				</div>
+        </ng-container>
+        <ng-container  *ngIf="_notification.length  == 0">
+              <div class="user">
+                <h3>No Notfications Available</h3>
+              </div>
+        </ng-container>
+
+         <button class="btn btn-success btn-block btn-sm" *ngIf="_notification.length > 4">Show All</button>
 			</div>
 		</li>
 		<li class="active dropdown">
