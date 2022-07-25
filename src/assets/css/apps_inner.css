@@ -943,3 +943,64 @@ b{font-size: 14px;color:black;}
   color: #cf2525;
   cursor:pointer;
 }
+
+.landingContainer {
+  width: 100%;
+  background: url("../images/bg.jpg") no-repeat center center;
+    background-size: auto;
+  background-size: cover;
+  padding: 0;
+  display: flex;
+  /* align-items: center; */
+  flex: 1 0 auto; height: 100%;
+  padding-top: 20px; padding-bottom: 20px;
+}
+
+.landingContainerSub {
+  max-width: 1110px; position: relative;
+  width: 100%;
+  margin: 0 auto; background: #fff; padding:15px; border-radius: 10px; 
+}
+
+app-root{
+  height: 100%;
+}
+
+app-before-login-dashboard, app-login-lee {
+  height: 100%; display: block;
+}
+
+.logoLanding{display: inline-block; width: 100%;}
+.logoLanding .logoLogin{}
+
+.logoSec{float: none; padding-right: 0; width: 100%; padding-bottom: 10px; text-align: center;}
+.logoRightTxt{font-size: 34px; padding-top: 12px; color: #4870de; font-weight: 900; font-style: italic; width: 100%; text-align: center;}
+
+
+.mainContainerLanding {
+  padding:150px 0 45px 0; display: inline-block; width: 100%;
+}
+
+.boxLanding{box-shadow:0 0 10px 5px #dbd9d9; background: #f4f2f2; border-radius: 5px; padding:15px 15px;}
+
+.boxLanding .iconLand{width: 78px; height: 78px; margin: 0 auto; border-radius: 50px; overflow: hidden; align-items: center; display: flex;}
+.boxLanding .iconLand img{margin: 0 auto;}
+.iconColor_1{background: #379ce2;}
+.iconColor_2{background: #fbbc04;}
+.iconColor_3{background: #33a652;}
+
+.boxLanding button.btn{color: #272727; font-size: 19px; margin-top: 10px; padding: 0; line-height: 20px;} 
+
+.footerLand{color: #333;
+  font-size: 15px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 18px;}
+
+
+
+
+
+
