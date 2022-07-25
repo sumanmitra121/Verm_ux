@@ -951,13 +951,17 @@ b{font-size: 14px;color:black;}
   display: flex;
   /* align-items: center; */
   flex: 1 0 auto; height: 100%;
-  padding-top: 20px; padding-bottom: 20px;
+  padding-top: 20px; padding-bottom: 20px; align-items: center;
 }
 
 .landingContainerSub {
-  max-width: 1110px; position: relative;
-  width: 100%;
-  margin: 0 auto; background: #fff; padding:15px; border-radius: 10px; 
+  max-width: 450px; 
+position: relative;
+width: 100%;
+margin: 0 auto;
+background: #fff;
+padding: 15px;
+border-radius: 10px; height: fit-content;
 }
 
 app-root{
@@ -972,22 +976,42 @@ app-before-login-dashboard, app-login-lee {
 .logoLanding .logoLogin{}
 
 .logoSec{float: none; padding-right: 0; width: 100%; padding-bottom: 10px; text-align: center;}
-.logoRightTxt{font-size: 34px; padding-top: 12px; color: #4870de; font-weight: 900; font-style: italic; width: 100%; text-align: center;}
+.logoRightTxt{font-size: 23px;
+  padding-top: 0;
+  color: #4870de;
+  font-weight: 900;
+  width: 100%;
+  text-align: center;
+  line-height: 32px;}
 
 
 .mainContainerLanding {
-  padding:150px 0 45px 0; display: inline-block; width: 100%;
+  padding:55px 0 45px 0; display: inline-block; width: 100%;
 }
 
-.boxLanding{box-shadow:0 0 10px 5px #dbd9d9; background: #f4f2f2; border-radius: 5px; padding:15px 15px;}
+.boxLanding{box-shadow:0 0 10px 5px #dbd9d9; background: #f4f2f2; border-radius: 50px; padding:0; display: inline-block; width: 100%;}
 
-.boxLanding .iconLand{width: 78px; height: 78px; margin: 0 auto; border-radius: 50px; overflow: hidden; align-items: center; display: flex;}
-.boxLanding .iconLand img{margin: 0 auto;}
+.boxLanding .iconLand{width: 45px; height: 45px; margin: 0 auto; border-radius: 50px; overflow: hidden; align-items: center; display: flex;float: left;}
+.boxLanding .iconLand img{margin: 0 auto; max-width: 35px;}
 .iconColor_1{background: #379ce2;}
 .iconColor_2{background: #fbbc04;}
 .iconColor_3{background: #33a652;}
 
-.boxLanding button.btn{color: #272727; font-size: 19px; margin-top: 10px; padding: 0; line-height: 20px;} 
+.boxLanding button.btn{color: #272727;
+  color: #3c3c3c;
+font-size: 17px;
+  margin-top: 12px;
+  padding: 0;
+    padding-top: 0px;
+    padding-left: 0px;
+  line-height: 20px;
+  float: left;
+  width: 213px;
+  padding-left: 15px;
+  padding-top: 0;
+  text-align: left;} 
+
+ .mainContainerLanding .col-sm-4 {float: none !important; margin: 0 auto 25px auto; max-width: 100%;}
 
 .footerLand{color: #333;
   font-size: 15px;
