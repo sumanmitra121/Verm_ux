@@ -76,10 +76,10 @@ export class VirtualEmergencyService {
     get_logged_employee(eventname:any){
        console.log(eventname)
       return new Observable((observer)=>{
+         console.log(observer);
         this.socket.on(eventname,(news:Observable<any>)=>{
           console.log(eventname);
               observer.next(news);
-              //  console.log(news);
         })
       })
     }

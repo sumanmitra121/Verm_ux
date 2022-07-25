@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
   _activeInc:any=[];
   _activeIncBackup:any=[]
   _selected_Inc:any='';
-  _notification:Notifiactions[]=[];
+  _notification:any=[];
   hidden = false;
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
@@ -96,7 +96,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.getCurrentIncident()
 
      this.get_details();
@@ -118,14 +117,13 @@ export class HeaderComponent implements OnInit {
       // this.emergencyservice.listen('get_notification').subscribe(data=>{
       //   //(data);
       // })
-    this.getNotifications();
-
+  this.getNotifications();
   }
 
  getNotifications(){
-  this.emergencyservice.get_logged_employee('notification').subscribe((res:any) =>{
-    console.log(res);
-   this._notification = res;
+    this.emergencyservice.listen('notification').subscribe(data=>{
+    console.log(data);
+    this._notification = data;
   })
 
  }
@@ -290,6 +288,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.getNotifications();
+
     if(changes?.IncID?.currentValue){
       this.getCurrentIncident();
     }
