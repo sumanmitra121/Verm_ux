@@ -1,18 +1,50 @@
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
 	<div class="text-left navbar-brand-wrapper d-flex logo"><img src="assets/images/logoWhit.png" alt=""/>
+    <!-- <b class="m-auto Blink text-success" style="font-size: 10px;">{{_ActiveIncNum}} Incident Activated</b> -->
+
 	</div>
 	<div class="navbar-menu-wrapper d-flex align-items-center">
 		<div class="breadCamp" *ngIf='active_flag!=0'>
 			<!--<a><i class="fa {{icon}}" aria-hidden="true"></i></a>  <strong>{{headername}}</strong> -->
 			<div class="insidentDataCont" *ngIf="Inc_Name!= ''">
 			<ul class="topinsidentData2 topinsidentData2_1">
-			<li class="typeCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_type}}"><strong>Type:</strong> {{Inc_type}}</li>
-			<li class="nameCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_Name}}"><strong>Name:</strong> {{Inc_Name}}</li>
+			<li class="typeCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_type}}"><strong>Type:</strong>
+        {{(Inc_type.length > 20 ) ? (Inc_type | slice:0:18)+'..':(Inc_type)}}
+
+      </li>
+			<li class="nameCl locationCl active dropdown"  >
+        <strong >Name:</strong>
+        <span #tooltip="matTooltip" matTooltip="{{Inc_Name}}">{{(Inc_Name.length > 20 )? (Inc_Name | slice:0:18)+'..':(Inc_Name)}}</span>
+
+        <a #tooltip="matTooltip" matTooltip="click to preview all incident list"  data-toggle="dropdown" *ngIf="_activeIncBackup.length > 1" aria-haspopup="true" role="button" aria-expanded="false"><mat-icon class="customArrow">arrow_downward</mat-icon></a>
+        <div class="dropdown-menu dropdown-menu-end dropdownActive p-3" aria-labelledby="navbarDropdown">
+         <ul class="list-unstyled" *ngIf="_selected_Inc !=''">
+          <li  class="text-success d-flex">
+            <mat-icon class="d-flex align-items-center selectedIcon">done</mat-icon>
+            <small >{{_selected_Inc}}</small>
+            <mat-icon class="d-flex align-items-center text-danger selectedIcon" *ngIf="_max_id.inc_no == localStorageAlice.getItem('Inc_No')">beenhere</mat-icon>
+
+          <hr/>
+          </li>
+         </ul>
+
+          <ul class="list-unstyled " *ngFor="let activeInc of _activeInc;let i=index">
+            <li #tooltip="matTooltip" matTooltip="Select {{activeInc.inc_name}} " role="button" class="d-flex pt-3" (click)="active_incident(activeInc.inc_name,activeInc.inc_no,activeInc.id)">
+              <mat-icon class="d-flex align-items-center selectedIcon text-danger" *ngIf='_max_id.inc_no == activeInc.inc_no'>beenhere</mat-icon>
+              <small class="fs-5" [ngClass]="_max_id.inc_no == activeInc.inc_no ? 'fs-5 font-weight-bold text-danger': 'fs-5 font-weight-bold text-center'">
+                {{activeInc.inc_name}} ({{activeInc.inc_no}})</small>
+            </li>
+          </ul>
+          </div>
+      </li>
 			</ul>
 			<ul class="topinsidentData2 topinsidentData2_2">
 			<li class="tierCl locationCl" #tooltip="matTooltip" matTooltip="{{tier}}"><strong>Tier:</strong> {{tier}}</li>
 			<li class="locationCl" #tooltip="matTooltip"
-			matTooltip="{{Inc_location}}"><strong>Location:</strong> {{Inc_location}}</li>
+			matTooltip="{{Inc_location}}"><strong>Location:</strong>
+      {{(Inc_location.length > 20 )? (Inc_location | slice:0:30)+'..':(Inc_location)}}
+
+    </li>
 			</ul>
 			<ul class="topinsidentData2 topinsidentData2_3">
 			<li class="casualtyCl"><strong>Casualty:</strong> {{tot_casualty}}</li>
@@ -28,6 +60,7 @@
 			<a  class="nav-link"  matBadge="4" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="hidden" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
 			<div class="dropdown-menu logoutPopup">
 				<div class="user">
+
 				</div>
 			</div>
 		</li>
@@ -51,9 +84,9 @@
 			</li>
 
 
-		<li class="userDrop dropdown"><a class="nav-link" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
-            <img src="{{img_src}}" alt="profile" class="thumImg">
-            <!-- <span class="nav-profile-name">{{name}}</span> -->
+		<li class="userDrop dropdown">
+      <a  class="nav-link" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"
+     ><img src="{{img_src}}" alt="profile" class="thumImg">
           </a>
 		<div class="dropdown-menu logoutPopup">
 			<a  class="profileEditPopup" data-toggle="modal" data-target="#Employee_profile" ><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</a>
@@ -61,40 +94,17 @@
 			<div class="thumLogout"><img src="{{img_src}}" alt="profile" class="thumImg"></div>
 			<div class="user">
 			{{name}}
-			<!-- <a >{{email}}</a> -->
-			<!-- <ng-template [ngIf]="user_type=='I'" [ngIfElse]="loggedOut">
-				<a >Incident Commander</a>
-			  </ng-template>
-
-			  <ng-template #loggedOut>
-				<a >User</a>
-
-			  </ng-template> -->
 			  <p *ngIf="user_type=='I'" class="text-success	">Incident Commander</p>
 			  <p *ngIf="user_type=='U'">User</p>
 
 			</div>
-			<!-- <ul class="portfolioStatus">
-				<li><a href=""><i class="fa fa-meetup activeStatus" aria-hidden="true"></i>In a meeting</a></li>
-				<li><a href=""><i class="fa fa-phone activeStatus" aria-hidden="true"></i>on a call</a></li>
-				<li><a href=""><i class="fa fa-times-circle-o activeStatus" aria-hidden="true"></i>Time out</a></li>
-				<li><a href=""><i class="fa fa-circle activeStatus" aria-hidden="true"></i>Standown</a></li>
-			</ul> -->
-
-
-
 			<a (click)="logout()" class="signOut">Sign Out</a>
-			<label class="or">Or</label>
-			<a class="handOver">Hand Over</a>
 
 			</div>
 
 			</li>
 
 		</ul>
-		<!-- <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-          <span class="fa fa-bars"></span>
-      </button> -->
 
 	</div>
 
@@ -207,16 +217,16 @@
 			                   <input type="hidden" name="emp_id" [(ngModel)]="Emp_id" class="form-control">
 
 								<label>Old Password</label>
-								<input  type="password"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
-								<i class="toggle-password fa fa-eye-slash" style="cursor:pointer"></i>
+								<input  [type]="_o_pass ? 'password' : 'text'"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
+							<i class="toggle-password fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('O')"></i>
 								<div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger">
 									<small>*Please provide old password</small>
 								  </div>
 							</div>
 							<div class="col-6">
 								<label>New Password</label>
-								<input  type="password" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
-								<i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer"></i>
+								<input  [type]="_n_pass ? 'password' : 'text'" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
+							<i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('N')"></i>
 
 								<div *ngIf="pass.errors?.required && (pass.touched || pass.dirty)" class="text-danger">
 									<small>*Please provide new password</small>
@@ -225,8 +235,10 @@
 
 							<div class="col-6 mt-3">
 								<label>Confirm Password</label>
-								<input  type="password" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
-								<i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer"></i>
+								<input   [type]="_c_pass ? 'password' : 'text'" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
+
+							<i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('C')"></i>
+
 								<div *ngIf="conf_pass.errors?.required && (conf_pass.touched || conf_pass.dirty)" class="text-danger">
 									<small>*Please provide confirm password</small>
 								  </div>

@@ -1,28 +1,11 @@
 
-<app-header [headername]="headername" [icon]="icon"></app-header>
+<app-header [headername]="headername" [icon]="icon" (IncStatus)="getIncDetails($event)"></app-header>
 <div class="page-body-wrapper">
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)"  size = "default" color = "#fff"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(255, 255, 255)" class="mt-5"> Loading.... </p></ngx-spinner>
 
 <app-sidebar class="sidebarMain"></app-sidebar>
 <div class="main-panel">
   <div class="content-wrapper">
-    <!-- <div class="row" *ngIf="get_incident_details!=''">
-      <div class="col-4">
-        <h3 class="text-dark"><strong>Incident Name: {{inc_name}}</strong></h3>
-      </div>
-      <div class="col-4">
-        <h3 class="text-dark"><strong>Location: {{Inc_location}}</strong></h3>
-
-      </div>
-      <div class="col-2">
-      <h3 class="text-dark"><strong>Initial tier:&nbsp;Tier1</strong></h3>
-      </div>
-      <div class="col-2">
-      <h3 class="text-dark"><strong>Days Elapsed:&nbsp;7</strong></h3>
-
-      </div>
-     </div> -->
-
     <div class="card whiteBoxComon_cardCus">
 
      <div class="card-body">
@@ -37,6 +20,8 @@
               <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
             </div>
             <div class="card_bodyCustom">
+             <!-- <h3 id="first-item"></h3> -->
+
               <ul class="listDashboard" *ngIf="get_in_status.length > 0">
                 <li><strong>Visibility:</strong> {{inc_visibility}}</li>
                 <li><strong>Sea State:</strong> {{inc_sea_state}}</li>
@@ -46,6 +31,13 @@
                 </li>
                 <li><strong>Wind Speed:</strong> {{wind_speed!='' ? wind_speed+'km/h' : 'N/A'}}</li>
               </ul>
+              <ng-container *ngIf="get_in_status.length == 0">
+                <ul class="boardStatus">
+									<li>
+										<h5 class="NoBoardStatusAvailable">No Incident Status Available</h5>
+									</li>
+								</ul>
+              </ng-container>
             </div>
           </div>
          </div>
@@ -56,21 +48,20 @@
               <h2 class="pull-left text-dark titleDashBox">Vessel Status</h2>
             </div>
             <div class="card_bodyCustom">
-              <!-- <mat-list *ngIf="get_vessel_status!=''">
-                <mat-list-item id="first-item" class="text-center"><h2 >{{this.ves_name}}</h2></mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item id="second-item" ><b >From:</b >&nbsp;&nbsp;{{this.form_at}}</mat-list-item>
-                <mat-list-item  id="third-item" ><b>To:</b >&nbsp;&nbsp;{{this.to_at}}</mat-list-item>
-                <mat-list-item  ></mat-list-item>
-
-             </mat-list> -->
-             <div *ngIf="get_vessel_status!=''">
+             <ng-container *ngIf="get_vessel_status.length > 0">
             <h3 id="first-item">{{this.ves_name}}</h3>
              <ul class="listDashboard">
               <li id="second-item" ><strong>From:</strong> {{this.form_at}}</li>
               <li id="third-item" ><strong>To:</strong > {{this.to_at}}</li>
             </ul>
-            </div>
+          </ng-container>
+          <ng-container *ngIf="get_vessel_status.length == 0">
+            <ul class="boardStatus">
+              <li>
+                <h5 class="NoBoardStatusAvailable">No Vessel Status Available</h5>
+              </li>
+            </ul>
+          </ng-container>
             </div>
         </div>
          </div>
@@ -81,20 +72,20 @@
               <h2 class="pull-left text-dark titleDashBox">Helicopter Status</h2>
             </div>
             <div class="card_bodyCustom">
-              <!-- <mat-list *ngIf="get_helicopter_status!=''">
-                <mat-list-item id="first-helicopter" class="text-center"><h2>{{call_sign}}</h2></mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item id="second-helicopter" ><b>From:</b>&nbsp;&nbsp;{{hel_from}}</mat-list-item>
-                <mat-list-item  id="third-helicopter" ><b>To:</b>&nbsp;&nbsp;{{hel_to}}</mat-list-item>
-                <mat-list-item  ></mat-list-item>
-              </mat-list> -->
-              <div *ngIf="get_helicopter_status!=''">
+              <ng-container *ngIf="get_helicopter_status.length > 0">
               <h3 id="first-helicopter">{{call_sign}}</h3>
              <ul class="listDashboard">
               <li id="second-helicopter" ><strong>From:</strong> {{hel_from}}</li>
               <li id="third-helicopter" ><strong>To:</strong > {{hel_to}}</li>
             </ul>
-            </div>
+            </ng-container>
+            <ng-container *ngIf="get_helicopter_status.length == 0">
+              <ul class="boardStatus">
+                <li>
+                  <h5 class="NoBoardStatusAvailable">No Helicopter Status Available</h5>
+                </li>
+              </ul>
+            </ng-container>
 
             </div>
           </div>
@@ -102,28 +93,25 @@
          <div class="col-3">
           <!-- POB status -->
           <div class="whiteBoxComon" type="button" id="pob" (click)="set_modal_for_create('pob')"  data-toggle="modal" data-target="#create_incident_modal">
-            <!-- <div class="card-header card_headerCustom">
-              <h2 class="pull-left text-dark titleDashBox"> Pob Status</h2>
-
-            </div>
-            <div class="card_bodyCustom">
-            <ngx-spinner bdColor = ""  name="pob" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Loading.... </p></ngx-spinner>
-            <div *ngIf="get_prob_status!=''">
-              <ul class="listDashboard">
-               <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
-             </ul>
-             </div>
-
-            </div> -->
             <div class="card-header card_headerCustom">
               <h2 class="pull-left text-dark titleDashBox">Pob Status</h2>
               <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
             </div>
-            <div class="card_bodyCustom" *ngIf="get_prob_status!=''">
+            <div class="card_bodyCustom" >
               <h3 id="first-item"></h3>
-              <ul class="listDashboard" >
-                <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
-              </ul>
+              <ng-container *ngIf="get_prob_status.length > 0">
+                <ul class="listDashboard" >
+                  <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
+                </ul>
+              </ng-container>
+              <ng-container *ngIf="get_prob_status.length == 0">
+                <ul class="boardStatus">
+                  <li>
+                    <h5 class="NoBoardStatusAvailable">No Pob Status Available</h5>
+                  </li>
+                </ul>
+              </ng-container>
+
             </div>
 
           </div>
@@ -140,25 +128,23 @@
 
           </div>
         <div class="card_bodyCustom">
-
-          <!-- <mat-list *ngIf="get_casualty_status!=''">
-            <mat-list-item id="full_name"><b>Total:</b>{{total}}</mat-list-item>
-            <mat-list-item id="location" ><b>Location:</b>{{Location}}</mat-list-item>
-            <mat-list-item  id="location" ><b>Lat:</b>{{this.lat}}</mat-list-item>
-            <mat-list-item  id="location" ><b>Long:</b>{{this.long}}</mat-list-item>
-         </mat-list> -->
-
-         <div *ngIf="get_casualty_status!=''">
         <h3 id="first-item"></h3>
 
+         <ng-container *ngIf="get_casualty_status.length > 0">
          <ul class="listDashboard">
           <li id="full_name"><strong>Total:</strong> {{total}}</li>
           <li id="location" ><strong>Location:</strong> {{Location}}</li>
           <li id="location" ><strong>Lat:</strong> {{this.lat}}</li>
           <li id="location" ><strong>Long:</strong> {{this.long}}</li>
         </ul>
-        </div>
-
+        </ng-container>
+        <ng-container *ngIf="get_casualty_status.length == 0">
+          <ul class="boardStatus">
+            <li>
+              <h5 class="NoBoardStatusAvailable">No Casualty Status Available</h5>
+            </li>
+          </ul>
+        </ng-container>
         </div>
       </div>
          </div>
@@ -169,22 +155,21 @@
         <h2 class="pull-left text-dark titleDashBox">Evacuation Status</h2>
       </div>
       <div class="card_bodyCustom">
-        <ngx-spinner bdColor = ""  name="evacuation" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner>
-        <!-- <mat-list *ngIf="get_evacuation_status!=''">
-          <mat-list-item id="first-evacuation"><b>Transport:</b>{{transport_mode}}</mat-list-item>
-          <mat-list-item id="second-evacuation" ><b>Time:</b>{{evacuation_time}}</mat-list-item>
-          <mat-list-item  id="third-evacuation" ></mat-list-item>
-       </mat-list> -->
-
-       <div *ngIf="get_evacuation_status!=''">
         <h3 _ngcontent-alt-c211="" id="first-item"></h3>
+        <ngx-spinner bdColor = ""  name="evacuation" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner>
+        <ng-container *ngIf="get_evacuation_status.length > 0">
         <ul class="listDashboard">
          <li id="first-evacuation"><strong>Transport:</strong> {{transport_mode}}</li>
          <li id="second-evacuation"><strong>Time:</strong> {{evacuation_time}}</li>
        </ul>
-       </div>
-
-
+       </ng-container>
+       <ng-container *ngIf="get_evacuation_status.length == 0">
+        <ul class="boardStatus">
+          <li>
+            <h5 class="NoBoardStatusAvailable">No Evacuation Status Available</h5>
+          </li>
+        </ul>
+      </ng-container>
       </div>
     </div>
          </div>
@@ -196,27 +181,22 @@
 
           </div>
           <div class="card_bodyCustom">
-            <!-- <ngx-spinner bdColor = "" name="events" size = "default" color = "black" type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner> -->
-        <!-- <mat-progress-spinner mode="indeterminate" diameter='30' strokeWidth='10' [hidden]="event_logs"></mat-progress-spinner> -->
-            <!-- <mat-list id="eventsloglist" *ngIf="get_events_status!=''">
-              <mat-list-item id="first-eventslog" ></mat-list-item>
-              <mat-list-item id="second-eventslog" class='mt-2'></mat-list-item>
-              <mat-list-item  id="third-eventslog" ></mat-list-item>
-           </mat-list> -->
-           <div id="eventsloglist" *ngIf="get_events_status!=''">
-            <h3 _ngcontent-alt-c211="" id="first-item"></h3>
+           <h3 id="first-item"></h3>
+           <ng-container id="eventsloglist" *ngIf="get_events_status.length > 0">
             <mat-spinner [hidden]="event_logs" class='mx-auto' diameter="30"></mat-spinner>
             <ul class="listDashboard">
-             <!-- <li id="first-eventslog"></li>
-             <li id="second-eventslog"></li>
-             <li id="third-eventslog"></li> -->
              <li><strong>Resource Assigned: </strong> {{resource_assigned}}</li>
              <li><strong>Time: </strong> {{event_time}}</li>
              <li><strong>Situation Status: </strong> {{situation_status}}</li>
-
-
            </ul>
-           </div>
+           </ng-container>
+           <ng-container *ngIf="get_events_status.length == 0">
+            <ul class="boardStatus">
+              <li>
+                <h5 class="NoBoardStatusAvailable">No Event Status Available</h5>
+              </li>
+            </ul>
+          </ng-container>
 
 
           </div>
@@ -236,7 +216,7 @@
                                 <!--Modal header -->
         <!-- Incident Status -->
         <div class="modal-header" *ngIf="this.id_create=='inc_create'">
-          <h3 class="modal-title" id="exampleModalLabel"><b *ngIf="get_incident_details !=''">{{Inc_name}}({{Inc_id}})</b></h3>
+          <h3 class="modal-title" id="exampleModalLabel"><b *ngIf="get_incident_details !=''">{{Inc_name}}#{{Inc_id}}</b></h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -307,14 +287,14 @@
            <!--SUMMARY OF INCIDENT  STATUS OF EMERGENCY RESPONSE -->
            <div class="row mt-2">
             <div class="col-6"><label>Summary Of Incident</label>
-                <textarea cols="30" rows="4" class="form-control" name="summary" id="incidentsummary" ngModel #summary="ngModel"></textarea>
+                <textarea cols="30" rows="4" class="form-control" name="summary" id="incidentsummary" ngModel #summary="ngModel" placeholder="Summary Of Incident"></textarea>
             </div>
             <div class="col-6"><label>Status Of Emergency Response</label>
-                <textarea cols="30" rows="4" class="form-control" name="status" id="emergencyresponse" ngModel #status="ngModel"></textarea>
+                <textarea cols="30" rows="4" class="form-control" name="status" id="emergencyresponse" ngModel #status="ngModel" placeholder="Status Of Emergency Response"></textarea>
                 </div>
          </div>
 
-         <table class="table" style="margin-top:10px" width="100%">
+         <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
                   <thead>
                       <tr>
                           <th class="text-center">Time</th>
@@ -334,19 +314,29 @@
                             <input readonly [(ngModel)]="dynamicArray[i].time_inc" class="form-control" type="text" [ngModelOptions]="{standalone: true}"/>
                           </td>
                           <td>
-                            <input [(ngModel)]="dynamicArray[i].visibility" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <input placeholder="Enter Visibility" [(ngModel)]="dynamicArray[i].visibility" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                           </td>
                           <td>
-                            <input [(ngModel)]="dynamicArray[i].sea_state" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <input placeholder="Enter Sea State" [(ngModel)]="dynamicArray[i].sea_state" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                           </td>
                           <td>
-                            <input [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <div class="row">
+                              <div class="col-8">
+                                <input  placeholder="Enter Temparature" [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="PreventNonNumeric($event)"/>
+                              </div>
+                              <div class="col-4 my-auto">
+                                <mat-radio-group aria-label="Select an option" [(ngModel)]="dynamicArray[i].temp_type" [ngModelOptions]="{standalone: true}">
+                                  <mat-radio-button value="C">C</mat-radio-button>
+                                  <mat-radio-button value="F">F</mat-radio-button>
+                                </mat-radio-group>
+                              </div>
+                            </div>
                           </td>
                           <td>
-                            <input [(ngModel)]="dynamicArray[i].wind_speed" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <input placeholder="Enter Wind Speed" [(ngModel)]="dynamicArray[i].wind_speed" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required maxlength="3" (keypress)="PreventNonNumeric($event)">
                           </td>
                           <td>
-                            <input [(ngModel)]="dynamicArray[i].wind_direc" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <input placeholder="Enter Wind Direction" [(ngModel)]="dynamicArray[i].wind_direc" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="preventNumber($event)" />
                           </td>
                           <td class="text-center">
                             <a class="customIcon" type="button"
@@ -356,19 +346,23 @@
                           </td>
                     </tr>
                   </tbody>
+
+                  <tfoot>
+                    <tr>
+                      <th class="text-center">Time</th>
+                      <th class="text-center">Visibility</th>
+                      <th class="text-center">Sea State</th>
+                      <th class="text-center">Temparature(C/F)</th>
+                      <th class="text-center">Wind Speed (km/h)</th>
+                      <th class="text-center">Wind Direction</th>
+                      <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+                  </tfoot>
           </table>
 
 
-
-          <!-- Wind Direction Wind Speed -->
-          <!-- <div class="row mt-2">
-              <div class="col-6"><label>Wind Speed</label>
-                <input type="text" class="form-control" name="wind_speed" id="windspeed" ngModel #wind_speed="ngModel">
-              </div>
-              <div class="col-6"><label>Wind Direction</label>
-                  <input type="text" class="form-control" name="wind_direction" id="winddirection" ngModel #wind_direction="ngModel">
-                  </div>
-          </div> -->
 
           </div>
           <!-- For VESSEL STATUS -->
@@ -380,7 +374,7 @@
 
               </div>
             </div>
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">Name</th>
@@ -398,25 +392,25 @@
               <tbody>
                    <tr *ngFor="let vesselarray of vesselArray; let i = index;">
                       <td >
-                        <input [(ngModel)]="vesselArray[i].vessel_name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Vessel Name" [(ngModel)]="vesselArray[i].vessel_name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].vessel_type" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Vessel Type" [(ngModel)]="vesselArray[i].vessel_type" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Starting Location" [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
                         <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Destination" [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
                         <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <textarea [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
+                        <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
                       </td>
                       <td  class="text-center">
                        <a class="customIcon" type="button"
@@ -427,6 +421,20 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th class="text-center">Name</th>
+                  <th class="text-center">Type</th>
+                  <th class="text-center">FROM</th>
+                  <th class="text-center">ETD</th>
+                  <th class="text-center">TO</th>
+                  <th class="text-center">ETA</th>
+                  <th class="text-center">Remarks</th>
+                 <th class="text-center" (click)="addRow()">
+                    <i class="fa fa-plus fa-2x"></i>
+                  </th>
+              </tr>
+              </tfoot>
            </table>
 
 
@@ -441,7 +449,7 @@
 
               </div>
             </div>
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">Call Sign</th>
@@ -459,25 +467,25 @@
               <tbody>
                    <tr *ngFor="let vessel_array of vesselArray; let i = index;">
                       <td>
-                        <input [(ngModel)]="vesselArray[i].call_sign" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Call Sign" [(ngModel)]="vesselArray[i].call_sign" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].heli_type" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Helicopter Type" [(ngModel)]="vesselArray[i].heli_type" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Starting Location" [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
                         <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Destination" [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
                         <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <textarea [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
+                        <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
                       </td>
                       <td  class="text-center">
                         <a class="customIcon" type="button"
@@ -488,6 +496,20 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                    <th class="text-center">Call Sign</th>
+                    <th class="text-center">Type</th>
+                    <th class="text-center">FROM</th>
+                    <th class="text-center">ETD</th>
+                    <th class="text-center">TO</th>
+                    <th class="text-center">ETA</th>
+                    <th class="text-center">Remarks</th>
+                   <th class="text-center" (click)="addRow()">
+                      <i class="fa fa-plus fa-2x"></i>
+                    </th>
+                </tr>
+            </tfoot>
            </table>
           </div>
           <!-- For POB STATUS -->
@@ -498,7 +520,7 @@
 
               </div>
             </div>
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <!-- <th class="text-center">Date</th> -->
@@ -528,7 +550,7 @@
                         <!-- <div *ngIf="vesselArray[i].Time==''"> <p class="text-danger">Please Provide Time</p></div> -->
                       </td>
                       <td>
-                        <input type="number" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
+                        <input type="text" placeholder="Enter value" (keypress)="PreventNonNumeric($event)" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
                       </td>
 
 
@@ -541,6 +563,16 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th class="text-center">Category</th>
+                  <th class="text-center">Time</th>
+                  <th class="text-center">Value</th>
+                 <th class="text-center" (click)="addRow()">
+                    <i class="fa fa-plus fa-2x"></i>
+                  </th>
+              </tr>
+              </tfoot>
            </table>
           </div>
           <!-- For CASUALITY STATUS -->
@@ -554,7 +586,7 @@
             </div>
             <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
 
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">FULL NAME</th>
@@ -570,22 +602,18 @@
               <tbody>
                    <tr *ngFor="let vessel_array of vesselArray; let i = index;">
                       <td>
-                        <input [(ngModel)]="vesselArray[i].full_name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Full Name" [(ngModel)]="vesselArray[i].full_name" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].employer" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
-                        <!-- <select [(ngModel)]="vesselArray[i].employer" class="form-control" [ngModelOptions]="{standalone: true}">
-                          <option value="">Select</option>
-                          <option *ngFor="let employee of employee_list" value="{{employee.id}}">{{employee.emp_name}}</option>
-                        </select> -->
+                        <input placeholder="Enter Employer" [(ngModel)]="vesselArray[i].employer" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].condition" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Condition" [(ngModel)]="vesselArray[i].condition" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
                         <select [(ngModel)]="vesselArray[i].location" class="form-control" [ngModelOptions]="{standalone: true}" required>
                           <option value="">Select</option>
-                          <option *ngFor="let location of offshore_list" value="{{location.id}}">{{location.offshore_name}}</option>
+                          <option *ngFor="let location of offshore_list" value="{{location.id}}" [selected]="vesselArray[i].location == location.id">{{location.offshore_name}}</option>
 
                         </select>
                         <!-- <input [(ngModel)]="vesselArray[i].location" class="form-control" type="time" [ngModelOptions]="{standalone: true}"/> -->
@@ -603,6 +631,19 @@
                       </td>
                 </tr>
               </tbody>
+
+              <tfoot>
+                <tr>
+                    <th class="text-center">FULL NAME</th>
+                    <th class="text-center">EMPLOYER</th>
+                    <th class="text-center">CONDITION</th>
+                    <th class="text-center">LOCATION</th>
+                    <th class="text-center">TIME</th>
+                   <th class="text-center" (click)="addRow()">
+                      <i class="fa fa-plus fa-2x"></i>
+                    </th>
+                </tr>
+            </tfoot>
            </table>
           </div>
           <!-- For EVACUATION STATUS -->
@@ -617,7 +658,7 @@
             </div>
             <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
 
-            <table class="table" style="margin-top:10px" width="100%">
+            <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
               <thead>
                   <tr>
                       <th class="text-center">TIME</th>
@@ -644,13 +685,13 @@
                         </select>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].mode_of_transport" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Mode Of Transport" [(ngModel)]="vesselArray[i].mode_of_transport" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].pob_remaining" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter Pob Remaining" (keypress)="PreventNonNumeric($event)"  [(ngModel)]="vesselArray[i].pob_remaining" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <textarea [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
+                        <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
                       </td>
 
                       <td  class="text-center">
@@ -662,6 +703,18 @@
                       </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                    <th class="text-center">TIME</th>
+                    <th class="text-center">DESTINATION</th>
+                    <th class="text-center">MODE OF TRANSPORT</th>
+                    <th class="text-center">POB REMAINING</th>
+                    <th class="text-center">REMARKS</th>
+                     <th class="text-center" (click)="addRow()">
+                      <i class="fa fa-plus fa-2x"></i>
+                    </th>
+                </tr>
+            </tfoot>
            </table>
           </div>
             <!-- For EventsLog -->
@@ -675,7 +728,7 @@
               </div>
               <!-- <input value="{{check_respond}}" class="form-control" type="time" /> -->
 
-              <table class="table" style="margin-top:10px" width="100%">
+              <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
                 <thead>
                     <tr>
                         <th class="text-center">TIME</th>
@@ -689,9 +742,9 @@
                 <tbody>
                      <tr *ngFor="let vessel_array of vesselArray; let i = index;">
                         <td> <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly size="5"/></td>
-                        <td><textarea [(ngModel)]="vesselArray[i].situation_status"  class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
+                        <td><textarea placeholder="Enter Situation" [(ngModel)]="vesselArray[i].situation_status"  class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
                         </td>
-                        <td><input [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
+                        <td><input placeholder="Enter Resource Assigned" [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>
                         <td  class="text-center">
                           <a class="customIcon" type="button"
                         #tooltip="matTooltip"
@@ -701,6 +754,16 @@
                         </td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                      <th class="text-center">TIME</th>
+                      <th class="text-center" rowspan="3">SITUATION STATUS</th>
+                      <th class="text-center">RESOURCE ASSIGNED</th>
+                     <th class="text-center" (click)="addRow()">
+                        <i class="fa fa-plus fa-2x"></i>
+                      </th>
+                  </tr>
+              </tfoot>
              </table>
             </div>
                                       <!-- End -->

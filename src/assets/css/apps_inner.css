@@ -21,7 +21,7 @@ ul.topinsidentData li.tierCl{width: 31%;}
 ul.topinsidentData li.locationCl{width: 38%; margin-bottom: 0;}
 ul.topinsidentData li.casualtyCl{width: 31%; margin-bottom: 0;}
 ul.topinsidentData li.timeCl{width: 31%; margin-bottom: 0;}
-    
+
 ul.topinsidentData li:first-child{padding-left: 0;}
 ul.topinsidentData li:last-child{padding-right: 0;}
 ul.topinsidentData li strong{font-weight: 700;}
@@ -33,16 +33,16 @@ ul.topinsidentData li strong{font-weight: 700;}
     border-radius: 10px; width: 100%;}
 ul.topinsidentData2{list-style-type: none; float: left; border-right: #eee solid 2px; padding: 0 15px;}
 ul.topinsidentData2:first-child{padding-left: 0;}
-ul.topinsidentData2:last-child{padding-right: 0; border-right: none;} 
+ul.topinsidentData2:last-child{padding-right: 0; border-right: none;}
 ul.topinsidentData2 li{font-size: 15px;
     color: #333; font-weight: 400;;
     padding: 0;
     float: left; margin-bottom: 0; width: 100%; line-height: 24px;
-   
+
     /* Css Adding */
-   white-space: nowrap;
+   /* white-space: nowrap;
    overflow: hidden;
-   text-overflow: ellipsis;
+   text-overflow: ellipsis; */
 }
 ul.topinsidentData2 li strong{color: #464ed0;}
 ul.topinsidentData2_1{width: 31%;}
@@ -95,7 +95,7 @@ ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
     line-height: 16px;
     background: #3f4c66;
     border-radius: 5px;}
-.whiteBox h2.titleDashBox{margin: 0 0 7px 0; 
+.whiteBox h2.titleDashBox{margin: 0 0 7px 0;
     /* font-size: 18px;   Utsave Da */
     font-size: 17px; /* Suman Mitra*/
 }
@@ -156,11 +156,11 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
     display: block;
     padding: 12px;
     text-decoration: none;}
-  
+
 /* .verticalScroll a:hover {}
-  
+
 .verticalScroll a.active {} */
-  
+
 .scrollLeftMenu {
   margin:4px, 4px;
   padding:4px;
@@ -194,9 +194,9 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 .logoutPopup {min-width: 320px;text-align: center;width: 100%;box-shadow: 0px 0 3px 2px #ccc;border: #fff solid 1px;right: 0;left: inherit;padding: 15px 15px 25px 15px;border-radius: 12px;}
 .show > .dropdown-menu {max-height: 800px;visibility: visible;}
 .dropdown-menu {display: block;max-height: 0;visibility: hidden;transition: all 0.4s ease-in-out;overflow: hidden;}
-.toggle-password {float: right;cursor: pointer;margin-right: 10px;margin-top: -29px;}
-.toggle-newpassword {float: right;cursor: pointer;margin-right: 10px;margin-top: -29px;}
-.toggle-confpassword {float: right;cursor: pointer;margin-right: 10px;margin-top: -29px;}
+.toggle-password {float: right;cursor: pointer;margin-right: 10px;margin-top: -26px;}
+.toggle-newpassword {float: right;cursor: pointer;margin-right: 10px;margin-top: -26px;}
+.toggle-confpassword {float: right;cursor: pointer;margin-right: 10px;margin-top: -26px;}
 .tab-content{border: 1px solid #6e6e6e42;}
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {background-color: #e7e7e7;}
 .greeting{font-size: 25px!important;text-align: center;font-weight: 400;margin-bottom: 0!important;}
@@ -232,7 +232,11 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 .tabs-container .tab .tab-content ul li span {float: left;font-weight: bold;color: #464ed0; width: 124px;}
 .tabs-container .tab .tab-content ul li a {display: block;color: #000;float: left;width: calc(100% - 90px);}
 .tabs-container .tabs-menu li.active a {background-color: #fff;position: relative;}
-.tabs-container .tabs-menu li a {display: block;color: #6a6969;font-size: 15px;padding: 15px 15px;word-break: break-all;}
+.tabs-container .tabs-menu li a {display: block;color: #6a6969;
+  /* font-size: 15px; */
+  font-size: 12px;
+  font-weight: 700;
+  padding: 15px 15px;word-break: break-all;}
 .tabs-container .tabs-menu li.active a:after {font-family: "FontAwesome";position: absolute;content: "\f105";right: 6px;top: 14px;color: #212529;font-size: 20px;}
 .headerIncident{padding: 7px 10px;display: inline-block;border-radius: 10px; width: 100%;}
 .headerIncidentbody{padding: 7px 10px; display: inline-block; border-radius: 10px; width: 100%; box-shadow: 3px 3px 7px 1px #d5d5d5; background: #f4f4f4;}
@@ -249,10 +253,24 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 }
 
 
-.pulse{width: 8px;height: 8px;border: 1px solid #464ed2;border-radius: 50%;background-color: #464ed2;z-index: 10;position: absolute; top: -4px;left: -2px;}
+.pulse{
+  /* width: 8px;height: 8px;border: 1px solid #464ed2;border-radius: 50%;background-color: #464ed2;z-index: 10;position: absolute; top: -4px;left: -2px; */
+  width: 6px;
+  height: 6px;
+  border: 1px solid #464ed2;
+  border-radius: 50%;
+  background-color: #464ed2;
+  z-index: 10;
+  position: absolute;
+  top: 8px;
+  left: 3px;
+}
 .Dot{border: 4px solid #464ed2;background: transparent;border-radius: 50%;height: 30px;width: 30px;
     animation: pulse 3s ease-out;animation-iteration-count: infinite;position: absolute;
-    top: -15px;left: -13px;z-index: 1;opacity: 1;}
+    /* top: -15px;left: -13px; */
+    top: -4px;
+    left: -9px;
+    z-index: 1;opacity: 1;}
 
 #container{position: relative;}
 .vesselName{font-size: 12px;float: right;}
@@ -302,7 +320,7 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
     opacity: 0.0;
  }
 }
-.customSpan{ font-weight: 700;font-size: 15px;color: #464ed2;} 
+.customSpan{ font-weight: 700;font-size: 15px;color: #464ed2;}
 /* End */
 
 /* Admin Login */
@@ -315,7 +333,7 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 /* End */
 
 /* Admin reportdatapoolDetails (ReportDataPooldetailsComponent) */
-.dashed-line{border-top: 1px dashed gray} 
+.dashed-line{border-top: 1px dashed gray}
 /* End */
 
 /* Admin Add Team Member (AddTeamMemberComponent)*/
@@ -324,11 +342,19 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 
 /* ------------------------------------------------USER----------------------------------------------------- */
 /* User Landing Page */
-.mainContainer{display: flex;min-height: 100%;flex-direction: column; display: grid; flex: 1 0 auto; align-items: center; padding: 0 15px;background-image: url("/assets/images/breakfast_bg_image.jpg");}	
-.bgimg {background-image: url('/assets/images/sunrise-view.jpg');min-height: 100%;background-position: center;background-size: cover;}
-.header {padding: 10px;text-align: center;background: #00477E;color: white;font-size: 20px;}	
+.mainContainer{
+  display: flex!important;min-height: 100%;flex-direction: column; display: grid; flex: 1 0 auto;
+  align-items: center; padding: 0 15px;
+  /* background-image: url("/assets/images/breakfast_bg_image.jpg"); */
+}
+.bgimg {
+  /* background-image: url('/assets/images/sunrise-view.jpg'); */
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;}
+.header {padding: 10px;text-align: center;background: #00477E;color: white;font-size: 20px;}
 .footer {position: fixed;left: 0;bottom: 0;width: 100%;background-color: #00477E;color: white;text-align: center;}
-.rowCustom{margin: 0 -15px;}	
+.rowCustom{margin: 0 -15px;}
 .fieldHalf{width: 50%; float: left; padding: 10px 15px;}
 .fieldFull{width:100%; float: left; padding: 10px 15px;}
 .menUlogoSec {max-width: 450px;width: 100%;margin: 0 auto;border-radius: 10px;background: rgba(255, 255, 255, 0.5);}
@@ -407,7 +433,7 @@ th.mat-header-cell{text-align: center!important;}
    }
 }
 .customh4{margin: 19px 0 0 0!important;}
-.listImg{width: 36px;height: 36px;overflow: hidden; border-radius: 50px;box-shadow: 0px 0 3px 2px #ccc;border: #fff solid 1px;margin-right: 6px;} 
+.listImg{width: 36px;height: 36px;overflow: hidden; border-radius: 50px;box-shadow: 0px 0 3px 2px #ccc;border: #fff solid 1px;margin-right: 6px;}
 .crossIcon{margin: 23px 0 0 0;font-size: 13px;font-weight: lighter!important;text-align: center;}
 /* End */
 /* User Activation Modeule */
@@ -419,7 +445,7 @@ th.mat-header-cell{text-align: center!important;}
 input.ng-touched.ng-invalid {
     border: 2px solid #d94a4a;
     border-left: solid 7px #d94a4a;
-  
+
   }
   select.ng-touched.ng-invalid {
     border: 2px solid #d94a4a;
@@ -429,20 +455,20 @@ input.ng-touched.ng-invalid {
     border: 2px solid #d94a4a;
     border-left: solid 7px #d94a4a;
   }
-  select.ng-touched.ng-valid {
+  /* select.ng-touched.ng-valid {
     border: 2px solid #445c8b;
       border-left: #445c8b 7px solid;
-  }
+  } */
 
-  textarea.ng-touched.ng-valid {
+  /* textarea.ng-touched.ng-valid {
     border: 2px solid #445c8b;
       border-left: #445c8b 7px solid;
-  }
-  
-  input.ng-touched.ng-valid {
+  } */
+
+  /* input.ng-touched.ng-valid {
     border: 2px solid #445c8b;
     border-left: #445c8b 7px solid;
-  }
+  } */
 /* End */
 
 /* User FormsCheckList*/
@@ -463,7 +489,7 @@ input.ng-touched.ng-invalid {
   .file-item:hover{
     box-shadow: 3px 5px 10px 6px #a6a8ab52;
   }
-  
+
   .file-item.focused {
     z-index: 2;
   }
@@ -617,7 +643,7 @@ input.ng-touched.ng-invalid {
     .light-style .file-manager-col-view .file-item.focused .file-item-actions,
     .light-style .file-manager-col-view .file-item.selected .file-item-actions {
         opacity: 1;
-     
+
     }
   }
   .material-style .file-item-name {
@@ -800,7 +826,7 @@ input.ng-touched.ng-invalid {
 .scroll {overflow: hidden;}
 .scroll::-webkit-scrollbar {display: none;}
 .customScroll{margin: 4px, 4px;padding: 4px;width: 100%;height: 176px;overflow-x: auto;overflow-y: auto;text-align: justify;scrollbar-color: #bfc1c0 #d7d9d8;transition: all 0.3s;transition: all 500ms ease-in-out;}
-.btn:hover {color: #ffffff;}
+/* .btn:hover {color: #ffffff;} */
 .Blink {font-size: 7px;margin-top: 2px;animation: zoom-in-zoom-out 2s linear infinite;}
   @keyframes zoom-in-zoom-out {
     0%{
@@ -908,3 +934,10 @@ b{font-size: 14px;color:black;}
 .mat-toolbar {background: #424242!important;color: rgb(255 255 255 / 87%)!important;}
 .mat-dialog-content {font-size: 16px;font-weight: 400;text-align: center; margin: 9px 0 9px 0!important;}
 .mat-dialog-actions {justify-content: flex-end;}
+.customArrow{
+  font-size: 14px!important;
+  text-align: center;
+  font-weight: 800!important;
+  color: #cf2525;
+  cursor:pointer;
+}

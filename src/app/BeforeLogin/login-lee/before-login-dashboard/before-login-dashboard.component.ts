@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./before-login-dashboard.component.css']
 })
 export class BeforeLoginDashboardComponent implements OnInit {
+  constructor() {
 
-  constructor() { }
+
+   }
 
   ngOnInit(): void {
   }
-
 }

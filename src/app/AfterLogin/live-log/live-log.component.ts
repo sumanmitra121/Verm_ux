@@ -28,9 +28,6 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
   url=global_url_test.URL;
   user: any = localStorage.getItem('Emp_name');
   constructor(private sanitize: DomSanitizer,private emergencyservice: VirtualEmergencyService, private datePipe: DatePipe,private sanitizer: DomSanitizer,private spinner:NgxSpinnerService,private toaster:ToastrManager) {
-    // this.emergencyservice.newUserJoin();
-    // })
-
   }
   recieved_msg: any = [];
   public roomId: any;
@@ -76,7 +73,8 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
 
     })
     //For getting old message
-    this.emergencyservice.global_service('0', '/oldMessage', 'min='+this.min+'&max=5').subscribe(data => {
+    this.emergencyservice.global_service('0', '/oldMessage', 'min='+this.min+'&max=5'+'&id='+localStorage.getItem('Inc_id')).subscribe(data => {
+     console.log( data);
       this.storageArray.length = 0;
       this.storageArray = data;
       this.storageArray = this.storageArray.msg;
@@ -148,7 +146,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
     $('.chat-messages-show-container').scroll(()=>{
       if($('.chat-messages-show-container').scrollTop() == 0){
         this.min += 5;
-        this.emergencyservice.global_service('0', '/oldMessage', 'min='+this.min+'&max=5').subscribe(data => {
+        this.emergencyservice.global_service('0', '/oldMessage', 'min='+this.min+'&max=5'+'&id='+localStorage.getItem('Inc_id')).subscribe(data => {
           this.storageArray.length = 0;
           this.storageArray = data;
           this.storageArray = this.storageArray.msg;
@@ -222,11 +220,11 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
 
         })
       }
-  });
-
+});
 
     //For getting instant messages sent by other users without refresh the page
     this.emergencyservice.listen('message').subscribe(data => {
+      console.log("NEW MESSAGE:" +data);
       this.phone = data;
       this.storageArray.length = 0;
       this.messageList.push({file_flag:this.phone.file_flag,file:this.phone.file_name!='' ? this.phone.file_name:'', user: this.phone.user, msg: this.phone.message, dateTime: this.phone.date_time, emp_id: this.phone.emp_id });
@@ -393,7 +391,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
     {
       // var blob = new Blob([ this.uploaded_file], { type: this.uploaded_file.type.toString() });
       // this.file_url=URL.createObjectURL(blob);
-      // window.open(this.file_url,'_blank');  
+      // window.open(this.file_url,'_blank');
     }
 }
   active_input_file(){$('#File_Upload').val(null);$('#File_Upload').click();}//For Activate input type file
@@ -412,7 +410,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
     if(type=='pdf' || type=='doc' || type=='docx'){
     var blob = new Blob([ this.uploaded_file], { type: this.uploaded_file.type.toString() });
       this.file_url=URL.createObjectURL(blob);
-      window.open(this.file_url,'_blank');  
+      window.open(this.file_url,'_blank');
     }
     else if(type=='jpeg' || type=='jpg' || type=='png'){
       var reader = new FileReader();

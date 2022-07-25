@@ -1,5 +1,5 @@
 
-<app-header [headername]="headername" [icon]="icon"></app-header>
+<app-header [headername]="headername" [icon]="icon" [IncID]="incid"></app-header>
 <div class="page-body-wrapper">
 <app-sidebar class="sidebarMain"></app-sidebar>
 <div class="main-panel">
@@ -7,7 +7,7 @@
         <div class="card">
          <div class="card-body">
             <div class="titleSec">
-             <h2>Close Incident</h2> 
+             <h2>Close Incident</h2>
              </div>
              <div class="row">
                  <div class="col-6">
@@ -16,22 +16,22 @@
                  </div>
              </div>
              <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
-                
+
                 <div class="row">
-    
+
             <div class="col-6">
                 <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Incident Type</label>
                         <div class="col-sm-12">
                         <input type="hidden" class="form-control"  name="id" [(ngModel)]="id" >
                         <input type="hidden" class="form-control"  name="user" [(ngModel)]="user">
-    
-    
+
+
                         <select class="form-control" name="inc_type_id" id="inc_type" ngModel #inc_type_id="ngModel"  >
                             <option value="">Select</option>
                             <option *ngFor="let incident of get_incident" value="{{incident.id}}">{{incident.incident_name}}</option>
                         </select>
-                        
+
                         </div>
                     </div>
                 </div>
@@ -40,12 +40,12 @@
                       <label  class="col-sm-12 col-form-label">Incident Name</label>
                       <div class="col-sm-12">
                         <input type="text" class="form-control" id="Inc_name"  name="inc_name" #inc_name="ngModel" ngModel readonly>
-                    
+
                       </div>
                     </div>
                 </div>
                  </div>
-    
+
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group row">
@@ -54,13 +54,13 @@
                            <select name="inc_location_id" id="location" #inc_location_id="ngModel" ngModel class="form-control" >
                                <option value="">Select Location</option>
                                <option *ngFor="let loc of location" value="{{loc.id}}">{{loc.offshore_name}}</option>
-    
+
                            </select>
-                           
+
                         </div>
                         </div>
                     </div>
-        
+
                      <div class="col-6">
                     <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Initial Tier</label>
@@ -68,31 +68,31 @@
                             <select name="initial_tier_id" #initial_tier_id="ngModel" id="initial_tier" ngModel class="form-control" >
                                 <option value="">Select Tier</option>
                                 <option *ngFor="let tier of initial_tier" value="{{tier.id}}">{{tier.tier_type}}</option>
-     
+
                             </select>
-                           
+
                         </div>
                     </div>
                     </div>
                 </div>
-          
+
                 <div class="row ">
                     <div class="col-12">
                         <div class="form-group row">
                             <label  class="col-sm-12 col-form-label">Event Description</label>
                             <div class="col-sm-12">
                                 <textarea #brief_desc="ngModel" id="event_desc"  class="form-control" rows="5" cols="5" name="brief_desc" ngModel readonly></textarea>
-                               
+
                             </div>
                         </div>
                     </div>
-                 
+
                 </div>
 
 
 
                 <div class="row">
-                    
+
                     <div class="col-6">
                         <label>Created Date</label>
                         <input type="text" class="form-control" name="created_date" id="created_date" readonly>
@@ -102,7 +102,7 @@
                         <input type="text" name="created_by" class="form-control" id="created_by" readonly>
                     </div>
 
-                
+
                 <!-- <div class="col-12"> -->
                     <div class="col-6 mt-2">
                         <label>Close Date</label>
@@ -113,7 +113,7 @@
                 <!-- <div class="col-12 mt-2">
                     <label>Closed Date</label>
                     <textarea class='form-control' name="closing_remarks" id="close_reamrks" cols="30" rows="5" readonly></textarea>
-                
+
                 </div> -->
                 <!-- <div class="col-12"> -->
                     <div class="col-6 mt-2">
@@ -137,28 +137,28 @@
 
                 <div class="row ">
                     <div class="col-6">
-                      
+
                             <label>Status</label>
-                          
+
                                <select name="inc_status" id="Inc_status" #inc_status="ngModel" ngModel class="form-control">
                                 <option value="">Select</option>
                                 <option value="O">Open</option>
                                 <option value="C">Close</option>
                             </select>
-                          
+
                        </div>
                         <div class="col-6">
                                 <label for="Final_tier_id">Final Tier</label>
-                        
+
                                 <select name="final_tier_id" id="Final_tier_id," #final_tier_id="ngModel" ngModel class="form-control">
                                  <option value="">Select</option>
                                  <option *ngFor="let tier of initial_tier" value="{{tier.id}}">{{tier.tier_type}}</option>
                              </select>
-                            
+
                         </div>
                     </div>
-                 
-       
+
+
 
                 <div class="row ">
                     <div class="col-12">
@@ -166,19 +166,19 @@
                             <label  class="col-sm-12 col-form-label">Remarks</label>
                             <div class="col-sm-12">
                                 <textarea #closing_remarks="ngModel"  class="form-control" rows="5" cols="5" name="closing_remarks" ngModel ></textarea>
-                               
+
                             </div>
                         </div>
                     </div>
-                 
+
                 </div>
-                
-                
-                <div class="row"> 
+
+
+                <div class="row">
                     <div class="col-3">
                 <div class="form-group row">
                     <label>&nbsp;</label><br>
-                    <div class="col-sm-12 btnSubmitSec mt-2">      
+                    <div class="col-sm-12 btnSubmitSec mt-2">
                     <input type="submit" class="btn btn-info" id="submit" name="submit" value="Save" [readonly]="logForm.invalid">
                     <!-- <input type="reset" onclick="" class="btn btn-info" value="Cancel" (click)="logForm.reset();logForm.value.id=0;"> -->
                     </div>

@@ -1,29 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import  { io, Socket }  from 'socket.io-client';//For Socket.io-client implementation
-import { observable, Observable, ReplaySubject } from 'rxjs';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DialogalertComponent } from '../CommonDialogAlert/dialogalert/dialogalert.component';
+import {Observable, Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { IncDetails } from '../Model/IncDetails';
 @Injectable({
   providedIn: 'root'
 })
 export class VirtualEmergencyService {
-  public _incDetails= new ReplaySubject<IncDetails>(1);
+  public _incDetails= new Subject<IncDetails>();
   currentIncdents$ = this._incDetails.asObservable();
   private socket: Socket;
 
-  // public url = 'http://192.168.1.244:3000';
-  public url = 'https://vermapi.opentech4u.co.in';
-
-
-
+  public url = 'http://192.168.1.244:3000';
+  // public url = 'https://vermapi.opentech4u.co.in';
   // socket:any;
 //  url:any='http://localhost:3000';
 //  readonly url:any='https://vermapi.opentech4u.co.in';
  constructor(public dialog:MatDialog,private http:HttpClient) {
   // this.socket = io(this.url);
-  this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
+  // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
+  this.socket = io(this.url, {transports: ['polling']});
+
  }
 
   //For Adding new Offshore
@@ -121,7 +119,6 @@ export class VirtualEmergencyService {
 
       this.socket.on('newUserJoined', (data:any) => {
         // console.log(data);
-
       })
 
   }
@@ -135,7 +132,6 @@ export class VirtualEmergencyService {
       this.socket.on('new message', (data) => {
         observer.next(data);
       });
-
       return () => {
         this.socket.disconnect();
       }
@@ -152,7 +148,7 @@ export class VirtualEmergencyService {
   }
 
 
-  setcurrInc(_inc:IncDetails){return this._incDetails.next(_inc);}
+  setcurrInc(_inc:IncDetails){this._incDetails.next(_inc);}
 
   }
 

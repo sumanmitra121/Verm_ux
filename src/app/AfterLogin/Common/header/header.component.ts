@@ -1,9 +1,8 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
@@ -16,6 +15,14 @@ declare var $:any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Output() incDetails = new EventEmitter<IncDetails>();
+  _c_pass:boolean = true;
+  _n_pass:boolean = true;
+  _o_pass:boolean = true;
+  _max_id!:any;
+  localStorageAlice = localStorage;
+  @Input() IncID!:string;
+  @Output() IncStatus= new EventEmitter<IncDetails>();
   @ViewChild('LogForm') LogForm!:NgForm;
   @ViewChild('logForm') profile!:NgForm;
   @Input() headername!:string;
@@ -41,100 +48,81 @@ export class HeaderComponent implements OnInit {
   user_status:any;
   img_src:any;
   tot_casualty:any;
+  // _ActiveIncNum:any=0;
+  _activeInc:any=[];
+  _activeIncBackup:any=[]
+  _selected_Inc:any='';
   hidden = false;
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
-     this.emergencyservice.currentIncdents$.subscribe((res:any) => {
-       if(res != '' || res!=undefined || res != null){
-       this.Inc_Name = res?.inc_name+" ("+res?.inc_no +")";
-       this.Inc_location=res?.offshore_name+" ("+res?.lat+" : "+res?.lon+ ")";
-       this.tier=res?.tier_type;
-        this.hours=res?.dif_time;
-         this.Inc_type=res?.incident_type;
-         this.tot_casualty=res?.tot_casualty ;
-        }
-     })
    }
+   getCurrentIncident(){
+    //  //(this.localStorageAlice.getItem('Inc_No'));
 
-  ngOnInit(): void {
+    this._activeInc.length=0;
+    this._activeIncBackup.length = 0;
+    //("SSADA");
+
+      this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
+        this._activeIncBackup = data;
+        // //(data.sort((a:any, b:any) => (a.id < b.id ? -1 : 1)));
+
+        if(data.length > 1){
+        var local_sel_id = Number(localStorage.getItem('_local_sel_id'));
+          if(local_sel_id > 0){
+                 this.getDetails(Number(localStorage.getItem('Inc_No')))
+          }else{
+            var dt = data.sort((a:any, b:any) => (a.id < b.id ? -1 : 1));//for sorting incident by their Id
+            this.getDetails(Number(dt[dt.length-1].inc_no))
+          }
+        }else if(data.length == 1){
+            this.getDetails(Number(data[0].inc_no))
+        }
+        else{
+          this.Inc_Name = '';
+          this.Inc_location='';
+          this.tier='';
+          this.hours='';
+          this.Inc_type='';
+          this.tot_casualty='';
+          this._selected_Inc = '';
+          localStorage.setItem('Inc_name','');
+          localStorage.setItem('Inc_No','');
+          localStorage.setItem('Inc_id','');
+        }
+      })
+      //(this._selected_Inc);
+
+  }
+
+  ngOnInit() {
+    this.getCurrentIncident()
+
      this.get_details();
-    // this.emergencyservice.global_service('0','/get_active_inc',null).subscribe(data=>{
-    //   this.get_incident_details=data;
-    //   this.get_incident_details=this.get_incident_details.msg;
-    //     if(this.get_incident_details!=''){
-    //           this.Inc_Name= this.get_incident_details[0].inc_name+" ("+this.get_incident_details[0].inc_no +")";
-    //           this.Inc_location=this.get_incident_details[0].offshore_name+" ("+this.get_incident_details[0].lat+" : "+this.get_incident_details[0].lon+ ")";
-    //           this.tier=this.get_incident_details[0].tier_type;
-    //           this.hours=this.get_incident_details[0].dif_time;
-    //           this.Inc_type=this.get_incident_details[0].incident_type;
-    //           this.tot_casualty=this.get_incident_details[0].tot_casualty ;
-    //     }
-    //     else{
-    //       this.Inc_Name='';
-    //       this.Inc_location='';
-    //       this.hours='';
-    //       this.tier='';
-
-    //     }
-    //   })
       //For Getting Department
       this.emergencyservice.global_service('0','/department',"null").subscribe(data=>{
-        // console.log(data);
+        // //(data);
         this.get_department=data;
         this.get_department=this.get_department.msg;
 
       })
       //For Getting Position
       this.emergencyservice.global_service('0','/position',"null").subscribe(data=>{
-        // console.log(data);
+        // //(data);
         this.get_position=data;
         this.get_position=this.get_position.msg;
       })
-         //For toggling eye and eye-slash for old password
-         $(".toggle-password").click(()=>{
-          if ($('#old_pass').attr("type") == "password") {
-            $('#old_pass').attr("type", "text");
-            $('.toggle-password').removeClass("fa-eye-slash");
-            $('.toggle-password').addClass("fa-eye");
-          } else {
-            $('#old_pass').attr("type", "password");
-            $('.toggle-password').removeClass("fa-eye");
-            $('.toggle-password').addClass("fa-eye-slash");
-          }
-      });
-      //For toggling eye and eye-slash for new password
-      $(".toggle-newpassword").click(()=>{
-        if ($('#pass').attr("type") == "password") {
-          $('#pass').attr("type", "text");
-        $('.toggle-newpassword').removeClass("fa-eye-slash");
-        $('.toggle-newpassword').addClass("fa-eye");
-        } else {
-          $('#pass').attr("type", "password");
-          $('.toggle-newpassword').removeClass("fa-eye");
-          $('.toggle-newpassword').addClass("fa-eye-slash");
-        }
-    });
-      //For toggling eye and eye-slash for confirm password
-     $(".toggle-confpassword").click(()=>{
-          if ($('#conf_pass').attr("type") == "password") {
-            $('#conf_pass').attr("type", "text");
-          $('.toggle-confpassword').removeClass("fa-eye-slash");
-          $('.toggle-confpassword').addClass("fa-eye");
-          } else {
-            $('#conf_pass').attr("type", "password");
-            $('.toggle-confpassword').removeClass("fa-eye");
-            $('.toggle-confpassword').addClass("fa-eye-slash");
-          }
-      });
-
       // For Getting Notification
       // this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
       // this.emergencyservice.listen('get_notification').subscribe(data=>{
-      //   console.log(data);
+      //   //(data);
       // })
+
   }
-  logout(){
+
+
+  public logout(){
     var dt={
       id:localStorage.getItem('Employee_id'),
       user:localStorage.getItem('Email')
@@ -144,7 +132,14 @@ export class HeaderComponent implements OnInit {
     })
     this.router.navigate(['/login']);
   }
-
+  show_pass(_type:any){
+    switch(_type){
+      case 'O':this._o_pass =!this._o_pass;break;
+      case 'C':this._c_pass =!this._c_pass;break;
+      case 'N':this._n_pass =!this._n_pass;break;
+      default:break;
+    }
+  }
   get_details(){
     this.emergencyservice.global_service('0','/employee','flag=A&emp_id='+localStorage.getItem('Employee_id')).subscribe(data=>{
      this.get_profile.length=0;
@@ -156,7 +151,7 @@ export class HeaderComponent implements OnInit {
      localStorage.removeItem('Emp_name');
      localStorage.setItem('Emp_name',this.get_profile[0].emp_name);
      this.name=localStorage.getItem('Emp_name');
-     this.profile.setValue({
+     this.profile.control.patchValue({
        user:this.email,
        emp_id:localStorage.getItem('Employee_id'),
        emp_name:this.get_profile[0].emp_name,
@@ -165,7 +160,6 @@ export class HeaderComponent implements OnInit {
        er_cnct_no:this.get_profile[0].er_cnct_no,
        depart_id:this.get_profile[0].emp_depart_id,
        pos_id:this.get_profile[0].emp_pos_id
-
      })
     })
   }
@@ -184,7 +178,7 @@ export class HeaderComponent implements OnInit {
     })
   }
   Submit_password(Logform:Form){
-    // console.log(LogForm);
+    // //(LogForm);
     if(this.LogForm.form.value.pass!=this.LogForm.form.value.conf_pass){
       this.toastr.errorToastr('Passwords are not getting matched','',{position:'top-center',animate:'slideFromTop',toastTimeout:5000});
     }
@@ -260,4 +254,37 @@ export class HeaderComponent implements OnInit {
 
    })
   }
+
+  active_incident(_inc_name:any,_inc_no:any,_inc_id:any){
+    this._activeInc.length =0;
+    localStorage.setItem('_local_sel_id','1');
+     this._selected_Inc = _inc_name+ '('+_inc_no+')';
+     this._activeInc = this._activeIncBackup.filter((x:any) => x.inc_no != _inc_no);
+     this.getDetails(Number(_inc_no));
+      // this.IncStatus.emit(this._activeIncBackup.filter((x:any) => x.inc_no == _inc_no)[0]);
+  }
+
+  getDetails(_inc_no:number){
+    var incStatus = this._activeIncBackup.find((x:any) => x.inc_no == _inc_no);
+    this.Inc_Name = incStatus.inc_name + '(' +incStatus.inc_no +')';
+    this._selected_Inc = this.Inc_Name;
+    this.Inc_location=incStatus.offshore_name+" ("+incStatus.lat+" : "+incStatus.lon+ ")";
+    this.tier=incStatus.tier_type;
+    this.hours=incStatus.dif_time;
+    this.Inc_type=incStatus.incident_type;
+    this.tot_casualty=incStatus.tot_casualty;
+    localStorage.setItem('Inc_name',incStatus.inc_name);
+    localStorage.setItem('Inc_No',incStatus.inc_no);
+    localStorage.setItem('Inc_id',incStatus.id);
+    this.IncStatus.emit(incStatus);
+    this._activeInc = this._activeIncBackup.filter((x:any) => x.id != localStorage.getItem('Inc_id'));
+    //For Getting Current Incident As the cuurent incident has the latest Id;
+    this._max_id = this._activeIncBackup.reduce((prev:any, current:any) => (+prev.id > +current.id) ? prev : current);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes?.IncID?.currentValue){
+      this.getCurrentIncident();
+    }
+}
 }
