@@ -6,4 +6,5 @@ export class Notifiactions {
   public narration!: string;
   public user!: number;
   public view_flag!: string;
+  public total!:string;
 }

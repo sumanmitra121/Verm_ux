@@ -72,6 +72,7 @@ import { UserInfoComponent } from './AfterLogin/user-info/user-info.component';
 import { BeforeLoginDashboardComponent } from './BeforeLogin/login-lee/before-login-dashboard/before-login-dashboard.component';
 import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/forgot-password/forgot-password.component';
 import { LoginLEEComponent } from './BeforeLogin/login-lee/login-lee.component';
+import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
 
 const routes: Routes = [
   {
@@ -384,6 +385,10 @@ const routes: Routes = [
   {
     path:'user/forgotPassword',
     component:ForgotPasswordComponent
+  },
+  {
+    path:'notifications/:type',
+    component:NotificationComponent
   }
 
 ];

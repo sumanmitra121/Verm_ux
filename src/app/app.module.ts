@@ -139,10 +139,12 @@ import { ResetPasswordComponent } from './Admin/BeforeLogin/reset-password/reset
 import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/forgot-password/forgot-password.component';
 import { UserInfoComponent } from './AfterLogin/user-info/user-info.component';
 import { DialogalertComponent } from './CommonDialogAlert/dialogalert/dialogalert.component';
+import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
 
 // End////////
 @NgModule({
   declarations: [
+    NotificationComponent,
     AppComponent,
     LoginLEEComponent,
     BeforeLoginDashboardComponent,

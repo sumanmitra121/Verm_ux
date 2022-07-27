@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChil
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Observable } from 'rxjs';
 // import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Socket } from 'socket.io-client';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { Notifiactions } from 'src/app/Model/Notifiactions';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
@@ -53,8 +55,10 @@ export class HeaderComponent implements OnInit {
   _activeInc:any=[];
   _activeIncBackup:any=[]
   _selected_Inc:any='';
-  _notification:any=[];
+  _notification:Notifiactions[]=[];
   hidden = false;
+  _TOTAL_LENGTH_NOTIFICATION:any;
+
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
@@ -121,10 +125,12 @@ export class HeaderComponent implements OnInit {
   }
 
  getNotifications(){
-    this.emergencyservice.listen('notification').subscribe(data=>{
-    console.log(data);
-    this._notification = data;
-  })
+      this.emergencyservice.emit('notification','');
+      this.emergencyservice.listen('notification').subscribe((data:any)=>{
+        // console.log(data);
+         this._notification = data;
+         this._TOTAL_LENGTH_NOTIFICATION = this._notification[this._notification.length-1].total;
+      })
 
  }
   public logout(){
@@ -293,5 +299,8 @@ export class HeaderComponent implements OnInit {
     if(changes?.IncID?.currentValue){
       this.getCurrentIncident();
     }
+}
+gotoNotifications(_activity:any){
+  this.router.navigate(['/notifications',btoa(_activity)]);
 }
 }
