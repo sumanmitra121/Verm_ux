@@ -43,6 +43,7 @@
     "ng2-charts": "^3.0.8",
     "ng6-toastr-notifications": "^1.0.4",
     "ngx-doc-viewer": "^2.1.2",
+    "ngx-pagination": "^6.0.2",
     "ngx-sharebuttons": "^9.0.0",
     "ngx-spinner": "^12.0.0",
     "react": "^17.0.2",

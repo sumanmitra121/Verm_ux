@@ -15,6 +15,7 @@ declare var $:any
 })
 export class ActivationModuleComponent implements OnInit {
    //Angular Material Data Table//
+   _team_name:any;
    checkBox_color:any='primary'
    selection = new SelectionModel<any>(true, []);
    _is_activeIncident:any= localStorage.getItem('Inc_id');
@@ -81,7 +82,8 @@ export class ActivationModuleComponent implements OnInit {
         user:localStorage.getItem('Email'),
         flag:event.checked==true?'Y':'N'
       }
-      this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
+      // this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
+      this.emergencyservice.global_service('1','/activation_team',res).subscribe(data=>{
         this.check_activity='';
         this.check_activity=data;
         if(this.check_activity.suc==1){
@@ -138,6 +140,7 @@ export class ActivationModuleComponent implements OnInit {
   }
   }
   putdata_employee(v:any){
+    console.log(v);
     this.dataSource_employee_roaster=new MatTableDataSource(v);
     console.log(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
 
@@ -178,28 +181,54 @@ export class ActivationModuleComponent implements OnInit {
 
   Active_member(){
     if(this._is_activeIncident!= ''){
-    var res = {
-        inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+      if(this.selection.selected.length > 0){
+        var res = {
+          inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+          team_id:this._team_id,
+          team_name:this.selection.selected[0].team_name,
+          inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
+          user:localStorage.getItem('Email'),
+          flag:'Y',
+          emp_dt:this.selection.selected
+      }
+      this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
+        this.check_activity='';
+        this.check_activity=data;
+        if(this.check_activity.suc==1){
+          this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
+        }
+       })
+      }
+      else{
+        var res1 = {
+          inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
         team_id:this._team_id,
-        team_name:this.selection.selected[0].team_name,
+        team_name:this._team_name,
         inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
         user:localStorage.getItem('Email'),
-        flag:'Y',
-        emp_dt:this.selection.selected
-    }
-    this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
-      this.check_activity='';
-      this.check_activity=data;
-      if(this.check_activity.suc==1){
-        this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
+        flag:'N'
+
+        }
+        this.emergencyservice.global_service('1','/activation_team',res1).subscribe(data=>{
+          this.check_activity='';
+          this.check_activity=data;
+          if(this.check_activity.suc==1){
+          var dt={id:'0',activity:'A',narration:localStorage.getItem('Email')+' has de-activate '+this._team_name+' at '+new Date().toISOString().substring(0,10)};
+          this.push_notfication(dt);
+          this.fetchdata();
+          this.toaster.successToastr('Team has been de-activated successfully','');
+          }
+          else{}
+        })
+
       }
-     })
+
     }
     else{
       this.toaster.errorToastr('There is no active incident, you can not active members untill an incident is created');
     }
 
   }
-
+  getTeamName(team_name:any){this._team_name =team_name;}
 push_notfication(dt:any){this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{})}
 }

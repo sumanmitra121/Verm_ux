@@ -59,7 +59,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
       this.emp_list.length = 0;
       if(this.Emp_Check.length!=0){
         for (let i = 0; i < this.Emp_Check.length; i++) {
-          if (this.Emp_Check[i].employee_id != localStorage.getItem('Employee_id')) {
+          if (this.Emp_Check[i].employee_id != localStorage.getItem('Employee_id') && this.Emp_Check[i].employee_id != '1') {
             this.emp_list.push(this.Emp_Check[i]);
           }
         }

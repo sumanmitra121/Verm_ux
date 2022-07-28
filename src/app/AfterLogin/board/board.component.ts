@@ -25,7 +25,7 @@ export class DynamicGrid{
   temp:any;
   wind_speed:any;
   wind_direc:any;
-  temp_type!:string;
+  temp_unit:string = 'C';
 }
 export class vesselGrid{
   call_sign:any;
@@ -65,6 +65,7 @@ export class vesselGrid{
   //End//
 })
 export class BoardComponent implements OnInit , OnDestroy{
+  temp_unit:any;
  alive = true;
 vessel_status:any;
 helicopter_status:any;
@@ -170,7 +171,7 @@ default_user:any=localStorage.getItem('Email');
     this.check_respond='';
       if(this.id_create=='inc_create'){
         for(let i=0;i<this.dynamicArray.length;i++){
-          if(this.dynamicArray[i].time_inc=='' || this.dynamicArray[i].visibility=='' || this.dynamicArray[i].sea_state=='' || this.dynamicArray[i].temp=='' || this.dynamicArray[i].wind_speed=='' || this.dynamicArray[i].wind_direc=='' ||  this.dynamicArray[i].temp_type==''){}
+          if(this.dynamicArray[i].time_inc=='' || this.dynamicArray[i].visibility=='' || this.dynamicArray[i].sea_state=='' || this.dynamicArray[i].temp=='' || this.dynamicArray[i].wind_speed=='' || this.dynamicArray[i].wind_direc=='' ||  this.dynamicArray[i].temp_unit==''){}
           else{counter++;}
         }
         if(counter==this.dynamicArray.length){
@@ -194,8 +195,6 @@ default_user:any=localStorage.getItem('Email');
                   this.SetIncStatus(localStorage.getItem('Inc_id'));
                   this.toastr.successToastr('Submitted Successfully');
                  },500)
-
-
              }
              else{
                 this.toastr.errorToastr('Failed to submit','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:5000})
@@ -432,13 +431,13 @@ default_user:any=localStorage.getItem('Email');
           this.dynamicArray.length=0;
           this.newDynamic='';
         for(let i=0;i<this.get_incident_details_after_save.length;i++){
-          this.newDynamic = {id:this.get_incident_details_after_save[i].id,time_inc:this.get_incident_details_after_save[i].time, visibility:this.get_incident_details_after_save[i].visibility,sea_state:this.get_incident_details_after_save[i].sea_state,temp:this.get_incident_details_after_save[i].temp,wind_speed:this.get_incident_details_after_save[i].wind_speed,wind_direc:this.get_incident_details_after_save[i].wind_direc};
+          this.newDynamic = {id:this.get_incident_details_after_save[i].id,time_inc:this.get_incident_details_after_save[i].time, visibility:this.get_incident_details_after_save[i].visibility,sea_state:this.get_incident_details_after_save[i].sea_state,temp:this.get_incident_details_after_save[i].temp,wind_speed:this.get_incident_details_after_save[i].wind_speed,wind_direc:this.get_incident_details_after_save[i].wind_direc,temp_unit:this.get_incident_details_after_save[i].temp_unit};
           this.dynamicArray.push(this.newDynamic);
         }
       }
       else{
         this.dynamicArray.length=0;
-        this.newDynamic = {id:'0',time_inc: this.datePipe.transform(this.now,'hh:mma'), visibility:"",sea_state:"",temp:"",wind_speed:"",wind_direc:""};
+        this.newDynamic = {id:'0',time_inc: this.datePipe.transform(this.now,'hh:mma'), visibility:"",sea_state:"",temp:"",wind_speed:"",wind_direc:"",temp_unit:'C'};
         this.dynamicArray.push(this.newDynamic);
       }
       this.setFormvalue();
@@ -776,9 +775,10 @@ SetIncStatus(_id:any){
             this.inc_visibility = res.visibility;
             this.inc_sea_state=res.sea_state;
             this.inc_temparature=res.temp;
-            this.deg=res.temp.charAt(res.temp.length-1);
+            // this.deg=res.temp.charAt(res.temp.length-1);
             this.temp=res.temp.split(this.deg)[0];
             this.wind_speed=res.wind_speed;
+            this.temp_unit=res.temp_unit
           }
 
        })

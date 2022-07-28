@@ -2,3 +2,25 @@
 .selectedIcon{
   font-size: 15px;
 }
+/* .example-small-box, .example-large-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+} */
+.logoutPopup .NotificationContent{
+  cursor: pointer;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+
+.example-large-box {
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+}

@@ -108,7 +108,7 @@ img {
 
 .loginContainer {
     width: 100%; background: url("../images/bg.jpg") no-repeat center center; background-size: cover;
-    padding:0;
+    padding:35px 0;
     display:flex; align-items: center;
     flex: 1 0 auto; height: 100%; padding: 35px 0;
 }
@@ -217,16 +217,24 @@ img {
 }
 .sidebar ul.nav li.nav-item a i.arowRight{margin-left: auto; font-size: 11px; line-height: 18px; margin-right: 0;}
 
-.main-panel {
+/* .main-panel {
     transition: width 0.25s ease, margin 0.25s ease;
     width: calc(100% - 260px);
     min-height: calc(100vh - 87px);
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
-    flex-direction: column; margin-left: 250px;
+    flex-direction: column;
+} */
+.main-panel {
+  transition: width 0.25s ease, margin 0.25s ease;
+  width: calc(100% - 260px);
+  min-height: calc(100vh - 87px);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column; margin-left: 250px;
 }
-
 .content-wrapper {
     background: #eee;
     padding: 1.75rem 1.312rem;
@@ -250,11 +258,11 @@ img {
 .card .card-body {padding: 1.25rem 1.75rem;	flex: 1 1 auto; padding: 1.25rem;}
 
 .card .card-body .titleSec{margin: 0 0 30px 0;}
-.card .card-body .titleSec h2{color:#2c2e3e; font-weight:400; font-size: 22px; margin:0; display: inline-block; 
+.card .card-body .titleSec h2{color:#2c2e3e; font-weight:400; font-size: 22px; margin:0; display: inline-block;
   /* width: 100%; */
-} 
+}
 
-.card .card-body .titleSec .btn-primary{color: #fff; background-color: #404f71; border-color: #404f71; float: right; font-size: 15px; 
+.card .card-body .titleSec .btn-primary{color: #fff; background-color: #404f71; border-color: #404f71; float: right; font-size: 15px;
 	border-radius: 4px; line-height: 25px; padding: 6px 25px;}
 .card .card-body .titleSec .btn-primary:hover{color: #fff; background-color:#34426f; border-color:#34426f;}
 
@@ -358,7 +366,7 @@ ul.topMenuRight li.active a.subLink{    padding: 0 10px;
   font-size: 14px;
   line-height: 34px; font-weight: 400;;
   border-bottom: #eee solid 1px;}
-  ul.topMenuRight li.active a.subLink:last-child{border-bottom: none;}
+ul.topMenuRight li.active a.subLink:last-child{border-bottom: none;}
 ul.topMenuRight li.active .dropdownActive{padding: 0; margin-top: 7px;}
 ul.topMenuRight li.active .dropdownActive i{margin-right: 5px; color: #333;}
 

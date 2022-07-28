@@ -91,7 +91,8 @@ dataSource6= new MatTableDataSource();
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.Inc_type == 'I' || this.Inc_type == 'A' ?
-      this.logform.controls["inc_name"].patchValue('0') :this.logform.controls["inc_name"].patchValue('');
+      this.logform.controls["inc_name"].patchValue('0') :
+      this.logform.controls["inc_name"].patchValue('');
     },300)
 
   }

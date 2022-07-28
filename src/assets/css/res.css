@@ -34,7 +34,7 @@
   ul.topinsidentData2_1{width: 100%;}
   ul.topinsidentData2_2{width: 100%;}
   ul.topinsidentData2_3{width: 100%;}
-  ul.topinsidentData2 li{width: 50%; line-height: 17px;} 
+  ul.topinsidentData2 li{width: 50%; line-height: 17px;}
 }
 @media only screen and (max-width: 1084px) {
   .breadCamp {max-width: 406px;}
@@ -67,7 +67,7 @@
     padding-left: 15px;
     padding-right: 15px;
   }
-	
+
 	.navbar .navbar-menu-wrapper{display: contents !important;}
 	.navbar .navbar-menu-wrapper button.navbar-toggler{margin-right: 15px;}
 }
@@ -227,5 +227,4 @@
 
 
 
-	
-	
+
