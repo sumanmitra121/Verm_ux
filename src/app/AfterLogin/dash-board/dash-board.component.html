@@ -6,8 +6,8 @@
 		<div class="content-wrapper">
 			<div class="row" *ngIf="this.active_flag!=0">
 				<div class="rowCustomFlex">
-					<div class="col-2 mb-5">
-						<div class="whiteBox2">
+					
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li #tooltip="matTooltip"
                 [matTooltipDisabled]="inc_visibility.length > 4 ? false : true"
@@ -19,7 +19,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="whiteBox2">
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li
                 #tooltip="matTooltip"
@@ -30,14 +30,14 @@
 								</li>
 							</ul>
 						</div>
-						<div class="whiteBox2">
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li><span>{{temp=='' ? 'N/A' : temp +'°'+ _temp_unit}}</span>
 									<h3>Temperature</h3>
 								</li>
 							</ul>
 						</div>
-						<div class="whiteBox2 mb-0">
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li>
 									<span>{{wind_speed!='' ? wind_speed +'km/h' : 'N/A'}}</span>
@@ -46,9 +46,32 @@
 							</ul>
 						</div>
 
-					</div>
-					<div class="col-5 mb-5">
+					
+					
+				</div>
+
+				<div class="rowCustomFlex marginBotPosition">
+
+					<div class="col-6 mb-6">
 						<div class="whiteBox">
+							<div class="card-header card_headerCustom">
+								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Live Log </h2>
+								<button class="btn custom_btn pull-right"
+									(click)="go_to_boards('vessel_create')">Details</button>
+								<br clear="all">
+							</div>
+							<div class="card_bodyCustom scroll">
+								<div class="verticalScroll scrollTableData">
+									XXXXXXXXXXXXXXXX
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-6 mb-6">
+
+					
+						<div class="whiteBox whiteBoxHeightNon whiteBox_marg_bot">
 							<div class="card-header card_headerCustom">
 								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Vessel Status</h2>
 								<button class="btn custom_btn pull-right"
@@ -56,7 +79,7 @@
 								<br clear="all">
 							</div>
 							<div class="card_bodyCustom scroll">
-								<div class="verticalScroll scrollTableData">
+								<div class="verticalScroll scrollTableData scrollTableDataHeightNon">
 									<ngx-spinner bdColor="" name="vessel_stats" size="default" color="black"
 										type="ball-clip-rotate" [fullScreen]="false">
 										<p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p>
@@ -97,9 +120,9 @@
 							</div>
 
 						</div>
-					</div>
-					<div class="col-5 mb-5">
-						<div class="whiteBox">
+					
+					
+						<div class="whiteBox whiteBoxHeightNon">
 							<div class="card-header card_headerCustom">
 								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Helicopter Status</h2>
 								<button class="btn custom_btn pull-right"
@@ -107,7 +130,7 @@
 								<br clear="all">
 							</div>
 							<div class="card_bodyCustom scroll">
-								<div class="verticalScroll scrollTableData">
+								<div class="verticalScroll scrollTableData scrollTableDataHeightNon">
 									<ngx-spinner bdColor="" name="heli_stats" size="default" color="black"
 										type="ball-clip-rotate" [fullScreen]="false">
 										<p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p>
@@ -147,6 +170,8 @@
 							</div>
 
 						</div>
+					
+
 					</div>
 				</div>
 

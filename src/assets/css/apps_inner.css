@@ -79,13 +79,31 @@ ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
     padding:15px 15px 10px 15px;
     box-shadow:3px 3px 7px 1px #d5d5d5;
     display: inline-block;
-    border-radius: 10px; width: 100%; margin-bottom: 26px;}
+    border-radius: 10px; width: 100%; margin:0 0 26px 0;}
+
+.whiteBox2_floatLeft{float: left;}
+    
 .whiteBox2_marginBottom_none{margin-bottom: 0;}
 .whiteBox2 ul.watherRepoort{list-style-type: none;}
 .whiteBox2 ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
 .whiteBox2 ul.watherRepoort li:last-child{margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
 .whiteBox2 ul.watherRepoort li h3{font-size: 14px; color: #464ed0; font-weight: 700; margin: 0; padding:3px 0 0 0;}
 .whiteBox2 ul.watherRepoort li span{font-size: 24px;}
+
+
+.whiteBox3{background: #f4f4f4; border: #fff solid 3px;
+  padding:15px 15px 10px 15px;
+  box-shadow:3px 3px 7px 1px #d5d5d5;
+  display: inline-block;
+  border-radius: 10px; width: 25%; margin:0 15px 26px 15px;}
+
+  
+
+.whiteBox3 ul.watherRepoort{list-style-type: none;}
+.whiteBox3 ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
+.whiteBox3 ul.watherRepoort li:last-child{margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
+.whiteBox3 ul.watherRepoort li h3{font-size: 14px; color: #464ed0; font-weight: 700; margin: 0; padding:3px 0 0 0;}
+.whiteBox3 ul.watherRepoort li span{font-size: 24px;}
 
 .rowCustomFlex{display: flex; width: 100%;}
 
@@ -150,12 +168,16 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 
 .whiteBoxComon_cardCus{height: 100%;}
 
-
+.scrollTableDataHeightNon{height: inherit !important;}
+.whiteBoxHeightNon{height: inherit !important;}
+.whiteBox_marg_bot{margin-bottom:20px;}
 
 .verticalScroll a {
     display: block;
     padding: 12px;
     text-decoration: none;}
+
+.marginBotPosition{margin-bottom: 26px;}
 
 /* .verticalScroll a:hover {}
 
