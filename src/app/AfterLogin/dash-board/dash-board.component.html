@@ -6,7 +6,7 @@
 		<div class="content-wrapper">
 			<div class="row" *ngIf="this.active_flag!=0">
 				<div class="rowCustomFlex">
-					
+
 						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li #tooltip="matTooltip"
@@ -46,8 +46,8 @@
 							</ul>
 						</div>
 
-					
-					
+
+
 				</div>
 
 				<div class="rowCustomFlex marginBotPosition">
@@ -56,13 +56,12 @@
 						<div class="whiteBox">
 							<div class="card-header card_headerCustom">
 								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Live Log </h2>
-								<button class="btn custom_btn pull-right"
-									(click)="go_to_boards('vessel_create')">Details</button>
 								<br clear="all">
 							</div>
 							<div class="card_bodyCustom scroll">
 								<div class="verticalScroll scrollTableData">
-									XXXXXXXXXXXXXXXX
+                  <ul class="chat-messages-show-list" id="message-list">
+                  </ul>
 								</div>
 							</div>
 
@@ -70,7 +69,7 @@
 					</div>
 					<div class="col-6 mb-6">
 
-					
+
 						<div class="whiteBox whiteBoxHeightNon whiteBox_marg_bot">
 							<div class="card-header card_headerCustom">
 								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Vessel Status</h2>
@@ -116,12 +115,15 @@
 											</tr>
 										</tbody>
 									</table>
+                  <ng-container *ngIf="get_vessel_status==''">
+                          <h3 class="text-center">No Incident Status Available</h3>
+                  </ng-container>
 								</div>
 							</div>
 
 						</div>
-					
-					
+
+
 						<div class="whiteBox whiteBoxHeightNon">
 							<div class="card-header card_headerCustom">
 								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Helicopter Status</h2>
@@ -166,11 +168,14 @@
 										</tr>
 
 									</table>
+                  <ng-container *ngIf="get_vessel_status==''">
+                    <h3 class="text-center">No Helicopter Status Available</h3>
+                  </ng-container>
 								</div>
 							</div>
 
 						</div>
-					
+
 
 					</div>
 				</div>

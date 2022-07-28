@@ -1,6 +1,6 @@
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -65,6 +65,7 @@ export class vesselGrid{
   //End//
 })
 export class BoardComponent implements OnInit , OnDestroy{
+  @ViewChild('myModalClose') modalClose!:ElementRef;
   temp_unit:any;
  alive = true;
 vessel_status:any;
@@ -166,6 +167,8 @@ default_user:any=localStorage.getItem('Email');
   ngOnInit(): void {
     this.getOffShoreLocation();
   }
+
+
   submit(v:Form){
     var counter=0;
     this.check_respond='';
@@ -194,7 +197,8 @@ default_user:any=localStorage.getItem('Email');
                  setTimeout(()=>{
                   this.SetIncStatus(localStorage.getItem('Inc_id'));
                   this.toastr.successToastr('Submitted Successfully');
-                 },500)
+                  this.modalClose.nativeElement.click();
+                 },500);
              }
              else{
                 this.toastr.errorToastr('Failed to submit','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:5000})
@@ -227,7 +231,9 @@ default_user:any=localStorage.getItem('Email');
                 clearTimeout(this.vessel_status);
                 setTimeout(()=>{
                   this.SetVesselStatus(localStorage.getItem('Inc_id'));
-                  this.toastr.successToastr('Submitted SuccessFully','');
+                  this.toastr.successToastr('Submitted Successfully','');
+                  this.modalClose.nativeElement.click();
+
                 },500)
 
             }
@@ -264,6 +270,7 @@ default_user:any=localStorage.getItem('Email');
               setTimeout(()=>{
                 this.setHelicopterStatus(localStorage.getItem('Inc_id'));
                 this.toastr.successToastr('Submitted Successfully','');
+                this.modalClose.nativeElement.click();
               },500)
 
           }
@@ -298,6 +305,8 @@ default_user:any=localStorage.getItem('Email');
                   setTimeout(()=>{
                     this.setCasualtyStatus(this.act_Inc_id);
                     this.toastr.successToastr('Submitted Successfully','');
+                  this.modalClose.nativeElement.click();
+
                   },500)
 
 
@@ -334,6 +343,8 @@ default_user:any=localStorage.getItem('Email');
               setTimeout(()=>{
                 this.setEvacuationStatus(localStorage.getItem('Inc_id'));
                 this.toastr.successToastr('Submitted Successfully','');
+                this.modalClose.nativeElement.click();
+
               },500)
 
           }
@@ -370,6 +381,8 @@ default_user:any=localStorage.getItem('Email');
             setTimeout(() => {
               this.setEventStatus(localStorage.getItem('Inc_id'));
               this.toastr.successToastr('Submitted Successfully','');
+              this.modalClose.nativeElement.click();
+
             }, 500);
 
           }
@@ -406,6 +419,8 @@ default_user:any=localStorage.getItem('Email');
                 this.setPobStatus(this.act_Inc_id);
                 this.get_incident_details_after_save=this.get_prob_status;
                 this.toastr.successToastr('Submitted Successfully','');
+                this.modalClose.nativeElement.click();
+
               }, 2000);
 
             }
@@ -763,6 +778,7 @@ SetIncStatus(_id:any){
   //_id)
   this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(data=>{
     //data);
+  console.log(data);
 
     this.get_in_status = data;
     this.get_incident_details_after_save = data;
