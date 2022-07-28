@@ -1,6 +1,6 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Notifiactions } from 'src/app/Model/Notifiactions';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { map, take } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { ConstantPool } from '@angular/compiler';
 export class NotificationComponent implements OnInit {
   displayedColumns: string[] = ['Notifications'];
   dataSource = new MatTableDataSource<Notifiactions[]>();
-  constructor(private route:ActivatedRoute,private _serve:VirtualEmergencyService) { }
+  constructor(private _serve:VirtualEmergencyService,private router:Router) { }
   _notifications:Notifiactions[]=[];
   _notifications_backup:Notifiactions[]=[];
   _current_index:number = 5;
@@ -27,14 +27,10 @@ export class NotificationComponent implements OnInit {
     this._serve.global_service('0','/notification','emp_code='+localStorage.getItem('Employee_id')+'&limit='+this._min).pipe(map((x:any) => x.msg)).subscribe((res:any) => {
       // this._notifications.length = 0;
       this._notifications = res;
+      console.log(res);
+
   })
   }
+  clickToSeeNotifications(Id:any,_activity:any){this._serve.clearNotifications(Id,_activity);}
 
-  // clickToSeeNotifications(Id:any){
-  //   // console.log(Id);
-  //   this._serve.global_service('1','/notification',{id:Id}).subscribe(res =>{
-  //     console.log(res);
-
-  //   })
-  // }
 }

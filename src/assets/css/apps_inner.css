@@ -82,7 +82,7 @@ ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
     border-radius: 10px; width: 100%; margin:0 0 26px 0;}
 
 .whiteBox2_floatLeft{float: left;}
-    
+
 .whiteBox2_marginBottom_none{margin-bottom: 0;}
 .whiteBox2 ul.watherRepoort{list-style-type: none;}
 .whiteBox2 ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
@@ -97,7 +97,7 @@ ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
   display: inline-block;
   border-radius: 10px; width: 25%; margin:0 15px 26px 15px;}
 
-  
+
 
 .whiteBox3 ul.watherRepoort{list-style-type: none;}
 .whiteBox3 ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
@@ -1053,8 +1053,13 @@ font-size: 17px;
   bottom: 0;
   width: 100%;
   padding-bottom: 18px;}
-
-
+/*Suman Mitra Added*/
+  .pagination {
+    margin-top: 21px;
+    display: flex;
+    justify-content: center;
+  }
+/*End*/
 
 
 

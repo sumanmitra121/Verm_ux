@@ -4,6 +4,7 @@ import  { io, Socket }  from 'socket.io-client';//For Socket.io-client implement
 import {Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { IncDetails } from '../Model/IncDetails';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +18,7 @@ export class VirtualEmergencyService {
   // socket:any;
 //  url:any='http://localhost:3000';
 //  readonly url:any='https://vermapi.opentech4u.co.in';
- constructor(public dialog:MatDialog,private http:HttpClient) {
+ constructor(private route:Router,public dialog:MatDialog,private http:HttpClient) {
   // this.socket = io(this.url);
   // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
   this.socket = io(this.url, {transports: ['polling']});
@@ -158,6 +159,28 @@ export class VirtualEmergencyService {
   // }
 
   setcurrInc(_inc:IncDetails){this._incDetails.next(_inc);}
+
+  routeToTheParticular(_type:any){
+    switch(_type){
+      case "BI": this.route.navigate(['/Board']);break;//Incident Board
+      case "BV": this.route.navigate(['/Board']);break;//VESSEL STATUS
+      case "BH": this.route.navigate(['/Board']);break;//Helicopter Status
+      case "BP": this.route.navigate(['/Board']);break;//Prob Status
+      case "BC": this.route.navigate(['/Board']);break;//Casualty Status
+      case "BE": this.route.navigate(['/Board']);break;//Evacuation Status
+      case "BL": this.route.navigate(['/Board']);break;//Events Log
+      case "I": this.route.navigate(['/AddIncident']);break;//Create Incident
+      case "A": this.route.navigate(['/ActivationModule']);break;//Activation Module
+      case "R": this.route.navigate(['/addRepository']);break;//Repository Module
+      case "F": this.route.navigate(['/FormsCheckList']);break;//Forms & Check List
+      default:break;
+    }
+  }
+  clearNotifications(_id:any,_activity:any){
+  this.global_service('1','/notification',{id:+_id}).subscribe(res =>{
+    this.routeToTheParticular(_activity);
+  })
+  }
 
   }
 

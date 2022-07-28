@@ -372,5 +372,65 @@ ul.topMenuRight li.active .dropdownActive i{margin-right: 5px; color: #333;}
 
 
 
+/* Suman Mitra added this css for Notification*/
+.m-b-50 .fa {
+  margin: 0 0 0 6px;
+  font-size: 14px;
+}
 
+.dark-link {
+  color: #333;
+}
+
+.heading-line {
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.heading-line:after {
+  content: "";
+  height: 2px;
+  width: 91px;
+  background-color: #464ed0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.notification-ui_dd-content {
+  margin-bottom: 30px;
+}
+.notification-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 7px 13px;
+  margin-bottom: 7px;
+  background: #fff;
+  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.notification-list--unread {
+  /* border-left: 2px solid #29B6F6; */
+  border-radius: 5px;
+    border-left: 2px solid #464ed0;
+}
+
+.notification-list .notification-list_content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+
+.notification-list .notification-list_content .notification-list_detail p {
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+/* End */
 
