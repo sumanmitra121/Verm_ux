@@ -45,7 +45,7 @@
 
 @media screen and (max-width: 991px) {
   .sidebar-offcanvas {
-    position: fixed;
+    /* position: fixed; */
     max-height: calc(100vh - 87px);
     top: 87px;
     bottom: 0;
@@ -74,7 +74,7 @@
 
 @media (max-width: 991px) {
   .main-panel {
-    margin-left: 0;
+    /* margin-left: 0; */
     width: 100%;
   }
 }
