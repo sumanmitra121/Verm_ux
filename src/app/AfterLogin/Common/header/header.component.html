@@ -62,7 +62,7 @@
         <ng-container *ngIf="_notification.length > 0">
           <div class="NotificationContent" *ngFor="let notify of _notification;let i=index">
             <ng-container *ngIf="i < 4">
-              <a  (click)="gotoNotifications(notify.activity)">{{notify.narration}}</a>
+              <a  (click)="gotoNotifications(notify.id,notify.activity)">{{notify.narration}}</a>
 
             </ng-container>
             <hr *ngIf="i < 4"/>
@@ -73,8 +73,7 @@
                 <h3>No Notfications Available</h3>
               </div>
         </ng-container>
-
-         <button class="btn btn-success btn-block btn-sm" *ngIf="_notification.length > 4" (click)="gotoNotifications('D')">Show All</button>
+         <button class="btn custom_btn btn-block btn-sm" *ngIf="_notification.length > 4" (click)="gotoNotifications(0,'D')">Show All</button>
 			</div>
 		</li>
 		<li class="active dropdown">
@@ -144,149 +143,6 @@
 		<div class="container">
 			<div class="row">
 			  <div class="col-12 ">
-				<!-- <nav>
-				  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-					<a class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Profile</a>
-					<a class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile-pic" role="tab" aria-controls="nav-profile" aria-selected="false">Profile Pic</a>
-					<a class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Change Password</a>
-
-				  </div>
-				</nav>
-				<div class="tab-content py-3 px-3" id="nav-tabContent">
-				  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-					<form #logForm="ngForm" (ngSubmit)="Submit(logForm.value)">
-						<div class="row">
-							<div class="col-6">
-								 <input type="hidden" name="user" #user="ngModel" ngModel>
-								<label>Employee Id</label>
-								 <input type="text" name="emp_id" #emp_id="ngModel" ngModel   class="form-control" readonly>
-							</div>
-							<div class="col-6">
-								<label>Email</label>
-								 <input type="email" name="email"  [(ngModel)]="email"  class="form-control" readonly>
-							</div>
-
-						</div>
-						<div class="row mt-3">
-							<div class="col-6">
-								<label>Name</label>
-								 <input type="text" name="emp_name" id="Name" #emp_name="ngModel" ngModel required class="form-control">
-								 <div *ngIf="emp_name.errors?.required && (emp_name.touched || emp_name.dirty)" class="text-danger">
-									<small>*Please provide Name</small>
-								  </div>
-							</div>
-							<div class="col-6">
-								<label>Department</label>
-							     <select class="form-control" required class="form-control" name="depart_id" id="department_id" #depart_id="ngModel" ngModel>
-									 <option value="">Select</option>
-									 <option *ngFor="let dep of get_department" value="{{dep.id}}">{{dep.department_name}}</option>
-
-								 </select>
-
-							</div>
-						</div>
-						<div class="row mt-3">
-							<div class="col-6">
-								<label>Contact No.(Personal)</label>
-								 <input type="text" name="per_cnct_no" id="Per_cnct_no" #per_cnct_no="ngModel" required ngModel class="form-control">
-								 <div *ngIf="per_cnct_no.errors?.required && (per_cnct_no.touched || per_cnct_no.dirty)" class="text-danger">
-									<small>*Please provide personal contact no</small>
-								  </div>
-							</div>
-							<div class="col-6">
-								<label>Contact No.(ER)</label>
-								 <input type="text" name="er_cnct_no" id="Er_cnct_no" #er_cnct_no="ngModel" ngModel  class="form-control">
-
-							</div>
-						</div>
-
-						<div class="row mt-3">
-							<div class="col-6">
-								<label>Position</label>
-								<select class="form-control" name="pos_id" id="Pos_id" #pos_id="ngModel" ngModel>
-									<option value="">Select</option>
-									<option *ngFor="let pos of get_position"  value="{{pos.id}}">{{pos.position}}</option>
-
-								</select>
-							</div>
-
-						</div>
-						<div class="btnSubmitSec mt-4 mb-3 float-right">
-							<input type="submit" value="Save" class="btn btn-info" [disabled]="logForm.invalid">
-
-						</div>
-					</form>
-				  </div>
-				  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-					<form #LogForm="ngForm" (ngSubmit)="Submit_password(LogForm.value)">
-						<div class="row mb-2">
-
-							<div class="col-6">
-			                   <input type="hidden" name="user" [(ngModel)]="email" class="form-control">
-			                   <input type="hidden" name="emp_id" [(ngModel)]="Emp_id" class="form-control">
-
-								<label>Old Password</label>
-								<input  [type]="_o_pass ? 'password' : 'text'"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
-							<i class="toggle-password fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('O')"></i>
-								<div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger">
-									<small>*Please provide old password</small>
-								  </div>
-							</div>
-							<div class="col-6">
-								<label>New Password</label>
-								<input  [type]="_n_pass ? 'password' : 'text'" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
-							<i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('N')"></i>
-
-								<div *ngIf="pass.errors?.required && (pass.touched || pass.dirty)" class="text-danger">
-									<small>*Please provide new password</small>
-								  </div>
-							</div>
-
-							<div class="col-6 mt-3">
-								<label>Confirm Password</label>
-								<input   [type]="_c_pass ? 'password' : 'text'" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
-
-							<i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('C')"></i>
-
-								<div *ngIf="conf_pass.errors?.required && (conf_pass.touched || conf_pass.dirty)" class="text-danger">
-									<small>*Please provide confirm password</small>
-								  </div>
-							</div>
-						</div>
-						<div class="btnSubmitSec mt-4 mb-3 float-right">
-							<input type="submit" value="Save" class="btn btn-info"  [disabled]="LogForm.invalid">
-
-						</div>
-					 </form>
-
-				</div>
-
-				<div class="tab-pane fade" id="nav-profile-pic" role="tabpanel" aria-labelledby="nav-profile-pic">
-					<div class="row">
-						<div class="col-12 ">
-							<div class="thumLogout text-center">
-
-								<img src="{{this.image}}" alt="profile" class="thumImg"  alt="Avatar"  class="avatar">
-
-							</div>
-						</div>
-
-					</div>
-					<div class="row mt-2">
-						<div class="col-12 text-center">
-								<label>&nbsp;</label>
-								 <input type="file" class="form-control" id="change_file" hidden (change)="change_profile($event)">
-								  <a (click)="Edit_profile()" class="customIcon" ><i class="fa fa-edit" ></i> <span class="customTextUpload">Update</span></a> |
-								  <a class="customIcon" (click)="remove_profile()" ><i class="fa fa-trash-o" ></i> <span class="customTextRemove">Remove</span> </a>
-						</div>
-					</div>
-					<div class="btnSubmitSec mt-4 mb-3 float-right">
-						<input type="submit" class="btn btn-info" (click)="saveChanges()" value="Upload"/>
-					</div>
-				</div>
-
-				</div> -->
-
         <mat-tab-group mat-align-tabs="start" dynamicHeight>
           <mat-tab label="Profile Details">
             <div class="example-large-box mat-elevation-z8">

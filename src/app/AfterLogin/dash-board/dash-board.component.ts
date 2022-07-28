@@ -6,6 +6,7 @@ import { from, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
+declare var $:any;
 @Component({
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',
@@ -16,6 +17,7 @@ export class DashBoardComponent implements OnInit {
   _casualty_observeable!:Subscription;
   _evacuation_observeable!:Subscription;
   _event_observable!:Subscription;
+ _min:number = 0;
 
   headername:any='Dashboard';
   active_flag:any=localStorage.getItem('active_flag');
@@ -46,6 +48,13 @@ export class DashBoardComponent implements OnInit {
   global_inc:any=1;
   temp:any='';
   deg:any='';
+  //For chat //
+  storageArray: any = [];
+  element: any;
+  public messageText: any;
+  li_select: any;
+  //End //
+
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {}
   ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc,emp_code:localStorage.getItem('Employee_id')});}
   go_to_boards(v:any){localStorage.setItem('id_create',v); this.router.navigate(['/Board']);}
@@ -145,16 +154,175 @@ getProbStatus(_id:any){
       this.get_prob_status=res;
       })
 }
+getChat(_Id:any){
+  this._min = 0;
+   //check If ul has its child
+   this.checkIfHasCHild();
+  this.emergencyservice.global_service('0', '/oldMessage', 'min='+this._min+'&max=5'+'&id='+localStorage.getItem('Inc_id')).subscribe(data => {
+    console.log(data);
+     this.storageArray.length = 0;
+     this.storageArray = data;
+     this.storageArray = this.storageArray.msg;
+     for (let i = (this.storageArray.length-1); i >= 0; i--) {
+       if (this.storageArray[i].employee_id != localStorage.getItem('Employee_id')) {
+         this.element = document.createElement('li');
+         if(this.storageArray[i].file_flag==0){
+           this.element.innerHTML = "<b>" + this.storageArray[i].emp_name + "</b>" + "<br>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+         }
+         else{
+           if(this.storageArray[i].file.split(".")[1]=='pdf'){
+           this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
+           }
+           else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
+           this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
 
-getIncDetails(e:IncDetails){
+           }
+           else{
+           this.element.innerHTML ="<b>" + this.storageArray[i].emp_name + "</b>" + "<br><br>"+"<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+           }
+         }
+         this.element.style='border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top-right-radius: 10px;';
+         this.element.style.background = 'rgb(46 232 220 / 5%)';
+         this.element.style.padding = '15px 30px';
+         this.element.style.margin = '10px';
+         this.element.style.border = '1px solid rgb(128 128 128 / 42%)';
+         this.element.style.width='50%';
+         this.element.style.float='left';
+         this.messageText = document.getElementById('message-list');
+         this.messageText.appendChild(this.element);
+       }
+       else {
+          this.element = document.createElement('li');
+          if(this.storageArray[i].file_flag==0){
+           this.element.innerHTML =  "<b>Me </b><br>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+         }
+         else{
+           if(this.storageArray[i].file.split(".")[1]=='pdf'){
+           this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+           }
+           else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
+             this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
 
-    this.getIncStatus(e.id);
-    this.getVesselStatus(e.id);
-    this.getHelicopterStatus(e.id);
-    this.getCasualtyStatus(e.id);
-    this.getEvacuationStatus(e.id);
-     this.getEventStatus(e.id);
-     this.getProbStatus(e.id);
+           }
+           else{
+           this.element.innerHTML ="<b>Me </b><br><br>" +"<a  target='_blank' href="+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+           }
+         }
+         this.element.style='border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top-left-radius: 10px;';
+
+         this.element.style.background = 'white';
+         this.element.style.padding = '15px 30px';
+         this.element.style.margin = '10px';
+         this.element.style.border = '1px solid rgb(128 128 128 / 42%)';
+
+         // this.element.style.textAlign = 'right';
+         this.element.style.width='50%';
+
+         this.element.style.float='right';
+         this.messageText = document.getElementById('message-list');
+         this.messageText.appendChild(this.element);
+       }
+     }
+     this.li_select = document.querySelector(".chat-messages-show-list li:last-child")
+     this.li_select.scrollIntoView({ behavior: 'smooth' });
+   })
+  //  this.loadMoreDataOnScroll(_Id)
+  //    //Load data on scrolling in chat
+  $('.verticalScroll').scroll(()=>{
+    if($('.verticalScroll').scrollTop() == 0){
+      this._min += 5;
+      this.emergencyservice.global_service('0', '/oldMessage', 'min='+this._min+'&max=5'+'&id='+_Id).subscribe(data => {
+        this.storageArray.length = 0;
+        this.storageArray = data;
+        this.storageArray = this.storageArray.msg;
+        if(this.storageArray.length!=0){
+        for (let i = 0; i <this.storageArray.length; i++) {
+          if (this.storageArray[i].employee_id != localStorage.getItem('Employee_id')) {
+            this.element = document.createElement('li');
+            if(this.storageArray[i].file_flag==0){
+              this.element.innerHTML = "<b>" + this.storageArray[i].emp_name + "</b>" + "<br>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+            }
+            else{
+              if(this.storageArray[i].file.split(".")[1]=='pdf'){
+              this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
+              }
+              else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
+                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
+              }
+              else{
+              this.element.innerHTML ="<b>" + this.storageArray[i].emp_name + "</b>" + "<br><br>"+"<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+              }
+            }
+            this.element.style='border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top-right-radius: 10px;';
+            this.element.style.background = 'rgb(46 232 220 / 5%)';
+            this.element.style.padding = '15px 30px';
+            this.element.style.margin = '10px';
+            this.element.style.border = '1px solid rgb(128 128 128 / 42%)';
+            this.element.style.width='50%';
+            this.element.style.float='left';
+            this.messageText = document.getElementById('message-list');
+            this.messageText.insertBefore(this.element, this.messageText.firstElementChild);
+            // this.messageText.appendChild(this.element);
+
+
+          }
+          else {
+            this.element = document.createElement('li');
+            if(this.storageArray[i].file_flag==0){
+              this.element.innerHTML =  "<b>Me </b><br>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+            }
+            else{
+              if(this.storageArray[i].file.split(".")[1]=='pdf'){
+                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+              }
+              else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
+                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+              }
+              else{
+              this.element.innerHTML ="<b>Me </b><br><br>" +"<a  target='_blank' href="+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+              }
+            }
+            this.element.style='border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top-left-radius: 10px;';
+            this.element.style.background = 'white';
+            this.element.style.padding = '15px 30px';
+            this.element.style.margin = '10px';
+            this.element.style.border = '1px solid rgb(128 128 128 / 42%)';
+            // this.element.style.textAlign = 'right';
+            this.element.style.width='50%';
+            this.element.style.float='right';
+            this.messageText = document.getElementById('message-list');
+            this.messageText.insertBefore(this.element, this.messageText.firstElementChild);
+            // this.messageText.appendChild(this.element);
+          }
+        }
+        $('.chat-messages-show-container').animate(
+          { scrollTop: "520" }, 'slow');
+      }
+        else{
+
+        }
+
+      })
+    }
+  });
 }
+
+checkIfHasCHild(){
+  this.messageText = document.getElementById('message-list');
+    while (this.messageText.firstChild) {
+      this.messageText.removeChild(this.messageText.firstChild);
+    }
+}
+getIncDetails(e:IncDetails){
+      this.getIncStatus(e.id);
+      this.getVesselStatus(e.id);
+      this.getHelicopterStatus(e.id);
+      this.getCasualtyStatus(e.id);
+      this.getEvacuationStatus(e.id);
+      this.getEventStatus(e.id);
+      this.getProbStatus(e.id);
+      this.getChat(e.id);
+}
+
 
 }

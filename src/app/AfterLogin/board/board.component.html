@@ -217,7 +217,7 @@
         <!-- Incident Status -->
         <div class="modal-header" *ngIf="this.id_create=='inc_create'">
           <h3 class="modal-title" id="exampleModalLabel"><b *ngIf="get_incident_details !=''">{{Inc_name}}#{{Inc_id}}</b></h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
             <span aria-hidden="true">×</span>
           </button>
         </div>
@@ -225,7 +225,7 @@
         <!-- VESSEL Status -->
         <div class="modal-header" *ngIf="this.id_create=='vessel_create'">
           <h3 class="modal-title" id="exampleModalLabel">Create Vessel Status</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
             <span aria-hidden="true">×</span>
           </button>
         </div>
@@ -233,35 +233,35 @@
          <!-- Helicopter Status -->
          <div class="modal-header" *ngIf="this.id_create=='hel_create'">
           <h3 class="modal-title" id="exampleModalLabel">Create Helicopter Status</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <!-- Pob Status -->
         <div class="modal-header" *ngIf="this.id_create=='pob'">
         <h3 class="modal-title" id="exampleModalLabel">Create Pob Status</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
           <span aria-hidden="true">×</span>
         </button>
        </div>
         <!-- Cauality Status -->
         <div class="modal-header" *ngIf="this.id_create=='casual'">
           <h3 class="modal-title" id="exampleModalLabel">Create Casualty Status</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
             <span aria-hidden="true">×</span>
           </button>
         </div>
           <!-- Evacuation Status -->
           <div class="modal-header" *ngIf="this.id_create=='evacuation'">
             <h3 class="modal-title" id="exampleModalLabel">Create Evacuation Status</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
               <span aria-hidden="true">×</span>
             </button>
           </div>
           <!-- EVENTS Log -->
           <div class="modal-header" *ngIf="this.id_create=='events'">
           <h3 class="modal-title" id="exampleModalLabel">Create Events Log</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
             <span aria-hidden="true">×</span>
           </button>
         </div>
@@ -777,452 +777,6 @@
       </div>
     </div>
   </div>
-  <!-- For view Incident Status-->
-<div class="modal modalCustomeBoard fade" id="view_incident_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-    <div class="modal-dialog modal_dialogCustomeBoard modal-dialog-centered modal-dialog-zoom  modal-xl" role="document">
-      <div class="modal-content">
-                                       <!--Modal Header  -->
-          <!--Incident Status View  -->
-        <div class="modal-header" *ngIf="this.id_create=='inc_view'">
-          <h3 class="modal-title" id="exampleModalLabel">View Incident Status</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-         <!--VESSEL Status View  -->
-         <div class="modal-header" *ngIf="this.id_create=='vessel_view'">
-          <h3 class="modal-title" id="exampleModalLabel">View Vessel Status</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-         <!--Helicopter Status View  -->
-         <div class="modal-header" *ngIf="this.id_create=='hel_create'">
-          <h3 class="modal-title" id="exampleModalLabel">View Helicopter Status</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-          <!--Pob Status View  -->
-          <div class="modal-header" *ngIf="this.id_create=='pob'">
-            <h3 class="modal-title" id="exampleModalLabel">View Pob Status</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <!--Pob Status View  -->
-          <div class="modal-header" *ngIf="this.id_create=='casual'">
-          <h3 class="modal-title" id="exampleModalLabel">View Casuality Status</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-         </div>
-          <!--Evacuation Status View  -->
-          <div class="modal-header" *ngIf="this.id_create=='evacuation'">
-            <h3 class="modal-title" id="exampleModalLabel">View Evacuation Status</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-           </div>
-               <!-- EVENTS Log -->
-          <div class="modal-header" *ngIf="this.id_create=='events'">
-            <h3 class="modal-title" id="exampleModalLabel">View Events Log</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-                         <!-- End -->
 
-                       <!-- Modal Body -->
-          <!--Incident Status View  -->
-        <div class="modal-body" *ngIf="this.id_create=='inc_view'">
-            <table width="100%" cellspacing="15">
-                <!-- INCIDENT STATUS -->
-                <tr>
-                    <th scope="col">INSTALLATION:</th>
-                    <th scope="col">XXX</th>
-                </tr>
-                <!-- COORDINATES -->
-                <tr bgcolor="#fff" align="center">
-                    <td bgcolor="#f1f1f1"> COORDINATES: </td>
-                    <td>XXX</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-
-                <tr style="background: white;"><th colspan="12" class="text-center">WEATHER</th></tr>
-                <!-- Visibility Wind speed -->
-                <tr style="background:rgb(240, 239, 239)" align="center">
-                   <td>VISIBILITY:</td>
-                    <td>8777528909</td>
-                    <td>WIND SPEED:</td>
-                    <td>54RPM</td>
-                 </tr>
-                 <!-- Sea State Wind direction -->
-                 <tr>
-                    <th scope="col">SEA STATE: </th>
-                    <th scope="col">XXX</th>
-                    <th scope="col">WIND DIRECTION: </th>
-                    <th scope="col">XXX</th>
-                </tr>
-                <!-- Temparature -->
-                <tr bgcolor="#fff" align="center"><td>TEMEPRATURE:</td><td colspan="8">XXX</td></tr>
-                  <!-- SUMMARY OF INCIDENT:  -->
-                <tr bgcolor="#fff" align="center"><th>SUMMARY OF INCIDENT:</th></tr>
-                <tr bgcolor="#fff" align="center"><td scope="col" colspan="12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium assumenda blanditiis, accusamus nobis modi cum quisquam quis ut! Repellat architecto maxime omnis, nihil eos reiciendis deleniti repellendus itaque vitae iste. Cum fugiat nostrum sequi eius aliquid beatae iste quo nesciunt ut minima, consequuntur, earum repudiandae provident explicabo hic molestiae odit?</td></tr>
-
-                  <!-- STATUS OF EMERGENCY RESPONSE:  -->
-                  <tr bgcolor="#fff" align="center"><th>STATUS OF EMERGENCY RESPONSE:</th></tr>
-                  <tr bgcolor="#fff" align="center"><td scope="col" colspan="12">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium assumenda blanditiis, accusamus nobis modi cum quisquam quis ut! Repellat architecto maxime omnis, nihil eos reiciendis deleniti repellendus itaque vitae iste. Cum fugiat nostrum sequi eius aliquid beatae iste quo nesciunt ut minima, consequuntur, earum repudiandae provident explicabo hic molestiae odit?</td></tr>
-            </table>
-
-        </div>
-        <!-- VESSEL STatus View -->
-        <div class="modal-body" *ngIf="this.id_create=='vessel_view'">
-          <mat-form-field appearance="outline">
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-          </mat-form-field>
-
-          <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" matSort>
-
-              <!-- NAME  Column -->
-              <ng-container matColumnDef="Name">
-                <th mat-header-cell *matHeaderCellDef class="text-center"> NAME </th>
-                <td mat-cell *matCellDef="let row" class="text-center"></td>
-              </ng-container>
-
-              <!-- Type Column -->
-              <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef  class="text-center">TYPE</th>
-                <td mat-cell *matCellDef="let row"  class="text-center"></td>
-              </ng-container>
-
-              <!-- From/At Column -->
-              <ng-container matColumnDef="from">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> FROM/AT </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"></td>
-              </ng-container>
-
-              <!-- ETD  Column -->
-              <ng-container matColumnDef="etd">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> ETD </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-              </ng-container>
-
-              <!-- TO  Column -->
-              <ng-container matColumnDef="to">
-              <th mat-header-cell *matHeaderCellDef  class="text-center"> TO </th>
-              <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-            </ng-container>
-
-            <!-- ETD  Column -->
-            <ng-container matColumnDef="eta">
-              <th mat-header-cell *matHeaderCellDef  class="text-center"> ETA </th>
-              <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-            </ng-container>
-
-              <!-- REMARKS   Column -->
-              <ng-container matColumnDef="remarks">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-              </ng-container>
-
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-              <!-- Row shown when there is no matching data. -->
-              <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-              </tr>
-            </table>
-
-            <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
-          </div>
-        </div>
-         <!-- Helicopter Status View -->
-          <div class="modal-body" *ngIf="this.id_create=='hel_create'">
-
-            <mat-form-field appearance="outline">
-              <mat-label>Filter</mat-label>
-              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-            </mat-form-field>
-
-            <div class="mat-elevation-z8">
-              <table mat-table [dataSource]="dataSource" matSort>
-
-                <!-- NAME  Column -->
-                <ng-container matColumnDef="Call-Sign">
-                  <th mat-header-cell *matHeaderCellDef class="text-center"> CALL SIGN </th>
-                  <td mat-cell *matCellDef="let row" class="text-center"></td>
-                </ng-container>
-
-                <!-- Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center">TYPE</th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- From/At Column -->
-                <ng-container matColumnDef="from">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> FROM/AT </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- ETD  Column -->
-                <ng-container matColumnDef="etd">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> ETD </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-                </ng-container>
-
-                <!-- TO  Column -->
-                <ng-container matColumnDef="to">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> TO </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-              </ng-container>
-
-              <!-- ETD  Column -->
-              <ng-container matColumnDef="eta">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> ETA </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-              </ng-container>
-
-                <!-- REMARKS   Column -->
-                <ng-container matColumnDef="remarks">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-                </ng-container>
-
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-              </table>
-
-              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
-            </div>
-          </div>
-         <!-- Pob Status View -->
-          <div class="modal-body" *ngIf="this.id_create=='pob'">
-            <mat-form-field appearance="outline">
-              <mat-label>Filter</mat-label>
-              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-            </mat-form-field>
-
-            <div class="mat-elevation-z8">
-              <table mat-table [dataSource]="dataSource" matSort>
-
-                <!-- NAME  Column -->
-                <ng-container matColumnDef="Call-Sign">
-                  <th mat-header-cell *matHeaderCellDef class="text-center"> CALL SIGN </th>
-                  <td mat-cell *matCellDef="let row" class="text-center"></td>
-                </ng-container>
-
-                <!-- Type Column -->
-                <ng-container matColumnDef="type">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center">TYPE</th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- From/At Column -->
-                <ng-container matColumnDef="from">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> FROM/AT </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- ETD  Column -->
-                <ng-container matColumnDef="etd">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> ETD </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-                </ng-container>
-
-                <!-- TO  Column -->
-                <ng-container matColumnDef="to">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> TO </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-              </ng-container>
-
-              <!-- ETD  Column -->
-              <ng-container matColumnDef="eta">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> ETA </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-              </ng-container>
-
-                <!-- REMARKS   Column -->
-                <ng-container matColumnDef="remarks">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-                </ng-container>
-
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-              </table>
-
-              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
-            </div>
-          </div>
-          <!-- Casuality Status View -->
-          <div class="modal-body" *ngIf="this.id_create=='casual'">
-            <mat-form-field appearance="outline">
-              <mat-label>Filter</mat-label>
-              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-            </mat-form-field>
-
-            <div class="mat-elevation-z8">
-              <table mat-table [dataSource]="dataSource" matSort>
-
-                <!-- FULLNAME  Column -->
-                <ng-container matColumnDef="FULLNAME">
-                  <th mat-header-cell *matHeaderCellDef class="text-center"> FULL NAME</th>
-                  <td mat-cell *matCellDef="let row" class="text-center"></td>
-                </ng-container>
-
-                <!-- EMPLOYER Column -->
-                <ng-container matColumnDef="EMPLOYER">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center">EMPLOYER </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- CONDITION Column -->
-                <ng-container matColumnDef="CONDITION">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> CONDITION  </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- LOCATION  Column -->
-                <ng-container matColumnDef="LOCATION">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> LOCATION  </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-                </ng-container>
-
-                <!-- TIME  Column -->
-                <ng-container matColumnDef="TIME">
-                <th mat-header-cell *matHeaderCellDef  class="text-center"> TIME  </th>
-                <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-              </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-              </table>
-
-              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
-            </div>
-          </div>
-          <!-- Evacuation Status View -->
-          <div class="modal-body" *ngIf="this.id_create=='evacuation'">
-
-            <mat-form-field appearance="outline">
-              <mat-label>Filter</mat-label>
-              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-            </mat-form-field>
-
-            <div class="mat-elevation-z8">
-              <table mat-table [dataSource]="dataSource" matSort>
-
-                <!-- Time  Column -->
-                <ng-container matColumnDef="TIME">
-                  <th mat-header-cell *matHeaderCellDef class="text-center"> TIME</th>
-                  <td mat-cell *matCellDef="let row" class="text-center"></td>
-                </ng-container>
-                   <!-- Time  Column -->
-                   <ng-container matColumnDef="DESTINATION">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> DESTINATION</th>
-                    <td mat-cell *matCellDef="let row" class="text-center"></td>
-                  </ng-container>
-
-                <!-- modoftransport Column -->
-                <ng-container matColumnDef="MODEOFTRANSPORT">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center">MODE OF TRANSPORT </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- pobremaining Column -->
-                <ng-container matColumnDef="POBREMAINING">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> POB REMAINING  </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-                <!-- Remarks  Column -->
-                <ng-container matColumnDef="REMARKS">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center"> REMARKS  </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"> </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-              </table>
-
-              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
-            </div>
-          </div>
-          <!-- Events Log View -->
-          <div class="modal-body" *ngIf="this.id_create=='events'">
-            <mat-form-field appearance="outline">
-              <mat-label>Filter</mat-label>
-              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-            </mat-form-field>
-
-            <div class="mat-elevation-z8">
-              <table mat-table [dataSource]="dataSource" matSort>
-
-                <!-- Time  Column -->
-                <ng-container matColumnDef="TIME">
-                  <th mat-header-cell *matHeaderCellDef class="text-center"> TIME</th>
-                  <td mat-cell *matCellDef="let row" class="text-center"></td>
-                </ng-container>
-                   <!-- Time  Column -->
-                   <ng-container matColumnDef="SITUATIONSTATUS">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> SITUATION STATUS </th>
-                    <td mat-cell *matCellDef="let row" class="text-center"></td>
-                  </ng-container>
-
-                <!-- modoftransport Column -->
-                <ng-container matColumnDef="RESOURCEASSIGNED">
-                  <th mat-header-cell *matHeaderCellDef  class="text-center">RESOURCE ASSIGNED </th>
-                  <td mat-cell *matCellDef="let row"  class="text-center"></td>
-                </ng-container>
-
-
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-              </table>
-
-              <mat-paginator [pageSizeOptions]="[50,100,200]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
-            </div>
-          </div>
-          <!-- End -->
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-</div>
 
 <div id="snackbar">Submitted Successfully</div>

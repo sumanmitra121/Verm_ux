@@ -1080,6 +1080,13 @@ font-size: 17px;
     text-align: center;
     vertical-align: sub;
   }
+/*Suman Mitra Added*/
+  .pagination {
+    margin-top: 21px;
+    display: flex;
+    justify-content: center;
+  }
+/*End*/
 
 
 

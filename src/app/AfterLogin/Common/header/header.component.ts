@@ -116,18 +116,12 @@ export class HeaderComponent implements OnInit {
         this.get_position=data;
         this.get_position=this.get_position.msg;
       })
-      // For Getting Notification
-      // this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
-      // this.emergencyservice.listen('get_notification').subscribe(data=>{
-      //   //(data);
-      // })
-  this.getNotifications();
+      this.getNotifications();
   }
 
  getNotifications(){
       this.emergencyservice.emit('notification','');
       this.emergencyservice.listen('notification').subscribe((data:any)=>{
-        // console.log(data);
          this._notification = data;
          this._TOTAL_LENGTH_NOTIFICATION = this._notification[this._notification.length-1].total;
       })
@@ -300,7 +294,12 @@ export class HeaderComponent implements OnInit {
       this.getCurrentIncident();
     }
 }
-gotoNotifications(_activity:any){
-  this.router.navigate(['/notifications',btoa(_activity)]);
+gotoNotifications(_id:any,_activity:any){
+  if(_activity !== 'D'){
+    this.emergencyservice.clearNotifications(_id,_activity);
+  }
+  else{
+    this.router.navigate(['/notifications',btoa(_activity)]);
+  }
 }
 }
