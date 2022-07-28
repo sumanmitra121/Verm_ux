@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Form } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
@@ -12,6 +10,8 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
   styleUrls: ['./forms-checklist.component.css']
 })
 export class FormsChecklistComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  p: number = 1;
   displayedColumns: string[] = ['icon','Name', 'Date', 'Type', 'Created_by'];
   dataSource= new MatTableDataSource();
   // getFiles:any=[];
@@ -27,15 +27,20 @@ export class FormsChecklistComponent implements OnInit {
     this.emergencyservice.global_service('0','/form_category',null).subscribe(data=>{console.log(data);
       this.get_category=data;
       this.get_category=this.get_category.msg;
-      this.dataSource=new MatTableDataSource(this.get_category);
+      this.putFiles(this.get_category);
        this.spinner.hide();
       })
   }
-   //For Changing List Or Grid View 
+ putFiles(v:any){
+  this.dataSource=new MatTableDataSource(v);
+  this.dataSource.paginator = this.paginator;
+ }
+
+   //For Changing List Or Grid View
   change_view(view_type:any){
        this.view_type=view_type;
     }
-    //For sorting 
+    //For sorting
     sorting(sort_value:any)
     {
       var flag=sort_value!='' ? sort_value : null;

@@ -142,6 +142,9 @@ import { DialogalertComponent } from './CommonDialogAlert/dialogalert/dialogaler
 import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
 
 // End////////
+//Ngx Pagination//
+import { NgxPaginationModule } from 'ngx-pagination';
+//End//
 @NgModule({
   declarations: [
     NotificationComponent,
@@ -224,6 +227,7 @@ import { NotificationComponent } from './CommonDialogAlert/Notification/Notifica
     // SearchFilterPipe
   ],
   imports: [
+    NgxPaginationModule,
     MatToolbarModule,
     MatDialogModule,
     ShareButtonsModule.withConfig({

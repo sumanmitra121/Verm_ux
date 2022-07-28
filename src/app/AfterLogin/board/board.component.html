@@ -25,7 +25,7 @@
               <ul class="listDashboard" *ngIf="get_in_status.length > 0">
                 <li><strong>Visibility:</strong> {{inc_visibility}}</li>
                 <li><strong>Sea State:</strong> {{inc_sea_state}}</li>
-                <li><strong>Temparature:</strong>
+                <li><strong>Temperature:</strong>
                   <!-- {{inc_temparature}} -->
                  {{temp}}&#xb0;{{temp_unit}}
                 </li>
@@ -300,7 +300,7 @@
                           <th class="text-center">Time</th>
                           <th class="text-center">Visibility</th>
                           <th class="text-center">Sea State</th>
-                          <th class="text-center">Temparature(C/F)</th>
+                          <th class="text-center">Temperature(C/F)</th>
                           <th class="text-center">Wind Speed (km/h)</th>
                           <th class="text-center">Wind Direction</th>
                           <th class="text-center" (click)="addRow()">
@@ -322,7 +322,7 @@
                           <td>
                             <div class="row">
                               <div class="col-8">
-                                <input  placeholder="Enter Temparature" [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="PreventNonNumeric($event)"/>
+                                <input  placeholder="Enter Temperature" [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="PreventNonNumeric($event)"/>
                               </div>
                               <div class="col-4 my-auto">
                                 <mat-radio-group aria-label="Select an option" [(ngModel)]="dynamicArray[i].temp_unit" [ngModelOptions]="{standalone: true}">
@@ -352,7 +352,7 @@
                       <th class="text-center">Time</th>
                       <th class="text-center">Visibility</th>
                       <th class="text-center">Sea State</th>
-                      <th class="text-center">Temparature(C/F)</th>
+                      <th class="text-center">Temperature(C/F)</th>
                       <th class="text-center">Wind Speed (km/h)</th>
                       <th class="text-center">Wind Direction</th>
                       <th class="text-center" (click)="addRow()">
