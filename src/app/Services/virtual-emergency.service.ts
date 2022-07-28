@@ -12,8 +12,8 @@ export class VirtualEmergencyService {
   currentIncdents$ = this._incDetails.asObservable();
   private socket: Socket;
 
-  // public url = 'http://192.168.1.244:3000';
-  public url = 'https://vermapi.opentech4u.co.in';
+  public url = 'http://192.168.1.244:3000';
+  // public url = 'https://vermapi.opentech4u.co.in';
   // socket:any;
 //  url:any='http://localhost:3000';
 //  readonly url:any='https://vermapi.opentech4u.co.in';

@@ -184,14 +184,21 @@
                 <div class="col-2 mb-5">
                     <div class="whiteBox2">
                         <ul class="watherRepoort">
-                            <li><span>{{inc_visibility == '' ? 'N/A' : inc_visibility}}</span>
+                            <li
+                            #tooltip="matTooltip"
+                             [matTooltipDisabled]="inc_visibility.length > 4 ? false : true"
+                              matTooltip="{{inc_visibility}}"><span>{{inc_visibility == '' ? 'N/A' : (inc_visibility.length > 4  ) ? (inc_visibility | slice:0:3)+'..' : (inc_visibility)}}</span>
                                 <h3>Visibility</h3>
                             </li>
                         </ul>
                     </div>
                     <div class="whiteBox2">
                         <ul class="watherRepoort">
-                            <li><span>{{inc_sea_state == '' ? 'N/A' : inc_sea_state}}</span>
+
+                            <li
+                            #tooltip="matTooltip"
+                              [matTooltipDisabled]="inc_sea_state.length > 4 ? false : true"
+                              matTooltip="{{inc_sea_state}}"><span>{{inc_sea_state == '' ? 'N/A' : (inc_sea_state.length > 4  ) ? (inc_sea_state | slice:0:3)+'..' : (inc_sea_state)}}</span>
                                 <h3>Sea State</h3>
                             </li>
                         </ul>

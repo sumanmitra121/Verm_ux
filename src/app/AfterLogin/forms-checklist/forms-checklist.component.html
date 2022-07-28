@@ -90,7 +90,6 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
           <mat-paginator [pageSizeOptions]="[10]" aria-label="Select page of users" [showFirstLastButtons]="true"></mat-paginator>
-
         </div>
 
         <div class="text-center" *ngIf="(view_type=='G' || view_type=='L') && get_category==''">
