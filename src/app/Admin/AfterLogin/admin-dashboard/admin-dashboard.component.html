@@ -14,14 +14,6 @@
                    <h2 class="customTextHeader">Closed Incident</h2>
                    <p class="customTextcontent">{{closed_incident}}</p>
                  </div>
-                 <!-- <div class="whiteBox2">
-                    <ul class="watherRepoort">
-                        <li>
-                            <h3>Closed Incident</h3>
-                            <span>{{closed_incident}}</span>
-                        </li>
-                    </ul>
-                </div> -->
             </div>
             <div class="col-4">
              <div class="incidentActiveClose">
@@ -39,18 +31,19 @@
                </div>
         </div>
         <hr/>
+
         <!-- Team On Roaster -->
             <div class="row">
                 <div class="col-12" (click)="expandDiv()" style="cursor:pointer">
-                    <h3>Team On Roster (Click to expand)</h3>
+                    <h3>Team On Roster {{showCardBody ?'Click to Close' : 'Click to expand'}} <mat-icon class="adminCheveronIcon">chevron_left</mat-icon></h3>
                 </div>
-                <div class="col-12" id="toggleDiv" >
+                <div class="col-12" [@openClose]="showCardBody ? 'open' : 'closed'">
                 <div class="tabs-container clearfix">
 
                     <table>
                         <tr>
                             <th colspan="4" class="text-center" id="team_Roster">
-                               <!-- {{team_roster[0].team_name}} <small><i>{{team_roster[0].team_type}} (From: {{team_roster[0].from_date}} To:{{team_roster[0].to_date}}) </i></small> -->
+                               {{team_roster[0]?.team_name}} <small><i>{{team_roster[0]?.team_type}} (From: {{team_roster[0]?.from_date}} To:{{team_roster[0]?.to_date}}) </i></small>
                             </th>
                         </tr>
                         <tr>
@@ -94,7 +87,9 @@
         <div class="col-12">
         <div class="tabs-container clearfix">
             <ul class="tabs-menu">
-            <li id="active_{{i}}" [ngClass]="i==0 ? 'active' : ''" *ngFor="let inc of all_incident; let i=index" (click)="get_incident_details(inc.id,i)"><a>{{inc.inc_name}} ({{inc.inc_no}})</a></li>
+            <li id="active_{{i}}" [ngClass]="i==0 ? 'active' : ''" *ngFor="let inc of all_incident; let i=index" (click)="get_incident_details(inc.id,i)">
+              <a>{{inc.inc_name}} ({{inc.inc_no}})</a>
+            </li>
 
         </ul>
         <div class="tab">
@@ -213,6 +208,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="col-10 mb-5">
                     <div class="whiteBox">
                         <div class="card-header card_headerCustom">

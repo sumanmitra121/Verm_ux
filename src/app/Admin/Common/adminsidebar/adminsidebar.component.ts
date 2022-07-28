@@ -1,8 +1,6 @@
-import { ThrowStmt } from '@angular/compiler';
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Item } from 'angular2-multiselect-dropdown';
-declare var $:any;
 @Component({
   selector: 'app-adminsidebar',
   templateUrl: './adminsidebar.component.html',

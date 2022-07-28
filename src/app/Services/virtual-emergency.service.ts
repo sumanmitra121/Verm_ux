@@ -84,16 +84,6 @@ export class VirtualEmergencyService {
       })
     }
 
-  //   //For Getting notifications
-  //   get_notifications(eventname:any){
-  //     console.log(eventname)
-  //    return new Observable((observer)=>{
-  //      this.socket.on(eventname,(news:Observable<any>)=>{
-  //        console.log(news);
-  //        observer.next(news);
-  //      })
-  //    })
-  //  }
 
 
   //For Listening api for chats
@@ -102,7 +92,6 @@ export class VirtualEmergencyService {
     return new Observable((observer)=>{
       this.socket.on(eventname,(news:Observable<any>)=>{
             observer.next(news);
-             // console.log(news);
       })
     })
    }

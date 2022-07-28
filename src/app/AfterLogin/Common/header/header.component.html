@@ -390,15 +390,18 @@
 
                   <label>Old Password</label>
                   <input  [type]="_o_pass ? 'password' : 'text'"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
-                <i class="toggle-password fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('O')"></i>
-                  <div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger">
+                <!-- <i class="toggle-password fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('O')"></i> -->
+                <mat-icon (click)="show_pass('O')" class="toggle-password">remove_red_eye</mat-icon>
+
+                <div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger">
                     <small>*Please provide old password</small>
                     </div>
                 </div>
                 <div class="col-6">
                   <label>New Password</label>
                   <input  [type]="_n_pass ? 'password' : 'text'" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
-                <i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('N')"></i>
+                <!-- <i class="toggle-newpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('N')"></i> -->
+                <mat-icon (click)="show_pass('N')" class="toggle-password">remove_red_eye</mat-icon>
 
                   <div *ngIf="pass.errors?.required && (pass.touched || pass.dirty)" class="text-danger">
                     <small>*Please provide new password</small>
@@ -408,8 +411,9 @@
                 <div class="col-6 mt-3">
                   <label>Confirm Password</label>
                   <input   [type]="_c_pass ? 'password' : 'text'" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
+                  <mat-icon (click)="show_pass('C')" class="toggle-password">remove_red_eye</mat-icon>
 
-                <i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('C')"></i>
+                <!-- <i class="toggle-confpassword fa fa-eye-slash" style="cursor:pointer" (click)="show_pass('C')"></i> -->
 
                   <div *ngIf="conf_pass.errors?.required && (conf_pass.touched || conf_pass.dirty)" class="text-danger">
                     <small>*Please provide confirm password</small>

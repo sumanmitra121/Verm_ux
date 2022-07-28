@@ -1,23 +1,24 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import {MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
 import { validations } from 'src/app/utilitY/validation';
-declare var $ :any;
 @Component({
   selector: 'app-adminheader',
   templateUrl: './adminheader.component.html',
   styleUrls: ['./adminheader.component.css']
 })
 export class AdminheaderComponent implements OnInit {
+  _c_pass:boolean = true;
+  _n_pass:boolean = true;
+  _o_pass:boolean = true;
   @ViewChild('LogForm') LogForm!:NgForm;
   @ViewChild('logForm') profile!:NgForm;
   @ViewChild('MatTabGroup') tabGroup!: MatTabGroup;
    Email:any=localStorage.getItem("Email");
-  //  Name:any=localStorage.getItem('Emp_name');
    _select_tab:any = 0;
    classList:any='';
    Name:any='';
@@ -36,45 +37,9 @@ export class AdminheaderComponent implements OnInit {
   // hidden:boolean=false;
   i:any=0;
   ngOnInit(): void {
+    // this.getNotifications();
     this.Emp_name=localStorage.getItem('Emp_name');
     this.get_details();
-      //For toggling eye and eye-slash for old password
-      $(".toggle-password").click(()=>{
-        if ($('#old_pass').attr("type") == "password") {
-          $('#old_pass').attr("type", "text");
-          $('.toggle-password').removeClass("fa-eye-slash");
-          $('.toggle-password').addClass("fa-eye");
-        } else {
-          $('#old_pass').attr("type", "password");
-          $('.toggle-password').removeClass("fa-eye");
-          $('.toggle-password').addClass("fa-eye-slash");
-        }
-    });
-    //For toggling eye and eye-slash for new password
-    $(".toggle-newpassword").click(()=>{
-      if ($('#pass').attr("type") == "password") {
-        $('#pass').attr("type", "text");
-      $('.toggle-newpassword').removeClass("fa-eye-slash");
-      $('.toggle-newpassword').addClass("fa-eye");
-      } else {
-        $('#pass').attr("type", "password");
-        $('.toggle-newpassword').removeClass("fa-eye");
-        $('.toggle-newpassword').addClass("fa-eye-slash");
-      }
-  });
-    //For toggling eye and eye-slash for confirm password
-   $(".toggle-confpassword").click(()=>{
-        if ($('#conf_pass').attr("type") == "password") {
-          $('#conf_pass').attr("type", "text");
-        $('.toggle-confpassword').removeClass("fa-eye-slash");
-        $('.toggle-confpassword').addClass("fa-eye");
-        } else {
-          $('#conf_pass').attr("type", "password");
-          $('.toggle-confpassword').removeClass("fa-eye");
-          $('.toggle-confpassword').addClass("fa-eye-slash");
-        }
-    });
-
     // For Getting Notification
     this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
     this.emergencyservice.listen('get_notification').subscribe(data=>{
@@ -84,6 +49,21 @@ export class AdminheaderComponent implements OnInit {
     })
 
   }
+  getNotifications(){
+    // this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
+    // this.emergencyservice.listen('get_notification').subscribe(data=>{
+    //   console.log(data);
+    // })
+  }
+  show_pass(_type:any){
+    switch(_type){
+      case 'O':this._o_pass =!this._o_pass;break;
+      case 'C':this._c_pass =!this._c_pass;break;
+      case 'N':this._n_pass =!this._n_pass;break;
+      default:break;
+    }
+  }
+
   logout(){
     this.router.navigate(['/admin']);localStorage.clear();}
   get_details(){
@@ -139,7 +119,7 @@ export class AdminheaderComponent implements OnInit {
     }
   }
   //For Non Numeric Validations
-PreventNonNumeric(_event:any){
-  validations._preventnonNumeric(_event)
-}
+  PreventNonNumeric(_event:any){
+    validations._preventnonNumeric(_event)
+  }
 }

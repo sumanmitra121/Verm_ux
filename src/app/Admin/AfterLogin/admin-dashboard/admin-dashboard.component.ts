@@ -1,21 +1,36 @@
-import { Component, OnInit,ViewChild} from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit} from '@angular/core';
 import {Chart } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
-declare var $:any;
-
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+  styleUrls: ['./admin-dashboard.component.css'],
+    animations: [
+        trigger('openClose', [
+            state('open', style({
+                height: '*',
+                opacity: 1,
+            })),
+            state('closed', style({
+                height: '0',
+                opacity: 0
+            })),
+            transition('open => closed', [
+                animate('0.35s')
+            ]),
+            transition('closed => open', [
+                animate('0.35s')
+            ]),
+        ]),
+    ]
 })
 export class AdminDashboardComponent implements OnInit {
 
   constructor(private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService) { }
-  // canvas: any;
-  // ctx: any;
-  // @ViewChild('ctx') mychart:any;
-  // Incidents
+  showCardBody = true;
   arr:any=[];
   closed_incident:any;
    all_incident:any=[];
@@ -92,37 +107,29 @@ export class AdminDashboardComponent implements OnInit {
 
           })
           // For  getting all incidents
-          this.emergencyservice.global_service('0','/get_all_incident',null).subscribe(data=>{
+          this.emergencyservice.global_service('0','/get_all_incident',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
           this.all_incident=data;
-          this.all_incident=this.all_incident.msg;
+          // this.all_incident=this.all_incident.msg;
           if(this.all_incident.length>0){
           this.get_incident_details(this.all_incident[0].id,0);
           }
           })
           // For getting team on Roster data
-          this.emergencyservice.global_service('0','/team_adm_dashboard',null).subscribe(data=>{
+          this.emergencyservice.global_service('0','/team_adm_dashboard',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
             console.log(data);
             this.team_roster=data;
-            this.team_roster=this.team_roster.msg;
-            if(this.team_roster.length>0){
-              $('#team_Roster').html(this.team_roster[0].team_name + '  <small><i>'+this.team_roster[0].team_type+ '  From:' + this.team_roster[0].from_date +' To:' +this.team_roster[0].to_date +'</small></i>')
-            }
+            // this.team_roster=this.team_roster.msg;
+            // if(this.team_roster.length>0){
+            //   $('#team_Roster').html(this.team_roster[0].team_name + '  <small><i>'+this.team_roster[0].team_type+ '  From:' + this.team_roster[0].from_date +' To:' +this.team_roster[0].to_date +'</small></i>')
+            // }
           })
         this.spinner.hide();
       }
       })
   }
-  expandDiv(){
-    if($('#toggleDiv').is(':visible')){
-      $('#toggleDiv').slideUp("slow");
-    }
-    else{
-      $('#toggleDiv').slideDown("slow");
-    }
-  }
+  expandDiv(){this.showCardBody = !this.showCardBody;}
 
   get_incident_details(id:any,index:any){
-    console.log(index);
     for(let i=0;i<this.all_incident.length;i++){
       var element = document.getElementById("active_"+i);
       element?.classList.remove("active");
@@ -130,7 +137,7 @@ export class AdminDashboardComponent implements OnInit {
     var element = document.getElementById("active_"+index);
     element?.classList.add("active");
     this.emergencyservice.global_service('0','/get_incident_dtls','id='+id).subscribe(data=>{
-      console.log(data);
+      // console.log(data);
        this.inc_details=data;
        this.inc_details=this.inc_details.msg;
     })
