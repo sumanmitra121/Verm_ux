@@ -7,7 +7,7 @@
 			<div class="row" *ngIf="this.active_flag!=0">
 				<div class="rowCustomFlex">
 					
-						<div class="whiteBox2 whiteBox2_floatLeft">
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li #tooltip="matTooltip"
                 [matTooltipDisabled]="inc_visibility.length > 4 ? false : true"
@@ -19,7 +19,7 @@
 								</li>
 							</ul>
 						</div>
-						<div class="whiteBox2 whiteBox2_floatLeft">
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li
                 #tooltip="matTooltip"
@@ -30,14 +30,14 @@
 								</li>
 							</ul>
 						</div>
-						<div class="whiteBox2 whiteBox2_floatLeft">
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li><span>{{temp=='' ? 'N/A' : temp +'°'+ _temp_unit}}</span>
 									<h3>Temperature</h3>
 								</li>
 							</ul>
 						</div>
-						<div class="whiteBox2 whiteBox2_floatLeft">
+						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li>
 									<span>{{wind_speed!='' ? wind_speed +'km/h' : 'N/A'}}</span>
