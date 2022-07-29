@@ -91,7 +91,7 @@ export class AddIncidentComponent implements OnInit {
      this.check_respond=data;
      if(this.check_respond.suc==1){
       this.response="An incident with Id "+ this.check_respond.inc_no+" has been created successfully";
-      var dt=global_url_test.get_dt(this.LogForm.form.value.id,'I',this.LogForm.form.value.inc_name,$('#type option:selected').text(),this.LogForm.form.value.user,'IC',this.datePipe.transform(new Date(),'dd/MM/YYYY hh:mma'));
+      var dt=global_url_test.get_dt(this.LogForm.form.value.id,'I',this.LogForm.form.value.inc_name,$('#type option:selected').text(),this.LogForm.form.value.user,'IC',this.datePipe.transform(new Date(),'dd/MM/YYYY hh:mma'),this.check_respond.inc_no);
       this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{})
       localStorage.setItem('_local_sel_id','0');
       this.incId = this.check_respond.inc_no;

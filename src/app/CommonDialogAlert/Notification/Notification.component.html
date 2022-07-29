@@ -1,13 +1,11 @@
-<app-header></app-header>
+<app-header [hidden]="_u_type == 'A'"></app-header>
+<app-adminheader [hidden]="_u_type != 'A'"></app-adminheader>
 
 <div class="page-body-wrapper">
-	<app-sidebar class="sidebarMain"></app-sidebar>
-
+	<app-sidebar class="sidebarMain" [hidden]="_u_type == 'A'"></app-sidebar>
+  <app-adminsidebar class="sidebarMain" [hidden]="_u_type != 'A'"></app-adminsidebar>
 	<div class="main-panel">
 		<div class="content-wrapper">
-
-
-
               <section class="section-50">
 
                     <h3 class="m-b-50 heading-line">Notifications <i class="fa fa-bell text-muted"></i></h3>

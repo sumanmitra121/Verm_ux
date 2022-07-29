@@ -41,8 +41,8 @@ export class AdminheaderComponent implements OnInit {
     this.Emp_name=localStorage.getItem('Emp_name');
     this.get_details();
     // For Getting Notification
-    this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
-    this.emergencyservice.listen('get_notification').subscribe(data=>{
+    this.emergencyservice.emit('notification','');
+    this.emergencyservice.listen('notification').subscribe(data=>{
       console.log(data);
       this.notifications=data;this.notifications=this.notifications.users;
       // console.log(this.notifications.length)

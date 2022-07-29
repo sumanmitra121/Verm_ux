@@ -93,7 +93,7 @@ import { DashboardComponent } from './AfterLogin/Close-Incident/dashboard/dashbo
 import { EditDashbaordComponent } from './AfterLogin/Close-Incident/edit-dashbaord/edit-dashbaord.component';
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
 ///END////////////
-import { ScrollingDirective } from './scrolling.directive';
+
 //End///////
 /////Emoji Package//////////
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -202,7 +202,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DashboardComponent,
     EditDashbaordComponent,
     ApproveIncidentComponent,
-    ScrollingDirective,
     UploadsComponent,
     CategoryComponent,
     CreateCategoryComponent,

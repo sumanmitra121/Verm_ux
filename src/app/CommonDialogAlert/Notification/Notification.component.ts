@@ -1,10 +1,8 @@
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Notifiactions } from 'src/app/Model/Notifiactions';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
-import { map, take } from 'rxjs/operators';
-import { ConstantPool } from '@angular/compiler';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-Notification',
@@ -12,9 +10,10 @@ import { ConstantPool } from '@angular/compiler';
   styleUrls: ['./Notification.component.css']
 })
 export class NotificationComponent implements OnInit {
+  _u_type:any= localStorage.getItem('User_type');
   displayedColumns: string[] = ['Notifications'];
   dataSource = new MatTableDataSource<Notifiactions[]>();
-  constructor(private _serve:VirtualEmergencyService,private router:Router) { }
+  constructor(private _serve:VirtualEmergencyService) { }
   _notifications:Notifiactions[]=[];
   _notifications_backup:Notifiactions[]=[];
   _current_index:number = 5;

@@ -87,7 +87,7 @@ export class ActivationModuleComponent implements OnInit {
         this.check_activity='';
         this.check_activity=data;
         if(this.check_activity.suc==1){
-        var dt={id:'0',activity:'A',narration:localStorage.getItem('Email')+' has activated '+team_name+' at '+new Date().toISOString().substring(0,10)};
+        var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+' has activated '+team_name+' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No') == '' ? 0 : localStorage.getItem('Inc_No')};
         this.push_notfication(dt);
         this.fetchdata();
         }
@@ -188,10 +188,13 @@ export class ActivationModuleComponent implements OnInit {
           flag:'Y',
           emp_dt:this.selection.selected
       }
+
       this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
         this.check_activity='';
         this.check_activity=data;
         if(this.check_activity.suc==1){
+          var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+' has activated '+this._team_name+' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No')};
+          this.push_notfication(dt);
           this.toaster.successToastr('Members of '+ this.selection.selected[0].team_name + '  has been successfully activated for ' + localStorage.getItem('Inc_name'));
         }
        })
@@ -210,7 +213,7 @@ export class ActivationModuleComponent implements OnInit {
           this.check_activity='';
           this.check_activity=data;
           if(this.check_activity.suc==1){
-          var dt={id:'0',activity:'A',narration:localStorage.getItem('Email')+' has de-activate '+this._team_name+' at '+new Date().toISOString().substring(0,10)};
+          var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+' has de-activate '+this._team_name+' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No')};
           this.push_notfication(dt);
           this.fetchdata();
           this.toaster.successToastr('Team has been de-activated successfully','');
