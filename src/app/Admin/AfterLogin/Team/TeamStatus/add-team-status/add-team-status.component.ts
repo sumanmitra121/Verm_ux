@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 declare var $: any;
 @Component({
@@ -15,6 +16,7 @@ declare var $: any;
   styleUrls: ['./add-team-status.component.css']
 })
 export class AddTeamStatusComponent implements OnInit {
+  _alert:boolean=true;
     // Material datatable
     displayedColumns: string[] = ['From_date', 'To_date','label'];
     displayedColumns_employee: string[] = ['Employee_name','Employee_designation','Employee_status'];
@@ -26,6 +28,7 @@ export class AddTeamStatusComponent implements OnInit {
 
   @ViewChild('logForm') LogForm!:NgForm;
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,public toastr:ToastrManager,private spinner: NgxSpinnerService,private datePipe: DatePipe) { }
+  _alert_show:boolean =  true;
   value:any;
   x:any;
   ID:any=0;
@@ -36,7 +39,6 @@ export class AddTeamStatusComponent implements OnInit {
    get_Employee:any=[];
    check_respond:any='';
   ngOnInit(): void {
-    // if('add-status' in localStorage){localStorage.removeItem('add-status');}
      //For getting teams in select dropdown
     this.emergencyservice.global_service('0','/assign_team_dash',"null").subscribe(data=>{
       console.log(data);
@@ -52,7 +54,7 @@ export class AddTeamStatusComponent implements OnInit {
       if(month < 10)
           month = '0' + month.toString();
       if(day < 10)
-          day = '0' + day.toString(); 
+          day = '0' + day.toString();
       var maxDate = year + '-' + month + '-' + day;
       $('#from_date').attr('min', maxDate);
       $('#to_date').attr('min', maxDate);
@@ -62,30 +64,31 @@ export class AddTeamStatusComponent implements OnInit {
     $('#from_date').on('change',()=>{
       var min=$('#from_date').val();
       if(min!=''){
+        this.checkTeamRoaster(min);
       $('#to_date').attr('min', min);
       if($('#to_date').val()!=''){
-        $('#populate').attr('disabled',false); 
+        $('#populate').attr('disabled',false);
       }
       else{
-        $('#populate').attr('disabled','disabled'); 
+        $('#populate').attr('disabled','disabled');
       }
     }
       else{
-        $('#populate').attr('disabled','disabled'); 
+        $('#populate').attr('disabled','disabled');
       }
     })
     //Disabling button depend on dates
     $('#to_date').on('change',()=>{
       if($('#to_date').val()!=''){
         if($('#from_date').val()!=''){
-          $('#populate').attr('disabled',false); 
+          $('#populate').attr('disabled',false);
         }
         else{
-          $('#populate').attr('disabled','disabled'); 
+          $('#populate').attr('disabled','disabled');
         }
       }
         else{
-          $('#populate').attr('disabled','disabled'); 
+          $('#populate').attr('disabled','disabled');
         }
     })
     //End
@@ -94,37 +97,6 @@ export class AddTeamStatusComponent implements OnInit {
       this.view_employee();
     })
 
-    //For populate data after hitting populate button
-  // $('#populate').on('click',()=>{
-  //   this.emergencyservice.global_service('0','/assign_team','id=' +this.LogForm.value.team_id).subscribe(data=>{console.log(data);
-  //     this.Team_Member.length=0;
-  //   this.Team_Member=data;
-  //   if(this.Team_Member.suc == 1){
-  //     $('#example > tbody >').empty();
-  //     $('.mat-card').show();
-  //     this.Team_Member=this.Team_Member.msg;
-  //     var j = 0;
-  //     var frm_dt = $("#from_date").val(),
-  //     to_dt = $("#to_date").val();
-  //     $.each(this.Team_Member, function (i:any, item:any) {
-  //       $('#example tbody').append('<tr>'
-  //             // +'<td><div class="custom-control custom-switch float-right">'
-  //             // +'<input type="checkbox" class="custom-control-input" id="emp_status_'+ j +'" name="emp_status[]">'
-  //             // +'<label class="custom-control-label" for="emp_status_'+ j +'"></label>'
-  //             // +'</div></td>'
-  //             +'<td class="text-center"><label>'+ item.emp_name +'</label>  </td>'
-  //             +'<td><input class="form-control" type="date" name="from_date[]"  id="frm_date_'+ j +'" value = "'+frm_dt+'" min= "'+frm_dt+'" max="'+to_dt+'"></td>'
-  //             +'<td><input class="form-control" type="date" name="to_date[]"  id="to_date_'+ j +'" value = "'+to_dt+'"  min= "'+frm_dt+'" max="'+to_dt+'"></td>'
-  //             +'<td style="display:none;"><input type= "hidden" name= "emp_id[]" id="emp_'+ j +'" value = "'+item.emp_id+'"></td>'
-  //             +'</tr>');
-
-  //             j++;    
-  //     });
-  //   }else{
-  //     $('.mat-card').hide();
-  //   } 
-  //   })
-  // })
 
   //For Populate team roaster When Select team if any roaster had been made
    $('#team_id').on('change',()=>{
@@ -135,28 +107,25 @@ export class AddTeamStatusComponent implements OnInit {
         this.Team_Member=data;
         this.Team_Member=this.Team_Member.msg;
         this.putdata(this.Team_Member);
-      $('#more_btn').show();
-      this.emergencyservice.global_service('0','/get_max_frm_dt','team_id=' +this.LogForm.value.team_id).subscribe(data=>{
-        // console.log(data);
-        this.get_date=data;
-        this.get_date=this.get_date.msg;
-        if(this.get_date[0].from_date==null){
-          console.log(" date null");
-        }
-        else{
-          console.log("not date null");
-          
-          var maximumdate=(this.get_date[0].from_date);
-          $('#from_date').attr('min', maximumdate);
-        }
-      })
+       $('#more_btn').show();
+      // this.emergencyservice.global_service('0','/get_max_frm_dt','team_id=' +this.LogForm.value.team_id).subscribe(data=>{
+      //   this.get_date=data;
+      //   this.get_date=this.get_date.msg;
+      //   if(this.get_date[0].from_date==null){
+      //     console.log(" date null");
+      //   }
+      //   else{
+      //     var maximumdate=(this.get_date[0].from_date);
+      //     $('#from_date').attr('min', maximumdate);
+      //   }
+      // })
         this.spinner.hide();
-      })     
+      })
      }
     else{
       console.log("team id is empty");
       $('#more_btn').hide();
-      this.Team_Member.length=0; 
+      this.Team_Member.length=0;
      this.spinner.hide();
     }
     $('#from_date').val('');
@@ -167,7 +136,6 @@ export class AddTeamStatusComponent implements OnInit {
    })
   //After hitting submit button
   $('#populate').on('click',()=>{
-
     var team_name=$('#team_id :selected').text();
      var dt={"user":localStorage.getItem('Email'),
         "from_date":$('#from_date').val(),
@@ -175,8 +143,6 @@ export class AddTeamStatusComponent implements OnInit {
         "team_id":this.LogForm.form.value.team_id,
          "id":this.LogForm.form.value.id,
         "team_name":team_name};
-    // console.log(dt);
-    
     this.emergencyservice.global_service('1','/team_status',dt).subscribe(data=>{
       // console.log(data);
       this.check_respond=data;
@@ -230,7 +196,7 @@ export class AddTeamStatusComponent implements OnInit {
  putdata_employee(v:any){
     this.dataSource_employee=new MatTableDataSource(v);
   }
-  logSubmit(logForm:Form){}  
+  logSubmit(logForm:Form){}
   //For showing  details of specific team roaster
 putdata(v:any){
   this.dataSource=new MatTableDataSource(v);
@@ -248,5 +214,13 @@ get_details_corrosponding_id(id:any,from_date:any,to_date:any){
   $('#populate').removeAttr('disabled');
    window.scrollTo(0, 0);
 }
-
+checkTeamRoaster(_frm_dt:any){
+  if(this.LogForm.value.team_id!=''){
+    this.emergencyservice.global_service('0','/get_max_frm_dt','team_id=' +this.LogForm.value.team_id).pipe(map((x:any) => x.msg)).subscribe(data=>{
+    this._alert = _frm_dt <= data[0].from_date ? false : true;
+    })
+  }
 }
+closeAlert(){this._alert = true;}
+}
+

@@ -29,10 +29,12 @@ export class AdminheaderComponent implements OnInit {
    notifications:any=[];
    url=global_url_test.URL;
    _date:any;
+   _TOTAL_LENGTH_NOTIFICATION:any;
   constructor(private emergencyservice:VirtualEmergencyService,private toastr:ToastrManager,private router:Router) {
    var d = new Date();
    var _timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
    this._date = d.toLocaleString('en-Us',{timeZone:_timeZone});
+   this.JoinUser();
   }
   // hidden:boolean=false;
   i:any=0;
@@ -41,19 +43,20 @@ export class AdminheaderComponent implements OnInit {
     this.Emp_name=localStorage.getItem('Emp_name');
     this.get_details();
     // For Getting Notification
-    this.emergencyservice.emit('notification','');
-    this.emergencyservice.listen('notification').subscribe(data=>{
-      console.log(data);
-      this.notifications=data;this.notifications=this.notifications.users;
-      // console.log(this.notifications.length)
-    })
+     this.getNotifications();
 
   }
+  JoinUser(){
+    this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:1,emp_code:localStorage.getItem('Employee_id')});
+  }
   getNotifications(){
-    // this.emergencyservice.emit('notification', {emp_id:localStorage.getItem('Employee_id')});
-    // this.emergencyservice.listen('get_notification').subscribe(data=>{
-    //   console.log(data);
-    // })
+    this.emergencyservice.emit('notification','');
+    this.emergencyservice.listen('notification').subscribe(data=>{
+      //data)
+      this.notifications=data;
+      this._TOTAL_LENGTH_NOTIFICATION = this.notifications[this.notifications.length-1].total;
+
+    })
   }
   show_pass(_type:any){
     switch(_type){
@@ -86,7 +89,7 @@ export class AdminheaderComponent implements OnInit {
     })
   }
   Submit(logForm:any){
-    // console.log(logForm);
+    // //logForm);
     this.emergencyservice.global_service('1','/update_info_admin ',logForm).subscribe(data=>{
       this.check_response='';
             this.check_response=data;
@@ -121,5 +124,16 @@ export class AdminheaderComponent implements OnInit {
   //For Non Numeric Validations
   PreventNonNumeric(_event:any){
     validations._preventnonNumeric(_event)
+  }
+  gotoNotifications(_id:any,_activity:any){
+    //_id);
+
+    if(_activity !== 'D'){
+      //"DSSAD")
+      this.emergencyservice.clearNotifications(_id,_activity);
+    }
+    else{
+      this.router.navigate(['/notifications',btoa(_activity)]);
+    }
   }
 }

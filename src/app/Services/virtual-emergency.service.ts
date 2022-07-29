@@ -125,14 +125,18 @@ export class VirtualEmergencyService {
       case "A": this.route.navigate(['/ActivationModule']);break;//Activation Module
       case "R": this.route.navigate(['/addRepository']);break;//Repository Module
       case "F": this.route.navigate(['/FormsCheckList']);break;//Forms & Check List
+      case "AN":this.route.navigate(['/admin/dashboard']);break;
       default:break;
     }
   }
   clearNotifications(_id:any,_activity:any){
   this.global_service('1','/notification',{id:+_id}).subscribe(res =>{
+    console.log(res);
+
     this.routeToTheParticular(_activity);
   })
   }
+
 
   }
 

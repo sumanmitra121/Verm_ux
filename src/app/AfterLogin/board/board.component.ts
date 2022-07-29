@@ -65,6 +65,7 @@ export class vesselGrid{
   //End//
 })
 export class BoardComponent implements OnInit , OnDestroy{
+  _active_flag:any = localStorage.getItem('active_flag');
   @ViewChild('myModalClose') modalClose!:ElementRef;
   temp_unit:any;
  alive = true;

@@ -20,6 +20,15 @@
                  </mat-form-field>
                </div>
               </div>
+              <div class="row text-center" >
+                <div class="col-12">
+                  <div class="alert alert-warning alert-dismissible" [hidden]="_show_alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Warning!</strong> Please fillup handover form first.
+                  </div>
+                </div>
+
+              </div>
                 <div class="row mt-2">
                 <!-- <div class="col-sm-8"></div> -->
 
@@ -59,7 +68,7 @@
                               <ng-container *ngIf="_is_activeIncident == ''">
                                         <b class="text-danger">There is no active incident</b>
                               </ng-container>
-
+                        {{row.active_flag}}
                               </td>
                           </ng-container>
 

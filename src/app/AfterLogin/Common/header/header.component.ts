@@ -2,10 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChil
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { Observable } from 'rxjs';
-// import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Socket } from 'socket.io-client';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { Notifiactions } from 'src/app/Model/Notifiactions';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
@@ -105,7 +102,6 @@ export class HeaderComponent implements OnInit {
      this.get_details();
       //For Getting Department
       this.emergencyservice.global_service('0','/department',"null").subscribe(data=>{
-        // //(data);
         this.get_department=data;
         this.get_department=this.get_department.msg;
 
@@ -120,13 +116,15 @@ export class HeaderComponent implements OnInit {
   }
 
  getNotifications(){
-      this.emergencyservice.emit('notification','');
-      this.emergencyservice.listen('notification').subscribe((data:any)=>{
-         console.log(data)
-         this._notification = data;
-         this._TOTAL_LENGTH_NOTIFICATION = this._notification[this._notification.length-1].total;
-      })
-
+     //call Notification if this member is activated against this team;
+      if(localStorage.getItem('active_flag') == '0'){}
+      else{
+        this.emergencyservice.emit('notification','');
+        this.emergencyservice.listen('notification').subscribe((data:any)=>{
+           this._notification =  data;
+           this._TOTAL_LENGTH_NOTIFICATION = this._notification[this._notification.length-1].total;
+        })
+      }
  }
   public logout(){
     var dt={
@@ -148,7 +146,7 @@ export class HeaderComponent implements OnInit {
   }
   get_details(){
     this.emergencyservice.global_service('0','/employee','flag=A&emp_id='+localStorage.getItem('Employee_id')).subscribe(data=>{
-     this.get_profile.length=0;
+      this.get_profile.length=0;
      this.get_profile=data;
      this.get_profile=this.get_profile.msg;
      this.image= this.get_profile[0].img !='' && this.get_profile[0].img!=null ? this.url+this.get_profile[0].img :'assets/images/no-user.png';
@@ -296,6 +294,7 @@ export class HeaderComponent implements OnInit {
     }
 }
 gotoNotifications(_id:any,_activity:any){
+  //og(_id)
   if(_activity !== 'D'){
     this.emergencyservice.clearNotifications(_id,_activity);
   }

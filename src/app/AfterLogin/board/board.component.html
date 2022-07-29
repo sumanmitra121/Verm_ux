@@ -6,8 +6,7 @@
 <app-sidebar class="sidebarMain"></app-sidebar>
 <div class="main-panel">
   <div class="content-wrapper">
-    <div class="card whiteBoxComon_cardCus">
-
+    <div class="card whiteBoxComon_cardCus"  *ngIf="_active_flag != '0'">
      <div class="card-body">
 
        <!-- Inicdent Status -->
@@ -206,6 +205,14 @@
       </div>
     </div>
     </div>
+    <div class="card" *ngIf="_active_flag == '0'">
+      <div class="card-body" >
+        <div class="titleSec text-center">
+        <h2>You are not eligible for this activity</h2>
+      </div>
+      </div>
+    </div>
+
 </div>
 </div>
 </div>
