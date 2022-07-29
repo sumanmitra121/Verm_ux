@@ -4,6 +4,7 @@ import  { io, Socket }  from 'socket.io-client';//For Socket.io-client implement
 import {Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { IncDetails } from '../Model/IncDetails';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +18,7 @@ export class VirtualEmergencyService {
   // socket:any;
 //  url:any='http://localhost:3000';
 //  readonly url:any='https://vermapi.opentech4u.co.in';
- constructor(public dialog:MatDialog,private http:HttpClient) {
+ constructor(private route:Router,public dialog:MatDialog,private http:HttpClient) {
   // this.socket = io(this.url);
   // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
   this.socket = io(this.url, {transports: ['polling']});
@@ -60,18 +61,6 @@ export class VirtualEmergencyService {
       return this.http.get(this.url + api_path + api_dt);
     }
    }
-   //For getting data from socket.io server
-
-  //  public getMessages = () => {
-  //    return new Observable((observer)=>{
-  //      this.socket.on('news',(news:Observable<any>)=>{
-  //            observer.next(news);
-
-  //      })
-  //    })
-  //  }
-
-
   //For getting employee list for showing in side pannel in live log
     get_logged_employee(eventname:any){
        console.log(eventname)
@@ -84,16 +73,6 @@ export class VirtualEmergencyService {
       })
     }
 
-  //   //For Getting notifications
-  //   get_notifications(eventname:any){
-  //     console.log(eventname)
-  //    return new Observable((observer)=>{
-  //      this.socket.on(eventname,(news:Observable<any>)=>{
-  //        console.log(news);
-  //        observer.next(news);
-  //      })
-  //    })
-  //  }
 
 
   //For Listening api for chats
@@ -102,33 +81,16 @@ export class VirtualEmergencyService {
     return new Observable((observer)=>{
       this.socket.on(eventname,(news:Observable<any>)=>{
             observer.next(news);
-             // console.log(news);
       })
     })
    }
    //For Sending data to socket.io server
-   emit(eventname:any,data:any){
-         this.socket.emit(eventname,data);
-   }
-
-   joinRoom(data:any): void {
-    //  console.log(data);
-
-    this.socket.emit('join', data);
-  }
-
-  newUserJoin(){
-
-      this.socket.on('newUserJoined', (data:any) => {
-        // console.log(data);
-      })
-
-  }
-
+  emit(eventname:any,data:any){this.socket.emit(eventname,data);}
+  joinRoom(data:any): void {this.socket.emit('join', data);}
+  newUserJoin(){this.socket.on('newUserJoined', (data:any) => {})}
   sendMessage(data:any): void {
     this.socket.emit('message', data);
   }
-
   getMessage(): Observable<any> {
     return new Observable<{user: string, message: string}>(observer => {
       this.socket.on('new message', (data) => {
@@ -139,7 +101,6 @@ export class VirtualEmergencyService {
       }
     });
   }
-
   getStorage() {
     const storage  = localStorage.getItem('chats');
     return storage ? JSON.parse(storage) : [];
@@ -149,15 +110,29 @@ export class VirtualEmergencyService {
     localStorage.setItem('chats', JSON.stringify(data));
   }
 
-  // getNotifications(eventname:any){
-  //   return new Observable((observer)=>{
-  //     this.socket.on(eventname,(news:Observable<any>)=>{
-  //           observer.next(news);
-  //     })
-  //   })
-  // }
-
   setcurrInc(_inc:IncDetails){this._incDetails.next(_inc);}
+
+  routeToTheParticular(_type:any){
+    switch(_type){
+      case "BI": this.route.navigate(['/Board']);break;//Incident Board
+      case "BV": this.route.navigate(['/Board']);break;//VESSEL STATUS
+      case "BH": this.route.navigate(['/Board']);break;//Helicopter Status
+      case "BP": this.route.navigate(['/Board']);break;//Prob Status
+      case "BC": this.route.navigate(['/Board']);break;//Casualty Status
+      case "BE": this.route.navigate(['/Board']);break;//Evacuation Status
+      case "BL": this.route.navigate(['/Board']);break;//Events Log
+      case "I": this.route.navigate(['/AddIncident']);break;//Create Incident
+      case "A": this.route.navigate(['/ActivationModule']);break;//Activation Module
+      case "R": this.route.navigate(['/addRepository']);break;//Repository Module
+      case "F": this.route.navigate(['/FormsCheckList']);break;//Forms & Check List
+      default:break;
+    }
+  }
+  clearNotifications(_id:any,_activity:any){
+  this.global_service('1','/notification',{id:+_id}).subscribe(res =>{
+    this.routeToTheParticular(_activity);
+  })
+  }
 
   }
 

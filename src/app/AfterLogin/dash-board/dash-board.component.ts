@@ -309,9 +309,9 @@ getChat(_Id:any){
 
 checkIfHasCHild(){
   this.messageText = document.getElementById('message-list');
-  while (this.messageText.firstChild) {
-    this.messageText.removeChild(this.messageText.firstChild);
-  }
+    while (this.messageText.firstChild) {
+      this.messageText.removeChild(this.messageText.firstChild);
+    }
 }
 getIncDetails(e:IncDetails){
       this.getIncStatus(e.id);

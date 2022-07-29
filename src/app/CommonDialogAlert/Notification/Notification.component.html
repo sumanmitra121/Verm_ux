@@ -13,7 +13,7 @@
                     <h3 class="m-b-50 heading-line">Notifications <i class="fa fa-bell text-muted"></i></h3>
 
                     <div class="notification-ui_dd-content">
-                        <div class="notification-list notification-list--unread" *ngFor="let _notification of _notifications">
+                        <div class="notification-list notification-list--unread" *ngFor="let _notification of _notifications" (click)="clickToSeeNotifications(_notification.id,_notification.activity)">
                             <div class="notification-list_content">
                                 <div class="notification-list_detail">
                                     <p class="text-muted">{{_notification.narration}}</p>

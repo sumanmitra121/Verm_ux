@@ -16,9 +16,5 @@ select{
   -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
   -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
 }
-.pagination {
-  margin-top: 21px;
-  display: flex;
-  justify-content: center;
-}
+
 

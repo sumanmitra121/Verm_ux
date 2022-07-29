@@ -142,10 +142,7 @@ export class ActivationModuleComponent implements OnInit {
   putdata_employee(v:any){
     console.log(v);
     this.dataSource_employee_roaster=new MatTableDataSource(v);
-    console.log(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
 
-    // this.selection = new SelectionModel<any>(true, this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'));
-    // this.selection.select(this.dataSource_employee_roaster.data.filter((x:any) => x.active_flag == 'Y'))
     this.dataSource_employee_roaster.data.forEach((element:any) =>{
       if(element.active_flag == 'Y'){
         this.selection.toggle(element)
