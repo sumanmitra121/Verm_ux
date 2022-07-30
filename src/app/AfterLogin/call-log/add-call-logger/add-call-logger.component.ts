@@ -1,11 +1,10 @@
-import { DatePipe } from '@angular/common';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
-declare var $ :any;
 @Component({
   selector: 'app-add-call-logger',
   templateUrl: './add-call-logger.component.html',
@@ -22,7 +21,7 @@ export class AddCallLoggerComponent implements OnInit {
   Inc_id:any=localStorage.getItem('Inc_id');
   Inc_no:any=localStorage.getItem('Inc_No');
   ref_no:any;
-  constructor(private datePipe:DatePipe,private route:ActivatedRoute,private router:Router,private emergencyService:VirtualEmergencyService,private toastr:ToastrManager,private spinner:NgxSpinnerService) { }
+  constructor(private route:ActivatedRoute,private router:Router,private emergencyService:VirtualEmergencyService,private toastr:ToastrManager,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.id=this.route.snapshot.params['id'];
@@ -74,12 +73,12 @@ export class AddCallLoggerComponent implements OnInit {
         if(this.check_response.suc==1){
           this.spinner.hide();
           this.router.navigate(['/Call-Logger']).then(()=>{
-            this.toastr.successToastr(this.check_response.msg,'',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
+            this.toastr.successToastr(this.check_response.msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
           })
         }
         else{
           this.spinner.hide();
-          this.toastr.errorToastr('Something went wrong,please try again later','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
+          this.toastr.errorToastr('Something went wrong,please try again later','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
 
         }
     })

@@ -1,12 +1,13 @@
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $:any
 @Component({
   selector: 'app-activation-module',
@@ -37,10 +38,9 @@ export class ActivationModuleComponent implements OnInit {
   team_on_duity_data:any=[];
    check_activity:any;
   active_flag:any=localStorage.getItem('active_flag');
-  constructor(private emergencyservice:VirtualEmergencyService,private datePipe:DatePipe,private toaster:ToastrManager) { }
+  constructor(private emergencyservice:VirtualEmergencyService,
+    private toaster:ToastrManager,private spinner:NgxSpinnerService) { }
   ngOnInit(): void {
-    console.log(this._checked_active);
-
     this.fetchdata();
   }
   ngAfterViewInit() {
@@ -52,11 +52,14 @@ export class ActivationModuleComponent implements OnInit {
     this.emergencyservice.global_service('0','/get_active_emp_list','flag='+this.approval_flag).subscribe(data=>{
     this.team_on_duity_data=data;
     this.team_on_duity_data=this.team_on_duity_data.msg;
+    this.check_active_team();
     this.putdata(this.team_on_duity_data);
-    this._checked_active = this.team_on_duity_data.find((x:any) => x.active_flag == 'Y') ? true : false;
   });
   }
-
+  //check_whether_active_or_not_for_two_team_assign_same_range
+  check_active_team(){
+    this._checked_active = this.team_on_duity_data.find((x:any) => x.active_flag == 'Y') ? true : false;
+  }
   putdata(v:any){
     this.dataSource= new MatTableDataSource(v);
     this.dataSource.paginator=this.paginator;
@@ -76,20 +79,20 @@ export class ActivationModuleComponent implements OnInit {
    this.fetchdata();
   }
   //For activate or deactive team
-  team_active_deactive(event:any,team_name:any,team_id:any,index:any){
-
-    if(localStorage.getItem('Inc_id') != ''){
-      if(event.checked && this._checked_active){
-         console.log("SS")
-         this._show_alert= false;
-
+  async team_active_deactive(event:any,team_name:any,team_id:any,index:any,toggleElement:any,active_flag:any){
+    //For One Team Assing between date range
+    if(this.team_on_duity_data.length == 1){
+    this.spinner.show('slider_'+index);
+     await this.Check_Assign_Team(event.checked,index);}
+    //For Two Team Assign bewtween same date Range
+    else{
+     if(this._checked_active){
+      toggleElement.checked = !event.checked;
+      // showing alert and uncheck toggle
+      this._show_alert= false;
       }
       else{
-        if(!event.checked && this.team_on_duity_data.length > 1){
-              //showing alert and uncheck toggle
-        }
-        else{
-          var res={
+           var res={
             inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
             team_id:team_id,
             team_name:team_name,
@@ -97,26 +100,69 @@ export class ActivationModuleComponent implements OnInit {
             user:localStorage.getItem('Email'),
             flag:event.checked==true?'Y':'N'
           }
-          // this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
-          this.emergencyservice.global_service('1','/activation_team',res).subscribe(data=>{
+          this.emergencyservice.global_service('1','/activation_team',res).subscribe(async data=>{
             this.check_activity='';
             this.check_activity=data;
             if(this.check_activity.suc==1){
             var msg = event.checked ? 'has activated ' + team_name : 'has de-activated ' + team_name;
             var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+ msg +' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No') == '' ? 0 : localStorage.getItem('Inc_No')};
             this.push_notfication(dt);
-            this.fetchdata();
+            await this.Check_Assign_Team(event.checked,index);
+            this.spinner.hide('slider_'+index);
             }
-            else{}
+            else{
+            this.spinner.hide('slider_'+index);
+            }
           })
         }
-
       }
-    }
-    else{
-      this.toaster.errorToastr('No Active Incident Available');
-    }
 
+    // if(localStorage.getItem('Inc_id') != ''){
+    //   if(event.checked && this._checked_active){
+    //      this._show_alert= false;
+
+    //   }
+    //   else{
+    //     if(!event.checked && this.team_on_duity_data.length > 1){
+    //           //showing alert and uncheck toggle
+    //           this._show_alert= false;
+    //     }
+    //     else{
+    //       var res={
+    //         inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+    //         team_id:team_id,
+    //         team_name:team_name,
+    //         inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
+    //         user:localStorage.getItem('Email'),
+    //         flag:event.checked==true?'Y':'N'
+    //       }
+    //       this.emergencyservice.global_service('1','/activation_team',res).subscribe(async data=>{
+    //         this.check_activity='';
+    //         this.check_activity=data;
+    //         if(this.check_activity.suc==1){
+    //         var msg = event.checked ? 'has activated ' + team_name : 'has de-activated ' + team_name;
+    //         var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+ msg +' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No') == '' ? 0 : localStorage.getItem('Inc_No')};
+    //         this.push_notfication(dt);
+    //         await this.Check_Assign_Team(event.checked,index);
+    //         this.spinner.hide('slider_'+index);
+    //         }
+    //         else{
+    //         this.spinner.hide('slider_'+index);
+    //         }
+    //       })
+    //     }
+
+    //   }
+    // }
+    // else{
+    //   this.toaster.errorToastr('No Active Incident Available');
+    // }
+  }
+
+  async Check_Assign_Team(checked_Status:any,index:any){
+    this.team_on_duity_data[index].active_flag = checked_Status ? 'Y' : 'N';
+    this.putdata(this.team_on_duity_data);
+     this.spinner.hide('slider_'+index);
   }
 
   //For FilterData from data table
@@ -159,7 +205,7 @@ export class ActivationModuleComponent implements OnInit {
   }
   }
   putdata_employee(v:any){
-    console.log(v);
+    //v);
     this.dataSource_employee_roaster=new MatTableDataSource(v);
 
     this.dataSource_employee_roaster.data.forEach((element:any) =>{
@@ -182,7 +228,7 @@ export class ActivationModuleComponent implements OnInit {
       return;
     }
     this.selection.select(...this.dataSource_employee_roaster.data);
-    console.log(this.selection);
+    //this.selection);
 
   }
 
@@ -207,7 +253,6 @@ export class ActivationModuleComponent implements OnInit {
           flag:'Y',
           emp_dt:this.selection.selected
       }
-
       this.emergencyservice.global_service('1','/activation ',res).subscribe(data=>{
         this.check_activity='';
         this.check_activity=data;

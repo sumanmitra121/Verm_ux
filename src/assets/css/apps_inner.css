@@ -485,7 +485,7 @@ th.mat-header-cell{text-align: center!important;}
 /* End */
 
 /* Create Incident */
-input.ng-touched.ng-invalid {
+/* input.ng-touched.ng-invalid {
     border: 2px solid #d94a4a;
     border-left: solid 7px #d94a4a;
 
@@ -497,7 +497,9 @@ input.ng-touched.ng-invalid {
   textarea.ng-touched.ng-invalid {
     border: 2px solid #d94a4a;
     border-left: solid 7px #d94a4a;
-  }
+  } */
+
+
   /* select.ng-touched.ng-valid {
     border: 2px solid #445c8b;
       border-left: #445c8b 7px solid;

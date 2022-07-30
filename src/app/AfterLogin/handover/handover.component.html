@@ -1,0 +1,38 @@
+<app-header></app-header>
+<div class="page-body-wrapper">
+	<app-sidebar class="sidebarMain"></app-sidebar>
+
+  <div class="main-panel">
+		<div class="content-wrapper">
+          <div class="card">
+            <div class="card-body">
+              <div class="titleSec">
+                <div class="btnSubmitSec ">
+                     <h2>Hand Over Form</h2>
+                  </div>
+                </div>
+                <form [formGroup]="handoverform" (ngSubmit)="HandOver()">
+                <div class="row">
+                  <div class="col-6 col-sm-6">
+                    <label>Header</label>
+                    <input type="text" class="form-control"  formControlName="header"  required/>
+                  </div>
+                  <div class="col-6 col-sm-6"></div>
+                  <div class="col-6 mt-3 col-sm-6">
+                    <label>Comment</label>
+                    <textarea  class="form-control" formControlName="comment" rows="5" required></textarea>
+                  </div>
+                  <div class="col-6 col-sm-6"></div>
+                  <div class="col-6 col-sm-6 mt-3">
+                    <div class="titleSec">
+                      <div class="btnSubmitSec">
+                        <input type="submit" [disabled]="handoverform.invalid" class="btn btn-info float-left" value="Submit"></div>
+                      </div>
+                  </div>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+
+  </div>
