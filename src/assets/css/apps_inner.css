@@ -1089,6 +1089,11 @@ font-size: 17px;
     justify-content: center;
   }
 /*End*/
+.reset{
+  background: transparent!important;
+  color: black!important;
+  font-size: 15px!important;
+}
 
 
 

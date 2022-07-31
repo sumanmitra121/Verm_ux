@@ -15,30 +15,12 @@ export class AdminLoginComponent implements OnInit {
   twoToneButton:any;
   constructor(public toastr: ToastrManager,private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService) { }
   check_response:any;
-  ngOnInit(): void {
-    // $(document).ready(()=> {
-    //   var check_val = $('#check_captcha').val();
-    //   if(check_val > 0){
-    //     $('#submit').removeAttr('disabled');
-    //   }else{
-    //     $('#submit').attr('disabled', 'disabled');
-    //   }
-    // })
-    // $('#check_captcha').on('change', () => {
-    //  var check_val = $('#check_captcha').val();
-    //   if(check_val > 0){
-    //     $('#submit').removeAttr('disabled');
-    //   }else{
-    //     $('#submit').attr('disabled', 'disabled');
-    //   }
-    // })
-
-  }
+  ngOnInit(): void {}
   submitForm(logForm:Form){
     this.spinner.show();
-    var email = $('#email').val();
-    var password = $('#password').val();
-      if(email != '' && password != ''){
+    // var email = $('#email').val();
+    // var password = $('#password').val();
+      // if(email != '' && password != ''){
       this.emergencyservice.global_service('1','/admin_login',logForm).subscribe(data=>{
         this.check_response=data;
       if(this.check_response.suc==1){
@@ -63,13 +45,14 @@ export class AdminLoginComponent implements OnInit {
       }
       else{
         this.spinner.hide();
-       this.toastr.errorToastr(this.check_response.msg,'Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+       this.toastr.errorToastr(this.check_response.msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:50000});
       }
     })
-    }else{
-    this.spinner.hide();
-    this.toastr.errorToastr('Please fill all required field','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
-    }
+    // }
+    // else{
+    // this.spinner.hide();
+    // this.toastr.errorToastr('Please fill all required field','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+    // }
 
   }
 

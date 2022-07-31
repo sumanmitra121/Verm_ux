@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Form } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,36 +11,42 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
   styleUrls: ['./add-admin-department.component.css']
 })
 export class AddAdminDepartmentComponent implements OnInit {
-
-  default_value:any=0;
-  check_response:any;
-  default_user:any=localStorage.getItem('Email');
+  @ViewChild('logForm') logForm!:NgForm;
   constructor(private emergencyservice:VirtualEmergencyService,private route:Router,public toastr:ToastrManager,private spinner:NgxSpinnerService) { }
 
-  ngOnInit(): void {
-    // if('add-department' in localStorage){localStorage.removeItem('add-department');}
-    // if('update-department' in localStorage){localStorage.removeItem('update-department');}
-  }
+  ngOnInit(): void {}
   logSubmit(logForm:Form){
-    // console.log(logForm);
     this.spinner.show();
-    this.emergencyservice.global_service('1','/department',logForm).subscribe(data=>{
-      console.log(data);
-      this.check_response=data;
-      if(this.check_response.suc==1){
+    this.emergencyservice.global_service('1','/department',logForm).subscribe((data:any)=>{
+      if(data.suc==1){
     //  localStorage.setItem('add-department','1');
     this.spinner.hide();
      this.route.navigate(['/admin/department']).then(()=>{
-      this.toastr.successToastr('Department Added Successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+      this.toastr.successToastr('Department Added Successfully','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
      })
       }
-      else{ 
-    this.spinner.hide();
+      else{
+       this.spinner.hide();
         //Error Message
-        this.toastr.errorToastr('Something went wrong,Please try again later','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+        this.toastr.errorToastr('Something went wrong,Please try again later','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
       }
-      
+
     })
 
+  }
+  ngAfterViewInit(){
+    setTimeout(() => {
+      this.logForm.form.patchValue({
+        id:'0',
+        user:localStorage.getItem('Email')
+      })
+    }, 100);
+  }
+  cancel(){
+    this.logForm.form.patchValue({
+      id:'0',
+      user:localStorage.getItem('Email'),
+      department:''
+    })
   }
 }

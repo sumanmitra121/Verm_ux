@@ -54,11 +54,8 @@
                             <th mat-header-cell *matHeaderCellDef  > Action</th>
                             <td mat-cell *matCellDef="let row;let i=index"  >
                               <ng-container *ngIf="_is_activeIncident != ''">
-                                <!-- <mat-slide-toggle id='toggle_{{i}}' *ngIf="row.active_flag=='N' || row.active_flag==null || row.active_flag==''" (change)='team_active_deactive($event,row.team_name,row.team_id,i)'
-                                #tooltip="matTooltip"
-                                matTooltip="Slide to activate team"
-                                  class="example-margin" color="primary">
-                                 </mat-slide-toggle> -->
+
+                                 {{row.active_flag}}
                                  <mat-slide-toggle id='toggle_{{i}}'  (change)='team_active_deactive($event,row.team_name,row.team_id,i,toggleElement,row.active_flag)'
                                  #tooltip="matTooltip"
                                  #toggleElement

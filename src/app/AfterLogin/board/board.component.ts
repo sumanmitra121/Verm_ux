@@ -876,7 +876,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     const disalogConfig = new MatDialogConfig();
     disalogConfig.disableClose = false;
     disalogConfig.autoFocus = true;
-    disalogConfig.width = '30%';
+    disalogConfig.width = '35%';
     disalogConfig.data = {
       board_type: _b_type,
       api_name: '',
@@ -1138,7 +1138,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       .pipe(map((x: any) => x.msg))
       .subscribe((data) => {
         //data);
-        console.log(data);
+        //.log(data);
 
         this.get_in_status = data;
         this.get_incident_details_after_save = data;

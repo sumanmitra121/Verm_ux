@@ -20,7 +20,7 @@
             </button>
           </div> -->
             <div class="titleSec">
-              <div class="btnSubmitSec "> 
+              <div class="btnSubmitSec ">
                 <h2 >Tier</h2>
                   <input  type="submit" class="btn btn-info float-right" routerLink="/admin/tier/add" value="Add">
                 </div>
@@ -33,13 +33,13 @@
 
              <div class="mat-elevation-z8">
                        <table mat-table [dataSource]="dataSource" matSort>
-                   
+
                              <!-- Progress Column -->
                          <ng-container matColumnDef="Sl.No">
                            <th mat-header-cell *matHeaderCellDef class="text-center"> Sl.No </th>
                            <td mat-cell *matCellDef="let row;let i=index;" class="text-center"> {{i+1}} </td>
                          </ng-container>
-                     
+
                          <!-- Name Column -->
                          <ng-container matColumnDef="Tier_Type">
                            <th mat-header-cell *matHeaderCellDef class="text-center">Tier Type</th>
@@ -49,80 +49,48 @@
                             <!-- Name Column -->
                             <ng-container matColumnDef="Action">
                                 <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
-                                <td mat-cell *matCellDef="let row" class="text-center">
-                                    <a  class="customIcon" 
+                                <td mat-cell *matCellDef="let row;let i = index" class="text-center">
+                                    <a  class="customIcon"
                                     #tooltip="matTooltip"
-                                    matTooltip="Edit Tier" 
+                                    matTooltip="Edit Tier"
                                     [matTooltipPosition]="positionforedit.value"
                                     [routerLink]="['/admin/tier/edit',row.id]"  routerLinkActive="true">
                                         <!-- <i class="fa fa-pencil" aria-hidden="true" ></i> -->
                                         <i class="fa fa-pencil-square-o " aria-hidden="true" ></i>
 
                                         </a>
-                                        <!-- <a type="button" class="customIcon" 
+                                        <!-- <a type="button" class="customIcon"
                                         #tooltip="matTooltip"
-                                    matTooltip="Delete Tier" 
+                                    matTooltip="Delete Tier"
                                     [matTooltipPosition]="positionfordelete.value"
                                         data-toggle="modal" data-target="#deletetier" (click)="modify_modal(row.id)">
                                           <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>   -->
-                                        <a type="button" class="customIcon" 
+                                        <a type="button" class="customIcon"
                                         #tooltip="matTooltip"
-                                    matTooltip="Delete Tier" 
+                                    matTooltip="Delete Tier"
                                     [matTooltipPosition]="positionfordelete.value"
-                                      (click)="modify_modal(row.id)">
+                                      (click)="modify_modal(row.id,i)">
                                           <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </a> 
+                                        </a>
                                 </td>
                               </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                     
+
                          <!-- Row shown when there is no matching data. -->
                          <tr class="mat-row" *matNoDataRow>
                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                          </tr>
                        </table>
-                     
+
                        <mat-paginator [pageSizeOptions]="[50, 100, 200, 300]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
-                  
+
              </div>
           </div>
         </div>
     </div>
-</div>
-
-
-<!-- The Delete Modal -->
-<div class="modal fade" id="deletetier">
-  <div class="modal-dialog modal-md">
-    <div class="modal-content">
-    
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Alert!</h4>
-        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-      </div>
-      
-      <!-- Modal body -->
-      <div class="modal-body text-center">
-        <b>Are you sure you want to delete?</b>
-      </div>
-      
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <!-- <button type="button" id="btn_yes" class="btn btn-info" data-dismiss="modal">Yes</button>
-        <button type="button" id="btn_no" class="btn btn-light" data-dismiss="modal">No</button> -->
-        <div class="btnSubmitSec"> 
-          <input  type="submit" id="btn_yes" class="btn btn-info" data-dismiss="modal" value="Yes" (click)="delete_tier()">
-          <input  type="submit" id="btn_no" class="btn btn-light" data-dismiss="modal" value="No">
-        </div>
-
-      </div>
-      
-    </div>
-  </div>
 </div>
 
 

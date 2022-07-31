@@ -3,8 +3,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 declare var $:any;
@@ -18,27 +18,20 @@ export class UploaddashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource()
-  Get_Uploaded_Files:any=[];
-  check_respond:any='';
-  del_id:any='';
   flag:any='F';
-  constructor(public dialog:MatDialog,private emergencyservice:VirtualEmergencyService,private toaster:ToastrManager,private spinner:NgxSpinnerService) { }
+  constructor(public dialog:MatDialog,private emergencyservice:VirtualEmergencyService,
+    private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {this.fetchdata();}
 
   fetchdata(){
-    this.spinner.show(); 
-    this.emergencyservice.global_service('0','/get_forms','flag='+this.flag).subscribe(data=>{
-    // this.emergencyservice.global_service('0','/get_forms',null).subscribe(data=>{
-    // console.log(data);
-    this.Get_Uploaded_Files.length=0;
-    this.Get_Uploaded_Files=data;
-    this.Get_Uploaded_Files=this.Get_Uploaded_Files.msg;
-    this.putdata(this.Get_Uploaded_Files);
+    this.spinner.show();
+    this.emergencyservice.global_service('0','/get_forms','flag='+this.flag).pipe(map((x:any) => x.msg)).subscribe(data=>{
+    this.putdata(data);
     this.spinner.hide();
     })
     }
-  
+
     putdata(files:any){
       this.dataSource=new MatTableDataSource(files);
       this.dataSource.paginator=this.paginator;
@@ -48,35 +41,25 @@ export class UploaddashboardComponent implements OnInit {
       applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
-    
         if (this.dataSource.paginator) {
           this.dataSource.paginator.firstPage();
         }
       }
-  
-      modify_modal(id:any){
-        // this.del_id='';this.del_id=id;
+
+      modify_modal(id:any,_index:any){
         const disalogConfig=new MatDialogConfig();
         disalogConfig.disableClose=false;
         disalogConfig.autoFocus=true;
-        disalogConfig.width='30%';
+        disalogConfig.width='35%';
         disalogConfig.data={id:id,api_name:'/forms_del',name:'Forms'}
         const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
         dialogref.afterClosed().subscribe(dt=>{
-        this.fetchdata();
+          if(dt){
+            this.dataSource.data.splice(_index, 1);
+            this.dataSource._updateChangeSubscription(); // <== refresh data table
+          }
         })
-      
-      }
 
-      delete_form(){
-        this.emergencyservice.global_service('0','/forms_del','id='+this.del_id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
-            this.check_respond='';
-            this.check_respond=data;
-            if(this.check_respond.suc==1){
-             this.fetchdata();
-              this.toaster.successToastr('Form deleted successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});}
-              else{this.toaster.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});}
-          })
       }
       change_mode(mode:any){
         this.flag=mode.value;

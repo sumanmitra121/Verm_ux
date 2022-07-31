@@ -14,8 +14,7 @@ export class LoginLEEComponent implements OnInit {
   check_response:any;
   constructor(public toastr: ToastrManager,private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   submitForm(v:any){
     // console.log(v);
@@ -44,7 +43,7 @@ export class LoginLEEComponent implements OnInit {
       }
       else{
         this.spinner.hide();
-       this.toastr.errorToastr(this.check_response.msg,'Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+       this.toastr.errorToastr(this.check_response.msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:50000});
       }
     })
   }

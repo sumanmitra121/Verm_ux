@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 declare var $:any;
@@ -25,7 +26,6 @@ export class AdminTierComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource()
-  gettier:any=[];
   del_id:any='';
   check_respond:any='';
   constructor(public dialog: MatDialog,private emergencyservice:VirtualEmergencyService,public toastr: ToastrManager,private spinner:NgxSpinnerService) { }
@@ -33,11 +33,8 @@ export class AdminTierComponent implements OnInit {
   ngOnInit(): void {this.fetchdata();}
   fetchdata(){
     this.spinner.show();
-    this.emergencyservice.global_service('0','/tier',"null").subscribe(data=>{
-      console.log(data);
-       this.gettier=data;
-       this.gettier=this.gettier.msg;
-       this.putdata(this.gettier);
+    this.emergencyservice.global_service('0','/tier',"null").pipe(map((x:any) => x.msg)).subscribe(data=>{
+       this.putdata(data);
       this.spinner.hide();
 
     })
@@ -51,39 +48,27 @@ export class AdminTierComponent implements OnInit {
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
-  
+
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
     }
 
       //For Delete Purpose
-   modify_modal(id:any){
+   modify_modal(id:any,_index:any){
     //  this.del_id='',this.del_id=id;
     const disalogConfig=new MatDialogConfig();
     disalogConfig.disableClose=false;
     disalogConfig.autoFocus=true;
-    disalogConfig.width='30%';
+    disalogConfig.width='35%';
     disalogConfig.data={id:id,api_name:'/tier_del',name:'Tier'}
     const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
     dialogref.afterClosed().subscribe(dt=>{
-    this.fetchdata();
+    // this.fetchdata();
+    if(dt){
+      this.dataSource.data.splice(_index, 1);
+      this.dataSource._updateChangeSubscription();// <== refresh data table
+    }
     })
     }
-   delete_tier(){
-    this.emergencyservice.global_service('0','/tier_del','id='+this.del_id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
-      // console.log(data);
-      this.check_respond=data;
-      if(this.check_respond.suc==1){
-          this.fetchdata();
-           this.toastr.successToastr('Tier deleted successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
-      }
-      else{
-        this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
-
-      }
-    })
-   }
-
-
 }

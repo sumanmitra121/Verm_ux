@@ -11,37 +11,44 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
   styleUrls: ['./add-admin-incident.component.css']
 })
 export class AddAdminIncidentComponent implements OnInit {
-
+@ViewChild('logForm') logForm!:NgForm
  default_value:any='0';
  default_user:any=localStorage.getItem('Email');
  check_data:any;
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,public toastr:ToastrManager,private spinner:NgxSpinnerService) { }
-
-  ngOnInit(): void {
-    // if('update' in localStorage){localStorage.removeItem('update');}
-    // if('add' in localStorage){localStorage.removeItem('add');}
-  }
+  ngOnInit(): void {}
   logSubmit(logForm:Form){
     this.spinner.show();
     //For Adding Incident
-    this.emergencyservice.add_new_Incident(logForm).subscribe(data=>{
-      // console.log(data);
-      this.check_data=data;
-      if(this.check_data.suc==1){
+    this.emergencyservice.add_new_Incident(logForm).subscribe((data:any)=>{
+      if(data.suc==1){
         this.spinner.hide();
         // localStorage.setItem('add','1');
         this.router.navigate(['/admin/incident']).then(()=>{
-          this.toastr.successToastr('Incident Type Added Successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+          this.toastr.successToastr('Incident Type Added Successfully','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
         })
       }
-      else{   
+      else{
         this.spinner.hide();
-        // this.router.navigate(['/admin/incident/add']);
-        this.toastr.errorToastr('Something went wrong,Please try again later','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+        this.toastr.errorToastr('Something went wrong,Please try again later','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
 
       }
-        
+
     })
   }
-
+  cancel(){
+    this.logForm.setValue({
+      id:'0',
+      user:localStorage.getItem('Email'),
+      incident_type:''
+    })
+  }
+  ngAfterViewInit(){
+     setTimeout(() => {
+        this.logForm.form.patchValue({
+          id:'0',
+          user:localStorage.getItem('Email'),
+        })
+    }, 100);
+  }
 }

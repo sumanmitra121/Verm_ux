@@ -1,14 +1,12 @@
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DatePipe } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
-import { global_url_test } from 'src/app/url';
 import { NgxSpinnerService } from 'ngx-spinner';
-declare var $:any
+
 @Component({
   selector: 'app-activation-module',
   templateUrl: './activation-module.component.html',
@@ -80,16 +78,27 @@ export class ActivationModuleComponent implements OnInit {
   }
   //For activate or deactive team
   async team_active_deactive(event:any,team_name:any,team_id:any,index:any,toggleElement:any,active_flag:any){
-    //For One Team Assing between date range
+    if(localStorage.getItem('Inc_id') != ''){
+    this.spinner.show('slider_'+index);
     if(this.team_on_duity_data.length == 1){
     this.spinner.show('slider_'+index);
-     await this.Check_Assign_Team(event.checked,index);}
+    var res={
+      inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
+      team_id:team_id,
+      team_name:team_name,
+      inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
+      user:localStorage.getItem('Email'),
+      flag:event.checked==true?'Y':'N'
+    }
+    this.active_Team(res,event.checked,team_name,index);
+    }
     //For Two Team Assign bewtween same date Range
     else{
      if(this._checked_active){
-      toggleElement.checked = !event.checked;
+      // toggleElement.checked = !event.checked;
       // showing alert and uncheck toggle
-      this._show_alert= false;
+        event.source.checked = !event.checked;//<= this will uncheck the toggle
+        this._show_alert= false;
       }
       else{
            var res={
@@ -100,23 +109,10 @@ export class ActivationModuleComponent implements OnInit {
             user:localStorage.getItem('Email'),
             flag:event.checked==true?'Y':'N'
           }
-          this.emergencyservice.global_service('1','/activation_team',res).subscribe(async data=>{
-            this.check_activity='';
-            this.check_activity=data;
-            if(this.check_activity.suc==1){
-            var msg = event.checked ? 'has activated ' + team_name : 'has de-activated ' + team_name;
-            var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+ msg +' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No') == '' ? 0 : localStorage.getItem('Inc_No')};
-            this.push_notfication(dt);
-            await this.Check_Assign_Team(event.checked,index);
-            this.spinner.hide('slider_'+index);
-            }
-            else{
-            this.spinner.hide('slider_'+index);
-            }
-          })
+          this.active_Team(res,event.checked,team_name,index);
         }
       }
-
+    }
     // if(localStorage.getItem('Inc_id') != ''){
     //   if(event.checked && this._checked_active){
     //      this._show_alert= false;
@@ -161,8 +157,27 @@ export class ActivationModuleComponent implements OnInit {
 
   async Check_Assign_Team(checked_Status:any,index:any){
     this.team_on_duity_data[index].active_flag = checked_Status ? 'Y' : 'N';
-    this.putdata(this.team_on_duity_data);
+    // this.putdata(this.team_on_duity_data);
+    this.dataSource.data = this.team_on_duity_data;
+    this.dataSource._renderChangesSubscription;
      this.spinner.hide('slider_'+index);
+  }
+
+  active_Team(res:any,checked_status:any,team_name:any,index:any){
+    this.emergencyservice.global_service('1','/activation_team',res).subscribe(async data=>{
+      this.check_activity='';
+      this.check_activity=data;
+      if(this.check_activity.suc==1){
+      var msg = checked_status ? 'has activated ' + team_name : 'has de-activated ' + team_name;
+      var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+ msg +' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No') == '' ? 0 : localStorage.getItem('Inc_No')};
+      this.push_notfication(dt);
+      await this.Check_Assign_Team(checked_status,index);
+      this.spinner.hide('slider_'+index);
+      }
+      else{
+      this.spinner.hide('slider_'+index);
+      }
+    },error => {this.spinner.hide('slider_'+index);})
   }
 
   //For FilterData from data table
