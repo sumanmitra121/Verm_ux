@@ -80,9 +80,8 @@ export class ActivationModuleComponent implements OnInit {
 
     if(localStorage.getItem('Inc_id') != ''){
       if(event.checked && this._checked_active){
-         console.log("SS")
          this._show_alert= false;
-
+         this.fetchdata();
       }
       else{
         if(!event.checked && this.team_on_duity_data.length > 1){
