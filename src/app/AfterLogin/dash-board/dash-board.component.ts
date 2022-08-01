@@ -76,10 +76,10 @@ getTooltipText(v:any,v1:any,v2:any,v3:any,v4:any,v5:any,mode:any){
 }
 getIncStatus(_id:any){
   this.spinner.show('inc_status');
-  console.log(_id);
+  //_id);
 
   this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
-    console.log(res);
+    //res);
 
 
       this.inc_visibility = res.length > 0 ? res[0].visibility : '';
@@ -159,7 +159,7 @@ getChat(_Id:any){
    //check If ul has its child
    this.checkIfHasCHild();
   this.emergencyservice.global_service('0', '/oldMessage', 'min='+this._min+'&max=5'+'&id='+localStorage.getItem('Inc_id')).subscribe(data => {
-    console.log(data);
+    //data);
      this.storageArray.length = 0;
      this.storageArray = data;
      this.storageArray = this.storageArray.msg;

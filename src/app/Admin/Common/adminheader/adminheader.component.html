@@ -19,12 +19,12 @@
 		<ul class="topMenuRight">
 			<!-- <li><i class="fa fa-bell fa-2x active dropdown" aria-hidden="true"></i></li> -->
 		<li class="userDrop dropdown">
-			<a class="nav-link"  matBadge="{{_TOTAL_LENGTH_NOTIFICATION}}" matBadgeOverlap="false" [matBadgeHidden]="notifications.length == 0"  matBadgeSize="medium"  id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell fa-2x" aria-hidden="true"></i></a>
+			<a class="nav-link"  matBadge="{{_TOTAL_LENGTH_NOTIFICATION}}" matBadgeOverlap="false" [matBadgeHidden]="_TOTAL_LENGTH_NOTIFICATION == 0"  matBadgeSize="medium"  id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell fa-2x" aria-hidden="true"></i></a>
 		    <!-- <div class="arrow-up"></div> -->
 			<div class="dropdown-menu customDropdown">
 				<!-- <h2>Notifications</h2> -->
 
-        <ng-container *ngIf="notifications.length > 0">
+        <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION > 0">
 			   <div class="notifications-item" *ngFor="let notify of notifications;let i=index">
           <ng-container *ngIf="i < 4">
 				   <img src="assets/images/no-user.png" alt="img" *ngIf="notify.img==null">
@@ -36,12 +36,12 @@
         </ng-container>
 				</div>
       </ng-container>
-      <ng-container *ngIf="notifications.length == 0">
+      <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION == 0">
         <div class="user">
           <h3>No Notfications Available</h3>
         </div>
       </ng-container>
-      <button class="btn custom_btn btn-block btn-sm" *ngIf="notifications.length > 4" (click)="gotoNotifications(0,'D')">Show All</button>
+      <button class="btn custom_btn btn-block btn-sm" *ngIf="_TOTAL_LENGTH_NOTIFICATION > 4" (click)="gotoNotifications(0,'D')">Show All</button>
 
 				</div>
 
@@ -95,15 +95,15 @@
 			<mat-tab-group mat-stretch-tabs dynamicHeight >
 				<mat-tab label="Profile" >
 				  <div class="example-large-box">
-					<form #logForm="ngForm" (ngSubmit)="Submit(logForm.value)">
+					<form #logForm="ngForm" (ngSubmit)="Submit(logForm.value)" ngNativeValidate>
 						<div class="row mt-3">
 							<div class="col-6">
 								<input type="hidden" name="user" [(ngModel)]="Email" class="form-control">
 								<input type="hidden" name="emp_id" [(ngModel)]="Emp_id" class="form-control">
 								<label>Name</label>
 								 <input type="text" name="emp_name" id="Name" #emp_name="ngModel" ngModel required class="form-control">
-								 <div *ngIf="emp_name.errors?.required && (emp_name.touched || emp_name.dirty)" class="text-danger">
-									<small>*Please provide Name</small>
+								 <div *ngIf="emp_name.errors?.required && (emp_name.touched || emp_name.dirty)" class="text-danger mt-2">
+									<strong>*Please provide Name</strong>
 								  </div>
 							</div>
 							<div class="col-6">
@@ -116,8 +116,8 @@
 							<div class="col-6">
 								<label>Contact No.(Personal)</label>
 								 <input type="text" maxlength="10" minlength="10" name="per_cnct_no" id="Per_cnct_no" #per_cnct_no="ngModel" required ngModel class="form-control" (keypress)="PreventNonNumeric($event)">
-								 <div *ngIf="per_cnct_no.errors?.required && (per_cnct_no.touched || per_cnct_no.dirty)" class="text-danger">
-									<small>*Please provide personal contact no</small>
+								 <div *ngIf="per_cnct_no.errors?.required && (per_cnct_no.touched || per_cnct_no.dirty)" class="text-danger mt-3">
+									<strong>*Please provide personal contact no</strong>
 								  </div>
 							</div>
 							<div class="col-6">
@@ -144,7 +144,7 @@
 				</mat-tab>
 				<mat-tab label="Change Password" >
 				  <div class="example-large-box">
-					<form #LogForm="ngForm" (ngSubmit)="Submit_password(LogForm.value)">
+					<form #LogForm="ngForm" (ngSubmit)="Submit_password(LogForm.value)" ngNativeValidate>
 						<div class="row mb-2">
 
 							<div class="col-6 ">
@@ -154,8 +154,8 @@
 								<label>Old Password</label>
 								<input  [type]="_o_pass ? 'password' : 'text'"  class="form-control" name="old_pass" id="old_pass" #old_pass="ngModel" ngModel required>
                 <mat-icon (click)="show_pass('O')" class="toggle-password">remove_red_eye</mat-icon>
-								<div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger">
-									<small>*Please provide old password</small>
+								<div *ngIf="old_pass.errors?.required && (old_pass.touched || old_pass.dirty)" class="text-danger mt-3 h-5">
+									<strong>*Please provide old password</strong>
 								  </div>
 							</div>
 							<div class="col-6"></div>
@@ -164,8 +164,8 @@
 								<input  [type]="_n_pass ? 'password' : 'text'" class="form-control" name="pass" id="pass" #pass="ngModel" ngModel required>
                 <mat-icon (click)="show_pass('N')" class="toggle-password">remove_red_eye</mat-icon>
 
-								<div *ngIf="pass.errors?.required && (pass.touched || pass.dirty)" class="text-danger">
-									<small>*Please provide new password</small>
+								<div *ngIf="pass.errors?.required && (pass.touched || pass.dirty)" class="text-danger mt-3 h-5">
+									<strong>*Please provide new password</strong>
 								  </div>
 							</div>
 							<div class="col-6"></div>
@@ -174,8 +174,8 @@
 								<input  [type]="_c_pass ? 'password' : 'text'" class="form-control" name="conf_pass" id="conf_pass" #conf_pass="ngModel" ngModel required>
                 <mat-icon (click)="show_pass('C')" class="toggle-password">remove_red_eye</mat-icon>
 
-								<div *ngIf="conf_pass.errors?.required && (conf_pass.touched || conf_pass.dirty)" class="text-danger">
-									<small>*Please provide confirm password</small>
+								<div *ngIf="conf_pass.errors?.required && (conf_pass.touched || conf_pass.dirty)" class="text-danger mt-3 h-5">
+									<strong>*Please provide confirm password</strong>
 								  </div>
 							</div>
 						</div>

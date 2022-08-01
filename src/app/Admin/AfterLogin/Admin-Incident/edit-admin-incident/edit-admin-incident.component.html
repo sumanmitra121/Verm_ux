@@ -7,7 +7,7 @@
          <div class="card-body">
             <div class="titleSec"><h2>Update Incident</h2></div>
             <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-            <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
+            <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)" ngNativeValidate>
             <div class="row">
                 <!-- <div class="col-1"></div> -->
                 <input type="hidden" name="user" id="default_user" #user="ngModel" ngModel>
@@ -20,21 +20,21 @@
                 <div class="col-6">
                     <b>Incident Type</b>
                     <input  type="text" name="incident_type" id="Incident_Type" class="form-control" ngModel #Incident_Type="ngModel" required>
-                    <div *ngIf="Incident_Type.errors?.required && (Incident_Type.touched || Incident_Type.dirty)" class="text-danger">
-                        *Please Provide Incident Type 
+                    <div *ngIf="Incident_Type.errors?.required && (Incident_Type.touched || Incident_Type.dirty)" class="text-danger h5 mt-2">
+                        *Please Provide Incident Type
                       </div>
                 </div>
                 </div>
                 <div class="row mt-3">
                 <div class="col-6">
-                    <div class="btnSubmitSec "> 
+                    <div class="btnSubmitSec ">
                     <input type="submit" class="btn btn-info" name="submit" id="submit" value="Save" [disabled]="logForm.invalid">
-                    <input type="reset" (click)="logForm.reset()" class="btn btn-info" value="Cancel" >
+                    <input type="button" (click)="cancel()" class="btn reset" value="Cancel" >
                     </div>
                 </div>
 
             </div>
-             </form> 
+             </form>
         </div>
         </div>
     </div>

@@ -12,8 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivationModuleComponent } from './AfterLogin/activation-module/activation-module.component';
 import { IncidentModuleComponent } from './AfterLogin/Incident/incident-module/incident-module.component';
 import { AddIncidentComponent } from './AfterLogin/Incident/add-incident/add-incident.component';
-import { FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 //For angular material Modules//
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -89,7 +89,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { ToastrModule } from 'ng6-toastr-notifications';
 import { AdminLoginComponent } from './Admin/BeforeLogin/admin-login/admin-login.component';
 import { ForgetPasswordForAdminComponent } from './Admin/BeforeLogin/forget-password-for-admin/forget-password-for-admin.component';
-import { DashboardComponent } from './AfterLogin/Close-Incident/dashboard/dashboard.component';
 import { EditDashbaordComponent } from './AfterLogin/Close-Incident/edit-dashbaord/edit-dashbaord.component';
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
 ///END////////////
@@ -144,6 +143,8 @@ import { NotificationComponent } from './CommonDialogAlert/Notification/Notifica
 // End////////
 //Ngx Pagination//
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HandoverComponent } from './AfterLogin/handover/handover.component';
+import { GlobalErrorHandlingInterceptor } from './Interceptor/global-error-handling.interceptor';
 //End//
 @NgModule({
   declarations: [
@@ -199,7 +200,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserStatusComponent,
     AdminLoginComponent,
     ForgetPasswordForAdminComponent,
-    DashboardComponent,
     EditDashbaordComponent,
     ApproveIncidentComponent,
     UploadsComponent,
@@ -222,10 +222,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ResetPasswordComponent,
     ForgotPasswordComponent,
     UserInfoComponent,
-    DialogalertComponent
+    DialogalertComponent,
+    HandoverComponent
     // SearchFilterPipe
   ],
   imports: [
+    ReactiveFormsModule,
     NgxPaginationModule,
     MatToolbarModule,
     MatDialogModule,
@@ -268,7 +270,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BrowserAnimationsModule
   ],
   providers: [DatePipe,
-    {provide:LocationStrategy, useClass:HashLocationStrategy}],
+    {provide:HTTP_INTERCEPTORS,useClass:GlobalErrorHandlingInterceptor,multi:true},
+    {provide:LocationStrategy, useClass:HashLocationStrategy}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,8 +14,7 @@ export class LoginLEEComponent implements OnInit {
   check_response:any;
   constructor(public toastr: ToastrManager,private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   submitForm(v:any){
     // console.log(v);
@@ -32,8 +31,9 @@ export class LoginLEEComponent implements OnInit {
         localStorage.setItem('User_type',this.check_response.msg[0].user_type);
         localStorage.setItem('active_flag',this.check_response.active_flag);
         localStorage.setItem('_local_sel_id','0');
+        localStorage.setItem('_emp_id',this.check_response.msg[0].id)
         // localStorage.setItem('emp_id',this.check_response.id);
-        localStorage.setItem('_local_set_val','0');
+        // localStorage.setItem('_local_set_val','0');
         this.spinner.hide();
         this.router.navigate(['/dashboard']);
         }
@@ -44,7 +44,7 @@ export class LoginLEEComponent implements OnInit {
       }
       else{
         this.spinner.hide();
-       this.toastr.errorToastr(this.check_response.msg,'Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+       this.toastr.errorToastr(this.check_response.msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:50000});
       }
     })
   }

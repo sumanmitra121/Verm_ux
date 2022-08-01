@@ -1,6 +1,9 @@
 
 <ng-container>
-    <div mat-dialog-content *ngIf="_u_type =='A'">{{ data.name=='Category' ? 'All files residing within the folder will be deleted.Do you want to continue?' : 'Are you sure you want to delete?'}}</div>
+    <div mat-dialog-content *ngIf="_u_type =='A'">
+      {{ data.name=='Category' ? 'All files residing within the folder will be deleted.Do you want to continue?' : 'Are you sure you want to delete?'}}
+
+    </div>
     <div mat-dialog-content *ngIf="_u_type !='A'">{{ data.name == 'board Type' ? 'Are you sure you want to delete?' : 'An incident is already active!! Do you want to continue?'}}</div>
     <div mat-dialog-actions>
         <button mat-dialog-close mat-stroked-button tab-index="-1" >Cancel</button>

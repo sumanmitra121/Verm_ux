@@ -1,20 +1,21 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
-declare var $:any;
+import { validations } from 'src/app/utilitY/validation';
+
 @Component({
   selector: 'app-edit-dashbaord',
   templateUrl: './edit-dashbaord.component.html',
   styleUrls: ['./edit-dashbaord.component.css']
 })
 export class EditDashbaordComponent implements OnInit {
+  @ViewChild('f') incno!: NgForm;
   incid!:string;
-  @ViewChild('logForm') LogForm!:NgForm
+  @ViewChild('logForm',{static:true}) LogForm!:NgForm
   headername:any='Incident Module';
   icon:any='fa-database';
   getIncident:any=[];
@@ -24,72 +25,66 @@ export class EditDashbaordComponent implements OnInit {
   inc_status:any='';
   user:any='';
   get_incident:any=[];location:any=[];initial_tier:any=[];
-  constructor(private datePipe:DatePipe,private route:ActivatedRoute,private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {
-
-   }
+  constructor(private datePipe:DatePipe,private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService,private toastr:ToastrManager) {}
 
   ngOnInit(): void {
-
-    this.spinner.show();
-    //For Disabled the select drop down as template driven form can not fetch the value of element which is disabled
-    $(document).ready(()=>{
-      $('#initial_tier').attr('disabled','disabled');
-      $('#location').attr('disabled','disabled');
-      $('#inc_type').attr('disabled','disabled');
-      $('#submit').attr('disabled','disabled');
-    })
-    if('edit_close_incidents' in localStorage){localStorage.removeItem('edit_close_incidents')}
-  //For Incident names in dropdown
-   this.emergencyservice.global_service('0','/incident',null).subscribe(data=>{
+     this.spinner.show();
+      //For Incident names in dropdown
+     this.getIncidents();
+     //For getting location in dropdown
+      this.getlocation();
+      //For getting Tier Type in dropdown
+    this.getTier();
+    this.spinner.hide();
+  }
+getIncidents(){
+  this.emergencyservice.global_service('0','/incident',null).subscribe(data=>{
     this.get_incident=data;
     this.get_incident=this.get_incident.msg;
   })
-  //For getting location in dropdown
+}
+getlocation(){
   this.emergencyservice.global_service('0','/offshore','flag='+'A').subscribe(data=>{
-   this.location=data;
-   this.location=this.location.msg;
- })
- //For getting Tier Type in dropdown
- this.emergencyservice.global_service('0','/tier',null).subscribe(data=>{
-   this.initial_tier=data;
-   this.initial_tier=this.initial_tier.msg;
- })
-  //For Fill the input field with data comming from database
-  // this.id=this.route.snapshot.params['id'];
-
-  this.spinner.hide();
+    this.location=data;
+    this.location=this.location.msg;
+  })
+}
+getTier(){
+  this.emergencyservice.global_service('0','/tier',null).subscribe(data=>{
+    this.initial_tier=data;
+    this.initial_tier=this.initial_tier.msg;
+  })
 }
    //For Submitting Final data
     logSubmit(form: Form) {
-      // console.log(this.LogForm.form.value.id,localStorage.getItem('Email'),this.LogForm.form.value.inc_name,$('#inc_type option:selected').text())
+      console.log(form);
 
-
+      var INC_TYPE = this.get_incident.find((x:any) => x.id == this.LogForm.form.controls.inc_type_id.value).incident_name
       this.spinner.show();
       this.emergencyservice.global_service('1','/close_incident',form).subscribe(data=>{
           this.check_respond=data;
           if(this.check_respond.suc==1){
             this.spinner.hide();
-            var dt=global_url_test.get_dt(this.LogForm.form.value.id,'I',this.LogForm.form.value.inc_name,$('#inc_type option:selected').text(),localStorage.getItem('Email'),'ICL',this.datePipe.transform(new Date(),'dd/MM/YYYY hh:mma'));
+            var dt=global_url_test.get_dt(this.LogForm.form.value.id,'I',this.LogForm.form.value.inc_name,INC_TYPE,localStorage.getItem('Emp_name'),'ICL',this.datePipe.transform(new Date(),'dd/MM/YYYY hh:mma'),this.incno.form.controls.inc_no.value);
               this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{
                 // console.log(data);
                })
                 localStorage.setItem('_local_sel_id',
                 Number(localStorage.getItem('_local_sel_id')) > 0 ? '0':
                 (Number(localStorage.getItem('_local_sel_id'))).toString());
-               this.toastr.successToastr('Updation Successfull','Success!',{position:'top-center',animate:'slideFromTop',toastTimeout:20000});
-               this.incid = $('#inc_no').val();
-              //  console.log(this.incid);
+                this.toastr.successToastr('Updation Successfull','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
+               this.incid = this.incno.form.controls.inc_no.value;
               }
           else{
           this.spinner.hide();
-          this.toastr.errorToastr('Updation Failed,Please Try Again After Some Time','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:20000});
+          this.toastr.errorToastr('Updation Failed,Please Try Again After Some Time','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
           }
       })
     }
     get_inc_details(){
         this.spinner.show();
-        if($('#inc_no').val()!=''){
-        this.emergencyservice.global_service('0','/get_incident','inc_no='+$('#inc_no').val()).subscribe(data=>{
+        if(this.incno.form.controls.inc_no.value!=''){
+        this.emergencyservice.global_service('0','/get_incident','inc_no='+this.incno.form.controls.inc_no.value).subscribe(data=>{
           this.getIncident='';
           console.log(data);
           this.getIncident=data;
@@ -108,39 +103,32 @@ export class EditDashbaordComponent implements OnInit {
               "user":this.user,
               "inc_status":this.inc_status,
               "final_tier_id":this.getIncident[0].final_tier_id!=null?this.getIncident[0].final_tier_id:'',
-             "closing_remarks":this.getIncident[0].closing_remarks!=null?this.getIncident[0].closing_remarks:''
+             "closing_remarks":this.getIncident[0].closing_remarks!=null?this.getIncident[0].closing_remarks:'',
+             "created_date":this.getIncident[0].created_at ? this.datePipe.transform(this.getIncident[0].created_at,'dd/MM/YYYY h:mma') : '',
+             "created_by":this.getIncident[0].created_by ? this.getIncident[0].created_by : '',
+             "closed_date":this.getIncident[0].closed_date ? this.datePipe.transform(this.getIncident[0].closed_date,'dd/MM/YYYY h:mma') : '',
+             "closed_at":this.getIncident[0].closed_at ? this.datePipe.transform(this.getIncident[0].closed_at,'dd/MM/YYYY h:mma') : '',
+             "closed_by":this.getIncident[0].closed_by ? this.getIncident[0].closed_by : ''
             })
-            $('#created_date').val(this.datePipe.transform(this.getIncident[0].created_at,'dd/MM/YYYY h:mma'));
-            $('#created_by').val(this.getIncident[0].created_by);
-            $('#closed_date').val(this.datePipe.transform(this.getIncident[0].closed_date,'dd/MM/YYYY h:mma'));
-            $('#closed_at').val(this.datePipe.transform(this.getIncident[0].closed_at,'dd/MM/YYYY h:mma'));
-            $('#closed_by').val(this.getIncident[0].closed_by);
-            $('#submit').removeAttr('disabled');
             this.spinner.hide();
           }
           else{
           this.getIncident='';
           this.LogForm.reset();
-           $('#inc_type').val('');
-           $('#Inc_name').val('');
-           $('#location').val('');
-           $('#initial_tier').val('');
-           $('#event_desc').val('');
-           $('#created_date').val('');
-           $('#created_by').val('');
-           $('#closed_date').val('');
-           $('#closed_at').val('');
-           $('#closed_by').val('');
-           $('#submit').attr('disabled','disabled');
-             this.spinner.hide();
-            this.toastr.errorToastr(this.check_respond.msg,'Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:20000});
+          this.spinner.hide();
+          this.toastr.errorToastr(this.check_respond.msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
           }
         })
         }
       else{
-        this.toastr.errorToastr('Please Provide Incident No.','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:20000});
+        this.LogForm.reset();
+        this.toastr.errorToastr('Please Provide Incident No.','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
          this.spinner.hide();
       }
-
     }
+    //For Non Numeric Validations
+PreventNonNumeric(_event:any){
+  validations._preventnonNumeric(_event)
+}
+
 }

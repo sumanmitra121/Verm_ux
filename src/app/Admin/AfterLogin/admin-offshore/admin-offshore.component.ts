@@ -9,8 +9,7 @@ import { FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {MatDialog,MatDialogConfig, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
-declare var $: any;
-
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-offshore',
@@ -31,21 +30,16 @@ export class AdminOffshoreComponent implements OnInit {
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource();
   error_message:any='';
-  Offshore:any=[];
   Flag='A';
   del_id:any='';
   check_respond:any;
-  constructor(public dialog: MatDialog,private emergencyservice:VirtualEmergencyService,private toaster:ToastrManager,private spinner:NgxSpinnerService) { }
+  constructor(public dialog: MatDialog,private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {this.fetchdata();}
   fetchdata(){
     this.spinner.show();
-    this.emergencyservice.get_offshore(this.Flag).subscribe(data=>{
-      console.log(data);
-      this.Offshore.length=0;
-      this.Offshore=data;
-     this.Offshore=this.Offshore.msg;
-     this.putdata(this.Offshore);
+    this.emergencyservice.get_offshore(this.Flag).pipe(map((x:any) => x.msg)).subscribe(data=>{
+     this.putdata(data);
      this.spinner.hide();
     })
   }
@@ -58,41 +52,31 @@ export class AdminOffshoreComponent implements OnInit {
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
-  
+
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
     }
-    //get the value of checked radio button,depending on which the data of of the datatable is to be shown 
+    //get the value of checked radio button,depending on which the data of of the datatable is to be shown
     check_Active_Inactive(v:any){
        this.Flag=v.value;
-    this.fetchdata();
+        this.fetchdata();
   }
   //For Delete Purpose
-  modify_modal(id:any){// this.del_id='',this.del_id=id;
+  modify_modal(id:any,_index:any){// this.del_id='',this.del_id=id;
     const disalogConfig=new MatDialogConfig();
     disalogConfig.disableClose=false;
     disalogConfig.autoFocus=true;
-    disalogConfig.width='30%';
+    disalogConfig.width='35%';
     disalogConfig.data={id:id,api_name:'/offshore_del',name:'Offshore'}
     const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
     dialogref.afterClosed().subscribe(dt=>{
-    this.fetchdata();
+      if(dt){
+        this.dataSource.data.splice(_index, 1);
+        this.dataSource._updateChangeSubscription();// <== refresh data table
+      }
     })
   }
-  delete_offshore(){
-    this.emergencyservice.global_service('0','/offshore_del','id='+this.del_id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
-      console.log(data);
-      this.fetchdata();
-      this.check_respond=data;
-      if(this.check_respond.suc==1){
-        this.toaster.successToastr('Offshore deleted successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
-        }
-        else{
-          this.toaster.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
 
-        }
-    })
-  }
-  
+
 }

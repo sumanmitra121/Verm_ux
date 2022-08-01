@@ -1,0 +1,58 @@
+<app-header></app-header>
+<div class="page-body-wrapper">
+	<app-sidebar class="sidebarMain"></app-sidebar>
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)"  size = "default" color = "#fff"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(255, 255, 255)" class="mt-5"> Loading.... </p></ngx-spinner>
+
+  <div class="main-panel">
+		<div class="content-wrapper">
+          <div class="card">
+            <div class="card-body">
+              <div class="titleSec">
+                <div class="btnSubmitSec ">
+                     <h2>Hand Over Form</h2>
+                  </div>
+                </div>
+                <ng-container *ngIf="_ACTIVE_FLAG!= '0'">
+                <form [formGroup]="handoverform" (ngSubmit)="HandOver()" ngNativeValidate>
+                <div class="row">
+                  <div class="col-6 col-sm-6 mt-2 mb-2">
+                    <label>Header</label>
+                    <input type="text" class="form-control"  formControlName="header"  required/>
+                  </div>
+                  <div class="col-6 col-sm-6"></div>
+                  <div class="col-6 col-sm-6">
+                    <label>Handover From</label>
+                    <input type="text" class="form-control"  formControlName="from_team"  required readonly/>
+                  </div>
+                  <div class="col-6 col-sm-6">
+                    <label>Handover To</label>
+                    <select class="form-control" formControlName="to_team_id" >
+                      <option value="0">Select Team</option>
+                      <option  value="{{teams.team_id}}" *ngFor="let teams of TO_TEAM">{{teams.team_name}}</option>
+
+                    </select>
+                  </div>
+
+                  <div class="col-12 mt-3 col-sm-12">
+                    <label>Comment</label>
+                    <textarea  class="form-control" formControlName="remarks" rows="5" required></textarea>
+                  </div>
+                  <div class="col-6 col-sm-6 mt-3">
+                    <div class="titleSec">
+                      <div class="btnSubmitSec">
+                        <input type="submit" [disabled]="handoverform.invalid" class="btn btn-info float-left" value="Submit"></div>
+                      </div>
+                  </div>
+                  <div class="col-6 col-sm-6"></div>
+
+                </div>
+              </form>
+              </ng-container>
+              <ng-container *ngIf="_ACTIVE_FLAG== '0'">
+                         <h2 class="text-center">You are not eligible for this activity</h2>
+              </ng-container>
+          </div>
+        </div>
+      </div>
+
+  </div>

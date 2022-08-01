@@ -1,3 +1,4 @@
+
 <app-header [headername]="headername" [icon]="icon"></app-header>
 <div class="page-body-wrapper">
 <app-sidebar class="sidebarMain"></app-sidebar>
@@ -9,7 +10,7 @@
              <h2 *ngIf="inc_status =='O'">Update Incident</h2>
              <h2 *ngIf="inc_status !='O'">View Incident</h2>
              </div>
-             <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
+             <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)" >
                  <div class="row">
                      <div class="col-6">
                          <label>Incident No.</label>
@@ -21,12 +22,12 @@
                 <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Incident Type</label>
                         <div class="col-sm-12">
-                        <input type="hidden" class="form-control"  name="id" [(ngModel)]="id" [readonly]="this.inc_status!='O'">
-                        <input type="hidden" class="form-control"  name="user" [(ngModel)]="user" [readonly]="this.inc_status!='O'">
-                        <input type="hidden" class="form-control"  name="inc_status"  [(ngModel)]="inc_status" [readonly]="this.inc_status!='O'">
+                        <input type="hidden" class="form-control"  name="id" [(ngModel)]="id" >
+                        <input type="hidden" class="form-control"  name="user" [(ngModel)]="user" >
+                        <input type="hidden" class="form-control"  name="inc_status"  [(ngModel)]="inc_status" >
 
 
-                        <select class="form-control" id="type" name="inc_type_id" ngModel #inc_type_id="ngModel" required [disabled]="this.inc_status!='O'">
+                        <select class="form-control" id="type" name="inc_type_id" ngModel #inc_type_id="ngModel" required >
                             <option value="">Select</option>
                             <option *ngFor="let incident of get_incident" value="{{incident.id}}">{{incident.incident_name}}</option>
                         </select>
@@ -41,7 +42,7 @@
                         <!-- <input type="hidden" name="id" #id="ngModel" ngModel> -->
                       <label  class="col-sm-12 col-form-label">Incident Name</label>
                       <div class="col-sm-12">
-                        <input type="text" class="form-control"  name="inc_name" #inc_name="ngModel" ngModel required [readonly]="this.inc_status!='O'">
+                        <input type="text" class="form-control"  name="inc_name" #inc_name="ngModel" ngModel required >
                         <div *ngIf="inc_name.errors?.required && (inc_name.touched || inc_name.dirty)" class="text-danger">
                             Please Provide Incident Name
                           </div>
@@ -56,7 +57,7 @@
                         <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Incident Location</label>
                         <div class="col-sm-12">
-                           <select name="inc_location_id" #inc_location_id="ngModel" ngModel class="form-control" required [disabled]="this.inc_status!='O'">
+                           <select name="inc_location_id" #inc_location_id="ngModel" ngModel class="form-control" required >
                                <option value="">Select Location</option>
                                <option *ngFor="let loc of location" value="{{loc.id}}">{{loc.offshore_name}}</option>
 
@@ -74,7 +75,7 @@
                     <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Initial Tier</label>
                         <div class="col-sm-12">
-                            <select name="initial_tier_id" #initial_tier_id="ngModel" ngModel class="form-control" required [disabled]="this.inc_status!='O'">
+                            <select name="initial_tier_id" #initial_tier_id="ngModel" ngModel class="form-control" required >
                                 <option value="">Select Tier</option>
                                 <option *ngFor="let tier of initial_tier" value="{{tier.id}}">{{tier.tier_type}}</option>
 
@@ -92,7 +93,7 @@
                         <div class="form-group row">
                             <label  class="col-sm-12 col-form-label">Event Description</label>
                             <div class="col-sm-12">
-                                <textarea #brief_desc="ngModel" required class="form-control" rows="5" cols="5" name="brief_desc" ngModel [readonly]="this.inc_status!='O'"></textarea>
+                                <textarea #brief_desc="ngModel" required class="form-control" rows="5" cols="5" name="brief_desc" ngModel ></textarea>
                                 <div *ngIf="brief_desc.errors?.required && (brief_desc.touched || brief_desc.dirty)" class="text-danger">
                                     Please Provide Event Description
                                   </div>
@@ -102,13 +103,62 @@
 
                 </div>
 
+                <div class="row" *ngIf="this.inc_status!='O'">
+
+                  <div class="col-6">
+                      <label>Created Date</label>
+                      <input type="text" class="form-control" name="created_date" #create_date="ngModel" ngModel id="created_date" >
+                  </div>
+                  <div class="col-6">
+                      <label>Created By</label>
+                      <input type="text" name="created_by"  #created_by="ngModel" ngModel class="form-control" id="created_by" >
+                  </div>
+
+
+              <!-- <div class="col-12"> -->
+                  <div class="col-6 mt-2">
+                      <label>Closed Date</label>
+                      <input type="text" class="form-control" name="closed_date" #closed_date="ngModel" ngModel id="closed_date" >
+                  </div>
+                  <div class="col-6 mt-2">
+                      <label>Final Tier</label>
+
+                      <select name="final_tire" #final_tire="ngModel" ngModel class="form-control" >
+                          <option value="">Select Tier</option>
+                          <option *ngFor="let tier of initial_tier" [selected]="final_tier==tier.id" value="{{tier.id}}">{{tier.tier_type}}</option>
+
+                      </select>
+
+                  </div>
+
+              <!-- </div> -->
+              <div class="col-12 mt-2">
+                  <label>Remarks</label>
+                  <textarea class='form-control' name="closing_remarks" #closing_remarks="ngModel" ngModel id="close_reamrks" cols="30" rows="5" ></textarea>
+
+              </div>
+              <!-- <div class="col-12"> -->
+                  <div class="col-6 mt-2">
+                      <label>Closed At</label>
+                      <input type="text" name="closed_at" #closed_at="ngModel" ngModel id="closed_at" class="form-control" >
+                  </div>
+                  <div class="col-6 mt-2">
+                      <label>Closed by</label>
+                      <input type="text" name="closed_by" id="closed_by" #closed_by="ngModel" ngModel  class="form-control">
+                  </div>
+
+              <!-- </div> -->
+
+
+               </div>
+
 
                 <div class="row">
                     <div class="col-3">
                 <div class="form-group row">
                     <label>&nbsp;</label><br>
                     <div class="col-sm-12 btnSubmitSec mt-2">
-                    <input type="submit" class="btn btn-info" id="submit" name="submit" value="Save" [disabled]="logForm.invalid" [hidden]="this.inc_status!='O'">
+                    <input type="submit" class="btn btn-info" id="submit" name="submit" value="Save" [hidden]="this.inc_status!='O'">
                     <!-- <input type="reset" onclick="" class="btn btn-info" value="Cancel" (click)="logForm.reset();logForm.value.id=0;"> -->
                     </div>
                     </div>
@@ -116,54 +166,7 @@
                  </div>
                 </form>
 
-                <div class="row" *ngIf="this.inc_status!='O'">
 
-                        <div class="col-6">
-                            <label>Created Date</label>
-                            <input type="text" class="form-control" name="created_date" id="created_date" readonly>
-                        </div>
-                        <div class="col-6">
-                            <label>Created By</label>
-                            <input type="text" name="created_by" class="form-control" id="created_by" readonly>
-                        </div>
-
-
-                    <!-- <div class="col-12"> -->
-                        <div class="col-6 mt-2">
-                            <label>Closed Date</label>
-                            <input type="text" class="form-control" name="closed_date" id="closed_date" readonly>
-                        </div>
-                        <div class="col-6 mt-2">
-                            <label>Final Tier</label>
-
-                            <select name="final_tire"  class="form-control" [disabled]="this.inc_status!='O'">
-                                <option value="">Select Tier</option>
-                                <option *ngFor="let tier of initial_tier" [selected]="final_tier==tier.id" value="{{tier.id}}">{{tier.tier_type}}</option>
-
-                            </select>
-
-                        </div>
-
-                    <!-- </div> -->
-                    <div class="col-12 mt-2">
-                        <label>Remarks</label>
-                        <textarea class='form-control' name="closing_remarks" id="close_reamrks" cols="30" rows="5" readonly></textarea>
-
-                    </div>
-                    <!-- <div class="col-12"> -->
-                        <div class="col-6 mt-2">
-                            <label>Closed At</label>
-                            <input type="text" name="closed_at" id="closed_at" class="form-control" readonly>
-                        </div>
-                        <div class="col-6 mt-2">
-                            <label>Closed by</label>
-                            <input type="text" name="closed_by" id="closed_by" readonly class="form-control">
-                        </div>
-
-                    <!-- </div> -->
-
-
-                </div>
 
 
             </div>

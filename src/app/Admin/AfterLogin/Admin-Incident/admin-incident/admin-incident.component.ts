@@ -9,8 +9,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
-
-declare var $:any;
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-admin-incident',
   templateUrl: './admin-incident.component.html',
@@ -24,23 +23,20 @@ export class AdminIncidentComponent implements OnInit {
     positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
     positionforedit = new FormControl(this.positionOptions[2]);
     positionfordelete = new FormControl(this.positionOptions[3]);
-  // Material datatable
-  displayedColumns: string[] = ['Sl.No','Incident_Type','Action'];
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) matsort!: MatSort;
-  dataSource= new MatTableDataSource();
-  get_incident:any=[];
-  del_id:any='';
-  check_respond:any='';
+    // Material datatable
+    displayedColumns: string[] = ['Sl.No','Incident_Type','Action'];
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) matsort!: MatSort;
+    dataSource= new MatTableDataSource();
+    del_id:any='';
+    check_respond:any='';
   constructor(public dialog: MatDialog,private emergencyservice:VirtualEmergencyService,private toaster:ToastrManager,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {this.fetchdata();}
   fetchdata(){
     this.spinner.show();
-    this.emergencyservice.get_incident().subscribe(data=>{
-      this.get_incident=data;
-      this.get_incident=this.get_incident.msg;
-      this.putdata(this.get_incident);
+    this.emergencyservice.get_incident().pipe(map((x:any) => x.msg)).subscribe(data=>{
+      this.putdata(data);
       this.spinner.hide();
     })
   }
@@ -60,30 +56,18 @@ export class AdminIncidentComponent implements OnInit {
   }
 
    //For Delete Purpose
-   modify_modal(id:any){
-    //  this.del_id='',this.del_id=id;
+   modify_modal(id:any,_index:any){
     const disalogConfig=new MatDialogConfig();
     disalogConfig.disableClose=false;
     disalogConfig.autoFocus=true;
-    disalogConfig.width='30%';
+    disalogConfig.width='35%';
     disalogConfig.data={id:id,api_name:'/incident_del',name:'Incident type'}
     const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
     dialogref.afterClosed().subscribe(dt=>{
-    this.fetchdata();
+      if(dt){
+        this.dataSource.data.splice(_index, 1);
+        this.dataSource._updateChangeSubscription();// <== refresh data table
+      }
     })
   }
-   delete_incident(){
-    this.emergencyservice.global_service('0','/incident_del','id='+this.del_id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
-      console.log(data);
-      this.check_respond=data;
-      if(this.check_respond.suc==1){
-      this.fetchdata();
-        this.toaster.successToastr('Incident type deleted successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
-        }
-        else{
-          this.toaster.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
-        }
-    })
-   }
-
 }

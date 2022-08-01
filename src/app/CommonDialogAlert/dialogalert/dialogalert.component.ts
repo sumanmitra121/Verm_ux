@@ -11,30 +11,31 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 export class DialogalertComponent implements OnInit {
   check_respond:any='';
   _u_type:any;
-  constructor(public dialogRef:MatDialogRef<DialogalertComponent>,@Inject(MAT_DIALOG_DATA) public data: any,private toastr:ToastrManager,private emergencyservice:VirtualEmergencyService) { }
+  constructor(public dialogRef:MatDialogRef<DialogalertComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
+  private toastr:ToastrManager,
+  private emergencyservice:VirtualEmergencyService,) {}
 
-  ngOnInit(): void {
-
-
-    console.log(localStorage.getItem('User_type'))
-    this._u_type = localStorage.getItem('User_type');
-  }
+  ngOnInit(): void {this._u_type = localStorage.getItem('User_type');
+   console.log(this.data)
+}
 
   delete(){
+    this.dialogRef.close(1);
     if(this._u_type == 'A'){
     this.emergencyservice.global_service('0',this.data.api_name,'id='+this.data.id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
       this.check_respond=data;
       if(this.check_respond.suc==1){
-        this.dialogRef.close();
-        this.toastr.successToastr(this.data.name +' deleted successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
+        this.dialogRef.close(1);
+        this.toastr.successToastr(this.data.name +' deleted successfully','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
         }
         else{
-          this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
+          this.dialogRef.close();
+          this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
           }
     })
    }
    else{
-        this.dialogRef.close(1)
+        this.dialogRef.close(1);
    }
   }
 

@@ -13,8 +13,8 @@ export class VirtualEmergencyService {
   currentIncdents$ = this._incDetails.asObservable();
   private socket: Socket;
 
-  public url = 'http://192.168.1.244:3000';
-  // public url = 'https://vermapi.opentech4u.co.in';
+  // public url = 'http://192.168.1.244:3000';
+  public url = 'https://vermapi.opentech4u.co.in';
   // socket:any;
 //  url:any='http://localhost:3000';
 //  readonly url:any='https://vermapi.opentech4u.co.in';
@@ -22,7 +22,6 @@ export class VirtualEmergencyService {
   // this.socket = io(this.url);
   // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
   this.socket = io(this.url, {transports: ['polling']});
-
  }
 
   //For Adding new Offshore
@@ -63,11 +62,11 @@ export class VirtualEmergencyService {
    }
   //For getting employee list for showing in side pannel in live log
     get_logged_employee(eventname:any){
-       console.log(eventname)
+       //.log(eventname)
       return new Observable((observer)=>{
-         console.log(observer);
+         //.log(observer);
         this.socket.on(eventname,(news:Observable<any>)=>{
-          console.log(eventname);
+          //.log(eventname);
               observer.next(news);
         })
       })
@@ -77,7 +76,7 @@ export class VirtualEmergencyService {
 
   //For Listening api for chats
    listen(eventname:any){
-     console.log(eventname);
+     //.log(eventname);
     return new Observable((observer)=>{
       this.socket.on(eventname,(news:Observable<any>)=>{
             observer.next(news);
@@ -131,7 +130,7 @@ export class VirtualEmergencyService {
   }
   clearNotifications(_id:any,_activity:any){
   this.global_service('1','/notification',{id:+_id}).subscribe(res =>{
-    console.log(res);
+    //.log(res);
 
     this.routeToTheParticular(_activity);
   })

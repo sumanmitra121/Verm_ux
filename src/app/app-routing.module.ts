@@ -51,12 +51,12 @@ import { BoardComponent } from './AfterLogin/board/board.component';
 import { AddCallLoggerComponent } from './AfterLogin/call-log/add-call-logger/add-call-logger.component';
 import { CallLoggerComponent } from './AfterLogin/call-log/call-logger/call-logger.component';
 // import { CallLoggerComponent } from './AfterLogin/call-logger/call-logger.component';
-import { DashboardComponent } from './AfterLogin/Close-Incident/dashboard/dashboard.component';
 import { EditDashbaordComponent } from './AfterLogin/Close-Incident/edit-dashbaord/edit-dashbaord.component';
 import { DashBoardComponent } from './AfterLogin/dash-board/dash-board.component';
 import { FirstloggedinchangePasswordComponent } from './AfterLogin/FirstTimeChangePassWord/firstloggedinchange-password/firstloggedinchange-password.component';
 import { FormsChecklistComponent } from './AfterLogin/forms-checklist/forms-checklist.component';
 import { FormschecklistfilesComponent } from './AfterLogin/formschecklistfiles/formschecklistfiles.component';
+import { HandoverComponent } from './AfterLogin/handover/handover.component';
 import { AddIncidentComponent } from './AfterLogin/Incident/add-incident/add-incident.component';
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
 import { EditIncidentComponent } from './AfterLogin/Incident/edit-incident/edit-incident.component';
@@ -302,10 +302,7 @@ const routes: Routes = [
     path:'admin/forgetpassword',
     component:ForgetPasswordForAdminComponent
   },
-  {
-    path:'closeincident/dashboard',
-    component:DashboardComponent
-  },
+
   // {
   //   path:'Editinc/:id',
   //   component:EditDashbaordComponent
@@ -389,6 +386,10 @@ const routes: Routes = [
   {
     path:'notifications/:type',
     component:NotificationComponent
+  },
+  {
+    path:'handover',
+    component:HandoverComponent
   }
 
 ];

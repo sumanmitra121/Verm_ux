@@ -43,8 +43,6 @@ dataSource3= new MatTableDataSource();
 dataSource4= new MatTableDataSource();
 dataSource5= new MatTableDataSource();
 dataSource6= new MatTableDataSource();
-
-
   headername:any='Form & Checklist';
   icon:any='fa-list-ul';
   Inc_id:any;
@@ -372,65 +370,6 @@ dataSource6= new MatTableDataSource();
           console.log("CLose");
           this.WindowObject.close();
         }, 100);
-
-
-    // const doc = new jsPDF("l", "mm", "a4");
-    // doc.addImage('/assets/images/logoWhit.png', 'JPEG', 138, 5, 20, 20);
-    // doc.setFontSize(15);
-    // doc.text("Virtual Emergency Response Management System", 85, 30);
-    // doc.setFontSize(10);
-    // doc.setTextColor(40);
-    // if(this.Inc_type=='I'){
-    //   doc.text("Incident Reports  From: " + this.logform.form.value.frm_date + " -- To: " + this.logform.form.value.to_date, 100, 36);
-    // autoTable(doc,
-    //   {
-    //     columnStyles: {
-    //       8: {cellWidth: 40},
-    //       7: {cellWidth: 70},
-    //       6: {cellWidth: 20},
-    //       5: {cellWidth: 20},
-    //       4: {cellWidth: 40},
-    //       3: {cellWidth: 30},
-    //       2: {cellWidth: 30},
-    //       1: {cellWidth: 20},
-    //       0: {cellWidth: 25},
-    //     },
-    //     margin: { top: 40,left:0,right:0 },
-    //     tableWidth:'auto',
-    //     styles: {
-    //       fontSize: 10
-    //     },
-    //   head: [['Date','No.','Type','Name', 'Location','Initial tier','Final tier','Description','Info.']],
-    //   body: this.print_incidentStatus,
-    //  })
-    // }
-    // else if(this.Inc_type=='A'){
-    //   doc.text("Activation Reports  From: " + this.logform.form.value.frm_date + " -- To: " + this.logform.form.value.to_date, 100, 36);
-    //   autoTable(doc,
-    //     {
-    //       margin: { top: 40,left:0,right:0 },
-    //       tableWidth:'auto',
-    //       styles: {
-    //         fontSize: 10
-    //       },
-    //     head: [['Date','Incident name','Team name','Status','Created by']],
-    //     body: this.print_incidentStatus,
-    //    })
-    // }
-    // else if(this.Inc_type=='C'){
-    //   doc.text("Live Logs Reports  From: " + this.logform.form.value.frm_date + " -- To: " + this.logform.form.value.to_date, 100, 36);
-    //   autoTable(doc,
-    //     {
-    //       margin: { top: 40,left:0,right:0 },
-    //       tableWidth:'auto',
-    //       styles: {
-    //         fontSize: 10
-    //       },
-    //     head: [['Date','Emp name','Chat','File']],
-    //     body: this.print_incidentStatus,
-    //    })
-    // }
-    // doc.save('table.pdf');
     }
       // For downloading as excel
     importAsXlsx(){

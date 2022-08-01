@@ -8,8 +8,6 @@ import { Router } from '@angular/router';
 })
 export class ReportDataPooldashboardComponent implements OnInit {
   constructor(private router:Router) {}
-
   ngOnInit(): void {}
-
   routetoreportdatapool(mode:any){this.router.navigate(['/admin/reportdatapoolDetails/',mode]);}
 }

@@ -19,30 +19,42 @@ export class AddAdminOffshoreComponent implements OnInit {
   get_status_after_insert:any='';
   constructor(private emergencyservice:VirtualEmergencyService,private router:Router,public toastr:ToastrManager,private spinner:NgxSpinnerService) { }
 
-  ngOnInit(): void {
-    // if('add-offshore' in localStorage){localStorage.removeItem('add-offshore');}
-    // if('update-offshore' in localStorage){localStorage.removeItem('update-offshore');}
-  }
+  ngOnInit(): void {}
   logSubmit(logForm:Form){
     this.spinner.show();
-    this.LogForm.value.status="A";
-     this.LogForm.value.Id="0";
-    //  this.LogForm.value.user="admin@gmail.com";
-    this.LogForm.value.user=localStorage.getItem('Email');
-    console.log(this.LogForm.form.value);
-    this.emergencyservice.add_new_offshore(this.LogForm.form.value).subscribe(data=>{
-    this.get_status_after_insert=data;
-    if(this.get_status_after_insert.suc==1){
-      // localStorage.setItem('add-offshore','1');
+    this.emergencyservice.add_new_offshore(this.LogForm.form.value).subscribe((data:any)=>{
+    if(data.suc==1){
+
       this.spinner.hide();
       this.router.navigate(['/admin/offshore']).then(()=>{
-        this.toastr.successToastr('Offshore Added Successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+        this.toastr.successToastr('Offshore Added Successfully','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
       });
     }
     else{
       this.spinner.hide();
-      this.toastr.errorToastr('Something went wrong,Please try again later','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
+      this.toastr.errorToastr('Something went wrong,Please try again later','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
     }
   })
+  }
+  cancel(){
+    this.LogForm.form.setValue({
+      Id:'0',
+      user:localStorage.getItem('Email'),
+      offshore_name:'',
+      location:'',
+      lattitude:'',
+      longitude:'',
+      workers_no:'',
+      status:'A'
+    })
+  }
+  ngAfterViewInit(){
+    setTimeout(() => {
+        this.LogForm.form.patchValue({
+          id:'0',
+          user:localStorage.getItem('Email'),
+          status:'A'
+        })
+    }, 100);
   }
 }
