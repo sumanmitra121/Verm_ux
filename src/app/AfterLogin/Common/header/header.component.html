@@ -63,7 +63,7 @@
           <div class="notifications-item" *ngFor="let notify of _notification;let i=index">
             <ng-container *ngIf="i < 4">
               <!-- <a  (click)="gotoNotifications(notify.id,notify.activity)">{{notify.narration}}</a> -->
-              <img src="assets/images/no-user.png" alt="img">
+              <img src="assets/images/no-user.png" alt="img" *ngIf="notify!=null">
               <div class="text" (click)="gotoNotifications(notify.id,notify.activity)">
                <p>{{notify.narration}}</p>
              </div>

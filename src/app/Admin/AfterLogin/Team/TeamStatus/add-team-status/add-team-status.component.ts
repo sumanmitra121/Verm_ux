@@ -106,6 +106,8 @@ export class AddTeamStatusComponent implements OnInit {
           this.Team_Member.length=0;
         this.Team_Member=data;
         this.Team_Member=this.Team_Member.msg;
+        console.log(this.Team_Member);
+
         this.putdata(this.Team_Member);
        $('#more_btn').show();
       // this.emergencyservice.global_service('0','/get_max_frm_dt','team_id=' +this.LogForm.value.team_id).subscribe(data=>{
@@ -217,11 +219,9 @@ get_details_corrosponding_id(id:any,from_date:any,to_date:any){
 checkTeamRoaster(_frm_dt:any){
   if(this.LogForm.value.team_id!=''){
     this.emergencyservice.global_service('0','/get_max_frm_dt','team_id=' +this.LogForm.value.team_id).pipe(map((x:any) => x.msg)).subscribe(data=>{
-      console.log(data)
-      console.log(_frm_dt);
-
-    this._alert = _frm_dt < data[0].from_date ? false : true;
-    console.log(this._alert);
+     console.log(data[0].from_date);
+      this._alert = _frm_dt < data[0].from_date ? false : true;
+         console.log(this._alert);
     })
   }
 }

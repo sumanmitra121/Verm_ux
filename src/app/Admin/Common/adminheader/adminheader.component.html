@@ -24,7 +24,7 @@
 			<div class="dropdown-menu customDropdown">
 				<!-- <h2>Notifications</h2> -->
 
-        <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION > 0">
+        <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION > 1">
 			   <div class="notifications-item" *ngFor="let notify of notifications;let i=index">
           <ng-container *ngIf="i < 4">
 				   <img src="assets/images/no-user.png" alt="img" *ngIf="notify.img==null">
@@ -36,7 +36,7 @@
         </ng-container>
 				</div>
       </ng-container>
-      <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION == 0">
+      <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION == 1">
         <div class="user">
           <h3>No Notfications Available</h3>
         </div>
