@@ -22,6 +22,7 @@ export class EditAdminPositionComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {}
   ngOnInit(): void {
+    this.spinner.show();
     this.id = this.activatedroute.snapshot.params['id'];
     var data = 'id=' + this.id;
     this.getPosition(data);
@@ -65,6 +66,8 @@ export class EditAdminPositionComponent implements OnInit {
           user: localStorage.getItem('Email'),
           position: data[0].position,
         });
+       this.spinner.hide();
+
       });
   }
   cancel() {

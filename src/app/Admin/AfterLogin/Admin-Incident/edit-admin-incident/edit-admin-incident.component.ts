@@ -16,6 +16,7 @@ export class EditAdminIncidentComponent implements OnInit {
   constructor(private activateroute:ActivatedRoute,private route:Router,private emergencyservice:VirtualEmergencyService,public toastr:ToastrManager,private spinner:NgxSpinnerService) { }
   id:any;
   ngOnInit(): void {
+    this.spinner.show();
     this.id=this.activateroute.snapshot.params['id'];
     this.getIncidentDetails(this.id);
   }
@@ -44,6 +45,7 @@ export class EditAdminIncidentComponent implements OnInit {
           user:localStorage.getItem('Email'),
           incident_type: data[0].incident_name
         })
+          this.spinner.hide();
      })
   }
   cancel(){

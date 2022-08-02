@@ -22,6 +22,7 @@ export class EditAdminTierComponent implements OnInit {
   ) {}
   id: any;
   ngOnInit(): void {
+    this.spinner.show();
     this.id = this.activatedroute.snapshot.params['id'];
     var data = 'id=' + this.id;
     this.getTierDetails(data);
@@ -37,6 +38,7 @@ export class EditAdminTierComponent implements OnInit {
           user: localStorage.getItem('Email'),
           tier_type: data[0].tier_type,
         });
+        this.spinner.hide();
       });
   }
   logSubmit(logForm: Form) {

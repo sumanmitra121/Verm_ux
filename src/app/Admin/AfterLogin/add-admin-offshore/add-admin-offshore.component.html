@@ -17,7 +17,7 @@
                 <div class="col-5">
                     <b>Offshore Name</b>
                     <input  type="text" name="offshore_name" id="offshore_name" class="form-control" ngModel #offshore_name="ngModel" required>
-                    <div *ngIf="offshore_name.errors?.required && (offshore_name.touched || offshore_name.dirty)" class="text-danger h5 mt-3">
+                    <div *ngIf="offshore_name.errors?.required && (offshore_name.touched || offshore_name.dirty)" class="text-danger h6 mt-3">
                         *Please Provide Offshore Name
                       </div>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="col-5">
                     <b>Location</b>
                     <input type="text" name="location" id="location" class="form-control" #location="ngModel" ngModel required>
-                    <div *ngIf="location.errors?.required && (location.touched || location.dirty)" class="text-danger h5 mt-3">
+                    <div *ngIf="location.errors?.required && (location.touched || location.dirty)" class="text-danger h6 mt-3">
                         *Please Provide Location
                       </div>
                 </div>

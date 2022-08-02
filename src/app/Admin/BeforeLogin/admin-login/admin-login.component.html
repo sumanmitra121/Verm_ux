@@ -12,11 +12,11 @@
 			<div class="form-outline mb-4">
 				<label class="form-label" for="email">Email address</label>
 			  <input type="email" id="email" class="form-control form-control-lg"  name="email" #email="ngModel" ngModel required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"/>
-              <div *ngIf="email.errors?.required && (email.touched || email.dirty)" class="text-danger mt-3  h5">
+              <div *ngIf="email.errors?.required && (email.touched || email.dirty)" class="text-danger mt-3  h6">
                 *Please Provide Email
               </div>
               <div *ngIf="email.touched" >
-                <div class="text-danger mt-3  h5" *ngIf="email.errors?.pattern">
+                <div class="text-danger mt-3  h6" *ngIf="email.errors?.pattern">
                   *Not a valid email
                </div>
             </div>
@@ -26,7 +26,7 @@
 			<div class="form-outline mb-4">
 				<label class="form-label" for="password">Password</label>
 			  <input type="password" id="password" class="form-control form-control-lg" name="password" #password="ngModel" ngModel required/>
-              <div *ngIf="password.errors?.required && (password.touched || password.dirty)" class="text-danger mt-3  h5">
+              <div *ngIf="password.errors?.required && (password.touched || password.dirty)" class="text-danger mt-3  h6">
                 *Please Provide Password
               </div>
 			</div>
@@ -46,5 +46,5 @@
 	  </div>
 	</div>
   </section>
-  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Please Wait... </p></ngx-spinner>
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Logging In... </p></ngx-spinner>
 

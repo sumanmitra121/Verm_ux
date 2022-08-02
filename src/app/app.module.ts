@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginLEEComponent } from './BeforeLogin/login-lee/login-lee.component';
@@ -92,8 +91,6 @@ import { ForgetPasswordForAdminComponent } from './Admin/BeforeLogin/forget-pass
 import { EditDashbaordComponent } from './AfterLogin/Close-Incident/edit-dashbaord/edit-dashbaord.component';
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
 ///END////////////
-
-//End///////
 /////Emoji Package//////////
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 //////End//////////////////

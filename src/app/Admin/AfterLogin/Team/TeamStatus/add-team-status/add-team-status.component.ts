@@ -217,7 +217,11 @@ get_details_corrosponding_id(id:any,from_date:any,to_date:any){
 checkTeamRoaster(_frm_dt:any){
   if(this.LogForm.value.team_id!=''){
     this.emergencyservice.global_service('0','/get_max_frm_dt','team_id=' +this.LogForm.value.team_id).pipe(map((x:any) => x.msg)).subscribe(data=>{
-    this._alert = _frm_dt <= data[0].from_date ? false : true;
+      console.log(data)
+      console.log(_frm_dt);
+
+    this._alert = _frm_dt < data[0].from_date ? false : true;
+    console.log(this._alert);
     })
   }
 }

@@ -121,8 +121,11 @@ export class HeaderComponent implements OnInit {
       else{
         this.emergencyservice.emit('notification','');
         this.emergencyservice.listen('notification').subscribe((data:any)=>{
+           console.log(data)
            this._notification =  data;
            this._TOTAL_LENGTH_NOTIFICATION = this._notification[this._notification.length-1].total;
+           console.log(this._TOTAL_LENGTH_NOTIFICATION);
+
         })
       }
  }

@@ -53,6 +53,8 @@ export class AdminheaderComponent implements OnInit {
     this.emergencyservice.emit('notification','');
     this.emergencyservice.listen('notification').subscribe(data=>{
       //data)
+      // console.log(data);
+
       this.notifications=data;
       this._TOTAL_LENGTH_NOTIFICATION = this.notifications[this.notifications.length-1].total;
 
@@ -67,8 +69,7 @@ export class AdminheaderComponent implements OnInit {
     }
   }
 
-  logout(){
-    this.router.navigate(['/admin']);localStorage.clear();}
+  logout(){this.router.navigate(['/admin']);localStorage.clear();}
   get_details(){
     this.emergencyservice.global_service('0','/Employee','id='+localStorage.getItem('id')).subscribe(data=>{
      this.get_profile.length=0;
