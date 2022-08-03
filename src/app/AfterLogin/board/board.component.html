@@ -23,7 +23,7 @@
 
               <ul class="listDashboard" *ngIf="get_in_status.length > 0">
                 <li><strong>Visibility:</strong> {{inc_visibility}}</li>
-                <li><strong>Sea State:</strong> {{inc_sea_state}}</li>
+                <li><strong>Sea Swell:</strong> {{inc_sea_state}}</li>
                 <li><strong>Temperature:</strong>
                   <!-- {{inc_temparature}} -->
                  {{temp}}&#xb0;{{temp_unit}}
@@ -132,7 +132,7 @@
          <ng-container *ngIf="get_casualty_status.length > 0">
          <ul class="listDashboard">
           <li id="full_name"><strong>Total:</strong> {{total}}</li>
-          <li id="location" ><strong>Location:</strong> {{Location}}</li>
+          <li id="location" ><strong>Casualty Location:</strong> {{Location}}</li>
           <li id="location" ><strong>Lat:</strong> {{this.lat}}</li>
           <li id="location" ><strong>Long:</strong> {{this.long}}</li>
         </ul>
@@ -306,7 +306,7 @@
                       <tr>
                           <th class="text-center">Time</th>
                           <th class="text-center">Visibility</th>
-                          <th class="text-center">Sea State</th>
+                          <th class="text-center">Sea Swell</th>
                           <th class="text-center">Temperature(C/F)</th>
                           <th class="text-center">Wind Speed (km/h)</th>
                           <th class="text-center">Wind Direction</th>
@@ -324,7 +324,7 @@
                             <input placeholder="Enter Visibility" [(ngModel)]="dynamicArray[i].visibility" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                           </td>
                           <td>
-                            <input placeholder="Enter Sea State" [(ngModel)]="dynamicArray[i].sea_state" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <input placeholder="Enter Sea Swell" [(ngModel)]="dynamicArray[i].sea_state" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                           </td>
                           <td>
                             <div class="row">
@@ -358,7 +358,7 @@
                     <tr>
                       <th class="text-center">Time</th>
                       <th class="text-center">Visibility</th>
-                      <th class="text-center">Sea State</th>
+                      <th class="text-center">Sea Swell</th>
                       <th class="text-center">Temperature(C/F)</th>
                       <th class="text-center">Wind Speed (km/h)</th>
                       <th class="text-center">Wind Direction</th>
@@ -531,9 +531,9 @@
               <thead>
                   <tr>
                       <!-- <th class="text-center">Date</th> -->
-                      <th class="text-center">Category</th>
+                      <th class="text-center">POB Status</th>
                       <th class="text-center">Time</th>
-                      <th class="text-center">Value</th>
+                      <th class="text-center">POB Count</th>
                      <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
                       </th>
@@ -547,7 +547,7 @@
                       <td>
 
                         <select class="form-control" [(ngModel)]="vesselArray[i].prob_cat_id"  [ngModelOptions]="{standalone: true}" required>
-                          <option value="">Select</option>
+                          <option value="">Select POB Status</option>
                           <option value="{{pob_cat.id}}" *ngFor="let pob_cat of get_pob_category">{{pob_cat.name}}</option>
 
                         </select>
@@ -557,7 +557,7 @@
                         <!-- <div *ngIf="vesselArray[i].Time==''"> <p class="text-danger">Please Provide Time</p></div> -->
                       </td>
                       <td>
-                        <input type="text" placeholder="Enter value" (keypress)="PreventNonNumeric($event)" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
+                        <input type="text" placeholder="Enter POB Count" (keypress)="PreventNonNumeric($event)" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
                       </td>
 
 
@@ -572,9 +572,9 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th class="text-center">Category</th>
+                  <th class="text-center">POB Status</th>
                   <th class="text-center">Time</th>
-                  <th class="text-center">Value</th>
+                  <th class="text-center">POB Count</th>
                  <th class="text-center" (click)="addRow()">
                     <i class="fa fa-plus fa-2x"></i>
                   </th>
@@ -599,7 +599,7 @@
                       <th class="text-center">FULL NAME</th>
                       <th class="text-center">EMPLOYER</th>
                       <th class="text-center">CONDITION</th>
-                      <th class="text-center">LOCATION</th>
+                      <th class="text-center">Casualty Location</th>
                       <th class="text-center">TIME</th>
                      <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
@@ -644,7 +644,7 @@
                     <th class="text-center">FULL NAME</th>
                     <th class="text-center">EMPLOYER</th>
                     <th class="text-center">CONDITION</th>
-                    <th class="text-center">LOCATION</th>
+                    <th class="text-center">Casualty Location</th>
                     <th class="text-center">TIME</th>
                    <th class="text-center" (click)="addRow()">
                       <i class="fa fa-plus fa-2x"></i>
@@ -669,9 +669,9 @@
               <thead>
                   <tr>
                       <th class="text-center">TIME</th>
-                      <th class="text-center">DESTINATION</th>
+                      <th class="text-center">From</th>
                       <th class="text-center">MODE OF TRANSPORT</th>
-                      <th class="text-center">POB REMAINING</th>
+                      <th class="text-center">POB Transported</th>
                       <th class="text-center">REMARKS</th>
                        <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
@@ -695,7 +695,7 @@
                         <input placeholder="Enter Mode Of Transport" [(ngModel)]="vesselArray[i].mode_of_transport" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input placeholder="Enter Pob Remaining" (keypress)="PreventNonNumeric($event)"  [(ngModel)]="vesselArray[i].pob_remaining" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                        <input placeholder="Enter POB Transported" (keypress)="PreventNonNumeric($event)"  [(ngModel)]="vesselArray[i].pob_remaining" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
                         <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
@@ -713,9 +713,9 @@
               <tfoot>
                 <tr>
                     <th class="text-center">TIME</th>
-                    <th class="text-center">DESTINATION</th>
+                    <th class="text-center">From</th>
                     <th class="text-center">MODE OF TRANSPORT</th>
-                    <th class="text-center">POB REMAINING</th>
+                    <th class="text-center">POB Transported</th>
                     <th class="text-center">REMARKS</th>
                      <th class="text-center" (click)="addRow()">
                       <i class="fa fa-plus fa-2x"></i>

@@ -91,11 +91,11 @@
                 <div class="row ">
                     <div class="col-12">
                         <div class="form-group row">
-                            <label  class="col-sm-12 col-form-label">Event Description</label>
+                            <label  class="col-sm-12 col-form-label">Summary Of Incident</label>
                             <div class="col-sm-12">
                                 <textarea #brief_desc="ngModel" required class="form-control" rows="5" cols="5" name="brief_desc" ngModel ></textarea>
                                 <div *ngIf="brief_desc.errors?.required && (brief_desc.touched || brief_desc.dirty)" class="text-danger">
-                                    Please Provide Event Description
+                                    Please Provide Summary Of Incident
                                   </div>
                             </div>
                         </div>

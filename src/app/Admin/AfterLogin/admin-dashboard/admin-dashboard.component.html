@@ -305,7 +305,6 @@
 
                                 </ul>
                               </div>
-
                             <div class="tab-content" *ngIf="this.status_mode=='4'" id="tabContentanimation">
                                 <ul>
                                     <li *ngFor="let statustype of statusType; let i=index"><span>{{statustype.prob_cat}}:</span>{{statustype.value}}</li>
@@ -317,7 +316,7 @@
                                 <ul *ngFor="let statustype of statusType; let i=index">
                                     <li> <h4 class="customHeader">{{statustype.full_name}} ({{statustype.employer}})</h4>
                                         <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
-                                        <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
+                                        <h5><label class="customLabel">Casualty Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
                                         <h5><label class="customLabel">Time: </label> {{statustype.time}} </h5>
                                         <h5><label class="customLabel">Condition: </label> {{statustype.emp_condition}} </h5>
                                        </li>
@@ -330,7 +329,7 @@
                                     <li> <h4 class="customHeader">{{statustype.mode_of_transport}}</h4>
                                         <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
                                         <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
-                                        <h5><label class="customLabel">Pob Remaining: </label> {{statustype.pob_remaining}} </h5>
+                                        <h5><label class="customLabel">POB Transported: </label> {{statustype.pob_remaining}} </h5>
                                         <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}} </h5>
                                        </li>
 

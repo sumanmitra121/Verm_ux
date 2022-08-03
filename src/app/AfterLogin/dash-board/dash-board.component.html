@@ -26,7 +26,7 @@
                 [matTooltipDisabled]="inc_sea_state.length > 4 ? false : true"
                 matTooltip="{{inc_sea_state}}"
                 ><span>{{inc_sea_state=='' ? 'N/A' : (inc_sea_state.length > 4  ) ? (inc_sea_state | slice:0:3)+'..' : (inc_sea_state)}}</span>
-									<h3>Sea State</h3>
+									<h3>Sea Swell</h3>
 								</li>
 							</ul>
 						</div>
@@ -55,7 +55,7 @@
 					<div class="col-6 mb-6">
 						<div class="whiteBox">
 							<div class="card-header card_headerCustom">
-								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Live Log </h2>
+								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Chat Box </h2>
 								<br clear="all">
 							</div>
 							<div class="card_bodyCustom scroll">
@@ -198,8 +198,8 @@
 
 								<table *ngIf="get_prob_status.length > 0">
 									<tr>
-										<th>Category</th>
-										<th>Value</th>
+										<th>POB Status</th>
+										<th>POB Count</th>
 									</tr>
 									<tr *ngFor="let prob_status of get_prob_status;let i=index"
 										[ngClass]="i == 0 ? 'my_class1' : ''">
@@ -365,7 +365,7 @@
 										<strong class="customLabel">Time :</strong> {{evacuationStatus?.time}}
 									</li>
 									<li >
-										<strong class="customLabel">Pob Remaining :</strong>
+										<strong class="customLabel">POB Transported :</strong>
 										{{evacuationStatus?.pob_remaining}}
 									</li>
 									<hr />

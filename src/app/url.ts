@@ -10,7 +10,7 @@ export class global_url_test{
      var dt=action_type=='IC' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is created by '+localStorage.getItem('Emp_name')+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id'),inc_no:_inc_no}
      :(action_type=='IU' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is updated by '+localStorage.getItem('Emp_name')+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id'),inc_no:localStorage.getItem('Inc_No')}
      :(action_type=='ICL' ? {id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is closed by '+localStorage.getItem('Emp_name')+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id'),inc_no:localStorage.getItem('Inc_No')}
-     :{id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is approved by '+localStorage.getItem('Emp_name')+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id'),inc_no:localStorage.getItem('Inc_No')}));
+     :{id:'0',activity:mode,narration:"An incident,"+name+' of ' + type+' is archived by '+localStorage.getItem('Emp_name')+' at '+date,view_flag:'N',created_by:localStorage.getItem('Employee_id'),inc_no:localStorage.getItem('Inc_No')}));
      return dt;
     }
 

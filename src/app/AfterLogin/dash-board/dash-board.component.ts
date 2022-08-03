@@ -140,8 +140,7 @@ getEventStatus(_id:any){
       this.spinner.show('events');
       this.get_events_status.length=0;
       this.emergencyservice.global_service('0','/event_log_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
-      this.get_events_status.length=0;
-
+        this.get_events_status.length=0;
         this._event_observable = from(res).pipe(take(2)).subscribe(dt =>{
         this.get_events_status.push(dt);
       })
