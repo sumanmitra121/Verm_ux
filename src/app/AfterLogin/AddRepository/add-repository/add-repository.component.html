@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="pagination" *ngIf="view_type=='G' && get_category!=''">
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
           </div>
 
         <div class="container-m-nx" [hidden]="view_type=='G' || get_category==''">

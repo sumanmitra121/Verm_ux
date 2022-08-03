@@ -596,6 +596,8 @@ export class BoardComponent implements OnInit, OnDestroy {
               );
             }
           );
+        // console.log(this.vesselArray);
+
       } else {
         this.toastr.errorToastr(
           'Some of  fields are empty, please fill them up',
@@ -688,7 +690,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.dynamicArray.length = 0;
         this.newDynamic = {
           id: '0',
-          time_inc: this.datePipe.transform(this.now, 'hh:mma'),
+          time_inc: this.datePipe.transform(this.now, 'HH:MM'),
           visibility: '',
           sea_state: '',
           temp: '',
@@ -790,6 +792,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       //.log(this.get_incident_details_after_save);
 
       if (this.get_incident_details_after_save.length > 0) {
+        console.log(this.get_incident_details_after_save);
+
         // this.vesselArray.length=0;
         this.vesselDynamic = '';
         for (let i = 0; i < this.get_incident_details_after_save.length; i++) {
@@ -808,7 +812,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       } else {
         this.vesselDynamic = {
           id: '0',
-          time: this.datePipe.transform(this.now, 'hh:mma'),
+          time: this.datePipe.transform(this.now, 'HH:MM'),
           destination: '',
           mode_of_transport: '',
           pob_remaining: '',
@@ -840,7 +844,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       } else {
         this.vesselDynamic = {
           id: '0',
-          time: this.datePipe.transform(this.now, 'hh:mma'),
+          time: this.datePipe.transform(this.now, 'HH:mm'),
           resource_assigned: '',
           situation_status: '',
         };
@@ -921,7 +925,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.id_create == 'inc_create') {
       this.newDynamic = {
         id: '0',
-        time_inc: this.datePipe.transform(this.now, 'hh:mma'),
+        time_inc: this.datePipe.transform(this.now, 'HH:MM'),
         visibility: '',
         sea_state: '',
         temp: '',
@@ -970,7 +974,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     } else if (this.id_create == 'events') {
       this.vesselDynamic = {
         id: '0',
-        time: this.datePipe.transform(this.now, 'hh:mma'),
+        time: this.datePipe.transform(this.now, 'HH:mm'),
         resource_assigned: '',
         situation_status: '',
       };
@@ -978,7 +982,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     } else if (this.id_create == 'evacuation') {
       this.vesselDynamic = {
         id: '0',
-        time: this.datePipe.transform(this.now, 'hh:mma'),
+        time: this.datePipe.transform(this.now, 'HH:mm'),
         destination: '',
         mode_of_transport: '',
         pob_remaining: '',
@@ -1081,10 +1085,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       j = 0;
     }
     if (data != '') {
-      this.total = data[j].tot_cas;
-      this.Location = data[j].offshore_name;
-      this.lat = data[j].latt;
-      this.long = data[j].lon;
+      this.total = data[j].full_name;
+      this.Location = data[j].location;
+      this.lat = data[j].emp_condition;
+      this.long = data[j].time;
     }
     this.casualy_status = setTimeout(() => {
       j = j + 1;

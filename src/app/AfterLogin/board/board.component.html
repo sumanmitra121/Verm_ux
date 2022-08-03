@@ -131,10 +131,10 @@
 
          <ng-container *ngIf="get_casualty_status.length > 0">
          <ul class="listDashboard">
-          <li id="full_name"><strong>Total:</strong> {{total}}</li>
+          <li id="full_name"><strong>Employee:</strong> {{total}}</li>
           <li id="location" ><strong>Casualty Location:</strong> {{Location}}</li>
-          <li id="location" ><strong>Lat:</strong> {{this.lat}}</li>
-          <li id="location" ><strong>Long:</strong> {{this.long}}</li>
+          <li id="location" ><strong>Condition:</strong> {{this.lat}}</li>
+          <li id="location" ><strong>Time:</strong> {{this.long}}</li>
         </ul>
         </ng-container>
         <ng-container *ngIf="get_casualty_status.length == 0">
@@ -599,7 +599,7 @@
                       <th class="text-center">FULL NAME</th>
                       <th class="text-center">EMPLOYER</th>
                       <th class="text-center">CONDITION</th>
-                      <th class="text-center">Casualty Location</th>
+                      <th class="text-center">CASUALTY LOCATION</th>
                       <th class="text-center">TIME</th>
                      <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
@@ -618,12 +618,11 @@
                         <input placeholder="Enter Condition" [(ngModel)]="vesselArray[i].condition" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <select [(ngModel)]="vesselArray[i].location" class="form-control" [ngModelOptions]="{standalone: true}" required>
+                        <!-- <select [(ngModel)]="vesselArray[i].location" class="form-control" [ngModelOptions]="{standalone: true}" required>
                           <option value="">Select</option>
                           <option *ngFor="let location of offshore_list" value="{{location.id}}" [selected]="vesselArray[i].location == location.id">{{location.offshore_name}}</option>
-
-                        </select>
-                        <!-- <input [(ngModel)]="vesselArray[i].location" class="form-control" type="time" [ngModelOptions]="{standalone: true}"/> -->
+                        </select> -->
+                        <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].location" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
                       </td>
                       <td>
                         <input [(ngModel)]="vesselArray[i].time" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
@@ -748,7 +747,9 @@
                 </thead>
                 <tbody>
                      <tr *ngFor="let vessel_array of vesselArray; let i = index;">
-                        <td> <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly size="5"/></td>
+                        <td>
+                          <input [(ngModel)]="vesselArray[i].time" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly size="5"/>
+                        </td>
                         <td><textarea placeholder="Enter Situation" [(ngModel)]="vesselArray[i].situation_status"  class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
                         </td>
                         <td><input placeholder="Enter Resource Assigned" [(ngModel)]="vesselArray[i].resource_assigned" class="form-control"  type="text" [ngModelOptions]="{standalone: true}" required/></td>

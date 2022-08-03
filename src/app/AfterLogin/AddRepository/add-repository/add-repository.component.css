@@ -16,6 +16,27 @@ select{
   -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
   -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
 }
+.my-pagination ::ng-deep .ngx-pagination .current {
+  background: red;
+}
 
+:host /deep/ .ngx-pagination {
+  padding-left: 0px;
+  /* border:1px solid rgb(183, 183, 183)!important; */
+    border-radius: 5px;
+    padding: 5px;
+}
 
+:host /deep/.ngx-pagination .current,
+.btn-info {
+  border:1px solid gray!important;
+  background: gray!important;
+  color:#fff!important;
+  border: transparent;
+  border-radius: 5px;
+}
+:host /deep/.ngx-pagination li{
+  border:1px solid gray!important;
+  border-radius: 18px!important;
+}
 
