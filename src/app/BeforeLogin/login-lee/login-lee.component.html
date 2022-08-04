@@ -3,7 +3,7 @@
 
 	<div class="loginContainerSub">
 	<div class="col-sm-7 loginLeft float-left">
-		<img src="assets/images/logoLogin.png" alt="" class="logoLogin"/>
+		<img src="assets/images/logoLogin.png" alt="" class="logoLogin" [routerLink]="'/'"/>
 <div class="leftLoginSec">
 		<img src="assets/images/imgLogin.png" alt=""/>
 		<h2>Welcome To Virtual Emergency Response Management</h2>
@@ -11,11 +11,10 @@
 		</div>
 	</div>
 	<div class="col-sm-5 loginRight float-left">
-
 		<h1>Login</h1>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 		<div class="loginForm">
-			<form #logForm="ngForm" (ngSubmit)="submitForm(logForm.value)">
+			<form #logForm="ngForm" (ngSubmit)="submitForm(logForm.value)" ngNativeValidate>
 				<!-- Email input -->
 
 					<label class="form-label" for="email">Email address</label>
@@ -28,12 +27,8 @@
 					  *Not a valid email
 				   </div>
 				</div>
-
-				<ngx-spinner bdColor = "rgba(87,87,87,0.8)" size = "medium" color = "#fffdfd" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-
-
+				<ngx-spinner bdColor = "rgb(27 27 27 / 80%)" size = "medium" color = "#fffdfd" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white;" > Logging In.. </p></ngx-spinner>
 				<!-- Password input -->
-
 					<label class="form-label mt-3" for="password">Password</label>
 				  <input type="password" class="form-control" id="password" name="password" #password="ngModel" ngModel required/>
 				  <div *ngIf="password.errors?.required && (password.touched || password.dirty)" class="text-white">

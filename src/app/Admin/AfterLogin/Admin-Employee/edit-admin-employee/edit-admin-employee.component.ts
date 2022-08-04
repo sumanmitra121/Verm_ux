@@ -21,6 +21,7 @@ export class EditAdminEmployeeComponent implements OnInit {
   emp_id:any;
   email:any;
   ngOnInit(): void {
+    this.spinner.show();
     this.id=this.activatedroute.snapshot.params['id'];
     var data='id='+this.id;
      this.getPosition();
@@ -72,6 +73,8 @@ export class EditAdminEmployeeComponent implements OnInit {
         user_type:res[0].user_type,
         approval_flag:res[0].approval_flag
       })
+       this.spinner.hide();
+
     })
      }
      PreventNonNumeric(_event: any) {

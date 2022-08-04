@@ -194,7 +194,7 @@
                             #tooltip="matTooltip"
                               [matTooltipDisabled]="inc_sea_state.length > 4 ? false : true"
                               matTooltip="{{inc_sea_state}}"><span>{{inc_sea_state == '' ? 'N/A' : (inc_sea_state.length > 4  ) ? (inc_sea_state | slice:0:3)+'..' : (inc_sea_state)}}</span>
-                                <h3>Sea State</h3>
+                                <h3>Sea Swell</h3>
                             </li>
                         </ul>
                     </div>
@@ -282,7 +282,7 @@
                                     <ul *ngFor="let statustype of statusType; let i=index">
 
                                       <li> <h4 class="customHeader">{{statustype.vessel_name}} ({{statustype.vessel_type}})</h4>
-                                         <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                         <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
                                          <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
                                          <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
                                          <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
@@ -296,7 +296,7 @@
                                 <ul *ngFor="let statustype of statusType; let i=index">
 
                                   <li> <h4 class="customHeader">{{statustype.call_sign}} ({{statustype.heli_type}})</h4>
-                                     <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                     <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
                                      <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
                                      <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
                                      <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
@@ -305,7 +305,6 @@
 
                                 </ul>
                               </div>
-
                             <div class="tab-content" *ngIf="this.status_mode=='4'" id="tabContentanimation">
                                 <ul>
                                     <li *ngFor="let statustype of statusType; let i=index"><span>{{statustype.prob_cat}}:</span>{{statustype.value}}</li>
@@ -316,9 +315,9 @@
                             <div class="tab-content" *ngIf="this.status_mode=='5'" id="tabContentanimation">
                                 <ul *ngFor="let statustype of statusType; let i=index">
                                     <li> <h4 class="customHeader">{{statustype.full_name}} ({{statustype.employer}})</h4>
-                                        <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
-                                        <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
-                                        <h5><label class="customLabel">Time: </label> {{statustype.time}} </h5>
+                                        <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
+                                        <h5><label class="customLabel">Casualty Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
+                                        <h5><label class="customLabel">Time: </label> {{statustype.time | slice:0:5}} </h5>
                                         <h5><label class="customLabel">Condition: </label> {{statustype.emp_condition}} </h5>
                                        </li>
 
@@ -328,9 +327,9 @@
                             <div class="tab-content" *ngIf="this.status_mode=='6'" id="tabContentanimation">
                                 <ul *ngFor="let statustype of statusType; let i=index">
                                     <li> <h4 class="customHeader">{{statustype.mode_of_transport}}</h4>
-                                        <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                        <h5><label class="customLabel">Date: </label> {{statustype.date |  date:'dd/MM/YYYY HH:mm'}}</h5>
                                         <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
-                                        <h5><label class="customLabel">Pob Remaining: </label> {{statustype.pob_remaining}} </h5>
+                                        <h5><label class="customLabel">POB Transported: </label> {{statustype.pob_remaining}} </h5>
                                         <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}} </h5>
                                        </li>
 
@@ -340,7 +339,7 @@
                             <div class="tab-content" *ngIf="this.status_mode=='7'" id="tabContentanimation">
                                 <ul *ngFor="let statustype of statusType; let i=index">
                                     <li>
-                                        <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                        <h5><label class="customLabel">Date: </label> {{statustype.date |  date:'dd/MM/YYYY HH:mm'}}</h5>
                                         <h5><label class="customLabel">Resource Assigned: </label> {{statustype.resource_assigned}}</h5>
                                         <h5><label class="customLabel">Situation Status: </label> {{statustype.situation_status}} </h5>
                                         <!-- <h5><label class="text-primary">Remarks: </label> {{statustype.remarks}} </h5> -->

@@ -4,6 +4,9 @@
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="card">
+          <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff"
+          type="ball-clip-rotate" [fullScreen]="true">
+        </ngx-spinner>
          <div class="card-body" *ngIf="active_flag!=0 || _u_type == 'I'">
             <div class="row ">
                 <div class="col-sm-6 m-auto">
@@ -146,7 +149,7 @@
       <div class="modal-body">
         <div class="row mb-2">
           <div class="col-12 btnSubmitSec" [hidden]="approval_flag > 0">
-            <b [ngClass]="_is_activeIncident != '' ? 'text-success' : 'text-danger'">Note:   {{_is_activeIncident == '' ? 'There is no active incident ' : 'You can either active all members or particular mamber of this team'}}</b>
+            <b [ngClass]="_is_activeIncident != '' ? 'text-success' : 'text-danger'">Note:   {{_is_activeIncident == '' ? 'There is no active incident ' : ' You can either activate all members or  a particular member of this team'}}</b>
             <input type="submit" #active_member value="Active / De-Active" [disabled]="_is_activeIncident == ''" [hidden]="(_activated_flag == 'N' || _activated_flag == null) && _checked_active && team_on_duity_data.length > 2" class="btn btn-info float-right" (click)="Active_member()">
           </div>
         </div>

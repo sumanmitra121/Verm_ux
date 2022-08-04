@@ -36,6 +36,7 @@ export class AdminIncidentComponent implements OnInit {
   fetchdata(){
     this.spinner.show();
     this.emergencyservice.get_incident().pipe(map((x:any) => x.msg)).subscribe(data=>{
+      console.log(data)
       this.putdata(data);
       this.spinner.hide();
     })

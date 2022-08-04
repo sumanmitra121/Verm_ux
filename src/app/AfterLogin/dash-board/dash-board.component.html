@@ -26,7 +26,7 @@
                 [matTooltipDisabled]="inc_sea_state.length > 4 ? false : true"
                 matTooltip="{{inc_sea_state}}"
                 ><span>{{inc_sea_state=='' ? 'N/A' : (inc_sea_state.length > 4  ) ? (inc_sea_state | slice:0:3)+'..' : (inc_sea_state)}}</span>
-									<h3>Sea State</h3>
+									<h3>Sea Swell</h3>
 								</li>
 							</ul>
 						</div>
@@ -55,7 +55,7 @@
 					<div class="col-6 mb-6">
 						<div class="whiteBox">
 							<div class="card-header card_headerCustom">
-								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Live Log </h2>
+								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Chat Box </h2>
 								<br clear="all">
 							</div>
 							<div class="card_bodyCustom scroll">
@@ -198,8 +198,8 @@
 
 								<table *ngIf="get_prob_status.length > 0">
 									<tr>
-										<th>Category</th>
-										<th>Value</th>
+										<th>POB Status</th>
+										<th>POB Count</th>
 									</tr>
 									<tr *ngFor="let prob_status of get_prob_status;let i=index"
 										[ngClass]="i == 0 ? 'my_class1' : ''">
@@ -362,25 +362,13 @@
 										{{evacuationStatus?.mode_of_transport}}
 									</li>
 									<li>
-										<strong class="customLabel">Time :</strong> {{evacuationStatus?.time}}
+										<strong class="customLabel">Time :</strong> {{evacuationStatus?.time | slice:0:5}}
 									</li>
 									<li >
-										<strong class="customLabel">Pob Remaining :</strong>
+										<strong class="customLabel">POB Transported :</strong>
 										{{evacuationStatus?.pob_remaining}}
 									</li>
 									<hr />
-									<!-- <li *ngIf="get_evacuation_status.length > 1"
-										matTooltip="{{get_evacuation_status[1]?.mode_of_transport}}">
-										<strong class="customLabel">Transportation Mode :</strong>
-										{{get_evacuation_status[1]?.mode_of_transport}}
-									</li>
-									<li *ngIf="get_evacuation_status.length > 1">
-										<strong class="customLabel">Time :</strong> {{get_evacuation_status[1]?.time}}
-									</li>
-									<li *ngIf="get_evacuation_status.length > 1">
-										<strong class="customLabel">Pob Remaining :</strong>
-										{{get_evacuation_status[1]?.pob_remaining}}
-									</li> -->
 								</ul>
               </ng-container>
 								<ul class="boardStatus" *ngIf="get_evacuation_status.length == 0">
@@ -406,38 +394,6 @@
 									type="ball-clip-rotate" [fullScreen]="false">
 									<p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p>
 								</ngx-spinner>
-								<!-- <div class="customScroll">
-									<table *ngIf="get_events_status!=''">
-										<thead>
-											<tr>
-												<th></th>
-												<th>Resource Assigned</th>
-												<th>Time</th>
-												<th>Situation Status</th>
-											</tr>
-										</thead>
-										<tbody *ngFor="let events of get_events_status;let i=index">
-											<tr [ngClass]="i == 0 ? 'my_class1' : ''"
-												[matTooltip]="getTooltipText(events.resource_assigned,events.time,events.situation_status,'','','','EV')">
-												<td>
-													<div id="container" *ngIf='i==0'>
-														<div class="dot"></div>
-														<div class="pulse"></div>
-													</div>
-												</td>
-												<td>
-													<p>{{events.resource_assigned}}</p>
-												</td>
-												<td>
-													<p>{{events.time}}</p>
-												</td>
-												<td>
-													<p>{{events.situation_status}}</p>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div> -->
 								<h3 class="customLine"></h3>
                 <ng-container *ngIf="get_events_status.length > 0">
                   <ul class="boardStatus" *ngFor="let event of get_events_status">
@@ -447,7 +403,10 @@
                       {{event?.resource_assigned}}
                     </li>
                     <li>
-                      <strong class="customLabel">Time :</strong> {{event?.time}}
+                      <strong class="customLabel">Time :</strong> {{event?.time | slice:0:5}}
+                    </li>
+                    <li>
+                      <strong class="customLabel">Situation Status :</strong> {{event?.situation_status}}
                     </li>
                     <hr />
                   </ul>

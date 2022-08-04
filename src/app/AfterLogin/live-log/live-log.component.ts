@@ -239,18 +239,18 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
           if (this.storageArray[i].emp_id != localStorage.getItem('Employee_id')) {
              this.element = document.createElement('li');
              if(this.storageArray[i].file_flag=='0'){
-              this.element.innerHTML = "<b>" + this.storageArray[i].user + "</b>" + "<br>" + this.storageArray[i].msg + "<br>" + "<br>" + this.storageArray[i].dateTime;
+              this.element.innerHTML = "<b>" + this.storageArray[i].user + "</b>" + "<br>" + this.storageArray[i].msg + "<br>" + "<br>" + this.datePipe.transform(this.storageArray[i].dateTime,'dd/mm/YYYY HH:MM');
             }
             else{
               if(this.storageArray[i].file.split(".")[1]=='pdf'){
-              this.element.innerHTML ="<a class='adjustContent float-right'  target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"'><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a><b>" + this.storageArray[i].user + "</b>" + " : " + this.storageArray[i].msg + "<br>" + "" + this.storageArray[i].dateTime;
+              this.element.innerHTML ="<a class='adjustContent float-right'  target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"'><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a><b>" + this.storageArray[i].user + "</b>" + " : " + this.storageArray[i].msg + "<br>" + "" +  this.datePipe.transform(this.storageArray[i].dateTime,'dd/MM/YYYY HH:MM');
               }
               else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
-                this.element.innerHTML ="<a class='adjustContent float-right'  target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"'><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a><b>" + this.storageArray[i].user + "</b>" + " : " + this.storageArray[i].msg + "<br>" + "" + this.storageArray[i].dateTime;
+                this.element.innerHTML ="<a class='adjustContent float-right'  target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"'><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a><b>" + this.storageArray[i].user + "</b>" + " : " + this.storageArray[i].msg + "<br>" + "" + this.datePipe.transform(this.storageArray[i].dateTime,'dd/MM/YYYY HH:MM');
 
               }
               else{
-              this.element.innerHTML ="<b>" + this.storageArray[i].user + "</b>" + "<br>" +"<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a><br><br>" + this.storageArray[i].msg + "<br>" + "<br>" + this.storageArray[i].dateTime;
+              this.element.innerHTML ="<b>" + this.storageArray[i].user + "</b>" + "<br>" +"<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a><br><br>" + this.storageArray[i].msg + "<br>" + "<br>" + this.datePipe.transform(this.storageArray[i].dateTime,'dd/MM/YYYY HH:MM');
               }
             }
 
@@ -277,7 +277,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
                this.element.innerHTML ="<a class='adjustContent float-right'  target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a><b>Me      </b>" + this.storageArray[i].msg + "<br>" + "" + this.storageArray[i].dateTime;
                }
                else{
-               this.element.innerHTML ="<b>Me</b>"+"<br><br><a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img class='img-fluid' height='200px' width='q00%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a><br><br>" + this.storageArray[i].msg + "<br>" + "<br>" + this.storageArray[i].dateTime;
+               this.element.innerHTML ="<b>Me</b>"+"<br><br><a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img class='img-fluid' height='200px' width='q00%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a><br><br>" + this.storageArray[i].msg + "<br>" + "<br>" +this.storageArray[i].dateTime;
                }
              }
             //  this.element.innerHTML = "<b>Me: </b>" + this.storageArray[i].msg + "<br>" + "" + this.storageArray[i].dateTime;
@@ -312,7 +312,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
     if(this.uploaded_file!='' || this.logform.form.value.txt!=''){
     this.isEmojiPickerVisible=false;
     var date = new Date();
-    let latest_date = this.datePipe.transform(date, 'dd/MM/yyyy HH:mm:ss');
+    let latest_date = this.datePipe.transform(date, 'dd/mm/yyyy HH:MM');
     this.storageArray.length = 0;
     var dt = {
       message: this.logform.form.value.txt,

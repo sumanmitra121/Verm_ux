@@ -13,9 +13,12 @@ export class EditAdminOffshoreComponent implements OnInit {
   @ViewChild('logForm') LogForm!:NgForm;
   get_offshore:any=[];
   Id:any;
-  constructor(private activatedroute: ActivatedRoute,private emergencyservice:VirtualEmergencyService,private router:Router,public toastr:ToastrManager,private spinner:NgxSpinnerService) { }
+  constructor(private activatedroute: ActivatedRoute,private emergencyservice:VirtualEmergencyService,private router:Router,public toastr:ToastrManager,private spinner:NgxSpinnerService) {
+
+  }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.Id=this.activatedroute.snapshot.params['id'];
     //For Getting details of corrosponding ID
     this.getOffshoreDetailsById(this.Id);
@@ -54,6 +57,7 @@ export class EditAdminOffshoreComponent implements OnInit {
     getOffshoreDetailsById(id:any){
       this.emergencyservice.get_offshore_depend_on_id(id).subscribe(data=>{
         this.get_offshore=data;
+         console.log(data);
          this.LogForm.setValue({
           id:this.Id,
           user:localStorage.getItem('Email'),
@@ -64,6 +68,7 @@ export class EditAdminOffshoreComponent implements OnInit {
           workers_no:this.get_offshore.msg[0].no_of_workers,
           status:this.get_offshore.msg[0].status
         })
+         this.spinner.hide();
       })
     }
 

@@ -305,14 +305,15 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
   position: absolute;
   /* top: 8px;*/
   left: 3px;
-  top: -2px;
+    top: 7px;
 }
 .Dot{border: 4px solid #464ed2;background: transparent;border-radius: 50%;height: 30px;width: 30px;
     animation: pulse 3s ease-out;animation-iteration-count: infinite;position: absolute;
     /* top: -15px;left: -13px; */
     /* top: -4px; */
-    top: -14px;
-    left: -9px;
+    /* top: -14px;
+    left: -9px; */
+    top: -5px;left: -9px;
     z-index: 1;opacity: 1;}
 
 #container{position: relative;}
@@ -1076,8 +1077,8 @@ font-size: 17px;
   padding-bottom: 18px;}
 
   .adminCheveronIcon{
-    font-size: 17px;
-    font-weight: 800;
+    font-size: 17px!important;
+    font-weight: 800!important;
     color: black;
     text-align: center;
     vertical-align: sub;

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
@@ -55,7 +56,7 @@ export class DashBoardComponent implements OnInit {
   li_select: any;
   //End //
 
-  constructor(private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {}
+  constructor(private datePipe:DatePipe,private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService,private toastr:ToastrManager) {}
   ngOnInit(): void {this.emergencyservice.joinRoom({user:localStorage.getItem('Emp_name'),room:this.global_inc,emp_code:localStorage.getItem('Employee_id')});}
   go_to_boards(v:any){localStorage.setItem('id_create',v); this.router.navigate(['/Board']);}
 
@@ -130,6 +131,8 @@ getEvacuationStatus(_id:any){
     this._evacuation_observeable =  from(res).pipe(take(2)).subscribe(dt =>{
       //.log(dt)
     this.get_evacuation_status.push(dt)
+    // console.log(this.get_evacuation_status);
+
      //.log(this.get_evacuation_status)
 
      })
@@ -140,10 +143,10 @@ getEventStatus(_id:any){
       this.spinner.show('events');
       this.get_events_status.length=0;
       this.emergencyservice.global_service('0','/event_log_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
-      this.get_events_status.length=0;
-
+        this.get_events_status.length=0;
         this._event_observable = from(res).pipe(take(2)).subscribe(dt =>{
         this.get_events_status.push(dt);
+        //  console.log(this.get_events_status)
       })
          this.spinner.hide('events');
       },error=>{this.spinner.hide('events')})
@@ -160,6 +163,7 @@ getChat(_Id:any){
    this.checkIfHasCHild();
   this.emergencyservice.global_service('0', '/oldMessage', 'min='+this._min+'&max=5'+'&id='+localStorage.getItem('Inc_id')).subscribe(data => {
     //data);
+    // console.log(data)
      this.storageArray.length = 0;
      this.storageArray = data;
      this.storageArray = this.storageArray.msg;
@@ -174,7 +178,7 @@ getChat(_Id:any){
            this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
            }
            else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
-           this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
+           this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt ;
 
            }
            else{
@@ -194,7 +198,7 @@ getChat(_Id:any){
        else {
           this.element = document.createElement('li');
           if(this.storageArray[i].file_flag==0){
-           this.element.innerHTML =  "<b>Me </b><br>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+           this.element.innerHTML =  "<b>Me </b><br>" + this.storageArray[i].chat + "<br>" + "<br>" +this.storageArray[i].chat_dt;
          }
          else{
            if(this.storageArray[i].file.split(".")[1]=='pdf'){
@@ -244,13 +248,13 @@ getChat(_Id:any){
             }
             else{
               if(this.storageArray[i].file.split(".")[1]=='pdf'){
-              this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
+              this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" +this.storageArray[i].chat_dt;
               }
               else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
-                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" + this.storageArray[i].chat_dt;
+                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file +"' class='adjustContent float-right' ><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>" + this.storageArray[i].emp_name + "</b>" + "     " + this.storageArray[i].chat + "<br>" + "" +this.storageArray[i].chat_dt;
               }
               else{
-              this.element.innerHTML ="<b>" + this.storageArray[i].emp_name + "</b>" + "<br><br>"+"<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+              this.element.innerHTML ="<b>" + this.storageArray[i].emp_name + "</b>" + "<br><br>"+"<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" +this.storageArray[i].chat_dt;
               }
             }
             this.element.style='border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top-right-radius: 10px;';
@@ -269,17 +273,17 @@ getChat(_Id:any){
           else {
             this.element = document.createElement('li');
             if(this.storageArray[i].file_flag==0){
-              this.element.innerHTML =  "<b>Me </b><br>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+              this.element.innerHTML =  "<b>Me </b><br>" + this.storageArray[i].chat + "<br>" + "<br>" +this.storageArray[i].chat_dt;
             }
             else{
               if(this.storageArray[i].file.split(".")[1]=='pdf'){
-                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-pdf-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" +this.storageArray[i].chat_dt;
               }
               else if(this.storageArray[i].file.split(".")[1]=='doc' || this.storageArray[i].file.split(".")[1]=='docx'){
-                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+                this.element.innerHTML ="<a target='_blank' href='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+ "' class='adjustContent float-right'><i class='fa fa-file-word-o p-1' style='font-size:25px'></i>"+this.storageArray[i].file+"</a>"+"<b>Me      </b>" + this.storageArray[i].chat + "<br>" + "<br>" +this.storageArray[i].chat_dt;
               }
               else{
-              this.element.innerHTML ="<b>Me </b><br><br>" +"<a  target='_blank' href="+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" + this.storageArray[i].chat_dt;
+              this.element.innerHTML ="<b>Me </b><br><br>" +"<a  target='_blank' href="+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"><img class='img-fluid' height='200px' width='100%' src='"+this.emergencyservice.url+"/uploads/"+this.storageArray[i].file+"'/></a>" +"<br><br>"+ this.storageArray[i].chat + "<br>" + "<br>" +this.storageArray[i].chat_dt;
               }
             }
             this.element.style='border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;border-top-left-radius: 10px;';

@@ -116,7 +116,7 @@ export class ApproveIncidentComponent implements OnInit {
                  "closed_by":this.getIncident[0].closed_by ? this.getIncident[0].closed_by : ''
               })
               if(this.getIncident[0].approval_status!='U'){
-                this.toastr.errorToastr('This incident is already approved','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
+                this.toastr.errorToastr('This incident is already archived','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
               }
                this.approve_btn.nativeElement.style.display = this.getIncident[0].approval_status != 'U' ? 'none':'block';
                this.approve_btn.nativeElement.disabled =this.getIncident[0].approval_status != 'U' ? true : false;

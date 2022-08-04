@@ -1,3 +1,4 @@
+import { IncDetails } from './../../Model/IncDetails';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
@@ -36,6 +37,7 @@ declare var JSZipUtils: any;
         ])],
 })
 export class RepositoryComponent implements OnInit {
+  _show_btn:boolean = true;
   showCardBody = true;
   @ViewChild('logForm') LogForm!: NgForm;
   headername: any = 'Repository';
@@ -423,5 +425,14 @@ export class RepositoryComponent implements OnInit {
     this.showCardBody = !this.showCardBody;
     this.LogForm.reset();
     this.File = '';
+  }
+
+  getIncDetails(inc_details:IncDetails){
+     console.log(this.catg_name);
+     console.log(inc_details.inc_no);
+
+    this._show_btn = Number(inc_details.inc_no) == this.catg_name ? false : true;
+      console.log(this._show_btn);
+
   }
 }

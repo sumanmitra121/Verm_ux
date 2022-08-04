@@ -12,11 +12,10 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body { padding-right: 0 !important }
 label{color:black;}
-mat-form-field{width:38%} 
+mat-form-field{width:38%}
 table {width: 100%;}
 th.mat-header-cell {font-size: 15px;color: #181818;background: #d3d4d54a;}
-
-
-
+.h6{font-size: 14px!important;}
+.h5{font-size: 14px!important;}
 
 

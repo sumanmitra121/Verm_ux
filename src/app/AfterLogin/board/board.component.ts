@@ -57,6 +57,8 @@ export class vesselGrid {
   prob_cat_id: any;
   Time: any;
   value: any;
+  dest_to:any;
+  total_prob:any
 }
 @Component({
   selector: 'app-board',
@@ -74,6 +76,8 @@ export class vesselGrid {
 export class BoardComponent implements OnInit, OnDestroy {
   _active_flag: any = localStorage.getItem('active_flag');
   @ViewChild('myModalClose') modalClose!: ElementRef;
+  @ViewChild('logForm') logForm!: NgForm;
+  _brief_desc:any;
   temp_unit: any;
   alive = true;
   vessel_status: any;
@@ -157,13 +161,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.now = new Date();
     }, 1);
     this.act_Inc_id = localStorage.getItem('Inc_id');
-    this.SetIncStatus(localStorage.getItem('Inc_id'));
-    this.SetVesselStatus(localStorage.getItem('Inc_id'));
-    this.setHelicopterStatus(localStorage.getItem('Inc_id'));
-    this.setPobStatus(localStorage.getItem('Inc_id'));
-    this.setCasualtyStatus(localStorage.getItem('Inc_id'));
-    this.setEvacuationStatus(localStorage.getItem('Inc_id'));
-    this.setEventStatus(localStorage.getItem('Inc_id'));
+    // this.SetIncStatus(localStorage.getItem('Inc_id'));
+    // this.SetVesselStatus(localStorage.getItem('Inc_id'));
+    // this.setHelicopterStatus(localStorage.getItem('Inc_id'));
+    // this.setPobStatus(localStorage.getItem('Inc_id'));
+    // this.setCasualtyStatus(localStorage.getItem('Inc_id'));
+    // this.setEvacuationStatus(localStorage.getItem('Inc_id'));
+    // this.setEventStatus(localStorage.getItem('Inc_id'));
   }
 
   ngOnInit(): void {
@@ -465,7 +469,8 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.vesselArray[i].destination == '' ||
           this.vesselArray[i].mode_of_transport == '' ||
           this.vesselArray[i].pob_remaining == '' ||
-          this.vesselArray[i].remarks == ''
+          this.vesselArray[i].remarks == '' ||
+          this.vesselArray[i].dest_to == ''
         ) {
         } else {
           counter++;
@@ -596,6 +601,8 @@ export class BoardComponent implements OnInit, OnDestroy {
               );
             }
           );
+        // console.log(this.vesselArray);
+
       } else {
         this.toastr.errorToastr(
           'Some of  fields are empty, please fill them up',
@@ -667,14 +674,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       //For Incident Status
       // this.get_incident_details_after_save.length=0;
       this.get_incident_details_after_save = this.get_in_status;
-
       if (this.get_incident_details_after_save.length > 0) {
         this.dynamicArray.length = 0;
         this.newDynamic = '';
         for (let i = 0; i < this.get_incident_details_after_save.length; i++) {
           this.newDynamic = {
             id: this.get_incident_details_after_save[i].id,
-            time_inc: this.get_incident_details_after_save[i].time,
+            time_inc: this.get_incident_details_after_save[i].time.split(":")[0] +":"+this.get_incident_details_after_save[i].time.split(":")[1],
             visibility: this.get_incident_details_after_save[i].visibility,
             sea_state: this.get_incident_details_after_save[i].sea_state,
             temp: this.get_incident_details_after_save[i].temp,
@@ -688,7 +694,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.dynamicArray.length = 0;
         this.newDynamic = {
           id: '0',
-          time_inc: this.datePipe.transform(this.now, 'hh:mma'),
+          time_inc: this.datePipe.transform(this.now, 'HH:MM'),
           visibility: '',
           sea_state: '',
           temp: '',
@@ -788,6 +794,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.vesselArray.length = 0;
       this.get_incident_details_after_save = this.get_evacuation_status;
       //.log(this.get_incident_details_after_save);
+        console.log(this.get_incident_details_after_save);
 
       if (this.get_incident_details_after_save.length > 0) {
         // this.vesselArray.length=0;
@@ -795,26 +802,33 @@ export class BoardComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.get_incident_details_after_save.length; i++) {
           this.vesselDynamic = {
             id: this.get_incident_details_after_save[i].id,
-            time: this.get_incident_details_after_save[i].time,
+            time: this.get_incident_details_after_save[i].time.split(":")[0]+":"+this.get_incident_details_after_save[i].time.split(":")[1],
             destination: this.get_incident_details_after_save[i].destination,
             mode_of_transport:
               this.get_incident_details_after_save[i].mode_of_transport,
             pob_remaining:
               this.get_incident_details_after_save[i].pob_remaining,
             remarks: this.get_incident_details_after_save[i].remarks,
+            dest_no: this.get_incident_details_after_save[i].dest_no,
+            dest_to:this.get_incident_details_after_save[i].dest_to
           };
           this.vesselArray.push(this.vesselDynamic);
+        console.log(this.vesselArray);
+
         }
       } else {
         this.vesselDynamic = {
           id: '0',
-          time: this.datePipe.transform(this.now, 'hh:mma'),
+          time: this.datePipe.transform(this.now, 'HH:MM'),
           destination: '',
           mode_of_transport: '',
           pob_remaining: '',
           remarks: '',
+          dest_no:'',
+          dest_to:''
         };
         this.vesselArray.push(this.vesselDynamic);
+        console.log(this.vesselArray)
       }
     } else if (this.id_create == 'events') {
       this.LogForm.form.patchValue({
@@ -829,7 +843,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.get_incident_details_after_save.length; i++) {
           this.vesselDynamic = {
             id: this.get_incident_details_after_save[i].id,
-            time: this.get_incident_details_after_save[i].time,
+            time: this.get_incident_details_after_save[i].time.split(":")[0] + ":" +this.get_incident_details_after_save[i].time.split(":")[1],
             resource_assigned:
               this.get_incident_details_after_save[i].resource_assigned,
             situation_status:
@@ -840,7 +854,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       } else {
         this.vesselDynamic = {
           id: '0',
-          time: this.datePipe.transform(this.now, 'hh:mma'),
+          time: this.datePipe.transform(this.now, 'HH:mm'),
           resource_assigned: '',
           situation_status: '',
         };
@@ -921,7 +935,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.id_create == 'inc_create') {
       this.newDynamic = {
         id: '0',
-        time_inc: this.datePipe.transform(this.now, 'hh:mma'),
+        time_inc: this.datePipe.transform(this.now, 'HH:MM'),
         visibility: '',
         sea_state: '',
         temp: '',
@@ -970,7 +984,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     } else if (this.id_create == 'events') {
       this.vesselDynamic = {
         id: '0',
-        time: this.datePipe.transform(this.now, 'hh:mma'),
+        time: this.datePipe.transform(this.now, 'HH:mm'),
         resource_assigned: '',
         situation_status: '',
       };
@@ -978,7 +992,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     } else if (this.id_create == 'evacuation') {
       this.vesselDynamic = {
         id: '0',
-        time: this.datePipe.transform(this.now, 'hh:mma'),
+        time: this.datePipe.transform(this.now, 'HH:mm'),
         destination: '',
         mode_of_transport: '',
         pob_remaining: '',
@@ -1043,7 +1057,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       j = 0;
     }
     if (data != '') {
-      this.evacuation_time = data[j].time;
+      this.evacuation_time =data[j].time.split(":")[0] + ":" + data[j].time.split(":")[1];
       this.transport_mode = data[j].mode_of_transport;
     }
 
@@ -1063,7 +1077,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
     if (data != '') {
       this.resource_assigned = data[j].resource_assigned;
-      this.event_time = data[j].time;
+      this.event_time = data[j].time.split(":")[0] + ":" + data[j].time.split(":")[1];
       this.situation_status = data[j].situation_status;
     }
     this.events_status = setTimeout(() => {
@@ -1081,10 +1095,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       j = 0;
     }
     if (data != '') {
-      this.total = data[j].tot_cas;
-      this.Location = data[j].offshore_name;
-      this.lat = data[j].latt;
-      this.long = data[j].lon;
+      this.total = data[j].full_name;
+      this.Location = data[j].location;
+      this.lat = data[j].emp_condition;
+      this.long = data[j].time;
     }
     this.casualy_status = setTimeout(() => {
       j = j + 1;
@@ -1133,17 +1147,19 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   SetIncStatus(_id: any) {
     //_id)
+     console.log(_id)
     this.emergencyservice
       .global_service('0', '/inc_board', 'inc_id=' + _id)
       .pipe(map((x: any) => x.msg))
       .subscribe((data) => {
         //data);
         //.log(data);
+        console.log(data);
 
         this.get_in_status = data;
         this.get_incident_details_after_save = data;
 
-        //data);
+
 
         from(data)
           .pipe(take(1))
@@ -1154,6 +1170,7 @@ export class BoardComponent implements OnInit, OnDestroy {
               this.inc_sea_state = res.sea_state;
               this.inc_temparature = res.temp;
               // this.deg=res.temp.charAt(res.temp.length-1);
+
               this.temp = res.temp.split(this.deg)[0];
               this.wind_speed = res.wind_speed;
               this.temp_unit = res.temp_unit;
@@ -1335,8 +1352,11 @@ export class BoardComponent implements OnInit, OnDestroy {
               prob_cat_id: this.get_incident_details_after_save[i].prob_cat_id,
               Time: this.get_incident_details_after_save[i].time,
               value: this.get_incident_details_after_save[i].value,
+              total_prob:this.get_incident_details_after_save[i].total_prob
             };
             this.vesselArray.push(this.vesselDynamic);
+            console.log(this.vesselArray);
+
           }
         } else {
           this.vesselDynamic = {
@@ -1344,25 +1364,33 @@ export class BoardComponent implements OnInit, OnDestroy {
             prob_cat_id: '',
             Time: '',
             value: '',
+            total_prob: ''
           };
           this.vesselArray.push(this.vesselDynamic);
         }
       });
   }
   setFormvalue() {
+    console.log(this.get_in_status);
+    // console.log(this.get_in_status[0]['summary']);
+
     setTimeout(() => {
-      //this.get_incident_details);
+      console.log(this.get_incident_details);
 
       this.LogForm.form.patchValue({
         inc_id: localStorage.getItem('Inc_id'),
         installation: this.get_incident_details.offshore_name,
         coordinates:
           this.get_incident_details.lat + ':' + this.get_incident_details.lon,
-        summary:
-          this.get_in_status.length > 0 ? this.get_in_status[0]?.summary : '',
+        summary:this.get_in_status.length > 0  ? (this.get_in_status[0]['summary']!='' ?  this.get_in_status[0]['summary'] :   this._brief_desc):  this._brief_desc,
+
         status:
           this.get_in_status.length > 0 ? this.get_in_status[0]?.status : '',
       });
+      console.log(this.LogForm);
+      console.log( this._brief_desc);
+
+
     }, 500);
   }
   //For Non Numeric Validations
@@ -1373,6 +1401,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     validations._preventNumber(_event);
   }
   getIncDetails(e: any) {
+     console.log(e)
+    this._brief_desc= e.brief_desc;
     this.get_incident_details = e;
     this.Inc_name = e.inc_name;
     this.Inc_id = e.inc_no;

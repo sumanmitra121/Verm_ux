@@ -17,6 +17,7 @@ declare var $:any;
 })
 export class SidebarComponent implements OnInit,OnDestroy {
   @Output() _u_status = new EventEmitter<userStatus>();
+  _app_flag:any = localStorage.getItem('app_flag');
   incArr:any=[];
    message_count:any=0;
    _notification:any=[];

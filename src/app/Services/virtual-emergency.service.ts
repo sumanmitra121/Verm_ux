@@ -14,7 +14,11 @@ export class VirtualEmergencyService {
   private socket: Socket;
 
   // public url = 'http://192.168.1.244:3000';
-  public url = 'https://vermapi.opentech4u.co.in';
+
+  // public url = 'https://vermapi.opentech4u.co.in';
+
+  public url = 'https://api.er-360.com';
+
   // socket:any;
 //  url:any='http://localhost:3000';
 //  readonly url:any='https://vermapi.opentech4u.co.in';
@@ -135,7 +139,7 @@ export class VirtualEmergencyService {
     this.routeToTheParticular(_activity);
   })
   }
-
+  disconnectSocket(){this.socket.disconnect();}
 
   }
 

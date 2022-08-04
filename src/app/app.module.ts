@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginLEEComponent } from './BeforeLogin/login-lee/login-lee.component';
@@ -74,10 +73,7 @@ import { AddAdminTeamComponent } from './Admin/AfterLogin/Admin-team/add-admin-t
 import { EditAdminTeamComponent } from './Admin/AfterLogin/Admin-team/edit-admin-team/edit-admin-team.component';
 import { AssignTeamComponent } from './Admin/AfterLogin/Team/assign-team/assign-team.component';
 import { AddTeamMemberComponent } from './Admin/AfterLogin/Team/add-team-member/add-team-member.component';
-import { EditAdminAssignTeamComponent } from './Admin/AfterLogin/Team/edit-admin-assign-team/edit-admin-assign-team.component';
-import { TeamStatusComponent } from './Admin/AfterLogin/Team/TeamStatus/team-status/team-status.component';
 import { AddTeamStatusComponent } from './Admin/AfterLogin/Team/TeamStatus/add-team-status/add-team-status.component';
-import { EditTeamStatusComponent } from './Admin/AfterLogin/Team/TeamStatus/edit-team-status/edit-team-status.component';
 import { UserStatusComponent } from './Admin/AfterLogin/User-Status/user-status/user-status.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 //For Date Pipe////
@@ -92,8 +88,6 @@ import { ForgetPasswordForAdminComponent } from './Admin/BeforeLogin/forget-pass
 import { EditDashbaordComponent } from './AfterLogin/Close-Incident/edit-dashbaord/edit-dashbaord.component';
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
 ///END////////////
-
-//End///////
 /////Emoji Package//////////
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 //////End//////////////////
@@ -193,10 +187,7 @@ import { GlobalErrorHandlingInterceptor } from './Interceptor/global-error-handl
     EditAdminTeamComponent,
     AssignTeamComponent,
     AddTeamMemberComponent,
-    EditAdminAssignTeamComponent,
-    TeamStatusComponent,
     AddTeamStatusComponent,
-    EditTeamStatusComponent,
     UserStatusComponent,
     AdminLoginComponent,
     ForgetPasswordForAdminComponent,

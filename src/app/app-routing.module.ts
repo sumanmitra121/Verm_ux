@@ -34,10 +34,7 @@ import { ReportDataPooldashboardComponent } from './Admin/AfterLogin/reportDataP
 import { ReportDataPooldetailsComponent } from './Admin/AfterLogin/reportDataPool/report-data-pooldetails/report-data-pooldetails.component';
 import { AddTeamMemberComponent } from './Admin/AfterLogin/Team/add-team-member/add-team-member.component';
 import { AssignTeamComponent } from './Admin/AfterLogin/Team/assign-team/assign-team.component';
-import { EditAdminAssignTeamComponent } from './Admin/AfterLogin/Team/edit-admin-assign-team/edit-admin-assign-team.component';
 import { AddTeamStatusComponent } from './Admin/AfterLogin/Team/TeamStatus/add-team-status/add-team-status.component';
-import { EditTeamStatusComponent } from './Admin/AfterLogin/Team/TeamStatus/edit-team-status/edit-team-status.component';
-import { TeamStatusComponent } from './Admin/AfterLogin/Team/TeamStatus/team-status/team-status.component';
 import { UserStatusComponent } from './Admin/AfterLogin/User-Status/user-status/user-status.component';
 import { AdminLoginComponent } from './Admin/BeforeLogin/admin-login/admin-login.component';
 import { ForgetPasswordForAdminComponent } from './Admin/BeforeLogin/forget-password-for-admin/forget-password-for-admin.component';
@@ -259,21 +256,6 @@ const routes: Routes = [
   {
     path:'admin/Team/addmember',
     component:AddTeamMemberComponent
-  },
-  //Admin Team Member Edit Page
-  {
-    path:'admin/Team/assignteam/edit/:id',
-    component:EditAdminAssignTeamComponent
-  },
-  // Admin Team status Page
-  {
-    path:'admin/Team/Status',
-    component:TeamStatusComponent
-  },
-  //For Viewing Team Status view
-  {
-    path:'admin/Team/Status/view/:id',
-    component:EditTeamStatusComponent
   },
    //For Adding Team Status view
    {
