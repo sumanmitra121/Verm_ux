@@ -20,12 +20,12 @@
                    <div class="row">
                        <div class="col-11">
                            <b>Team</b>
-                           <select class="form-control" name="team_id" #team="ngModel" ngModel  id="team_id" required>
+                           <select class="form-control" name="team_id" #team="ngModel" ngModel  id="team_id" required (change)="SelectTeam()">
                                <option value="">Select</option>
                                <option *ngFor="let teams of get_team" value="{{teams.team_id}}">{{teams.team_name}}</option>
                             </select>
                        </div>
-                       <div class="col-1 pt-4" id="more_btn" style="display: none;">
+                       <div #moreBtn class="col-1 pt-4" id="more_btn" style="display: none;">
                         <a class="customIcon" type="button" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                           <i class="fa fa-ellipsis-v fa-2x" aria-hidden="true"></i>
                         </a>
@@ -46,12 +46,12 @@
                      <div class="row mt-5">
                     <div class="col-4">
                         <b>From Date</b>
-                       <input type="date" name="from_date" id="from_date" #from_date="ngModel" ngModel class="form-control" required>
+                       <input type="date" name="from_date" id="from_date" #from_date="ngModel" ngModel class="form-control" required (change)="changeFromDt()" [min]="getToday()">
                     </div>
                    <div class="col-1"></div>
                     <div class="col-4">
                      <b>To Date</b>
-                     <input type="date" name="to_date" id="to_date" class="form-control" #to_date="ngModel" ngModel required>
+                     <input type="date" name="to_date" id="to_date" class="form-control" #to_date="ngModel" ngModel required [min]="from_date.value == '' ? getToday() : from_date.value">
                  </div>
                  <div class="col-1"></div>
                  <div class="col-2 mt-auto">
@@ -68,7 +68,7 @@
                   </form>
                   <br>
 
-                   <mat-card *ngIf="Team_Member!=''" class="example-card">
+                   <mat-card *ngIf="dataSource.data.length > 0" class="example-card">
                           <div class="row mb-2">
                               <div class="col-11 text-center"><h2>Upcoming Roster</h2></div>
                               <div class="col-1">
@@ -76,7 +76,7 @@
                           </div>
                     <mat-card-content>
                       <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Please Wait... </p></ngx-spinner>
-                            <div class="mat-elevation-z8">
+                            <div class="mat-elevation-z4">
                                     <table mat-table [dataSource]="dataSource" matSort>
                                       <ng-container matColumnDef="From_date">
                                         <th mat-header-cell *matHeaderCellDef> From Date </th>
@@ -115,7 +115,6 @@
             </div>
     </div>
 </div>
-<div id="snackbar" ><strong>{{m}}</strong></div>
 
 <!-- For View Employees-->
 <div class="modal fade zoom-in" id="exampleModal2"  role="dialog" >

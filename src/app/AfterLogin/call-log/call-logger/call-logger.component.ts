@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
+import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 
@@ -25,27 +27,17 @@ export class CallLoggerComponent implements OnInit {
   @ViewChild(MatSort) matsort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private emergencyService:VirtualEmergencyService,private toastr:ToastrManager,private spinner:NgxSpinnerService) { }
+  constructor(private emergencyService:VirtualEmergencyService,
+    private dialog:MatDialog,
+    private toastr:ToastrManager,
+    private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     // this.fetchdata();
   }
   fetchdata(id:any){
     this.spinner.show()
-    this.emergencyService.global_service('0','/call_log','inc_id=' + id).pipe(map((x:any)=> x.msg)).subscribe(data=>{
-      console.log(data);
-           this.putdata(data);
-        //  this.get_call_log=data;
-        //  this.get_call_log=this.get_call_log.msg;
-        //  if(this.get_call_log!=''){
-        //    this.putdata(this.get_call_log);
-        //  }
-        //  else{
-        //    this.spinner.hide();
-        //  }
-    })
-
-
+    this.emergencyService.global_service('0','/call_log','inc_id=' + id).pipe(map((x:any)=> x.msg)).subscribe(data=>{this.putdata(data);})
   }
   putdata(v:any){
     this.dataSource=new MatTableDataSource(v);
@@ -62,22 +54,34 @@ export class CallLoggerComponent implements OnInit {
         this.dataSource.paginator.firstPage();
       }
     }
-    modify_modal(id:any){this.del_id='',this.del_id=id;}
-    delete_call_log(){
-      this.emergencyService.global_service('0','/call_log_del','id='+this.del_id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
-        console.log(data);
-        this.check_respond=data;
-        if(this.check_respond.suc==1){
-        this.fetchdata(localStorage.getItem('Inc_id'));
-          this.toastr.successToastr('Call Log deleted successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
-          }
-          else{
-            this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
-          }
+    modify_modal(id:any,_index:any){
+      this.del_id='';
+      this.del_id=id;
+      const disalogConfig=new MatDialogConfig();
+      disalogConfig.disableClose=false;
+      disalogConfig.autoFocus=true;
+      disalogConfig.width='35%';
+      disalogConfig.data={id:id,api_name:'/call_log_del',name:'Board Type'}
+      const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
+      dialogref.afterClosed().subscribe(dt=>{
+       if(dt){
+         this.spinner.show();
+        this.delete_call_log(id,_index);
+       }
       })
     }
-    getIncDetails(_e:IncDetails){
-        console.log(_e);
-             this.fetchdata(_e.id);
+    delete_call_log(id:any,_index:any){
+      this.emergencyService.global_service('0','/call_log_del','id='+id+'&user='+localStorage.getItem('Email')).subscribe((data:any)=>{
+        if(data.suc==1){
+          this.dataSource.data.splice(_index, 1);
+          this.dataSource._updateChangeSubscription();// <== refresh data table
+          this.toastr.successToastr('Call Log deleted successfully','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:5000})
+          }
+          else{
+            this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:5000})
+          }
+         this.spinner.hide();
+      })
     }
+    getIncDetails(_e:IncDetails){this.fetchdata(_e.id);}
 }

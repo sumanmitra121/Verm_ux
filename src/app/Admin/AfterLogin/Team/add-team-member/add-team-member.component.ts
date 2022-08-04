@@ -73,14 +73,13 @@ export class AddTeamMemberComponent implements OnInit {
          console.log(this.get_employee.length);
 
          }
-         
+
       })
     })
-    
+
   }
   drop(event: CdkDragDrop<any[]>) {
     console.log(event);
-
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       console.log( moveItemInArray);
@@ -158,7 +157,7 @@ export class AddTeamMemberComponent implements OnInit {
       this.spinner.hide();
       this.toastr.errorToastr('Something went wrong,Please try again later','Error!',{position:'top-center',animate:'slideFromTop',toastTimeout:50000});
     }
-     })      
+     })
     }
     else{
       this.spinner.hide();
@@ -167,4 +166,3 @@ export class AddTeamMemberComponent implements OnInit {
   }
 }
 }
- 
