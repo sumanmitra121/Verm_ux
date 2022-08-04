@@ -9,5 +9,8 @@ export class IncDetails{
   public lat!:string;
   public lon!:string;
   public offshore_name!:string
+  public inc_no!:string
+  initial_tier_id!:string
+
 
 }

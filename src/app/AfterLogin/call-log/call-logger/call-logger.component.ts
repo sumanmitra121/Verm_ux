@@ -4,6 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs/operators';
+import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 
 @Component({
@@ -26,19 +28,21 @@ export class CallLoggerComponent implements OnInit {
   constructor(private emergencyService:VirtualEmergencyService,private toastr:ToastrManager,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.fetchdata();
+    // this.fetchdata();
   }
-  fetchdata(){
+  fetchdata(id:any){
     this.spinner.show()
-    this.emergencyService.global_service('0','/call_log',null).subscribe(data=>{
-         this.get_call_log=data;
-         this.get_call_log=this.get_call_log.msg;
-         if(this.get_call_log!=''){
-           this.putdata(this.get_call_log);
-         }
-         else{
-           this.spinner.hide();
-         }
+    this.emergencyService.global_service('0','/call_log','inc_id=' + id).pipe(map((x:any)=> x.msg)).subscribe(data=>{
+      console.log(data);
+           this.putdata(data);
+        //  this.get_call_log=data;
+        //  this.get_call_log=this.get_call_log.msg;
+        //  if(this.get_call_log!=''){
+        //    this.putdata(this.get_call_log);
+        //  }
+        //  else{
+        //    this.spinner.hide();
+        //  }
     })
 
 
@@ -64,12 +68,16 @@ export class CallLoggerComponent implements OnInit {
         console.log(data);
         this.check_respond=data;
         if(this.check_respond.suc==1){
-        this.fetchdata();
+        this.fetchdata(localStorage.getItem('Inc_id'));
           this.toastr.successToastr('Call Log deleted successfully','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
           }
           else{
             this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
           }
       })
+    }
+    getIncDetails(_e:IncDetails){
+        console.log(_e);
+             this.fetchdata(_e.id);
     }
 }

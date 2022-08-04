@@ -18,14 +18,14 @@
                  </div>
              </div>
           <div class="row mt-4">
-             <div class="col-3">
+             <div class="col-2">
                  <label>Start Date</label>
                  <input type="date" name="frm_date" id="From_date" #frm_date="ngModel" [(ngModel)]="now" class="form-control" required [max]="getToday()">
                  <div *ngIf="frm_date.errors?.required && (frm_date.touched || frm_date.dirty)" class="text-danger">
                     *Please Provide Start Date
                   </div>
              </div>
-             <div class="col-3">
+             <div class="col-2">
                 <label>End Date</label>
                 <input type="date" name="to_date" id="To_date" #to_date="ngModel" [(ngModel)]="now_to" class="form-control" required [max]="getToday()" >
                 <div *ngIf="to_date.errors?.required && (to_date.touched || to_date.dirty)" class="text-danger">
@@ -46,6 +46,18 @@
               *Please Provide Incident Name
             </div>
              </div>
+              <div class="col-3" *ngIf="Inc_type=='I'">
+                <label>Tier</label>
+                <select class="form-control" name="tier_id" #tier_id="ngModel" ngModel required>
+                    <option value="">Select</option>
+                    <option value="0" >--All--</option>
+                    <option value="{{tier.id}}" *ngFor="let tier of  get_tier">{{tier.tier_type}}</option>
+                </select>
+                <div *ngIf="tier_id.errors?.required && (tier_id.touched || tier_id.dirty)" class="text-danger">
+                 *Please Provide Tier
+               </div>
+                </div>
+
              <div class="col-2">
                  <label>&nbsp;</label>
                 <div class="btnSubmitSec text-center">

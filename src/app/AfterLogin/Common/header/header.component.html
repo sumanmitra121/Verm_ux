@@ -39,7 +39,7 @@
       </li>
 			</ul>
 			<ul class="topinsidentData2 topinsidentData2_2">
-			<li class="tierCl locationCl" #tooltip="matTooltip" matTooltip="{{tier}}"><strong>Tier:</strong> {{tier}}</li>
+			<li class="tierCl locationCl" #tooltip="matTooltip" matTooltip="{{tier}}"><strong>Tier:</strong> <span  [ngClass]="_initial_tier_id == '1' ? 'text-success' : _initial_tier_id == '2' ? 'text-warning' :  _initial_tier_id == '3' ? 'text-danger' : 'text-dark'">{{tier}}</span></li>
 			<li class="locationCl" #tooltip="matTooltip"
 			matTooltip="{{Inc_location}}"><strong>Location:</strong>
       {{(Inc_location.length > 20 )? (Inc_location | slice:0:30)+'..':(Inc_location)}}

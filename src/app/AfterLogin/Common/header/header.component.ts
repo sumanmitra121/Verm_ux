@@ -15,6 +15,7 @@ declare var $:any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  _initial_tier_id:any;
   @Output() incDetails = new EventEmitter<IncDetails>();
   _c_pass:boolean = true;
   _n_pass:boolean = true;
@@ -67,6 +68,7 @@ export class HeaderComponent implements OnInit {
       this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
         this._activeIncBackup = data;
         // //(data.sort((a:any, b:any) => (a.id < b.id ? -1 : 1)));
+            //.log(data);
 
         if(data.length > 1){
         var local_sel_id = Number(localStorage.getItem('_local_sel_id'));
@@ -121,10 +123,10 @@ export class HeaderComponent implements OnInit {
       else{
         this.emergencyservice.emit('notification','');
         this.emergencyservice.listen('notification').subscribe((data:any)=>{
-           console.log(data)
+           //.log(data)
            this._notification =  data;
            this._TOTAL_LENGTH_NOTIFICATION = this._notification[this._notification.length-1].total;
-           console.log(this._TOTAL_LENGTH_NOTIFICATION);
+           //.log(this._TOTAL_LENGTH_NOTIFICATION);
 
         })
       }
@@ -273,9 +275,12 @@ export class HeaderComponent implements OnInit {
 
   getDetails(_inc_no:number){
     var incStatus = this._activeIncBackup.find((x:any) => x.inc_no == _inc_no);
+   console.log(incStatus);
+
     this.Inc_Name = incStatus.inc_name + '(' +incStatus.inc_no +')';
     this._selected_Inc = this.Inc_Name;
     this.Inc_location=incStatus.offshore_name+" ("+incStatus.lat+" : "+incStatus.lon+ ")";
+    this._initial_tier_id = incStatus.initial_tier_id
     this.tier=incStatus.tier_type;
     this.hours=incStatus.dif_time;
     this.Inc_type=incStatus.incident_type;

@@ -134,7 +134,7 @@
           <li id="full_name"><strong>Employee:</strong> {{total}}</li>
           <li id="location" ><strong>Casualty Location:</strong> {{Location}}</li>
           <li id="location" ><strong>Condition:</strong> {{this.lat}}</li>
-          <li id="location" ><strong>Time:</strong> {{this.long}}</li>
+          <li id="location" ><strong>Time:</strong> {{this.long | slice:0:5}}</li>
         </ul>
         </ng-container>
         <ng-container *ngIf="get_casualty_status.length == 0">
@@ -277,7 +277,7 @@
                            <!-- Modal Body -->
         <form #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
           <!-- For INCIDENT STATUS -->
-          <div class="modal-body" id="inc_create" *ngIf="this.id_create=='inc_create'">
+          <div class="modal-body" id="inc_create" [hidden]="this.id_create!='inc_create'">
 
              <!-- Installation Co-ordinates -->
              <div class="row">
@@ -534,6 +534,8 @@
                       <th class="text-center">POB Status</th>
                       <th class="text-center">Time</th>
                       <th class="text-center">POB Count</th>
+                      <th class="text-center">Total POB</th>
+
                      <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
                       </th>
@@ -559,8 +561,9 @@
                       <td>
                         <input type="text" placeholder="Enter POB Count" (keypress)="PreventNonNumeric($event)" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
                       </td>
-
-
+                      <td>
+                        <input type="text" placeholder="Enter Total Pob" (keypress)="PreventNonNumeric($event)" class="form-control"  [(ngModel)]="vesselArray[i].total_prob" [ngModelOptions]="{standalone: true}" required/>
+                      </td>
                       <td  class="text-center">
                         <a class="customIcon" type="button"
                        #tooltip="matTooltip"
@@ -575,6 +578,7 @@
                   <th class="text-center">POB Status</th>
                   <th class="text-center">Time</th>
                   <th class="text-center">POB Count</th>
+                  <th class="text-center">Total POB</th>
                  <th class="text-center" (click)="addRow()">
                     <i class="fa fa-plus fa-2x"></i>
                   </th>
@@ -643,7 +647,7 @@
                     <th class="text-center">FULL NAME</th>
                     <th class="text-center">EMPLOYER</th>
                     <th class="text-center">CONDITION</th>
-                    <th class="text-center">Casualty Location</th>
+                    <th class="text-center">CASUALTY LOCATION</th>
                     <th class="text-center">TIME</th>
                    <th class="text-center" (click)="addRow()">
                       <i class="fa fa-plus fa-2x"></i>
@@ -668,7 +672,8 @@
               <thead>
                   <tr>
                       <th class="text-center">TIME</th>
-                      <th class="text-center">From</th>
+                      <th class="text-center">FROM</th>
+                      <th class="text-center">TO</th>
                       <th class="text-center">MODE OF TRANSPORT</th>
                       <th class="text-center">POB Transported</th>
                       <th class="text-center">REMARKS</th>
@@ -687,9 +692,16 @@
                         <select [(ngModel)]="vesselArray[i].destination" class="form-control" [ngModelOptions]="{standalone: true}" required>
                           <option value="">Select</option>
                           <option *ngFor="let location of offshore_list" value="{{location.id}}">{{location.offshore_name}}</option>
-
                         </select>
                       </td>
+
+                      <td>
+                        <select [(ngModel)]="vesselArray[i].dest_to" class="form-control" [ngModelOptions]="{standalone: true}" required>
+                          <option value="">Select</option>
+                          <option *ngFor="let location of offshore_list" value="{{location.id}}">{{location.offshore_name}}</option>
+                        </select>
+                      </td>
+
                       <td>
                         <input placeholder="Enter Mode Of Transport" [(ngModel)]="vesselArray[i].mode_of_transport" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
@@ -712,7 +724,8 @@
               <tfoot>
                 <tr>
                     <th class="text-center">TIME</th>
-                    <th class="text-center">From</th>
+                    <th class="text-center">FROM</th>
+                    <th class="text-center">TO</th>
                     <th class="text-center">MODE OF TRANSPORT</th>
                     <th class="text-center">POB Transported</th>
                     <th class="text-center">REMARKS</th>

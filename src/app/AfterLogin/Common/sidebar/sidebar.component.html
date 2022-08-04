@@ -24,7 +24,7 @@
             <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink='/AddIncident' routerLinkActive="true">Create Incident</a></li>
             <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink="/IncidentModule" routerLinkActive="true">Manage Incident</a></li>
             <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink="/Editinc" routerLinkActive="true">Close Incident</a></li>
-            <li class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink="/EditApprove" routerLinkActive="true">Archive Incident</a></li>
+            <li *ngIf="_app_flag == 'Y'" class="nav-item" routerLinkActive="active"> <a class="nav-link" routerLink="/EditApprove" routerLinkActive="true">Archive Incident</a></li>
 
           </ul>
         </ul>

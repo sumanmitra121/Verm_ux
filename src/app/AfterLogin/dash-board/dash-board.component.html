@@ -362,7 +362,7 @@
 										{{evacuationStatus?.mode_of_transport}}
 									</li>
 									<li>
-										<strong class="customLabel">Time :</strong> {{evacuationStatus?.time}}
+										<strong class="customLabel">Time :</strong> {{evacuationStatus?.time | slice:0:5}}
 									</li>
 									<li >
 										<strong class="customLabel">POB Transported :</strong>
@@ -406,38 +406,6 @@
 									type="ball-clip-rotate" [fullScreen]="false">
 									<p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p>
 								</ngx-spinner>
-								<!-- <div class="customScroll">
-									<table *ngIf="get_events_status!=''">
-										<thead>
-											<tr>
-												<th></th>
-												<th>Resource Assigned</th>
-												<th>Time</th>
-												<th>Situation Status</th>
-											</tr>
-										</thead>
-										<tbody *ngFor="let events of get_events_status;let i=index">
-											<tr [ngClass]="i == 0 ? 'my_class1' : ''"
-												[matTooltip]="getTooltipText(events.resource_assigned,events.time,events.situation_status,'','','','EV')">
-												<td>
-													<div id="container" *ngIf='i==0'>
-														<div class="dot"></div>
-														<div class="pulse"></div>
-													</div>
-												</td>
-												<td>
-													<p>{{events.resource_assigned}}</p>
-												</td>
-												<td>
-													<p>{{events.time}}</p>
-												</td>
-												<td>
-													<p>{{events.situation_status}}</p>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div> -->
 								<h3 class="customLine"></h3>
                 <ng-container *ngIf="get_events_status.length > 0">
                   <ul class="boardStatus" *ngFor="let event of get_events_status">
@@ -447,7 +415,10 @@
                       {{event?.resource_assigned}}
                     </li>
                     <li>
-                      <strong class="customLabel">Time :</strong> {{event?.time}}
+                      <strong class="customLabel">Time :</strong> {{event?.time | slice:0:5}}
+                    </li>
+                    <li>
+                      <strong class="customLabel">Situation Status :</strong> {{event?.situation_status}}
                     </li>
                     <hr />
                   </ul>

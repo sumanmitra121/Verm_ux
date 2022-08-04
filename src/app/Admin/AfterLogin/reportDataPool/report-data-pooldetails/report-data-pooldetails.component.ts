@@ -55,7 +55,7 @@ dataSource6= new MatTableDataSource();
   get_incident_details4:any=[];
   get_incident_details5:any=[];
   get_incident_details6:any=[];
-
+  get_tier:any=[];
 
   board_stats:any='';
   WindowObject:any;
@@ -77,13 +77,14 @@ dataSource6= new MatTableDataSource();
 
   ngOnInit(): void {
     this.Inc_type=this.route.snapshot.params['inc_type'];
-
-
     this.Report_type = this.Inc_type=='I' ? 'Incident Reports' : (this.Inc_type=='A' ? 'Activation Reports' : (this.Inc_type=='C' ? 'Live Logs' : (this.Inc_type=='B' ? 'Boards' : (this.Inc_type=='L' ? 'Log Sheets' : (this.Inc_type=='CL' ? 'Call Logger' : '')))))
     if(this.Inc_type=='B' || this.Inc_type=='C' || this.Inc_type=='L' || this.Inc_type=='CL' || this.Inc_type=='I' || this.Inc_type=='A'){
       this.emergencyservice.global_service('0','/get_all_incident',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
          this.get_allIncident=data;
       })
+    }
+    if(this.Inc_type=='I'){
+            this.getTier();
     }
   }
   ngAfterViewInit(): void {
@@ -91,6 +92,7 @@ dataSource6= new MatTableDataSource();
       this.Inc_type == 'I' || this.Inc_type == 'A' ?
       this.logform.controls["inc_name"].patchValue('0') :
       this.logform.controls["inc_name"].patchValue('');
+      this.Inc_type == 'I' ? this.logform.controls["tier_id"].patchValue('0') : '';
     },300)
 
   }
@@ -100,14 +102,23 @@ dataSource6= new MatTableDataSource();
      this.get_incident_details.length=0;
      var api_url=this.Inc_type=='A' ? '/activation_report' : (this.Inc_type=='I' ? '/incident_report': (this.Inc_type=='C' ? '/chat_report' : (this.Inc_type=='CL' ? '/call_log_report' : (this.Inc_type=='L' && this.logform.form.value.logTypes=='1') ? '/autolog_report' :'/manuallog_report')))
      this.displayedColumns=this.Inc_type=='A' ? ['Date','incident_name','team_name','Status','created_by'] : (this.Inc_type=='I' ?  ['Incident_no','Incident_type','Incident_name', 'Incident_location','Initial_tier','Final_tier','event_description','remarks','created_at','Created_By','close_date','Closed_by','Closed_at','approved_by','approved_at'] : (this.Inc_type=='C' ? ['Date','emp_name','chat','file'] : (this.Inc_type=='CL' ? ['Date','ref_no','made_by','made_to','received_by','call_details'] : [])))
-    if(this.Inc_type=='I' || this.Inc_type=='A' ){
-     this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date).subscribe(data=>{
+    if(this.Inc_type=='I' ){
+     this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date+'&tier_id='+this.logform.form.value.tier_id).subscribe(data=>{
       this.get_incident_details=data;
       this.get_incident_details=this.get_incident_details.msg;
       this.dataSource=new MatTableDataSource(this.get_incident_details);
       if(this.get_incident_details.length > 0){}
       else{this.toastr.errorToastr('No reports available from '+this.logform.form.value.frm_date + ' to '+ this.logform.form.value.to_date,'')}
       })
+    }
+    else if(this.Inc_type=='A'){
+      this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date).subscribe(data=>{
+        this.get_incident_details=data;
+        this.get_incident_details=this.get_incident_details.msg;
+        this.dataSource=new MatTableDataSource(this.get_incident_details);
+        if(this.get_incident_details.length > 0){}
+        else{this.toastr.errorToastr('No reports available from '+this.logform.form.value.frm_date + ' to '+ this.logform.form.value.to_date,'')}
+        })
     }
     else if(this.Inc_type=='L'){
       // console.log(this.logform.form.value.logTypes)
@@ -387,6 +398,11 @@ dataSource6= new MatTableDataSource();
       }
       }
 
+      getTier(){
+        this.emergencyservice.global_service('0','/tier',"null").pipe(map((x:any) => x.msg)).subscribe(res =>{
+          this.get_tier = res;
+        })
+      }
 
       getToday(){//For Getting Date Only
         return new Date().toISOString().substring(0,10);

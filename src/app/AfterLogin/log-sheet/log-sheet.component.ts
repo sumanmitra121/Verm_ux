@@ -8,6 +8,7 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 import { jsPDF } from 'jspdf';
 import { Form, NgForm } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { IncDetails } from 'src/app/Model/IncDetails';
 @Component({
   selector: 'app-log-sheet',
   templateUrl: './log-sheet.component.html',
@@ -67,11 +68,13 @@ export class LogSheetComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-  fetchdata() {
+  fetchdata(_id:any) {
     // this.spinner.show();
     this.emergencyService
-      .global_service('0', '/manuallog', 'id=')
+      .global_service('0', '/manuallog', 'inc_id='+_id)
       .subscribe((data) => {
+        console.log(data);
+
         this.get_logsheet.length = 0;
         this.get_logsheet = data;
         this.get_logsheet = this.get_logsheet.msg;
@@ -105,7 +108,7 @@ export class LogSheetComponent implements OnInit {
       this.showCardBody = true;
     } else {
       this.showCardBody = !this.showCardBody;
-      this.fetchdata();
+      this.fetchdata(localStorage.getItem('Inc_id'));
     }
   }
   // modify_modal(del_id:any){this.del_id='';this.del_id=del_id;}
@@ -125,7 +128,7 @@ export class LogSheetComponent implements OnInit {
 
         this.check_respond = data;
         if (this.check_respond.suc == 1) {
-          this.fetchdata();
+          this.fetchdata(localStorage.getItem("Inc_id"));
           this.toastr.successToastr(this.check_respond.msg, '', {
             position: 'bottom-right',
             animate: 'slideFromRight',
@@ -242,6 +245,8 @@ export class LogSheetComponent implements OnInit {
     }
   }
   SubmitForm(ManualLog: Form) {
+    console.log(ManualLog);
+
     this.spinner.show();
     this.emergencyService
       .global_service('1', '/manuallog', ManualLog)
@@ -266,7 +271,7 @@ export class LogSheetComponent implements OnInit {
             animate: 'slideFromRight',
             toastTimeout: 5000,
           });
-          this.fetchdata();
+          this.fetchdata(localStorage.getItem('Inc_id'));
           this.spinner.hide();
           window.scrollTo(window.innerHeight, window.innerWidth);
         } else {
@@ -314,5 +319,25 @@ export class LogSheetComponent implements OnInit {
   getToday() {
     //For Getting Date Only
     return new Date().toISOString().substring(0, 10);
+  }
+  getIncDetails(_e:IncDetails){
+     console.log(_e);
+     this.fetchdata(_e.id);
+     this.manuallog.form.reset();
+     console.log(this.manuallog);
+     this.Id = 0;
+     this.Inc_id = localStorage.getItem('Inc_id');
+     this.Act_type = 'W';
+    console.log(this.manuallog);
+    this.manuallog.setValue({
+      id:this.Id,
+      inc_id:  localStorage.getItem('Inc_id'),
+      act_type: 'W',
+      act_by: '',
+      activity: '',
+      act_at: '',
+    });
+    console.log(this.manuallog)
+
   }
 }

@@ -36,7 +36,11 @@ export class IncidentModuleComponent implements OnInit {
 
   fetchdata(){
     this.spinner.show();
-    this.emergencyservice.global_service('0','/get_incident','flag=' +this.flag).pipe(map((x:any)=>x.msg)).subscribe(data=>{
+    console.log('incident');
+   var _app_flag = this.flag == 'A' ? 'A' : null
+    this.emergencyservice.global_service('0','/get_incident','flag=' +this.flag +'&approval_flag='+ _app_flag).pipe(map((x:any)=>x.msg)).subscribe(data=>{
+      console.log(data);
+
       this.get_incident=data;
      this.putdata(this.get_incident);
     })

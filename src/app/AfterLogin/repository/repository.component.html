@@ -1,4 +1,4 @@
-<app-header [headername]="headername" [icon]="icon"></app-header>
+<app-header [headername]="headername" [icon]="icon" (IncStatus)="getIncDetails($event)"></app-header>
 <div class="page-body-wrapper">
 <app-sidebar class="sidebarMain"></app-sidebar>
 <div class="main-panel">
@@ -48,7 +48,7 @@
                                <!-- </div> -->
 
                     </div>
-                    <div class="col-1">
+                    <div class="col-1" >
                         <div class="btnSubmitSec ">
                             <input type="submit" value="Search" class="btn btn-info" (click)="serach_files()">
                           </div>
@@ -62,7 +62,7 @@
 
                      </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2"  [hidden]="_show_btn">
                         <div class="btnSubmitSec float-right">
                             <input type="submit" value="Add" class="btn btn-info customButton" id="newButton" (click)="open_card()">
                           </div>
