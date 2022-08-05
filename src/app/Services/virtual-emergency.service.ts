@@ -140,6 +140,8 @@ export class VirtualEmergencyService {
   })
   }
   disconnectSocket(){this.socket.disconnect();}
-
+  getWindDirection(){
+    return this.http.get('../../assets/JSON/windDirection.json');
+  }
   }
 

@@ -1,0 +1,10 @@
+[
+  {"dir_id":"N","direction":"North"},
+  {"dir_id":"NE","direction":"North East"},
+  {"dir_id":"E","direction":"East"},
+  {"dir_id":"SE","direction":"South East"},
+  {"dir_id":"S","direction":"South"},
+  {"dir_id":"SW","direction":"South West"},
+  {"dir_id":"W","direction":"West"},
+  {"dir_id":"NW","direction":"North West"}
+]

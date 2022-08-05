@@ -22,7 +22,11 @@
              <!-- <h3 id="first-item"></h3> -->
 
               <ul class="listDashboard" *ngIf="get_in_status.length > 0">
-                <li><strong>Visibility:</strong> {{inc_visibility}}</li>
+                <li><strong>Visibility:</strong> {{inc_visibility}}
+                  <!-- For Showing visibility Unit -->
+                  <!-- {{_vis_unit}} -->
+                  <!-- End -->
+                 </li>
                 <li><strong>Sea Swell:</strong> {{inc_sea_state}}</li>
                 <li><strong>Temperature:</strong>
                   <!-- {{inc_temparature}} -->
@@ -281,16 +285,16 @@
 
              <!-- Installation Co-ordinates -->
              <div class="row">
-              <div class="col-6">
-                <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
-                  <label>Installation</label>
-                  <input class="form-control" type="text" name="installation" id="ins_id" ngModel #installation="ngModel" readonly>
-              </div>
-              <div class="col-6">
-              <label>COORDINATES:</label>
-              <input class="form-control" type="text" name="coordinates" id="coordinate_id" ngModel #coordinates="ngModel" readonly>
-          </div>
-          </div>
+                <div class="col-6">
+                  <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+                    <label>Installation</label>
+                    <input class="form-control" type="text" name="installation" id="ins_id" ngModel #installation="ngModel" readonly>
+                </div>
+                <div class="col-6">
+                <label>COORDINATES:</label>
+                <input class="form-control" type="text" name="coordinates" id="coordinate_id" ngModel #coordinates="ngModel" readonly>
+                </div>
+            </div>
            <!--SUMMARY OF INCIDENT  STATUS OF EMERGENCY RESPONSE -->
            <div class="row mt-2">
             <div class="col-6"><label>Summary Of Incident</label>
@@ -298,8 +302,27 @@
             </div>
             <div class="col-6"><label>Status Of Emergency Response</label>
                 <textarea cols="30" rows="4" class="form-control" name="status" id="emergencyresponse" ngModel #status="ngModel" placeholder="Status Of Emergency Response"></textarea>
-                </div>
-         </div>
+            </div>
+           </div>
+           <!-- Impact to -->
+           <div class="row mt-3">
+            <div class="col-3">
+              <label>People</label>
+              <textarea cols="30" rows="3" class="form-control" name="people" id="people" ngModel #people="ngModel" placeholder="Enter People"></textarea>
+            </div>
+            <div class="col-3">
+              <label>Environment</label>
+              <textarea cols="30" rows="3" class="form-control" name="environment" id="Environment" ngModel #environment="ngModel" placeholder="Status Of Emergency Response"></textarea>
+            </div>
+            <div class="col-3">
+              <label>Asset</label>
+              <textarea cols="30" rows="3" class="form-control" name="asset" id="Asset" ngModel #asset="ngModel" placeholder="Enter Asset"></textarea>
+            </div>
+            <div class="col-3">
+              <label>Reputation</label>
+              <textarea cols="30" rows="3" class="form-control" name="reputation" id="Reputation" ngModel #reputation="ngModel" placeholder="Enter Reputation"></textarea>
+            </div>
+            </div>
 
          <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
                   <thead>
@@ -307,8 +330,8 @@
                           <th class="text-center">Time</th>
                           <th class="text-center">Visibility</th>
                           <th class="text-center">Sea Swell</th>
-                          <th class="text-center">Temperature(C/F)</th>
-                          <th class="text-center">Wind Speed (km/h)</th>
+                          <th class="text-center">Temperature</th>
+                          <th class="text-center">Wind Speed</th>
                           <th class="text-center">Wind Direction</th>
                           <th class="text-center" (click)="addRow()">
                             <i class="fa fa-plus fa-2x"></i>
@@ -318,18 +341,29 @@
                   <tbody>
                        <tr *ngFor="let dynamic of dynamicArray; let i = index;">
                           <td>
-                            <input readonly [(ngModel)]="dynamicArray[i].time_inc" class="form-control" type="text" [ngModelOptions]="{standalone: true}"/>
+                            <input size="7" readonly [(ngModel)]="dynamicArray[i].time_inc" class="form-control" type="text" [ngModelOptions]="{standalone: true}"/>
                           </td>
                           <td>
-                            <input placeholder="Enter Visibility" [(ngModel)]="dynamicArray[i].visibility" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <div class="row">
+                               <div class="col-8">
+                                <input size="7" placeholder="Enter Visibility" [(ngModel)]="dynamicArray[i].visibility" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                               </div>
+                               <div class="col-4 my-auto">
+                                <mat-radio-group aria-label="Select an option" [(ngModel)]="dynamicArray[i].visibility_unit" [ngModelOptions]="{standalone: true}">
+                                  <mat-radio-button value="KM" [checked]="dynamicArray[i].visibility_unit == 'KM'">KM</mat-radio-button>
+                                  <mat-radio-button value="NM" [checked]="dynamicArray[i].visibility_unit == 'NM'">NM</mat-radio-button>
+                                </mat-radio-group>
+                               </div>
+                            </div>
+
                           </td>
                           <td>
-                            <input placeholder="Enter Sea Swell" [(ngModel)]="dynamicArray[i].sea_state" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                            <input size="7" placeholder="Enter Sea Swell" [(ngModel)]="dynamicArray[i].sea_state" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                           </td>
                           <td>
                             <div class="row">
                               <div class="col-8">
-                                <input  placeholder="Enter Temperature" [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="PreventNonNumeric($event)"/>
+                                <input size="7" placeholder="Enter Temperature" [(ngModel)]="dynamicArray[i].temp" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="PreventNonNumeric($event)"/>
                               </div>
                               <div class="col-4 my-auto">
                                 <mat-radio-group aria-label="Select an option" [(ngModel)]="dynamicArray[i].temp_unit" [ngModelOptions]="{standalone: true}">
@@ -340,10 +374,26 @@
                             </div>
                           </td>
                           <td>
-                            <input placeholder="Enter Wind Speed" [(ngModel)]="dynamicArray[i].wind_speed" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required maxlength="3" (keypress)="PreventNonNumeric($event)">
+                            <div class="row">
+                              <div class="col-8">
+                                <input size="7" placeholder="Enter Wind Speed" [(ngModel)]="dynamicArray[i].wind_speed" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required maxlength="3" (keypress)="PreventNonNumeric($event)">
+
+                              </div>
+                              <div class="col-4">
+                                <mat-radio-group aria-label="Select an option" [(ngModel)]="dynamicArray[i].wind_unit" [ngModelOptions]="{standalone: true}">
+                                  <mat-radio-button value="KM" [checked]="dynamicArray[i].wind_unit == 'KM'">KM</mat-radio-button>
+                                  <mat-radio-button value="NM" [checked]="dynamicArray[i].wind_unit == 'NM'">NM</mat-radio-button>
+                                </mat-radio-group>
+                              </div>
+
+                            </div>
                           </td>
                           <td>
-                            <input placeholder="Enter Wind Direction" [(ngModel)]="dynamicArray[i].wind_direc" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="preventNumber($event)" />
+                            <select class="form-control" [(ngModel)]="dynamicArray[i].wind_direc"  [ngModelOptions]="{standalone: true}" required>
+                              <option value="">Select</option>
+                              <option value="{{wind.dir_id}}" *ngFor="let wind of getWindDirection">{{wind.direction}}</option>
+                           </select>
+                            <!-- <input placeholder="Enter Wind Direction" [(ngModel)]="dynamicArray[i].wind_direc" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required (keypress)="preventNumber($event)" /> -->
                           </td>
                           <td class="text-center">
                             <a class="customIcon" type="button"
@@ -359,8 +409,8 @@
                       <th class="text-center">Time</th>
                       <th class="text-center">Visibility</th>
                       <th class="text-center">Sea Swell</th>
-                      <th class="text-center">Temperature(C/F)</th>
-                      <th class="text-center">Wind Speed (km/h)</th>
+                      <th class="text-center">Temperature</th>
+                      <th class="text-center">Wind Speed</th>
                       <th class="text-center">Wind Direction</th>
                       <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
@@ -368,9 +418,6 @@
                   </tr>
                   </tfoot>
           </table>
-
-
-
           </div>
           <!-- For VESSEL STATUS -->
           <div class="modal-body" id="inc_create" *ngIf="this.id_create=='vessel_create'">
@@ -390,6 +437,7 @@
                       <th class="text-center">ETD</th>
                       <th class="text-center">TO</th>
                       <th class="text-center">ETA</th>
+                      <th class="text-center">TIME TO LOCATION</th>
                       <th class="text-center">Remarks</th>
                      <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
@@ -414,7 +462,10 @@
                         <input placeholder="Enter Destination" [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                        <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required (change)="changeTime(vesselArray[i].eta,vesselArray[i].etd,i)"/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].time_to_location" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly/>
                       </td>
                       <td>
                         <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required></textarea>
@@ -436,6 +487,7 @@
                   <th class="text-center">ETD</th>
                   <th class="text-center">TO</th>
                   <th class="text-center">ETA</th>
+                  <th class="text-center">TIME TO LOCATION</th>
                   <th class="text-center">Remarks</th>
                  <th class="text-center" (click)="addRow()">
                     <i class="fa fa-plus fa-2x"></i>

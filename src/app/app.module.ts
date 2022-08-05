@@ -40,7 +40,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 ///END//////
 import { EditIncidentComponent } from './AfterLogin/Incident/edit-incident/edit-incident.component';
 import { LiveLogComponent } from './AfterLogin/live-log/live-log.component';
-import { BoardComponent } from './AfterLogin/board/board.component';
+// import { BoardComponent } from './AfterLogin/board/board.component';
+
 import { RepositoryComponent } from './AfterLogin/repository/repository.component';
 import { FormsChecklistComponent } from './AfterLogin/forms-checklist/forms-checklist.component';
 import { AudioVideoConferenceComponent } from './AfterLogin/audio-video-conference/audio-video-conference.component';
@@ -139,6 +140,7 @@ import { NotificationComponent } from './CommonDialogAlert/Notification/Notifica
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HandoverComponent } from './AfterLogin/handover/handover.component';
 import { GlobalErrorHandlingInterceptor } from './Interceptor/global-error-handling.interceptor';
+import { BoardComponent } from './AfterLogin/board/board.component';
 //End//
 @NgModule({
   declarations: [
