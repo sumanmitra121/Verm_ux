@@ -7,29 +7,44 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css'],
-    animations: [
-        trigger('openClose', [
-            state('open', style({
-                height: '*',
-                opacity: 1,
-            })),
-            state('closed', style({
-                height: '0',
-                opacity: 0
-            })),
-            transition('open => closed', [
-                animate('0.35s')
-            ]),
-            transition('closed => open', [
-                animate('0.35s')
-            ]),
-        ]),
-    ]
+  styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
+  incDetails:any= {
+    Inc_name: "",
+    brief_desc: "",
+    dif_time: '',
+    id: '',
+    inc_dt: '',
+    inc_name: "",
+    inc_no: '',
+    incident_type: "",
+    initial_tier_id: '',
+    lat: "",
+    location: "",
+    lon: "",
+    offshore_name: "",
+    tier_type: "",
+    tot_casualty: ""
+  };
+  cur_inc_status:any ={
+    visibility: '',
+    temp_unit: '',
+    sea_state: '',
+    temp: '',
+    wind_speed: '',
+  };
+  _show_incident_status_number:any = {
+   closed_inc:'',
+      opened_inc:'',
+      approved_inc:'',
+      tot_team:''
+  }
+  constructor(private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService) {
+    this.spinner.show();
+    this.Actitve_incident();
 
-  constructor(private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService) { }
+  }
   showCardBody = true;
   arr:any=[];
   closed_incident:any;
@@ -38,7 +53,7 @@ export class AdminDashboardComponent implements OnInit {
    team_roster:any=[];
   opened_inc:any;
   approved_inc:any;
-  get_current_incident:any=[];
+  get_current_incident:any[]=[];
   get_current_incident_status:any=[];
   inc_visibility:any='';
   _temp_unit:any = '';
@@ -47,102 +62,19 @@ export class AdminDashboardComponent implements OnInit {
   wind_speed:any='';
   temp:any='';
   deg:any;
-  Inc_Name:any='';
-  Inc_location:any='';
-  tier:any='';
-  hours:any='';
-  Inc_type:any='';
   inc_id:any;
   status_mode:any='2';
   statusType:any=[];
   get_active_emp:any=[];
-  tot_casualty:any;
   total_teams:any;
-  ngOnInit(): void {
-    this.spinner.show();
-    // For Getting Current Incident
-    this.emergencyservice.global_service('0','/get_active_inc',null).subscribe(data=>{
-      this.get_current_incident=data;
-      this.get_current_incident=this.get_current_incident.msg;
-      if(this.get_current_incident.length > 0){
-      this.Inc_Name= this.get_current_incident[0].inc_name+" ("+this.get_current_incident[0].inc_no +")";
-      this.Inc_location=this.get_current_incident[0].offshore_name+" ("+this.get_current_incident[0].lat+" : "+this.get_current_incident[0].lon+ ")";
-      this.tier=this.get_current_incident[0].tier_type;
-      this.hours=this.get_current_incident[0].dif_time;
-      this.Inc_type=this.get_current_incident[0].incident_type;
-      this.inc_id=this.get_current_incident[0].id;
-      this.tot_casualty=this.get_current_incident[0].tot_casualty;
+  panelOpenState = false;
+  ngOnInit(): void {}
 
-      // For gettting Current Incident  Status
-      this.emergencyservice.global_service('0','/inc_board','inc_id=' +this.get_current_incident[0].id).subscribe(data=>{
-        console.log(data);
-        this.get_current_incident_status=data;
-        this.get_current_incident_status=this.get_current_incident_status.msg;
-        if(this.get_current_incident_status!=''){
-          this.inc_visibility = this.get_current_incident_status[0].visibility;
-          this.inc_sea_state=this.get_current_incident_status[0].sea_state;
-        //  this.deg=this.get_current_incident_status[0].temp.charAt(this.get_current_incident_status[0].temp.length-1);
-          this.temp=this.get_current_incident_status[0].temp;
-          this.wind_speed=this.get_current_incident_status[0].wind_speed;
-          this._temp_unit = this.get_current_incident_status[0].temp_unit;
-        }
-
-
-      })
-      this.emergencyservice.global_service('0','/active_emp_dashboard',null).subscribe(data=>{
-       this.get_active_emp=data;
-      this.get_active_emp=this.get_active_emp.msg;
-      })
-      this.status_type(this.status_mode);
-      // this.spinner.hide();
-      }
-      else{
-          // For getting closed,Opened & approved incident
-          this.emergencyservice.global_service('0','/inc_adm_dashboard',null).subscribe(data=>{
-            this.arr=data;
-            this.closed_incident=this.arr.msg[0].closed_inc;
-            this.opened_inc=this.arr.msg[0].opened_inc;
-            this.approved_inc=this.arr.msg[0].approved_inc;
-            this.total_teams=this.arr.msg[0].tot_team;
-
-          })
-          // For  getting all incidents
-          this.emergencyservice.global_service('0','/get_all_incident',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
-          this.all_incident=data;
-          // this.all_incident=this.all_incident.msg;
-          if(this.all_incident.length>0){
-          this.get_incident_details(this.all_incident[0].id,0);
-          }
-          })
-          // For getting team on Roster data
-          this.emergencyservice.global_service('0','/team_adm_dashboard',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
-            console.log(data);
-            this.team_roster=data;
-            // this.team_roster=this.team_roster.msg;
-            // if(this.team_roster.length>0){
-            //   $('#team_Roster').html(this.team_roster[0].team_name + '  <small><i>'+this.team_roster[0].team_type+ '  From:' + this.team_roster[0].from_date +' To:' +this.team_roster[0].to_date +'</small></i>')
-            // }
-          })
-        this.spinner.hide();
-      }
-      })
+  get_incident_details(id:any){
+    this.inc_id = id;
+    this.getIncidentDetailsById(id);
   }
-  expandDiv(){this.showCardBody = !this.showCardBody;}
-
-  get_incident_details(id:any,index:any){
-    for(let i=0;i<this.all_incident.length;i++){
-      var element = document.getElementById("active_"+i);
-      element?.classList.remove("active");
-    }
-    var element = document.getElementById("active_"+index);
-    element?.classList.add("active");
-    this.emergencyservice.global_service('0','/get_incident_dtls','id='+id).subscribe(data=>{
-      // console.log(data);
-       this.inc_details=data;
-       this.inc_details=this.inc_details.msg;
-    })
-
-  }
+  getIncidentDetailsById(id:any){this.emergencyservice.global_service('0','/get_incident_dtls','id='+id).pipe(map((x:any) => x.msg)).subscribe(data=>{this.inc_details=data;})}
   ngAfterViewInit() {
   //  For Pie Chart
     var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
@@ -169,22 +101,61 @@ export class AdminDashboardComponent implements OnInit {
   }
   status_type(status_mode:any){
     this.status_mode=status_mode;
-    this.statusType.length=0;
-    if(status_mode!='4'){
-    this.emergencyservice.global_service('0','/board_report','inc_id='+this.inc_id+'&board_id='+this.status_mode).subscribe(data=>{
-      console.log(data);
-      this.statusType=data;
-      this.statusType=this.statusType.msg;
+    var api_name = status_mode!='4' ? '/board_report' : '/prob_board_dashboard';
+    var dt = status_mode!='4' ? 'inc_id='+this.incDetails?.id+'&board_id='+this.status_mode : 'inc_id='+this.incDetails?.id;
+    this.emergencyservice.global_service('0',api_name,dt).pipe(map((x:any) => x.msg)).subscribe(data=>{this.statusType=data;
     })
-   }
-   else{
-    this.emergencyservice.global_service('0','/prob_board_dashboard','inc_id=' +this.inc_id).subscribe(data=>{
-     console.log(data);
-     this.statusType=data;
-     this.statusType=this.statusType.msg;
-    })
-   }
-   this.spinner.hide();
   }
 
+  Actitve_incident(){
+    this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe(res=>{
+      this.get_current_incident=res;
+      if(res.length > 0){
+        this.setCurrentIncidentDetails(this.get_current_incident[this.get_current_incident.length -1]);
+        this.spinner.hide();
+      }
+      else{
+        this.get_opened_closed_archived_Incident();
+        this.getTeamRoaster_data();
+        this.getAllIncidents();
+        this.spinner.hide();
+      }
+    })
+  }
+  setCurrentIncidentDetails(_res:any){
+    this.incDetails = _res;
+    this.incDetails.Inc_name = _res.inc_name+" ("+_res.inc_no +")";
+    this.incDetails.location = _res.offshore_name+" ("+_res.lat+" : "+_res.lon+ ")";
+    this.getCurrentIncidentStatus(_res.id);
+    this.ActiveTeamMemberOfSelectedIncident();//need to change
+    this.status_type(this.status_mode);
+  }
+  //Need_To_Change_This
+  ActiveTeamMemberOfSelectedIncident(){
+    this.emergencyservice.global_service('0','/active_emp_dashboard',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
+      this.get_active_emp=data;})
+  }
+  //End
+  getCurrentIncidentStatus(_id:any){
+    this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any)=>x.msg)).subscribe(res=>{this.cur_inc_status = res[0];})
+  }
+  get_opened_closed_archived_Incident(){
+    this.emergencyservice.global_service('0','/inc_adm_dashboard',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
+       this._show_incident_status_number.closed_inc= data.length > 0 ? data[0].closed_inc : 0;
+       this._show_incident_status_number.opened_inc= data.length > 0 ? data[0].opened_inc : 0;
+       this._show_incident_status_number.approved_inc=data.length > 0 ?  data[0].approved_inc : 0;
+       this._show_incident_status_number.tot_team= data.length > 0 ? data[0].tot_team : 0;
+  })
+  }
+  getAllIncidents(){
+          this.emergencyservice.global_service('0','/get_all_incident',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
+          this.all_incident=data;
+          if(data.length>0){
+          this.get_incident_details(data[0].id);
+          }
+          })
+  }
+  getTeamRoaster_data(){this.emergencyservice.global_service('0','/team_adm_dashboard',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
+    this.team_roster=data;})
+  }
 }

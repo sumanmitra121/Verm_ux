@@ -37,6 +37,7 @@ export class DynamicGrid {
   wind_unit= 'KM';
 }
 export class vesselGrid {
+
   call_sign: any;
   vessel_name: any;
   vessel_type: any;
@@ -63,7 +64,8 @@ export class vesselGrid {
   value: any;
   dest_to:any;
   total_prob:any;
-  time_to_location:any
+  time_to_location:any;
+  hours_to_location:any;
 }
 @Component({
   selector: 'app-board',
@@ -91,7 +93,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   evacuation_status: any;
   events_status: any;
   casualy_status: any;
-
+   _pob_transported:any;
   act_Inc_id: any;
   resource_assigned: any;
   event_time: any;
@@ -167,6 +169,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     setInterval(() => {
       this.now = new Date();
     }, 1);
+    var now =Date.now();
     this.act_Inc_id = localStorage.getItem('Inc_id');
     this.getwindDirection()
   }
@@ -229,7 +232,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                 localStorage.getItem('Email'),
                 'BI',
                 this.mode,
-                this.datePipe.transform(new Date(), 'dd/MM/YYYY hh:mma')
+                this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
               );
               this.Post_notification(post_notification);
               setTimeout(() => {
@@ -303,7 +306,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                   localStorage.getItem('Email'),
                   'BV',
                   this.mode,
-                  this.datePipe.transform(new Date(), 'dd/MM/YYYY hh:mma')
+                  this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
                 );
                 this.Post_notification(post_notification);
                 clearTimeout(this.vessel_status);
@@ -377,7 +380,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                 localStorage.getItem('Email'),
                 'BH',
                 this.mode,
-                this.datePipe.transform(new Date(), 'dd/MM/YYYY hh:mma')
+                this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
               );
               clearTimeout(this.helicopter_status);
               this.Post_notification(post_notification);
@@ -438,7 +441,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                   localStorage.getItem('Email'),
                   'BC',
                   this.mode,
-                  this.datePipe.transform(new Date(), 'dd/MM/YYYY hh:mma')
+                  this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
                 );
                 // For Notification
                 clearTimeout(this.casualy_status);
@@ -512,7 +515,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                   localStorage.getItem('Email'),
                   'BE',
                   this.mode,
-                  this.datePipe.transform(new Date(), 'dd/MM/YYYY hh:mma')
+                  this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
                 );
                 clearTimeout(this.evacuation_status);
                 this.Post_notification(post_notification);
@@ -583,7 +586,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                   localStorage.getItem('Email'),
                   'BL',
                   this.mode,
-                  this.datePipe.transform(new Date(), 'dd/MM/YYYY hh:mma')
+                  this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
                 );
                 clearTimeout(this.events_status);
                 this.Post_notification(post_notification);
@@ -656,7 +659,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                 localStorage.getItem('Email'),
                 'BP',
                 this.mode,
-                this.datePipe.transform(new Date(), 'dd/MM/YYYY hh:mma')
+                this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
               );
               this.Post_notification(post_notification);
               setTimeout(() => {
@@ -710,7 +713,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.dynamicArray.length = 0;
         this.newDynamic = {
           id: '0',
-          time_inc: this.datePipe.transform(this.now, 'HH:MM'),
+          time_inc: this.datePipe.transform(this.now, 'HH:mm'),
           visibility: '',
           sea_state: '',
           temp: '',
@@ -745,7 +748,6 @@ export class BoardComponent implements OnInit, OnDestroy {
             eta: this.get_incident_details_after_save[i].eta,
             remarks: this.get_incident_details_after_save[i].remarks,
             time_to_location:moment.utc(moment(this.get_incident_details_after_save[i].etd,"HH:mm").diff(moment(this.get_incident_details_after_save[i].eta,"HH:mm"))).format("HH:mm")
-
           };
           this.vesselArray.push(this.vesselDynamic);
           console.log(this.vesselArray);
@@ -761,6 +763,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           to_at: '',
           eta: '',
           remarks: '',
+          time_to_location:''
         };
         this.vesselArray.push(this.vesselDynamic);
         //this.vesselArray);
@@ -784,6 +787,8 @@ export class BoardComponent implements OnInit, OnDestroy {
             to_at: this.get_incident_details_after_save[i].to_at,
             eta: this.get_incident_details_after_save[i].eta,
             remarks: this.get_incident_details_after_save[i].remarks,
+            hours_to_location:moment.utc(moment(this.get_incident_details_after_save[i].etd,"HH:mm").diff(moment(this.get_incident_details_after_save[i].eta,"HH:mm"))).format("HH:mm")
+
           };
           this.vesselArray.push(this.vesselDynamic);
         }
@@ -797,6 +802,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           to_at: '',
           eta: '',
           remarks: '',
+          hours_to_location:''
         };
         this.vesselArray.push(this.vesselDynamic);
       }
@@ -843,7 +849,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       } else {
         this.vesselDynamic = {
           id: '0',
-          time: this.datePipe.transform(this.now, 'HH:MM'),
+          time: this.datePipe.transform(this.now, 'HH:mm'),
           destination: '',
           mode_of_transport: '',
           pob_remaining: '',
@@ -959,14 +965,15 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.id_create == 'inc_create') {
       this.newDynamic = {
         id: '0',
-        time_inc: this.datePipe.transform(this.now, 'HH:MM'),
+        time_inc: this.datePipe.transform(this.now, 'HH:mm'),
         visibility: '',
         sea_state: '',
         temp: '',
         wind_speed: '',
         wind_direc: '',
         temp_unit:'C',
-        visibility_unit: 'KM'
+        visibility_unit: 'KM',
+        wind_unit:'KM'
       };
       this.dynamicArray.push(this.newDynamic);
       // return true;
@@ -1026,19 +1033,11 @@ export class BoardComponent implements OnInit, OnDestroy {
       };
       this.vesselArray.push(this.vesselDynamic);
     } else if (this.id_create == 'pob') {
-      // this.vesselDynamic =  {id:"0",time:this.datePipe.transform(this.now,'hh:mma'),destination:"",mode_of_transport:"",pob_remaining:"",remarks:""};
+      // this.vesselDynamic =  {id:"0",time:this.datePipe.transform(this.now,'HH:mma'),destination:"",mode_of_transport:"",pob_remaining:"",remarks:""};
       // this.vesselArray.push(this.vesselDynamic);
       this.vesselDynamic = { id: '0', prob_cat_id: '', Time: '', value: '' };
       this.vesselArray.push(this.vesselDynamic);
     }
-  }
-  // For snackbar
-  myFunction() {
-    this.y = document.getElementById('snackbar');
-    this.y.className = 'snackbar show';
-    setTimeout(() => {
-      this.y.className = this.y.className.replace('snackbar show', 'snackbar');
-    }, 3000);
   }
   //for displaying vessel status continiously on the board
   display_vessel_status(i: any, data1: any) {
@@ -1083,8 +1082,9 @@ export class BoardComponent implements OnInit, OnDestroy {
       j = 0;
     }
     if (data != '') {
-      this.evacuation_time =data[j].time.split(":")[0] + ":" + data[j].time.split(":")[1];
+      this.evacuation_time =data[j].time;
       this.transport_mode = data[j].mode_of_transport;
+      this._pob_transported  = data[j].pob_remaining
     }
 
     this.evacuation_status = setTimeout(() => {
@@ -1103,7 +1103,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     }
     if (data != '') {
       this.resource_assigned = data[j].resource_assigned;
-      this.event_time = data[j].time.split(":")[0] + ":" + data[j].time.split(":")[1];
+      this.event_time = data[j].time;
       this.situation_status = data[j].situation_status;
     }
     this.events_status = setTimeout(() => {
@@ -1186,11 +1186,13 @@ export class BoardComponent implements OnInit, OnDestroy {
             //.log(res);
             if (res != '') {
               this.inc_visibility = res.visibility;
+              // this.inc_visibility = res.visibility + res.visibility_unit; <== This is to need ti exchange with above
               this.inc_sea_state = res.sea_state;
               this.inc_temparature = res.temp;
               // this._vis_unit = res.visibility_unit;
               this.temp = res.temp.split(this.deg)[0];
               this.wind_speed = res.wind_speed;
+              // this.wind_speed = res.wind_speed + res.wind_unit; <== This is to need ti exchange with above
               this.temp_unit = res.temp_unit;
 
             }
@@ -1394,15 +1396,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.LogForm.form.patchValue({
         inc_id: localStorage.getItem('Inc_id'),
         installation: this.get_incident_details.offshore_name,
-        coordinates:
-          this.get_incident_details.lat + ':' + this.get_incident_details.lon,
+        coordinates:this.get_incident_details.lat + ':' + this.get_incident_details.lon,
         summary:this.get_in_status.length > 0  ? (this.get_in_status[0]['summary']!='' ?  this.get_in_status[0]['summary'] :   this._brief_desc):  this._brief_desc,
-
         status:this.get_in_status.length > 0 ? this.get_in_status[0]?.status : '',
-          // people:this.get_in_status.length > 0 ? this.get_in_status[0]?.people : '',
-          // environment:this.get_in_status.length > 0 ? this.get_in_status[0]?.environment : '',
-          // asset:this.get_in_status.length > 0 ? this.get_in_status[0]?.asset : '',
-          // reputation:this.get_in_status.length > 0 ? this.get_in_status[0]?.reputation : ''
+      // people:this.get_in_status.length > 0 ? this.get_in_status[0]?.people : '',
+      // environment:this.get_in_status.length > 0 ? this.get_in_status[0]?.environment : '',
+      // asset:this.get_in_status.length > 0 ? this.get_in_status[0]?.asset : '',
+      // reputation:this.get_in_status.length > 0 ? this.get_in_status[0]?.reputation : ''
 
       });
     }, 500);
@@ -1415,11 +1415,12 @@ export class BoardComponent implements OnInit, OnDestroy {
     validations._preventNumber(_event);
   }
   getIncDetails(e: any) {
-     console.log(e)
     this._brief_desc= e.brief_desc;
     this.get_incident_details = e;
     this.Inc_name = e.inc_name;
     this.Inc_id = e.inc_no;
+    console.log(this.Inc_id);
+
     this.ngOnDestroy();
     this.SetIncStatus(localStorage.getItem('Inc_id'));
     this.SetVesselStatus(localStorage.getItem('Inc_id'));
@@ -1431,6 +1432,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.alive = true;
   }
   changeTime(event:any,_etd:any,Index:any){
-   this.vesselArray[Index].time_to_location = moment.utc(moment(_etd,"HH:mm").diff(moment(event,"HH:mm"))).format("HH:mm")
+    if(this.id_create == 'vessel_create'){
+      this.vesselArray[Index].time_to_location =event !=='' && _etd !='' ?  moment.utc(moment(_etd,"HH:mm").diff(moment(event,"HH:mm"))).format("HH:mm") : '';
+    }
+    else{
+      this.vesselArray[Index].hours_to_location =event !=='' && _etd !='' ?  moment.utc(moment(_etd,"HH:mm").diff(moment(event,"HH:mm"))).format("HH:mm") : '';
+    }
   }
 }

@@ -30,6 +30,7 @@ export class AddRepositoryComponent implements OnInit {
   }
   fetchData(){
     this.emergencyservice.global_service('0','/repository_category',null).subscribe(data=>{
+       console.log(data)
       this.get_category=data;
       this.get_category=this.get_category.msg;
       this.putfiles(this.get_category);

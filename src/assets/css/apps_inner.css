@@ -283,17 +283,6 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 .headerIncidentbody{padding: 7px 10px; display: inline-block; border-radius: 10px; width: 100%; box-shadow: 3px 3px 7px 1px #d5d5d5; background: #f4f4f4;}
 .customLabel{font-size: 14px;font-weight: 700;color: #4c4ed0;}
 .customHeader{color: #252525;font-weight: 400;font-size: 18px;text-align: center;}
-#tabContentanimation{animation: fadeInAnimation ease 2s;animation-iteration-count: 1;animation-fill-mode: forwards;}
-@keyframes fadeInAnimation {
-  0%{
-      opacity: 0;
-  }
-  100% {
-      opacity: 1;
-   }
-}
-
-
 .pulse{
   /* width: 8px;height: 8px;border: 1px solid #464ed2;border-radius: 50%;background-color: #464ed2;z-index: 10;position: absolute; top: -4px;left: -2px; */
   width: 6px;
@@ -986,6 +975,7 @@ b{font-size: 14px;color:black;}
   font-weight: 800!important;
   color: #cf2525;
   cursor:pointer;
+  vertical-align: sub!important;
 }
 
 /* .landingContainer {

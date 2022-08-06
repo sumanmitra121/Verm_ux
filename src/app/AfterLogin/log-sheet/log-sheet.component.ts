@@ -74,11 +74,18 @@ export class LogSheetComponent implements OnInit {
   }
   ngOnInit(): void {}
   fetchdata(_id:any) {
-    this.emergencyService
+    console.log(_id);
+     if(_id != ''){
+      this.emergencyService
       .global_service('0', '/manuallog', 'inc_id='+_id).pipe(map((x:any)=>x.msg))
       .subscribe((data) => {
         this.putdata(data);
       });
+     }
+     else{
+
+     }
+
   }
 
   putdata(v: any) {
@@ -147,14 +154,16 @@ export class LogSheetComponent implements OnInit {
   }
 
   logSubmit(downloadAs: any) {
+   if(this.Inc_id){
     if (this.flag != '') {
       if (this.LogForm.form.value.frm_date <= this.LogForm.form.value.to_date) {
+
         var str =
           this.flag == 'A'
             ? '/get_autolog'
             : this.flag == 'C'
             ? '/get_chat_log'
-            : '/get_manuallog'; //After clicking on radio button which api get call
+            : '/get_manuallog'; //After clicking on radio button api get called
         this.emergencyService
           .global_service(
             '0',
@@ -214,7 +223,7 @@ export class LogSheetComponent implements OnInit {
                   this.LogForm.form.value.frm_date +
                   ' to ' +
                   this.LogForm.form.value.to_date,
-                'Sorry',
+                '',
                 {
                   position: 'bottom-right',
                   animate: 'slideFromRight',
@@ -241,10 +250,24 @@ export class LogSheetComponent implements OnInit {
         toastTimeout: 5000,
       });
     }
+   }
+   else{
+    this.toastr.errorToastr(
+      'There is no active incident available',
+      '',
+      {
+        position: 'bottom-right',
+        animate: 'slideFromRight',
+        toastTimeout: 5000,
+      }
+    );
+   }
+
   }
   SubmitForm(ManualLog: Form) {
     this.spinner.show();
-    this.emergencyService
+    if(localStorage.getItem('Inc_id')!=''){
+      this.emergencyService
       .global_service('1', '/manuallog', ManualLog)
       .subscribe((data:any) => {
         if (data.suc == 1) {
@@ -291,6 +314,12 @@ export class LogSheetComponent implements OnInit {
           );
         }
       });
+    }
+    else{
+      this.spinner.hide();
+      this.toastr.errorToastr('Sorry!! There is no active incident available','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
+    }
+
   }
   close_card() {this.showCardBody = !this.showCardBody;}
   close_DataTable() {this.close_card();}
@@ -342,7 +371,5 @@ export class LogSheetComponent implements OnInit {
       activity: '',
       act_at: '',
     });
-    console.log(this.manuallog);
-    console.log(this.LogForm);
   }
 }

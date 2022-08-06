@@ -19,3 +19,11 @@ th.mat-header-cell {font-size: 15px;color: #181818;background: #d3d4d54a;}
 .h5{font-size: 14px!important;}
 
 
+.noDataFound{
+  background-image: url('http://localhost:4200/assets/images/no_data_found.png');
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-size: auto 90%;
+  background-position-x: center;
+}
+

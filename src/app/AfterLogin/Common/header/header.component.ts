@@ -67,9 +67,6 @@ export class HeaderComponent implements OnInit {
     this._activeIncBackup.length = 0;
       this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe((data:any)=>{
         this._activeIncBackup = data;
-        // //(data.sort((a:any, b:any) => (a.id < b.id ? -1 : 1)));
-            //.log(data);
-
         if(data.length > 1){
         var local_sel_id = Number(localStorage.getItem('_local_sel_id'));
           if(local_sel_id > 0){

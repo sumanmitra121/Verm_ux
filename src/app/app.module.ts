@@ -134,7 +134,7 @@ import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/
 import { UserInfoComponent } from './AfterLogin/user-info/user-info.component';
 import { DialogalertComponent } from './CommonDialogAlert/dialogalert/dialogalert.component';
 import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 // End////////
 //Ngx Pagination//
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -220,6 +220,7 @@ import { BoardComponent } from './AfterLogin/board/board.component';
     // SearchFilterPipe
   ],
   imports: [
+    MatExpansionModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     MatToolbarModule,

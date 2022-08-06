@@ -163,7 +163,9 @@
         <ng-container *ngIf="get_evacuation_status.length > 0">
         <ul class="listDashboard">
          <li id="first-evacuation"><strong>Transport:</strong> {{transport_mode}}</li>
-         <li id="second-evacuation"><strong>Time:</strong> {{evacuation_time}}</li>
+         <li id="second-evacuation"><strong>Time:</strong> {{evacuation_time | slice:0:5}}</li>
+         <li id="third-evacuation"><strong>POB Transported:</strong> {{_pob_transported}}</li>
+
        </ul>
        </ng-container>
        <ng-container *ngIf="get_evacuation_status.length == 0">
@@ -189,7 +191,7 @@
             <mat-spinner [hidden]="event_logs" class='mx-auto' diameter="30"></mat-spinner>
             <ul class="listDashboard">
              <li><strong>Resource Assigned: </strong> {{resource_assigned}}</li>
-             <li><strong>Time: </strong> {{event_time}}</li>
+             <li><strong>Time: </strong> {{event_time | slice:0:5}}</li>
              <li><strong>Situation Status: </strong> {{situation_status}}</li>
            </ul>
            </ng-container>
@@ -456,7 +458,7 @@
                         <input placeholder="Enter Starting Location" [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                        <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required (change)="changeTime(vesselArray[i].eta,vesselArray[i].etd,i)"/>
                       </td>
                       <td>
                         <input placeholder="Enter Destination" [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
@@ -517,6 +519,7 @@
                       <th class="text-center">ETD</th>
                       <th class="text-center">TO</th>
                       <th class="text-center">ETA</th>
+                      <th class="text-center">HOURS TO LOCATION</th>
                       <th class="text-center">Remarks</th>
                      <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
@@ -535,13 +538,16 @@
                         <input placeholder="Enter Starting Location" [(ngModel)]="vesselArray[i].form_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                        <input [(ngModel)]="vesselArray[i].etd" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required (change)="changeTime(vesselArray[i].eta,vesselArray[i].etd,i)"/>
                       </td>
                       <td>
                         <input placeholder="Enter Destination" [(ngModel)]="vesselArray[i].to_at" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                        <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required (change)="changeTime(vesselArray[i].eta,vesselArray[i].etd,i)"/>
+                      </td>
+                      <td>
+                        <input [(ngModel)]="vesselArray[i].hours_to_location" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly/>
                       </td>
                       <td>
                         <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
@@ -563,6 +569,7 @@
                     <th class="text-center">ETD</th>
                     <th class="text-center">TO</th>
                     <th class="text-center">ETA</th>
+                    <th class="text-center">HOURS TO LOCATION</th>
                     <th class="text-center">Remarks</th>
                    <th class="text-center" (click)="addRow()">
                       <i class="fa fa-plus fa-2x"></i>

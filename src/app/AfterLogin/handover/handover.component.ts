@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { filter, map } from 'rxjs/operators';
+import {map } from 'rxjs/operators';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 
 @Component({
@@ -33,8 +33,6 @@ export class HandoverComponent implements OnInit {
     this.getTeam_id();
   }
   HandOver(){
-    console.log(this.handoverform.value)
-
     this.spinner.show();
     if(this.handoverform.get('to_team_id')?.value > 0){
       this.emergency.global_service('1','/handover',this.handoverform.value).subscribe((res:any) =>{
@@ -81,18 +79,17 @@ export class HandoverComponent implements OnInit {
   }
   getTeam_id(){
     this.emergency.global_service('0','/get_assigned_team','emp_id='+localStorage.getItem('_emp_id')).pipe(map((x:any)=> x.msg)).subscribe(res =>{
-      this.handoverform.get('from_team_id')?.setValue(res[0].team_id ? res[0].team_id : 0);
-      this.handoverform.get('from_team')?.setValue(res[0].team_name);
+      this.handoverform.get('from_team_id')?.setValue(res.length > 0 ? res[0].team_id : 0);
+      this.handoverform.get('from_team')?.setValue(res.length > 0 ? res[0].team_name : '');
        this.getTeam();
-
     })
   }
   getTeam(){
       this.emergency.global_service('0','/get_active_emp_list','flag=A').pipe(map((x:any)=> x.msg)).subscribe(data=>{
-      if(data.length > 1){
+        console.log(data);
+        if(data.length > 1){
         for(let i=0;i<(data.length -1) ;i++){
           if(data[i]!=null && data[i].team_id != this.handoverform.get('from_team_id')?.value){
-             console.log(data[i])
             this.TO_TEAM.push(data[i])
           }
         }
