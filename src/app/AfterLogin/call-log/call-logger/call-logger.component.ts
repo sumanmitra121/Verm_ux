@@ -64,7 +64,7 @@ export class CallLoggerComponent implements OnInit {
       disalogConfig.disableClose=false;
       disalogConfig.autoFocus=true;
       disalogConfig.width='35%';
-      disalogConfig.data={id:id,api_name:'/call_log_del',name:'Board Type'}
+      disalogConfig.data={id:id,api_name:'/call_log_del',name:'board Type'}
       const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
       dialogref.afterClosed().subscribe(dt=>{
        if(dt){

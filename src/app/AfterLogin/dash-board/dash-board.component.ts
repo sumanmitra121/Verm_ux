@@ -163,7 +163,7 @@ getChat(_Id:any){
    this.checkIfHasCHild();
   this.emergencyservice.global_service('0', '/oldMessage', 'min='+this._min+'&max=5'+'&id='+localStorage.getItem('Inc_id')).subscribe(data => {
     //data);
-    // console.log(data)
+    console.log(data)
      this.storageArray.length = 0;
      this.storageArray = data;
      this.storageArray = this.storageArray.msg;
@@ -236,6 +236,8 @@ getChat(_Id:any){
     if($('.verticalScroll').scrollTop() == 0){
       this._min += 5;
       this.emergencyservice.global_service('0', '/oldMessage', 'min='+this._min+'&max=5'+'&id='+_Id).subscribe(data => {
+       console.log(data)
+
         this.storageArray.length = 0;
         this.storageArray = data;
         this.storageArray = this.storageArray.msg;

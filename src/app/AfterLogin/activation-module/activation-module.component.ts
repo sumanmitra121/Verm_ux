@@ -51,14 +51,18 @@ export class ActivationModuleComponent implements OnInit {
     this.dataSource.sort = this.matsort;
   }
   fetchdata(){
-    this.spinner.show();
+    // this.spinner.show();
     this.team_on_duity_data.length=0;
     this.emergencyservice.global_service('0','/get_active_emp_list','flag='+this.approval_flag+'&inc_id='+localStorage.getItem('Inc_id')).pipe(map((x:any)=> x.msg)).subscribe(data=>{
+       console.log(data);
+
       this._HAND_FLAG = data[data.length -1].hand_flag;
       this.team_on_duity_data=data;
     this.check_active_team();
     this.putdata(this.team_on_duity_data);
     this.getTeambyEmployeeId();
+    console.log('ss');
+
   });
   }
   //check_whether_active_or_not_for_two_team_assign_same_range
@@ -81,6 +85,8 @@ export class ActivationModuleComponent implements OnInit {
     this.displayedColumns=['Name', 'employees_no','Action','Status','View'];
     this.displayedColumns_employee= ['select','Employee_name','Employee_designation'];
   }
+  console.log('sssad');
+
    this.fetchdata();
   }
   //For activate or deactive team
@@ -272,10 +278,12 @@ export class ActivationModuleComponent implements OnInit {
   getTeamName(team_name:any,active_flag:any){this._team_name =team_name;this._activated_flag = active_flag}
   push_notfication(dt:any){this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{})}
   getTeambyEmployeeId(){
-    this.emergencyservice.global_service('0','/get_assigned_team','emp_id='+localStorage.getItem('_emp_id')).pipe(map((x:any)=> x.msg)).subscribe(res =>{
-          this._show_alert = this.team_on_duity_data.find((x:any) => x.team_id == res[0].team_id).active_flag == 'Y' ? true : false;
-    })
-    this.spinner.hide();
-
+    if( this.team_on_duity_data.length > 1){
+      this.emergencyservice.global_service('0','/get_assigned_team','emp_id='+localStorage.getItem('_emp_id')).pipe(map((x:any)=> x.msg)).subscribe(res =>{
+        console.log(res);
+        this._show_alert = this.team_on_duity_data.find((x:any) => x.team_id == res[0].team_id).active_flag == 'Y' ? true : false;
+      })
+    }
+    // this.spinner.hide();
   }
 }
