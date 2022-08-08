@@ -312,7 +312,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
     if(this.uploaded_file!='' || this.logform.form.value.txt!=''){
     this.isEmojiPickerVisible=false;
     var date = new Date();
-    let latest_date = this.datePipe.transform(date, 'dd/mm/yyyy HH:MM');
+    let latest_date = this.datePipe.transform(date, 'dd/MM/yyyy HH:mm');
     this.storageArray.length = 0;
     var dt = {
       message: this.logform.form.value.txt,

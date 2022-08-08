@@ -34,7 +34,9 @@ ngOnInit(): void {this.fetchdata();}
 fetchdata(){
   this.spinner.show();
   this.emergencyservice.global_service('0','/employee',this.Flag).pipe(map((x:any)=> x.msg)).subscribe(data=>{
-   this.putdata(data);
+   console.log(data);
+
+    this.putdata(data);
   this.spinner.hide();
   })
 }

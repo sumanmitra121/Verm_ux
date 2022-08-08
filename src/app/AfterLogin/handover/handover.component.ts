@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {map } from 'rxjs/operators';
+import { IncDetails } from 'src/app/Model/IncDetails';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class HandoverComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.handoverform = this.fb.group({
+      inc:[''],
       header:['',Validators.required],
       remarks:['',Validators.required],
       from_team:[],
@@ -97,5 +99,11 @@ export class HandoverComponent implements OnInit {
       this.spinner.hide();
 
     });
+  }
+  getIncDetails(_event:any){
+    console.log(_event);
+    setTimeout(() => {
+    this.handoverform.get('inc')?.setValue(_event?.inc_name +' - '+ _event.inc_no);
+    }, 100);
   }
 }

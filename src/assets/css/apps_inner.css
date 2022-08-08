@@ -1086,6 +1086,17 @@ font-size: 17px;
   font-size: 15px!important;
 }
 
-
+.prefix{
+  width: 58px!important;
+  text-align: center;
+  margin: 0px 6px 0 0;
+  outline: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #9f9f9f;
+  border-radius: 0.25rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
 
 

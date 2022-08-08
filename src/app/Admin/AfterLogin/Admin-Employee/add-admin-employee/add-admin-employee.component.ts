@@ -41,6 +41,7 @@ export class AddAdminEmployeeComponent implements OnInit {
    })
   }
   logSubmit(logForm:Form){
+
     this.spinner.show();
     if(this.chk_existance[0].email == 0 || this.chk_existance[1].er_contact == 0 ||
       this.chk_existance[2].p_contact == 0 || this.chk_existance[3].emp_id == 0)

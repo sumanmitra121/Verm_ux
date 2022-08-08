@@ -13,7 +13,7 @@
                 [matTooltipDisabled]="inc_visibility.length > 4 ? false : true"
                 matTooltip="{{inc_visibility}}">
                   <span>
-                  {{inc_visibility =='' ? 'N/A' :(inc_visibility.length > 4  ) ? (inc_visibility | slice:0:3)+'..' : (inc_visibility)}}
+                  {{inc_visibility =='' ? 'N/A' :(inc_visibility.length > 6  ) ? (inc_visibility | slice:0:5)+'..' : (inc_visibility)}}
                   </span>
 									<h3>Visibility</h3>
 								</li>
@@ -40,7 +40,7 @@
 						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li>
-									<span>{{wind_speed!='' ? wind_speed +'km/h' : 'N/A'}}</span>
+									<span>{{wind_speed!='' ? wind_speed  : 'N/A'}}</span>
 									<h3>Wind Speed</h3>
 								</li>
 							</ul>

@@ -14,14 +14,11 @@ export class VirtualEmergencyService {
   private socket: Socket;
 
   // public url = 'http://192.168.1.244:3000';
-
   // public url = 'https://vermapi.opentech4u.co.in';
-
   public url = 'https://api.er-360.com';
-
   // socket:any;
-//  url:any='http://localhost:3000';
-//  readonly url:any='https://vermapi.opentech4u.co.in';
+  //  url:any='http://localhost:3000';
+  //  readonly url:any='https://vermapi.opentech4u.co.in';
  constructor(private route:Router,public dialog:MatDialog,private http:HttpClient) {
   // this.socket = io(this.url);
   // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});

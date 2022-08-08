@@ -53,6 +53,7 @@ import { DashBoardComponent } from './AfterLogin/dash-board/dash-board.component
 import { FirstloggedinchangePasswordComponent } from './AfterLogin/FirstTimeChangePassWord/firstloggedinchange-password/firstloggedinchange-password.component';
 import { FormsChecklistComponent } from './AfterLogin/forms-checklist/forms-checklist.component';
 import { FormschecklistfilesComponent } from './AfterLogin/formschecklistfiles/formschecklistfiles.component';
+import { HandOverDashboardComponent } from './AfterLogin/hand-over-dashboard/hand-over-dashboard.component';
 import { HandoverComponent } from './AfterLogin/handover/handover.component';
 import { AddIncidentComponent } from './AfterLogin/Incident/add-incident/add-incident.component';
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
@@ -370,8 +371,12 @@ const routes: Routes = [
     component:NotificationComponent
   },
   {
-    path:'handover',
+    path:'add_handover',
     component:HandoverComponent
+  },
+  {
+    path:'handover',
+    component:HandOverDashboardComponent
   }
 
 ];

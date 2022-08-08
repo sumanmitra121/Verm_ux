@@ -141,6 +141,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { HandoverComponent } from './AfterLogin/handover/handover.component';
 import { GlobalErrorHandlingInterceptor } from './Interceptor/global-error-handling.interceptor';
 import { BoardComponent } from './AfterLogin/board/board.component';
+import { HandOverDashboardComponent } from './AfterLogin/hand-over-dashboard/hand-over-dashboard.component';
 //End//
 @NgModule({
   declarations: [
@@ -216,7 +217,8 @@ import { BoardComponent } from './AfterLogin/board/board.component';
     ForgotPasswordComponent,
     UserInfoComponent,
     DialogalertComponent,
-    HandoverComponent
+    HandoverComponent,
+    HandOverDashboardComponent
     // SearchFilterPipe
   ],
   imports: [

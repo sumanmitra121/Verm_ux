@@ -34,7 +34,7 @@ export class DynamicGrid {
   wind_direc: any;
   temp_unit: string = 'C';
   visibility_unit = 'KM';
-  wind_unit= 'KM';
+  wind_speed_unit= 'KM';
 }
 export class vesselGrid {
 
@@ -65,7 +65,7 @@ export class vesselGrid {
   dest_to:any;
   total_prob:any;
   time_to_location:any;
-  hours_to_location:any;
+  // hours_to_location:any;
 }
 @Component({
   selector: 'app-board',
@@ -209,10 +209,10 @@ export class BoardComponent implements OnInit, OnDestroy {
           coordinates: this.LogForm.form.value.coordinates,
           summary: this.LogForm.form.value.summary,
           status: this.LogForm.form.value.status,
-          // people:this.LogForm.form.value.people,
-          // environment:this.LogForm.form.value.environment,
-          // asset:this.LogForm.form.value.asset,
-          // reputation:this.LogForm.form.value.reputation,
+          people:this.LogForm.form.value.people,
+          env:this.LogForm.form.value.env,
+          asset:this.LogForm.form.value.asset,
+          reputation:this.LogForm.form.value.reputation,
           user: this.default_user,
           dt: this.dynamicArray,
         };
@@ -701,10 +701,9 @@ export class BoardComponent implements OnInit, OnDestroy {
             wind_speed: this.get_incident_details_after_save[i].wind_speed,
             wind_direc: this.get_incident_details_after_save[i].wind_direc,
             temp_unit: this.get_incident_details_after_save[i].temp_unit,
-            // visibility_unit: this.get_incident_details_after_save[i].visibility_unit
-            visibility_unit: 'KM',
-            // wind_unit:this.get_incident_details_after_save[i].wind_unit,
-            wind_unit:'KM',
+            visibility_unit: this.get_incident_details_after_save[i].visibility_unit,
+            wind_speed_unit:this.get_incident_details_after_save[i].wind_speed_unit,
+
 
           };
           this.dynamicArray.push(this.newDynamic);
@@ -721,7 +720,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           wind_direc: '',
           temp_unit: 'C',
           visibility_unit:'KM',
-          wind_unit:'KM',
+          wind_speed_unit:'KM',
         };
         this.dynamicArray.push(this.newDynamic);
       }
@@ -787,7 +786,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             to_at: this.get_incident_details_after_save[i].to_at,
             eta: this.get_incident_details_after_save[i].eta,
             remarks: this.get_incident_details_after_save[i].remarks,
-            hours_to_location:moment.utc(moment(this.get_incident_details_after_save[i].etd,"HH:mm").diff(moment(this.get_incident_details_after_save[i].eta,"HH:mm"))).format("HH:mm")
+            time_to_location:this.get_incident_details_after_save[i].time_to_location
 
           };
           this.vesselArray.push(this.vesselDynamic);
@@ -802,7 +801,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           to_at: '',
           eta: '',
           remarks: '',
-          hours_to_location:''
+          time_to_location:''
         };
         this.vesselArray.push(this.vesselDynamic);
       }
@@ -839,8 +838,8 @@ export class BoardComponent implements OnInit, OnDestroy {
             pob_remaining:
               this.get_incident_details_after_save[i].pob_remaining,
             remarks: this.get_incident_details_after_save[i].remarks,
-            dest_no: this.get_incident_details_after_save[i].dest_no,
-            dest_to:this.get_incident_details_after_save[i].dest_to
+            // dest_no: this.get_incident_details_after_save[i].dest_no,
+             dest_to:this.get_incident_details_after_save[i].dest_to
           };
           this.vesselArray.push(this.vesselDynamic);
         console.log(this.vesselArray);
@@ -973,7 +972,7 @@ export class BoardComponent implements OnInit, OnDestroy {
         wind_direc: '',
         temp_unit:'C',
         visibility_unit: 'KM',
-        wind_unit:'KM'
+        wind_speed_unit:'KM'
       };
       this.dynamicArray.push(this.newDynamic);
       // return true;
@@ -1185,14 +1184,14 @@ export class BoardComponent implements OnInit, OnDestroy {
           .subscribe((res: any) => {
             //.log(res);
             if (res != '') {
-              this.inc_visibility = res.visibility;
-              // this.inc_visibility = res.visibility + res.visibility_unit; <== This is to need ti exchange with above
+              // this.inc_visibility = res.visibility;
+              this.inc_visibility = res.visibility + res.visibility_unit; //<== This is to need ti exchange with above
               this.inc_sea_state = res.sea_state;
               this.inc_temparature = res.temp;
-              // this._vis_unit = res.visibility_unit;
+              this._vis_unit = res.visibility_unit;
               this.temp = res.temp.split(this.deg)[0];
               this.wind_speed = res.wind_speed;
-              // this.wind_speed = res.wind_speed + res.wind_unit; <== This is to need ti exchange with above
+              this.wind_speed = res.wind_speed + res.wind_speed_unit; //<== This is to need ti exchange with above
               this.temp_unit = res.temp_unit;
 
             }
@@ -1399,10 +1398,10 @@ export class BoardComponent implements OnInit, OnDestroy {
         coordinates:this.get_incident_details.lat + ':' + this.get_incident_details.lon,
         summary:this.get_in_status.length > 0  ? (this.get_in_status[0]['summary']!='' ?  this.get_in_status[0]['summary'] :   this._brief_desc):  this._brief_desc,
         status:this.get_in_status.length > 0 ? this.get_in_status[0]?.status : '',
-      // people:this.get_in_status.length > 0 ? this.get_in_status[0]?.people : '',
-      // environment:this.get_in_status.length > 0 ? this.get_in_status[0]?.environment : '',
-      // asset:this.get_in_status.length > 0 ? this.get_in_status[0]?.asset : '',
-      // reputation:this.get_in_status.length > 0 ? this.get_in_status[0]?.reputation : ''
+      people:this.get_in_status.length > 0 ? this.get_in_status[0]?.people : '',
+      env:this.get_in_status.length > 0 ? this.get_in_status[0]?.env : '',
+      asset:this.get_in_status.length > 0 ? this.get_in_status[0]?.asset : '',
+      reputation:this.get_in_status.length > 0 ? this.get_in_status[0]?.reputation : ''
 
       });
     }, 500);
@@ -1432,11 +1431,11 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.alive = true;
   }
   changeTime(event:any,_etd:any,Index:any){
-    if(this.id_create == 'vessel_create'){
+    // if(this.id_create == 'vessel_create'){
       this.vesselArray[Index].time_to_location =event !=='' && _etd !='' ?  moment.utc(moment(_etd,"HH:mm").diff(moment(event,"HH:mm"))).format("HH:mm") : '';
-    }
-    else{
-      this.vesselArray[Index].hours_to_location =event !=='' && _etd !='' ?  moment.utc(moment(_etd,"HH:mm").diff(moment(event,"HH:mm"))).format("HH:mm") : '';
-    }
+    // }
+    // else{
+    //   this.vesselArray[Index].hours_to_location =event !=='' && _etd !='' ?  moment.utc(moment(_etd,"HH:mm").diff(moment(event,"HH:mm"))).format("HH:mm") : '';
+    // }
   }
 }

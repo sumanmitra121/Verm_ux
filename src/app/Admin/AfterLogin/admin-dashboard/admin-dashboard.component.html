@@ -226,7 +226,7 @@
                             <li
                             #tooltip="matTooltip"
                              [matTooltipDisabled]="cur_inc_status?.visibility.length > 4 ? false : true"
-                              matTooltip="{{cur_inc_status?.visibility}}"><span>{{!cur_inc_status ? 'N/A' : (cur_inc_status?.visibility.length > 4  ) ? (cur_inc_status?.visibility | slice:0:3)+'..' : (cur_inc_status?.visibility)}}</span>
+                              matTooltip="{{cur_inc_status?.visibility}}"><span>{{!cur_inc_status ? 'N/A' : (cur_inc_status?.visibility.length > 4  ) ? (cur_inc_status?.visibility + cur_inc_status?.visibility_unit | slice:0:3)+'..' : (cur_inc_status?.visibility +  cur_inc_status?.visibility_unit)}}</span>
                                 <h3>Visibility</h3>
                             </li>
                         </ul>
@@ -253,7 +253,7 @@
                     </div>
                     <div class="whiteBox2 mb-0">
                         <ul class="watherRepoort">
-                            <li><span>{{!cur_inc_status ? 'N/A' :  cur_inc_status?.wind_speed + 'km/h'}}</span>
+                            <li><span>{{!cur_inc_status ? 'N/A' :  cur_inc_status?.wind_speed + cur_inc_status?.wind_speed_unit}}</span>
                                 <h3>Wind Speed</h3>
                             </li>
                         </ul>

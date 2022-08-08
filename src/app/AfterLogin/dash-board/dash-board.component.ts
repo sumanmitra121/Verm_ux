@@ -82,12 +82,13 @@ getIncStatus(_id:any){
   this.emergencyservice.global_service('0','/inc_board','inc_id=' +_id).pipe(map((x:any) => x.msg)).subscribe(res=>{
     //res);
 
+      console.log(res);
 
-      this.inc_visibility = res.length > 0 ? res[0].visibility : '';
+      this.inc_visibility = res.length > 0 ? res[0].visibility + res[0].visibility_unit : '';
       this.inc_sea_state=res.length > 0 ? res[0].sea_state : "";
       // this.deg=res.length > 0 ? res[0].temp.charAt(res[0].temp.length-1): '';
       this.temp=res.length > 0 ? res[0].temp : '';
-      this.wind_speed=res.length > 0 ? res[0].wind_speed : '';
+      this.wind_speed=res.length > 0 ? res[0].wind_speed + res[0].wind_speed_unit: '';
       this.spinner.hide('inc_status');
       this._temp_unit = res.length > 0 ?  res[0].temp_unit : '';
   },error => {this.spinner.hide('inc_status');})

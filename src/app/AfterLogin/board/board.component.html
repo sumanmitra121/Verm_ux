@@ -32,7 +32,7 @@
                   <!-- {{inc_temparature}} -->
                  {{temp}}&#xb0;{{temp_unit}}
                 </li>
-                <li><strong>Wind Speed:</strong> {{wind_speed!='' ? wind_speed+'km/h' : 'N/A'}}</li>
+                <li><strong>Wind Speed:</strong> {{wind_speed!='' ? wind_speed : 'N/A'}}</li>
               </ul>
               <ng-container *ngIf="get_in_status.length == 0">
                 <ul class="boardStatus">
@@ -314,7 +314,7 @@
             </div>
             <div class="col-3">
               <label>Environment</label>
-              <textarea cols="30" rows="3" class="form-control" name="environment" id="Environment" ngModel #environment="ngModel" placeholder="Status Of Emergency Response"></textarea>
+              <textarea cols="30" rows="3" class="form-control" name="env" id="Environment" ngModel #env="ngModel" placeholder="Status Of Emergency Response"></textarea>
             </div>
             <div class="col-3">
               <label>Asset</label>
@@ -382,9 +382,9 @@
 
                               </div>
                               <div class="col-4">
-                                <mat-radio-group aria-label="Select an option" [(ngModel)]="dynamicArray[i].wind_unit" [ngModelOptions]="{standalone: true}">
-                                  <mat-radio-button value="KM" [checked]="dynamicArray[i].wind_unit == 'KM'">KM</mat-radio-button>
-                                  <mat-radio-button value="NM" [checked]="dynamicArray[i].wind_unit == 'NM'">NM</mat-radio-button>
+                                <mat-radio-group aria-label="Select an option" [(ngModel)]="dynamicArray[i].wind_speed_unit" [ngModelOptions]="{standalone: true}">
+                                  <mat-radio-button value="KM" [checked]="dynamicArray[i].wind_speed_unit == 'KM'">KM</mat-radio-button>
+                                  <mat-radio-button value="NM" [checked]="dynamicArray[i].wind_speed_unit == 'NM'">NM</mat-radio-button>
                                 </mat-radio-group>
                               </div>
 
@@ -547,7 +547,7 @@
                         <input [(ngModel)]="vesselArray[i].eta" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required (change)="changeTime(vesselArray[i].eta,vesselArray[i].etd,i)"/>
                       </td>
                       <td>
-                        <input [(ngModel)]="vesselArray[i].hours_to_location" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly/>
+                        <input [(ngModel)]="vesselArray[i].time_to_location" class="form-control" type="text" [ngModelOptions]="{standalone: true}" readonly/>
                       </td>
                       <td>
                         <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].remarks" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
