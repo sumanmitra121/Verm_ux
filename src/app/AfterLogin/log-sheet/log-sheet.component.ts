@@ -343,9 +343,9 @@ export class LogSheetComponent implements OnInit {
   }
   delete_modal(id: any,_index:any) {
     const disalogConfig=new MatDialogConfig();
-    disalogConfig.disableClose=false;
-    disalogConfig.autoFocus=true;
-    disalogConfig.width='35%';
+      disalogConfig.disableClose=false;
+      disalogConfig.autoFocus=true;
+      disalogConfig.width='35%';
     disalogConfig.data={id:id,api_name:'/manuallog_del',name:'board Type'}
     const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
     dialogref.afterClosed().subscribe(dt=>{

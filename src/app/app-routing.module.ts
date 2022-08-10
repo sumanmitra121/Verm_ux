@@ -59,6 +59,8 @@ import { AddIncidentComponent } from './AfterLogin/Incident/add-incident/add-inc
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
 import { EditIncidentComponent } from './AfterLogin/Incident/edit-incident/edit-incident.component';
 import { IncidentModuleComponent } from './AfterLogin/Incident/incident-module/incident-module.component';
+import { AddLessonLearntComponent } from './AfterLogin/Lesson_Learnt/add-lesson-learnt/add-lesson-learnt.component';
+import { LessonDashboardComponent } from './AfterLogin/Lesson_Learnt/lesson-dashboard/lesson-dashboard.component';
 import { LiveLogComponent } from './AfterLogin/live-log/live-log.component';
 import { AddlogsheetComponent } from './AfterLogin/log-sheet/Add-Log-Sheet/addlogsheet/addlogsheet.component';
 import { EditLogSheetComponent } from './AfterLogin/log-sheet/Edit-Log-Sheet/edit-log-sheet/edit-log-sheet.component';
@@ -71,6 +73,7 @@ import { BeforeLoginDashboardComponent } from './BeforeLogin/login-lee/before-lo
 import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/forgot-password/forgot-password.component';
 import { LoginLEEComponent } from './BeforeLogin/login-lee/login-lee.component';
 import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
+import { PageNotFoundComponent } from './Error_pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -377,6 +380,18 @@ const routes: Routes = [
   {
     path:'handover',
     component:HandOverDashboardComponent
+  },
+  {
+    path:'lesson_learnt',
+    component:LessonDashboardComponent
+  },
+  {
+    path:'add_lesson_learnt/:id',
+    component:AddLessonLearntComponent
+  },
+  {
+    path:"**",
+    component:PageNotFoundComponent
   }
 
 ];

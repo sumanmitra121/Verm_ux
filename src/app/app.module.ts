@@ -142,6 +142,9 @@ import { HandoverComponent } from './AfterLogin/handover/handover.component';
 import { GlobalErrorHandlingInterceptor } from './Interceptor/global-error-handling.interceptor';
 import { BoardComponent } from './AfterLogin/board/board.component';
 import { HandOverDashboardComponent } from './AfterLogin/hand-over-dashboard/hand-over-dashboard.component';
+import { LessonDashboardComponent } from './AfterLogin/Lesson_Learnt/lesson-dashboard/lesson-dashboard.component';
+import { AddLessonLearntComponent } from './AfterLogin/Lesson_Learnt/add-lesson-learnt/add-lesson-learnt.component';
+import { PageNotFoundComponent } from './Error_pages/page-not-found/page-not-found.component';
 //End//
 @NgModule({
   declarations: [
@@ -218,7 +221,10 @@ import { HandOverDashboardComponent } from './AfterLogin/hand-over-dashboard/han
     UserInfoComponent,
     DialogalertComponent,
     HandoverComponent,
-    HandOverDashboardComponent
+    HandOverDashboardComponent,
+    LessonDashboardComponent,
+    AddLessonLearntComponent,
+    PageNotFoundComponent
     // SearchFilterPipe
   ],
   imports: [
