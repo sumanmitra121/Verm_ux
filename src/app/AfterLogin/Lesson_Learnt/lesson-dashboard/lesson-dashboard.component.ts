@@ -28,12 +28,12 @@ export class LessonDashboardComponent implements OnInit {
 
     this.api_call.global_service('0','/lesson','inc_id='+inc_id).pipe((map((x:any) => x.msg))).subscribe(res => {
       console.log(res);
-      this.dataSource = new MatTableDataSource(res)
+      this.dataSource = new MatTableDataSource(res);
+    this.dataSource.paginator = this.paginator;
+
     })
   }
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -48,13 +48,19 @@ export class LessonDashboardComponent implements OnInit {
   Navigate(_id:any){
     this.router.navigate(['/add_lesson_learnt',btoa(_id)])
   }
-  delete(id:any){
+  delete(id:any,_index:any){
     const disalogConfig=new MatDialogConfig();
     disalogConfig.disableClose=false;
     disalogConfig.autoFocus=true;
     disalogConfig.width='35%';
     disalogConfig.data={id:id,api_name:'/manuallog_del',name:'board Type'};
     const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
-    dialogref.afterClosed().subscribe(dt=>{})
+    dialogref.afterClosed().subscribe(dt=>{
+      if(dt){
+        this.dataSource.data.splice(_index,1);
+        this.dataSource._updateChangeSubscription();
+      }
+
+    })
   }
 }

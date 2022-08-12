@@ -1099,4 +1099,16 @@ font-size: 17px;
   border-bottom-left-radius: 0;
 }
 
-
+.attchments {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  margin:0 5px 0 0;
+}
+.attchments:hover {
+  box-shadow: 0 0 2px 1px rgb(210 210 210 / 50%);
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

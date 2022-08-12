@@ -65,6 +65,8 @@ import { LiveLogComponent } from './AfterLogin/live-log/live-log.component';
 import { AddlogsheetComponent } from './AfterLogin/log-sheet/Add-Log-Sheet/addlogsheet/addlogsheet.component';
 import { EditLogSheetComponent } from './AfterLogin/log-sheet/Edit-Log-Sheet/edit-log-sheet/edit-log-sheet.component';
 import { LogSheetComponent } from './AfterLogin/log-sheet/log-sheet.component';
+import { MediaComponent } from './AfterLogin/Media_Module/media/media.component';
+import { ModifyMediaComponent } from './AfterLogin/Media_Module/modify-media/modify-media.component';
 import { ReportdatapoolDetailsComponent } from './AfterLogin/report-datepool/detailsReportdatapool/reportdatapool-details/reportdatapool-details.component';
 import { ReportDatepoolComponent } from './AfterLogin/report-datepool/report-datepool.component';
 import { RepositoryComponent } from './AfterLogin/repository/repository.component';
@@ -388,6 +390,14 @@ const routes: Routes = [
   {
     path:'add_lesson_learnt/:id',
     component:AddLessonLearntComponent
+  },
+  {
+    path:'media',
+    component:MediaComponent
+  },
+  {
+       path:'media/:type/:id',
+       component:ModifyMediaComponent
   },
   {
     path:"**",

@@ -18,7 +18,10 @@
               <label>REF <span class="text-danger">*</span></label>
               <input type="text" id="ref" class="form-control" formControlName="ref"/>
             </div>
-            <div class="col-6 mt-2"></div>
+            <div class="col-6 mt-2">
+              <!-- <label>Incident</label>
+              <input type="text" id="inc" class="form-control" formControlName="inc_id" readonly/> -->
+            </div>
             <div class="col-6 mt-2">
               <label>TITLE <span class="text-danger">*</span></label>
               <input type="text" id="title" class="form-control" formControlName="title"/>
@@ -30,28 +33,37 @@
 
           </div>
 
-          <div class="row form-group mt-2">
+          <div class="row form-group mt-4">
             <div class="col-6">
               <label>DESCRIPTION OF THE INCIDENT <span class="text-danger">*</span></label>
-              <textarea id="desc" class="form-control" formControlName="desc"></textarea>
+              <textarea id="desc" class="form-control" formControlName="desc" rows="5"></textarea>
             </div>
             <div class="col-6">
 
               <label>RECOMMENDATIONS <span class="text-danger">*</span></label>
-              <textarea id="rec"  class="form-control" formControlName="rec"></textarea>
+              <textarea id="rec"  class="form-control" formControlName="rec" rows="5"></textarea>
             </div>
           </div>
 
-          <div class="row form-group mt-2">
-            <div class="col-6">
-              <label>ATTACHMENT1
-                <!-- <span class="text-danger">*</span>  -->
+          <div class="row form-group mt-4">
+            <div class="col-6"  *ngIf="paramsString == 0">
+              <label>ATTACHMENT
               </label>
-               <input type="file"  class="form-control" formControlName="fileSource" (change)="onFileChange($event)" multiple/>
+               <input type="file" formControlName="fileSource"  class="form-control"  (change)="onFileChange($event)" multiple accept=".png,.jpeg,.jpg"/>
+               <mat-hint class="mt-5"><strong class="text-danger ">Note: Only .png,.jpg,.jpeg are allowed</strong></mat-hint>
+            </div>
+            <div class="col-12"  *ngIf="paramsString > 0 && isFile > 0">
+                  <!-- <img [src]="img_url + lesson_learnt.value.file" alt="Attachment"/> -->
+                  <ng-container *ngFor="let file of FILE">
+                    <a target="_blank" [href]="img_url + file">
+                      <img class="attchments" [src]="img_url + file" alt="Attachments" style="width:150px">
+                    </a>
+                  </ng-container>
+
             </div>
             </div>
 
-          <div class="row">
+          <div class="row mt-4">
             <div class="col-6">
               <div class="btnSubmitSec ">
                 <input type="submit" [disabled]="lesson_learnt.invalid" value="Save As Draft" class="btn btn-info" id="draft" (click)="submit('D')"/>

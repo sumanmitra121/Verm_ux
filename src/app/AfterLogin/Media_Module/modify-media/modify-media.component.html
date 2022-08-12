@@ -1,0 +1,62 @@
+<app-header (IncStatus)="getIncDetails($event)"></app-header>
+<div class="page-body-wrapper">
+  <app-sidebar class="sidebarMain"></app-sidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+            <div class="btnSubmitSec">
+            <h2 >{{ROUTEPARAMS.type == 'M' ? 'Media Release' : 'Holding Statement'}}</h2>
+            </div>
+          </div>
+             <!-- Media Release -->
+          <form [formGroup] = "media_release" (ngSubmit)="submit('M')" *ngIf="ROUTEPARAMS.type == 'M'">
+            <div class="form-group row">
+                 <div class="col-6">
+                  <label>RELEASE NO</label>
+                  <input type="text" class="form-control" formControlName="rel_no"/>
+                 </div>
+
+            </div>
+            <div class="form-group row">
+              <div class="col-6">
+                <label>DATE</label>
+                <input type="date" class="form-control" formControlName="date"/>
+               </div>
+              <div class="col-6">
+               <label>TIME</label>
+               <input type="time" class="form-control" formControlName="time"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-6">
+                <label>CONTACT-1</label>
+                <input type="text" class="form-control" formControlName="contact_1"/>
+               </div>
+              <div class="col-6">
+               <label>CONTACT-2</label>
+               <input type="text" class="form-control" formControlName="contact_2"/>
+              </div>
+            </div>
+            <div class="form-group row">
+            <div class="col-12">
+              <label>LOCATION</label>
+              <textarea  class="form-control" rows="5" formControlName="location"></textarea>
+             </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="btnSubmitSec">
+                  <input type="submit" class="customBtn" [value]="ROUTEPARAMS.id  > 0 ? 'Update' : 'Save'">
+                </div>
+              </div>
+            </div>
+
+          </form>
+              <!-- End -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

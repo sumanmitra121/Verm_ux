@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { global_url_test } from 'src/app/url';
 
 @Component({
   selector: 'app-add-lesson-learnt',
@@ -13,13 +14,18 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./add-lesson-learnt.component.css']
 })
 export class AddLessonLearntComponent implements OnInit {
+  FILE:any=[];
+  img_url= global_url_test.URL;
+  isFile:number=0;
+  paramsString!:number;
   lesson_learnt!: FormGroup;
   constructor(private _route: Router,
     private datePipe:DatePipe,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
+    public route: ActivatedRoute,
     private api_call: VirtualEmergencyService,
     private toastr:ToastrManager,private spinner:NgxSpinnerService) {
+      this.paramsString = Number(atob(this.route.snapshot.params.id))
     this.lesson_learnt = this.fb.group({
       id: [atob(this.route.snapshot.params.id)],
       inc_id: [''],
@@ -40,29 +46,29 @@ export class AddLessonLearntComponent implements OnInit {
   }
   ngOnInit(): void {
     if(Number(atob(this.route.snapshot.params.id)) > 0){
+      console.log(Number(atob(this.route.snapshot.params.id)))
       this.setFormValue();
     }
   }
   setFormValue(){
-     console.log("data")
     this.api_call.global_service('0', '/lesson', 'id='+atob(this.route.snapshot.params.id)).pipe(map((x:any) => x.msg)).subscribe(res => {
-       console.log(res);
-console.log(this.datePipe.transform(res[0].date,'dd/mm/YYYY'));
-
+       if(res.length > 0){
+       res.forEach((element:any) => {
+         this.FILE.push(element.file_path);
+       });
+       this.isFile = res[0].isFile;
       this.lesson_learnt.patchValue({
         id: res[0].id,
-        inc_id: res[0].inc_id,
+        inc_id: res[0].inc_id ? res[0].inc_id : '',
         user: localStorage.getItem('Email'),
-        ref: res[0].reff_no,
-        title: res[0].title,
-        date: this.datePipe.transform(res[0].date,'dd/MM/YYYY'),
-        desc: res[0].description,
-        rec: res[0].recom,
-        fileSource: res[0].file_name,
-        files: res[0].file_path
+        ref: res[0].reff_no ? res[0].reff_no :'',
+        title: res[0].title ? res[0].title : '',
+        date: res[0].date ? this.datePipe.transform(res[0].date,'yyyy-MM-dd') : '',
+        desc: res[0].description ? res[0].description : '',
+        rec: res[0].recom ? res[0].recom : '',
+        file:null
       })
-      console.log(this.lesson_learnt);
-
+    }
     })
   }
   submit(_type: any) {
@@ -80,9 +86,15 @@ console.log(this.datePipe.transform(res[0].date,'dd/mm/YYYY'));
     formdata.append('date', this.lesson_learnt.value.date);
     formdata.append('description', this.lesson_learnt.value.desc);
     formdata.append('recom', this.lesson_learnt.value.rec);
-    for (let img_file of  this.lesson_learnt.value.file) {
-      formdata.append("file", img_file);
+    if(Number(atob(this.route.snapshot.params.id)) > 0){
+      formdata.append("file", "");
     }
+    else{
+      for (let img_file of  this.lesson_learnt.value.file) {
+        formdata.append("file", img_file);
+      }
+    }
+
     var api_name = _type == 'D' ? '/lesson' : '';
     this.api_call.global_service('1', api_name, formdata).subscribe((res: any) => {
     this.spinner.hide();
@@ -111,7 +123,5 @@ console.log(this.datePipe.transform(res[0].date,'dd/mm/YYYY'));
     this.lesson_learnt.patchValue({
       inc_id: e.id
     });
-    console.log(Number(atob(this.route.snapshot.params.id)));
-
   }
 }

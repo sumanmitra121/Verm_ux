@@ -145,6 +145,8 @@ import { HandOverDashboardComponent } from './AfterLogin/hand-over-dashboard/han
 import { LessonDashboardComponent } from './AfterLogin/Lesson_Learnt/lesson-dashboard/lesson-dashboard.component';
 import { AddLessonLearntComponent } from './AfterLogin/Lesson_Learnt/add-lesson-learnt/add-lesson-learnt.component';
 import { PageNotFoundComponent } from './Error_pages/page-not-found/page-not-found.component';
+import { MediaComponent } from './AfterLogin/Media_Module/media/media.component';
+import { ModifyMediaComponent } from './AfterLogin/Media_Module/modify-media/modify-media.component';
 //End//
 @NgModule({
   declarations: [
@@ -224,7 +226,9 @@ import { PageNotFoundComponent } from './Error_pages/page-not-found/page-not-fou
     HandOverDashboardComponent,
     LessonDashboardComponent,
     AddLessonLearntComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    MediaComponent,
+    ModifyMediaComponent
     // SearchFilterPipe
   ],
   imports: [
