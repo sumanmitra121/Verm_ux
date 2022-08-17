@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { map } from 'rxjs/operators';
+import { global_url_test } from 'src/app/url';
 
 @Component({
   selector: 'app-media',
@@ -11,6 +12,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./media.component.css']
 })
 export class MediaComponent implements OnInit {
+  _url= global_url_test.URL;
+
   incDetails:any={};
   flag:any = "M";
   dataSource = new MatTableDataSource();

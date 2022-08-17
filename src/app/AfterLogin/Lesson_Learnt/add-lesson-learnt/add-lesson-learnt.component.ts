@@ -151,7 +151,7 @@ export class AddLessonLearntComponent implements OnInit {
     const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
     dialogref.afterClosed().subscribe(dt=>{
       // var msg = this.lesson_learnt.value.id > 0 ? 'Updation Successfull! you can now check this in repository section in ' : 'Addition Successfull';
-       var msg = 'Successfully saved as pdf in repository section under' + localStorage.getItem('Inc_No') + 'folder';
+       var msg = 'Successfully saved as pdf in repository section under ' + localStorage.getItem('Inc_No') + ' folder';
       if(dt){this.submitData(formdata,api_name,msg);}
     })
  }

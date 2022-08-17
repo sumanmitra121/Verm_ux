@@ -11,7 +11,7 @@
             </div>
           </div>
              <!-- Media Release -->
-          <form [formGroup] = "media" (ngSubmit)="submit('M')" >
+          <form [formGroup] = "media" >
             <div class="form-group row">
                  <div class="col-6">
                   <label>{{ROUTEPARAMS.type == 'M' ? 'RELEASE NO' :  'HOLDING STATEMENT NO'}}</label>
@@ -75,7 +75,9 @@
             <div class="row">
               <div class="col-6">
                 <div class="btnSubmitSec">
-                  <input type="submit" class="customBtn" [value]="ROUTEPARAMS.id  > 0 ? 'Update' : 'Save'">
+                  <input type="submit" class="customBtn" value="Save As Draft" (click)="submit('D')" >
+                  <input type="submit" class="customBtn" value="Save As Final" (click)="submit('F')" >
+
                 </div>
               </div>
             </div>

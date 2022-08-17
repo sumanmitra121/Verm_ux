@@ -136,9 +136,9 @@
                                     </a>
                                    <mat-menu #menu="matMenu">
                                      <share-buttons
-                                     [showText]="true"
                                      style="color: white;"
-                                     theme="material-light"
+                                     [showText]="true"
+                                     theme="material-dark"
                                      [include]="['facebook', 'whatsapp', 'email', 'copy']"
                                      url="{{files.form_path}}"
                                    ></share-buttons>
@@ -245,10 +245,12 @@
                            <mat-menu #menu="matMenu">
                              <share-buttons
                              style="color: white;"
-                             theme="material-light"
+                              [showText]="true"
+                              theme="material-dark"
                              [include]="['facebook', 'whatsapp', 'email', 'copy']"
                              url="{{row.form_path}}"
                            ></share-buttons></mat-menu>
+
 
                            <!-- For Preview -->
                            <!-- <a style="cursor:pointer" type="button"

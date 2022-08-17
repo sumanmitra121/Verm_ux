@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import "~angular2-multiselect-dropdown/themes/default.theme.css"; */
 @import url('https://fonts.googleapis.com/css?family=Spectral+SC:700');
+@import '~@angular/cdk/overlay-prebuilt.css';
 /* @import '~ngx-sharebuttons/themes/material.scss'; */
 /* @import '~ngx-sharebuttons/themes/modern.scss'; */
 /* @import '~@ngx-share/button/styles/themes/default/default-theme.css'; */

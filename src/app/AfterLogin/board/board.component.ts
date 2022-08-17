@@ -16,7 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { from } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take} from 'rxjs/operators';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
@@ -1177,6 +1177,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       .global_service('0', '/inc_board', 'inc_id=' + _id)
       .pipe(map((x: any) => x.msg))
       .subscribe((data) => {
+        console.log(data);
+
         this.get_in_status = data;
         this.get_incident_details_after_save = data;
         from(data)
@@ -1193,7 +1195,6 @@ export class BoardComponent implements OnInit, OnDestroy {
               this.wind_speed = res.wind_speed;
               this.wind_speed = res.wind_speed + res.wind_speed_unit; //<== This is to need ti exchange with above
               this.temp_unit = res.temp_unit;
-
             }
           });
       });
@@ -1430,5 +1431,24 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
   changeTime(event:any,_etd:any,Index:any){
       this.vesselArray[Index].time_to_location =event !=='' && _etd !='' ?  moment.utc(moment(event,"HH:mm").diff(moment(_etd,"HH:mm"))).format("HH:mm") : '';
+  }
+  openModalDialog(){
+    const disalogConfig = new MatDialogConfig();
+    disalogConfig.disableClose = false;
+    disalogConfig.autoFocus = true;
+    disalogConfig.width = '35%';
+    disalogConfig.data = {
+      summary_incident: this.get_in_status[0].summary,
+      api_name: '',
+      name: 'summary_inc',
+      id: 0,
+    };
+    const dialogref = this.dialog.open(DialogalertComponent, disalogConfig);
+    dialogref.afterClosed().subscribe((dt) => {
+         if(dt){
+          console.log('sss');
+
+         }
+    })
   }
 }

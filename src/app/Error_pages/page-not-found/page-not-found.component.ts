@@ -1,5 +1,5 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-page-not-found',
@@ -7,19 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-not-found.component.css',
    '../../../assets/css/adminLTE_Errors.css']
 })
-export class PageNotFoundComponent implements OnInit {
-
-  constructor(private router:Router) { }
-
-  ngOnInit(): void {
-  }
-  navigate(){
-    if(localStorage.getItem('User_type')!='A'){
-             this.router.navigate(['/dashboard']);
-    }
-    else{
-      this.router.navigate(['/admin/dashboard']);
-
-    }
-  }
+export class PageNotFoundComponent {
+  constructor(private _location:Location){}
+  navigate(){this._location.back();}
 }

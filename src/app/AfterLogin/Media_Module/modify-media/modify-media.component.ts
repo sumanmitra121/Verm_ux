@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-modify-media',
@@ -18,6 +19,7 @@ export class ModifyMediaComponent implements OnInit {
     private toastr:ToastrManager,
     private fb:FormBuilder,
     private datePipe:DatePipe,
+    private spinner:NgxSpinnerService,
     private router:Router,
     private api_call:VirtualEmergencyService) {
     this.ROUTEPARAMS = {
@@ -28,6 +30,7 @@ export class ModifyMediaComponent implements OnInit {
       this.media = this.fb.group({
         id:[Number(atob(this.routeParams.snapshot.params.id))],
         inc_id:[''],
+        inc_no:[localStorage.getItem('Inc_No')],
         user:[localStorage.getItem('Email')],
         description:[''],
         rel_no:[''],
@@ -43,6 +46,7 @@ export class ModifyMediaComponent implements OnInit {
         id:[Number(atob(this.routeParams.snapshot.params.id))],
         inc_id:[''],
         user:[localStorage.getItem('Email')],
+        inc_no:[localStorage.getItem('Inc_No')],
         description:[''],
         stat_no:[''],
         date:[''],
@@ -66,6 +70,7 @@ export class ModifyMediaComponent implements OnInit {
         switch(atob(this.routeParams.snapshot.params.type)){
           case "M":this.media.patchValue({
                     id:Number(atob(this.routeParams.snapshot.params.id)),
+                    inc_no:localStorage.getItem('Inc_No'),
                     inc_id:res[0].inc_id,
                     user:localStorage.getItem('Email'),
                     rel_no:res[0].rel_no ? res[0].rel_no : '',
@@ -91,20 +96,38 @@ export class ModifyMediaComponent implements OnInit {
     }
   }
   submit(mode:any){
+   this.spinner.show();
    console.log(this.media.value);
-  //  this.submitForm('/media_rel');
+   var api_name;
+   var msg;
+   switch(mode){
+    case 'D':
+              api_name = this.ROUTEPARAMS.type == 'M' ? '/media_rel' : '/holding';
+              msg =  Number(atob(this.routeParams.snapshot.params.id)) > 0 ? 'Updation Successfull' : 'Submited successfully';
+              this.submitForm(api_name,msg)
+              break;
+    case 'F':
+              api_name = this.ROUTEPARAMS.type == 'M' ? '/media_rel_final' : '/holding';
+               msg = 'Successfully saved as pdf in repository under'+localStorage.getItem('Inc_No')+'folder';
+               this.submitForm(api_name,msg);
+               break;
+    default:break;
+
+   }
   }
 
-  submitForm(api_name:any){
+  submitForm(api_name:any,msg:any){
     this.api_call.global_service(1,api_name,this.media.value).pipe((map((x:any) => x.suc))).subscribe(res =>{
+        this.spinner.hide();
         if(res > 0){
           this.router.navigate(['/media']).then(()=>{
-            this.toastr.successToastr('Submited successfully','');
+            this.toastr.successToastr(msg,'');
           })
         }
         else{
           this.toastr.errorToastr('Submition Failed','');
         }
     })
+
   }
 }

@@ -1109,6 +1109,13 @@ font-size: 17px;
 .attchments:hover {
   box-shadow: 0 0 2px 1px rgb(210 210 210 / 50%);
 }
-.mat-radio-button ~ .mat-radio-button {
-  margin-left: 16px;
+
+.headline{
+  color:#464ed0!important
+}
+.backBtn{
+  background: #464ed0!important;
+  color: #fff!important;
+  outline: 0!important;
+  border: 0!important;
 }

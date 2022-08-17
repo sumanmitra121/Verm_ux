@@ -13,12 +13,13 @@
        <!-- <div class="row "> -->
        <div class="rowCustomFlex">
          <div class="col-3">
-          <div class="whiteBoxComon" id="inc_create" (click)="set_modal_for_create('inc_create')" type="button" data-toggle="modal" data-target="#create_incident_modal">
+          <div class="whiteBoxComon" >
             <div class="card-header card_headerCustom">
-              <h2 class="pull-left text-dark titleDashBox">Incident Status</h2>
-              <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
+              <h2 class="pull-left text-dark titleDashBox w-100">Incident Status
+                <mat-icon class="float-right"  *ngIf="get_in_status.length > 0" (click)="openModalDialog()">more_vert</mat-icon>
+              </h2>
             </div>
-            <div class="card_bodyCustom">
+            <div class="card_bodyCustom" id="inc_create" (click)="set_modal_for_create('inc_create')" type="button" data-toggle="modal" data-target="#create_incident_modal">
              <h3 id="first-item"></h3>
 
               <ul class="listDashboard" *ngIf="get_in_status.length > 0">
