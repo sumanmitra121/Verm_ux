@@ -191,7 +191,7 @@
                           <mat-list-item   *ngFor="let incidents of get_current_incident;let i=index" #tooltip="matTooltip" matTooltip="Select {{incidents.inc_name}}" (click)="setCurrentIncidentDetails(incidents)" [hidden]="incDetails?.inc_no ==incidents.inc_no">
 
                           <mat-icon mat-list-icon class="text-danger" *ngIf='i == (get_current_incident.length-1)'>beenhere</mat-icon>
-                            <div mat-line>{{incidents.inc_name}} ({{incidents.inc_no}}</div>
+                            <div mat-line>{{incidents.inc_name}} ({{incidents.inc_no}})</div>
                           </mat-list-item>
                         </mat-list>
                     </mat-menu>

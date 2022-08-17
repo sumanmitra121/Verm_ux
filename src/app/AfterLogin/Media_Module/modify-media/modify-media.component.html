@@ -11,13 +11,13 @@
             </div>
           </div>
              <!-- Media Release -->
-          <form [formGroup] = "media_release" (ngSubmit)="submit('M')" *ngIf="ROUTEPARAMS.type == 'M'">
+          <form [formGroup] = "media" (ngSubmit)="submit('M')" >
             <div class="form-group row">
                  <div class="col-6">
-                  <label>RELEASE NO</label>
-                  <input type="text" class="form-control" formControlName="rel_no"/>
+                  <label>{{ROUTEPARAMS.type == 'M' ? 'RELEASE NO' :  'HOLDING STATEMENT NO'}}</label>
+                  <input type="text" class="form-control" formControlName="rel_no" *ngIf="ROUTEPARAMS.type == 'M'"/>
+                  <input type="text" class="form-control" formControlName="stat_no" *ngIf="ROUTEPARAMS.type == 'H'"/>
                  </div>
-
             </div>
             <div class="form-group row">
               <div class="col-6">
@@ -31,19 +31,46 @@
             </div>
             <div class="form-group row">
               <div class="col-6">
-                <label>CONTACT-1</label>
-                <input type="text" class="form-control" formControlName="contact_1"/>
+                <label>{{ROUTEPARAMS.type == 'M' ? 'CONTACT NAME' : 'ISSUED BY'}}</label>
+                <input type="text" class="form-control" formControlName="contact_name"/>
                </div>
               <div class="col-6">
-               <label>CONTACT-2</label>
-               <input type="text" class="form-control" formControlName="contact_2"/>
+               <label>CONTACT INFORMATION</label>
+               <input type="text" class="form-control" formControlName="contact_info"/>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="ROUTEPARAMS.type == 'H'">
+              <div class="col-6" >
+                <label>ISSUED DATE</label>
+               <input type="date" class="form-control" formControlName="issued_date"/>
+              </div>
+              <div class="col-6" >
+                <label>CONTACT PERSON</label>
+               <input type="text" class="form-control" formControlName="contact_person"/>
               </div>
             </div>
             <div class="form-group row">
             <div class="col-12">
               <label>LOCATION</label>
-              <textarea  class="form-control" rows="5" formControlName="location"></textarea>
+              <textarea  class="form-control" rows="3" formControlName="location"></textarea>
              </div>
+             <div class="col-12 mt-3">
+              <label>DESCRIPTION</label>
+              <textarea  class="form-control" rows="3" formControlName="description"></textarea>
+             </div>
+            </div>
+            <div class="form-group row" *ngIf="ROUTEPARAMS.type == 'H'">
+                <div class="col-12">
+              <h4>Preview: </h4>
+                  <span>
+                      Our Emergency Response Team has been mobilised to contain the incident and is working closely with <b>{{media.value.description ?  media.value.description : '[…………………………………………………………………………………….]'}}.</b>
+                      All other relevant authorities have been informed. Our utmost priority and concern is the safety of the people and environment at the moment.
+                      We will provide additional information in due course as the investigation is still being carried out.
+                  </span><br>
+                  <span>
+                    For further inquiries, please contact <b>{{media.value.contact_person ? media.value.contact_person : '[………………………………………………….]' }}.</b>
+                  </span>
+                </div>
             </div>
             <div class="row">
               <div class="col-6">
@@ -52,9 +79,9 @@
                 </div>
               </div>
             </div>
-
           </form>
               <!-- End -->
+
         </div>
       </div>
     </div>

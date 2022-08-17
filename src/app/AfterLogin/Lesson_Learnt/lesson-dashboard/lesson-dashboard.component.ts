@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { map } from 'rxjs/operators';
+import { global_url_test } from 'src/app/url';
 
 @Component({
   selector: 'app-lesson-dashboard',
@@ -14,6 +15,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./lesson-dashboard.component.css']
 })
 export class LessonDashboardComponent implements OnInit {
+  _url= global_url_test.URL;
   displayedColumns: string[] = ['Id', 'Ref', 'Title', 'Action'];
    public dataSource = new MatTableDataSource();
    @ViewChild(MatSort) matsort!: MatSort;
@@ -24,8 +26,7 @@ export class LessonDashboardComponent implements OnInit {
   ngOnInit(): void {}
 
   fetchData(inc_id:any,id:any){
-    console.log("INC_ID:"+inc_id+"ID:"+id);
-
+    // console.log("INC_ID:"+inc_id+"ID:"+id);
     this.api_call.global_service('0','/lesson','inc_id='+inc_id).pipe((map((x:any) => x.msg))).subscribe(res => {
       console.log(res);
       this.dataSource = new MatTableDataSource(res);
@@ -60,7 +61,6 @@ export class LessonDashboardComponent implements OnInit {
         this.dataSource.data.splice(_index,1);
         this.dataSource._updateChangeSubscription();
       }
-
     })
   }
 }

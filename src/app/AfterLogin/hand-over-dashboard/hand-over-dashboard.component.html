@@ -34,6 +34,10 @@
                   <th mat-header-cell *matHeaderCellDef > Handover To </th>
                   <td mat-cell *matCellDef="let row">{{row.to_team}}</td>
                 </ng-container>
+                <ng-container matColumnDef="Handover_against">
+                  <th mat-header-cell *matHeaderCellDef > Handover Against </th>
+                  <td mat-cell *matCellDef="let row" ><b class="text-success">{{row.inc_name}} {{'('+row.inc_no+')'}}</b></td>
+                </ng-container>
                 <ng-container matColumnDef="Reason_Of_Header">
                   <th mat-header-cell *matHeaderCellDef > Reason For Handover </th>
                   <td mat-cell *matCellDef="let row" >{{row.header}}</td>

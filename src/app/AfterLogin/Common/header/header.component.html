@@ -85,28 +85,23 @@
 				<span *ngIf="user_status=='M'"><i class="fa fa-meetup activeStatus" aria-hidden="true"></i> In a meeting</span>
 				<span *ngIf="user_status=='C'"><i class="fa fa-phone activeStatus" aria-hidden="true"></i> On a call</span>
 				<span *ngIf="user_status=='S'"><i class="fa fa-circle activeStatus" aria-hidden="true"></i> Stand down</span>
-
-
 				<i class="fa fa-caret-down activeDropCUs" aria-hidden="true"></i></a>
-
 			<div class="dropdown-menu dropdown-menu-end dropdownActive" aria-labelledby="navbarDropdown">
 				<a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="user_status=='M' ? 'customBackground' : ''" (click)="select_mode('M')"><i class="fa fa-meetup" [ngStyle]="{'color' : user_status=='M' ? '#fff' : 'black'}" aria-hidden="true"></i>In a meeting</a>
 				<a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="user_status=='C' ? 'customBackground' : ''" (click)="select_mode('C')"><i class="fa fa-phone" [ngStyle]="{'color' : user_status=='C' ? '#fff' : 'black'}" aria-hidden="true"></i>On a call</a>
 				<a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="user_status=='L' ? 'customBackground' : ''" (click)="select_mode('L')"><i class="fa  fa-circle" [ngStyle]="{'color' : user_status=='L' ? '#fff' : 'black'}" aria-hidden="true"></i>Logged In</a>
 				<a class="dropdown-item subLink" style="cursor: pointer;" [ngClass]="user_status=='S' ? 'customBackground' : ''" (click)="select_mode('S')"><i class="fa fa-circle" [ngStyle]="{'color' : user_status=='S' ? '#fff' : 'black'}" aria-hidden="true"></i>Stand down</a>
 			  </div>
-
 			</li>
-
 
 		<li class="userDrop dropdown">
       <a  class="nav-link" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"
-     ><img src="{{img_src}}" alt="profile" class="thumImg">
-          </a>
+     ><img src="{{img_src}}" alt="profile" class="thumImg"></a>
 		<div class="dropdown-menu logoutPopup">
 			<a  class="profileEditPopup" data-toggle="modal" data-target="#Employee_profile" ><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</a>
-
-			<div class="thumLogout"><img src="{{img_src}}" alt="profile" class="thumImg"></div>
+			<div class="thumLogout">
+        <img src="{{img_src}}" alt="profile" class="thumImg">
+      </div>
 			<div class="user">
 			{{name}}
 			  <p *ngIf="user_type=='I'" class="text-success	">Incident Commander</p>

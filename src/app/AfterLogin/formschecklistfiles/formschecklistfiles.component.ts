@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as JSZip from 'jszip';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Location } from '@angular/common';
 declare var JSZipUtils : any
 @Component({
   selector: 'app-formschecklistfiles',
@@ -23,7 +24,12 @@ export class FormschecklistfilesComponent implements OnInit {
   icon:any='fa-list-ul';
   url=global_url_test.URL;
   get_text:any='';
-  constructor(private route:ActivatedRoute,private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService,private router:Router,private toastr:ToastrManager) { }
+  constructor(private route:ActivatedRoute,
+    private emergencyservice:VirtualEmergencyService,
+    private spinner:NgxSpinnerService,
+    private _location:Location,
+    private router:Router,
+    private toastr:ToastrManager) { }
   displayedColumns: string[] = ['chk','img','Name', 'Date', 'Type', 'Created_by','Action'];
   dataSource= new MatTableDataSource();
    selection = new SelectionModel<any>(true);
@@ -45,6 +51,7 @@ export class FormschecklistfilesComponent implements OnInit {
     this.get_files.length=0;
       this.Get_Uploaded_Files=data;
       this.Get_Uploaded_Files=this.Get_Uploaded_Files.msg;
+
       if(this.Get_Uploaded_Files!=''){
         this.catg_name=this.Get_Uploaded_Files[0].catg_name;
       for(let i=0;i<this.Get_Uploaded_Files.length;i++){
@@ -283,5 +290,7 @@ export class FormschecklistfilesComponent implements OnInit {
   }
   // this.selection.selected.length=0;
   }
-
+  backToLocation(){
+ this._location.back();
+  }
 }

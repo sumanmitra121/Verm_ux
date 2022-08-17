@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./hand-over-dashboard.component.css']
 })
 export class HandOverDashboardComponent implements OnInit {
-  displayedColumns: string[] = ['Id','Hanover_From','Hanover_To', 'Reason_Of_Header'];
+  displayedColumns: string[] = ['Id','Hanover_From','Hanover_To','Handover_against', 'Reason_Of_Header'];
   dataSource= new MatTableDataSource();
   @ViewChild(MatSort) matsort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

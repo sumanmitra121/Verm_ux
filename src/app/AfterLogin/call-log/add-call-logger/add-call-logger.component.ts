@@ -21,7 +21,11 @@ export class AddCallLoggerComponent implements OnInit {
   Inc_id:any=localStorage.getItem('Inc_id');
   Inc_no:any=localStorage.getItem('Inc_No');
   ref_no:any;
-  constructor(private route:ActivatedRoute,private router:Router,private emergencyService:VirtualEmergencyService,private toastr:ToastrManager,private spinner:NgxSpinnerService) { }
+  constructor(private route:ActivatedRoute,
+    private router:Router,
+    private emergencyService:VirtualEmergencyService,
+    private toastr:ToastrManager,
+    private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.id=this.route.snapshot.params['id'];
@@ -49,7 +53,7 @@ export class AddCallLoggerComponent implements OnInit {
     }
     else{
      this.emergencyService.global_service('0','/get_ref_no','inc_id='+this.Inc_no).subscribe(data=>{
-      //  console.log(data);
+       console.log(data);
       this.ref_no=data;
       this.LogForm.setValue({
         id:this.id,
@@ -65,9 +69,10 @@ export class AddCallLoggerComponent implements OnInit {
     })
     }
   }
+
   logSubmit(logForm:Form){
-    // console.log(logForm)
-    this.spinner.show();
+   if(this.LogForm.form.value.inc_id){
+      this.spinner.show();
     this.emergencyService.global_service('1','/call_log',logForm).subscribe(data=>{
         this.check_response=data;
         if(this.check_response.suc==1){
@@ -82,6 +87,10 @@ export class AddCallLoggerComponent implements OnInit {
 
         }
     })
+    }
+    else{
+           this.toastr.errorToastr('There are no active incident','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
+    }
   }
 
 }

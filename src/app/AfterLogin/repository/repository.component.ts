@@ -11,7 +11,7 @@ import * as FileSaver from 'file-saver';
 import '../../../assets/jszip-utils.js';
 import * as JSZip from 'jszip';
 import { ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 declare var JSZipUtils: any;
 @Component({
@@ -73,7 +73,8 @@ export class RepositoryComponent implements OnInit {
     private emergencyservice: VirtualEmergencyService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrManager,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private _location:Location
   ) {}
 
   ngOnInit(): void {
@@ -88,6 +89,8 @@ export class RepositoryComponent implements OnInit {
         this.get_files.length = 0;
         this.Get_Uploaded_Files = data;
         this.Get_Uploaded_Files = this.Get_Uploaded_Files.msg;
+        console.log(data);
+
         if (this.Get_Uploaded_Files != '') {
           for (let i = 0; i < this.Get_Uploaded_Files.length; i++) {
             this.get_files.push({
@@ -434,5 +437,8 @@ export class RepositoryComponent implements OnInit {
     this._show_btn = Number(inc_details.inc_no) == this.catg_name ? false : true;
       console.log(this._show_btn);
 
+  }
+  backToLocation(){
+    this._location.back();
   }
 }

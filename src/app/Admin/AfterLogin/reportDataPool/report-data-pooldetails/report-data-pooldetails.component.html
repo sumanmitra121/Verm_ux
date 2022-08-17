@@ -232,7 +232,35 @@
                     </tr>
                     </table>
                     <table width="100%" id="example1" border="1" *ngIf="Inc_type=='I'">
+                        <thead *ngIf="_show_all_count!=null">
+
+                          <tr>
+                              <th colspan="2">Opened</th>
+                              <th colspan="2">Closed</th>
+                              <th colspan="1">Archived</th>
+                              <th colspan="2">Total</th>
+                          </tr>
+                          <tr>
+                              <td colspan="2" class="text-center">{{_show_all_count.open_inc}}</td>
+                              <td colspan="2" class="text-center">{{_show_all_count.close_inc}}</td>
+                              <td colspan="1" class="text-center">{{_show_all_count.archive_inc}}</td>
+                              <td colspan="2" class="text-center">{{get_incident_details.length}}</td>
+                          </tr>
+                          <tr>
+                            <th colspan="2">Tier I</th>
+                            <th colspan="2">Tier II</th>
+                            <th colspan="1">Tier III</th>
+                            <th colspan="2">Near Miss</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center">{{_show_all_count.tier1}}</td>
+                            <td colspan="2" class="text-center">{{_show_all_count.tier2}}</td>
+                            <td colspan="1" class="text-center">{{_show_all_count.tier3}}</td>
+                            <td colspan="2" class="text-center">{{_show_all_count.near_mess}}</td>
+                        </tr>
+                      </thead>
                         <thead>
+
                             <tr>
                                 <th>Date</th>
                                 <th>No.</th>
@@ -241,10 +269,10 @@
                                 <th>Location</th>
                                 <th>Initial Tier</th>
                                 <th>Final Tier</th>
-                                <!-- <th>Info</th> -->
                             </tr>
                         </thead>
                         <tbody *ngFor="let inc of get_incident_details">
+
                             <tr>
                               <td>{{inc.inc_dt}}</td>
                               <td>{{inc.inc_no}}</td>
@@ -254,13 +282,6 @@
                               <td>{{inc.initial_tier}}</td>
                               <td>{{inc.final_tier}}</td>
                             </tr>
-                            <!-- <tr>
-                                <td colspan="4"><label>Description: </label>&nbsp;{{inc.brief_desc}}</td>
-                                <td colspan="3"><label>Closing Remarks: </label>{{inc.closing_remarks}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="7"></td>
-                            </tr> -->
                             <tr>
                                 <td colspan="7" class="dashed-line"><label>Description: </label>&nbsp;{{inc.brief_desc}}</td>
                             </tr>

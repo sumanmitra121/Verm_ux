@@ -7,6 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { global_url_test } from 'src/app/url';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 
 @Component({
   selector: 'app-add-lesson-learnt',
@@ -20,6 +22,7 @@ export class AddLessonLearntComponent implements OnInit {
   paramsString!:number;
   lesson_learnt!: FormGroup;
   constructor(private _route: Router,
+    public dialog: MatDialog,
     private datePipe:DatePipe,
     private fb: FormBuilder,
     public route: ActivatedRoute,
@@ -29,6 +32,7 @@ export class AddLessonLearntComponent implements OnInit {
     this.lesson_learnt = this.fb.group({
       id: [atob(this.route.snapshot.params.id)],
       inc_id: [''],
+      inc_no:[localStorage.getItem('Inc_No')],
       user: [localStorage.getItem('Email')],
       ref: ['', [Validators.required]],
       title: ['', [Validators.required]],
@@ -37,13 +41,10 @@ export class AddLessonLearntComponent implements OnInit {
       rec: ['', [Validators.required]],
       fileSource: [null],
       file: [null],
-
     })
   }
 
-  get f() {
-    return this.lesson_learnt.controls;
-  }
+  get f() {return this.lesson_learnt.controls;}
   ngOnInit(): void {
     if(Number(atob(this.route.snapshot.params.id)) > 0){
       console.log(Number(atob(this.route.snapshot.params.id)))
@@ -52,7 +53,9 @@ export class AddLessonLearntComponent implements OnInit {
   }
   setFormValue(){
     this.api_call.global_service('0', '/lesson', 'id='+atob(this.route.snapshot.params.id)).pipe(map((x:any) => x.msg)).subscribe(res => {
-       if(res.length > 0){
+       console.log(res);
+
+      if(res.length > 0){
        res.forEach((element:any) => {
          this.FILE.push(element.file_path);
        });
@@ -76,7 +79,7 @@ export class AddLessonLearntComponent implements OnInit {
       this.toastr.errorToastr('Some of fields are empty','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
       return;
     }
-    this.spinner.show();
+
     const formdata = new FormData();
     formdata.append('id', atob(this.route.snapshot.params.id));
     formdata.append('inc_id', this.lesson_learnt.value.inc_id);
@@ -94,12 +97,40 @@ export class AddLessonLearntComponent implements OnInit {
         formdata.append("file", img_file);
       }
     }
+    var api_name = _type == 'D' ? '/lesson' : '/lesson_final';
+    switch(_type){
+    case 'D':
+             var msg = this.lesson_learnt.value.id > 0 ? 'Updation Successfull' : 'Addition Successfull';
+              this.submitData(formdata,api_name,msg);break;
+    case 'F': formdata.append('inc_no',this.lesson_learnt.value.inc_no);
 
-    var api_name = _type == 'D' ? '/lesson' : '';
+              this.openDialog(formdata,api_name);
+              break;
+      default:break;
+
+    }
+
+    // this.api_call.global_service('1', api_name, formdata).subscribe((res: any) => {
+    // this.spinner.hide();
+    //   if (res.suc > 0) {
+    //     var msg = this.lesson_learnt.value.id > 0 ? 'Updation Successfull' : 'Addition Successfull';
+    //     this._route.navigate(['/lesson_learnt']).then(() => {
+    //       this.toastr.successToastr(msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
+    //          })
+    //   }
+    //   else {
+    //     this.toastr.errorToastr('Submission Failed','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
+    //   }
+    // })
+  }
+
+
+  submitData(formdata:any,api_name:any,msg:any){
+    this.spinner.show();
+
     this.api_call.global_service('1', api_name, formdata).subscribe((res: any) => {
-    this.spinner.hide();
+      this.spinner.hide();
       if (res.suc > 0) {
-        var msg = this.lesson_learnt.value.id > 0 ? 'Updation Successfull' : 'Addition Successfull';
         this._route.navigate(['/lesson_learnt']).then(() => {
           this.toastr.successToastr(msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
              })
@@ -108,7 +139,23 @@ export class AddLessonLearntComponent implements OnInit {
         this.toastr.errorToastr('Submission Failed','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
       }
     })
+
   }
+
+ openDialog(formdata:any,api_name:any){
+    const disalogConfig=new MatDialogConfig();
+    disalogConfig.disableClose=false;
+    disalogConfig.autoFocus=true;
+    disalogConfig.width='35%';
+    disalogConfig.data={id:Number(atob(this.route.snapshot.params.id)),api_name:'/lesson_final',name:'lesson_final'}
+    const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
+    dialogref.afterClosed().subscribe(dt=>{
+      // var msg = this.lesson_learnt.value.id > 0 ? 'Updation Successfull! you can now check this in repository section in ' : 'Addition Successfull';
+       var msg = 'Successfully saved as pdf in repository section under' + localStorage.getItem('Inc_No') + 'folder';
+      if(dt){this.submitData(formdata,api_name,msg);}
+    })
+ }
+
   onFileChange(event: any) {
     if(event.target.files.length > 0){
         this.lesson_learnt.patchValue({
@@ -121,7 +168,8 @@ export class AddLessonLearntComponent implements OnInit {
        return;
     }
     this.lesson_learnt.patchValue({
-      inc_id: e.id
+      inc_id: e.id,
     });
   }
+
 }

@@ -19,7 +19,7 @@
               <!-- <a class="float-right" ><i class="fa fa-plus" style="color:#213f79;"></i></a> -->
             </div>
             <div class="card_bodyCustom">
-             <!-- <h3 id="first-item"></h3> -->
+             <h3 id="first-item"></h3>
 
               <ul class="listDashboard" *ngIf="get_in_status.length > 0">
                 <li><strong>Visibility:</strong> {{inc_visibility}}
@@ -50,10 +50,14 @@
             <div class="card-header card_headerCustom">
               <h2 class="pull-left text-dark titleDashBox">Vessel Status</h2>
             </div>
+
             <div class="card_bodyCustom">
+            <h3 id="first-item"></h3>
+
              <ng-container *ngIf="get_vessel_status.length > 0">
-            <h3 id="first-item">{{this.ves_name}}</h3>
              <ul class="listDashboard">
+              <li id="first-item" ><strong>Vessel Name:</strong> {{this.ves_name}}</li>
+
               <li id="second-item" ><strong>From:</strong> {{this.form_at}}</li>
               <li id="third-item" ><strong>To:</strong > {{this.to_at}}</li>
             </ul>
@@ -75,9 +79,12 @@
               <h2 class="pull-left text-dark titleDashBox">Helicopter Status</h2>
             </div>
             <div class="card_bodyCustom">
+              <h3 id="first-helicopter"></h3>
+
               <ng-container *ngIf="get_helicopter_status.length > 0">
-              <h3 id="first-helicopter">{{call_sign}}</h3>
              <ul class="listDashboard">
+              <li id="first-helicopter" ><strong>Call Sign:</strong> {{call_sign}}</li>
+
               <li id="second-helicopter" ><strong>From:</strong> {{hel_from}}</li>
               <li id="third-helicopter" ><strong>To:</strong > {{hel_to}}</li>
             </ul>
@@ -102,7 +109,9 @@
             </div>
             <div class="card_bodyCustom" >
               <h3 id="first-item"></h3>
+
               <ng-container *ngIf="get_prob_status.length > 0">
+
                 <ul class="listDashboard" >
                   <li *ngFor="let cat of get_prob_status"><strong>{{cat.prob_cat}}:</strong> {{cat.value}}</li>
                 </ul>
@@ -121,7 +130,7 @@
          </div>
 
        </div>
-       <div class="row mt-3 p-2">
+       <div class="rowCustomFlex mt-3 p-2">
          <div class="col-3">
             <!-- Casulaity Status -->
         <div class="whiteBoxComon" type="button" id="casual" (click)="set_modal_for_create('casual')"  data-toggle="modal" data-target="#create_incident_modal" >
@@ -131,9 +140,9 @@
 
           </div>
         <div class="card_bodyCustom">
-        <h3 id="first-item"></h3>
-
+          <h3 id="first-item"></h3>
          <ng-container *ngIf="get_casualty_status.length > 0">
+
          <ul class="listDashboard">
           <li id="full_name"><strong>Employee:</strong> {{total}}</li>
           <li id="location" ><strong>Casualty Location:</strong> {{Location}}</li>
@@ -158,9 +167,11 @@
         <h2 class="pull-left text-dark titleDashBox">Evacuation Status</h2>
       </div>
       <div class="card_bodyCustom">
-        <h3 _ngcontent-alt-c211="" id="first-item"></h3>
+        <h3 id="first-item"></h3>
+
         <ngx-spinner bdColor = ""  name="evacuation" size = "default" color = "black"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p></ngx-spinner>
         <ng-container *ngIf="get_evacuation_status.length > 0">
+
         <ul class="listDashboard">
          <li id="first-evacuation"><strong>Transport:</strong> {{transport_mode}}</li>
          <li id="second-evacuation"><strong>Time:</strong> {{evacuation_time | slice:0:5}}</li>
@@ -187,7 +198,9 @@
           </div>
           <div class="card_bodyCustom">
            <h3 id="first-item"></h3>
+
            <ng-container id="eventsloglist" *ngIf="get_events_status.length > 0">
+
             <mat-spinner [hidden]="event_logs" class='mx-auto' diameter="30"></mat-spinner>
             <ul class="listDashboard">
              <li><strong>Resource Assigned: </strong> {{resource_assigned}}</li>

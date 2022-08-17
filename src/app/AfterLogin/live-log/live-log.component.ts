@@ -320,7 +320,8 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
       inc_id: localStorage.getItem('Inc_id'),
       emp_id: localStorage.getItem('Employee_id'),
       file: this.uploaded_file,
-      file_name: this.uploaded_file.name
+      file_name: this.uploaded_file.name,
+      chat_dt:this.datePipe.transform(date, 'yyyy-MM-dd HH:mm')
     };
     this.emergencyservice.emit('message', dt);//emit chat after submit
     this.element = document.createElement('li');

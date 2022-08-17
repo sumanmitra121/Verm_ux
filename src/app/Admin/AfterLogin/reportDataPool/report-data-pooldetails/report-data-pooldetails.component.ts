@@ -18,6 +18,7 @@ declare var XLSX : any;
   styleUrls: ['./report-data-pooldetails.component.css']
 })
 export class ReportDataPooldetailsComponent implements OnInit , AfterViewInit{
+  _show_all_count:any;
   _u_type = localStorage.getItem('User_type');
   ctx:any="";
  workbookXML:any= "";
@@ -105,8 +106,9 @@ dataSource6= new MatTableDataSource();
      var api_url=this.Inc_type=='A' ? '/activation_report' : (this.Inc_type=='I' ? '/incident_report': (this.Inc_type=='C' ? '/chat_report' : (this.Inc_type=='CL' ? '/call_log_report' : (this.Inc_type=='L' && this.logform.form.value.logTypes=='1') ? '/autolog_report' :'/manuallog_report')))
      this.displayedColumns=this.Inc_type=='A' ? ['Date','incident_name','team_name','Status','created_by'] : (this.Inc_type=='I' ?  ['Incident_no','Incident_type','Incident_name', 'Incident_location','Initial_tier','Final_tier','event_description','remarks','created_at','Created_By','close_date','Closed_by','Closed_at','approved_by','approved_at'] : (this.Inc_type=='C' ? ['Date','emp_name','chat','file'] : (this.Inc_type=='CL' ? ['Date','ref_no','made_by','made_to','received_by','call_details'] : [])))
     if(this.Inc_type=='I' ){
-     this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date+'&tier_id='+this.logform.form.value.tier_id).subscribe(data=>{
+     this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date+'&tier_id='+this.logform.form.value.tier_id).subscribe((data:any)=>{
       this.get_incident_details=data;
+      this._show_all_count = data.count_dt
       this.get_incident_details=this.get_incident_details.msg;
       this.dataSource=new MatTableDataSource(this.get_incident_details);
       if(this.get_incident_details.length > 0){}

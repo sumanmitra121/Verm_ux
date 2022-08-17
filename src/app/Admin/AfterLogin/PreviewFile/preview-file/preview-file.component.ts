@@ -16,7 +16,10 @@ export class PreviewFileComponent implements OnInit {
     this.spinner.show();
    }
 
-  ngOnInit(): void {this.doc=this.url+this.activatedroute.snapshot.params['form_path'];}
+  ngOnInit(): void {this.doc=this.url+this.activatedroute.snapshot.params['form_path'];
+      console.log(this.doc);
+
+   }
   contentLoaded(){ this.spinner.hide();}
 
 }
