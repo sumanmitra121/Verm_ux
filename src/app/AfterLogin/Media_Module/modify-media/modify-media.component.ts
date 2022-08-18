@@ -59,8 +59,6 @@ export class ModifyMediaComponent implements OnInit {
         contact_person:['']
       })
     }
-    console.log(this.media);
-
   }
   ngOnInit(): void {this.setmedia_Control();}
   setmedia_Control(){
