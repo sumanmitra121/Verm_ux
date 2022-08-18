@@ -45,13 +45,14 @@ export class ModifyMediaComponent implements OnInit {
       this.media = this.fb.group({
         id:[Number(atob(this.routeParams.snapshot.params.id))],
         inc_id:[''],
+        wishers_name:[''],
         user:[localStorage.getItem('Email')],
         inc_no:[localStorage.getItem('Inc_No')],
         description:[''],
-        stat_no:[''],
+        sta_no:[''],
         date:[''],
         time:[''],
-        contact_name:[''],
+        issued_by:[''],
         contact_info:[''],
         location:[''],
         issued_date:[''],
@@ -63,8 +64,11 @@ export class ModifyMediaComponent implements OnInit {
   }
   ngOnInit(): void {this.setmedia_Control();}
   setmedia_Control(){
+    console.log(Number(atob(this.routeParams.snapshot.params.id)));
+
     if(Number(atob(this.routeParams.snapshot.params.id)) > 0){
-      var api_name = atob(this.routeParams.snapshot.params.type) == 'M' ? '/media_rel' : 'holding_statement';
+      console.log(atob(this.routeParams.snapshot.params.type));
+      var api_name = atob(this.routeParams.snapshot.params.type) == 'M' ? '/media_rel' : '/holding';
       this.api_call.global_service(0,api_name,'id='+Number(atob(this.routeParams.snapshot.params.id))).pipe((map((x:any) => x.msg))).subscribe(res =>{
          console.log(res)
         switch(atob(this.routeParams.snapshot.params.type)){
@@ -82,7 +86,23 @@ export class ModifyMediaComponent implements OnInit {
                     location:res[0].location ? res[0].location : ''
                     });
                     break;
-          case "H":break;
+          case "H":this.media.patchValue({
+                id:Number(atob(this.routeParams.snapshot.params.id)),
+                inc_no:localStorage.getItem('Inc_No'),
+                inc_id:res[0].inc_id,
+                wishers_name:res[0].wishers_name,
+                user:localStorage.getItem('Email'),
+                sta_no:res[0].sta_no ? res[0].sta_no : '',
+                date:res[0].date  ? this.datePipe.transform(res[0].date,'yyyy-MM-dd') : '',
+                time:res[0].time ? res[0].time : '',
+                issued_by:res[0].issued_by ? res[0].issued_by : '',
+                contact_info:res[0].contact_info ? res[0].contact_info : '',
+                issued_date:res[0].issued_date ?  this.datePipe.transform(res[0].issued_date,'yyyy-MM-dd') : '',
+                contact_person:res[0].contact_person ? res[0].contact_person : '',
+                description:res[0].description ? res[0].description : '',
+                location:res[0].location ? res[0].location : ''
+                });
+                break;
           default:break;
         }
       })
@@ -96,7 +116,7 @@ export class ModifyMediaComponent implements OnInit {
     }
   }
   submit(mode:any){
-   this.spinner.show();
+  //  this.spinner.show();
    console.log(this.media.value);
    var api_name;
    var msg;

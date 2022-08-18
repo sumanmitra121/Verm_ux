@@ -13,7 +13,7 @@ import { global_url_test } from 'src/app/url';
 })
 export class MediaComponent implements OnInit {
   _url= global_url_test.URL;
-
+   inc_name:any;
   incDetails:any={};
   flag:any = "M";
   dataSource = new MatTableDataSource();
@@ -25,8 +25,10 @@ export class MediaComponent implements OnInit {
   fetchData(inc_id:any){
     console.log(inc_id);
 
-     let api_name = this.flag == 'M' ? '/media_rel' :'/'
+     let api_name = this.flag == 'M' ? '/media_rel' :'/holding'
      this.api_call.global_service(0,api_name,'inc_id='+inc_id).pipe(map((x:any) => x.msg)).subscribe(res =>{
+      console.log(res);
+
       this.dataSource = new MatTableDataSource(res);
           this.dataSource.paginator = this.paginator;
      })
@@ -34,6 +36,7 @@ export class MediaComponent implements OnInit {
   getIncDetails(event:any){
     this.incDetails = event;
     this.fetchData(event.id);
+    this.inc_name = event.inc_name+' (' + event.inc_no + ')';
   }
   checkMediaType(event:any){
       this.flag = event.value;
