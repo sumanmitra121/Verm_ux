@@ -65,20 +65,44 @@
                 <div class="col-1"></div>
                 <div class="col-5">
                     <b>Contact No.(Personal) <span class="text-danger">*</span></b>
+
+                    <!-- <input type="text" value="+" readonly class="form-control">
+                    <input type="text" name="personal_c_code"  class="form-control" #personal_c_code="ngModel" ngModel  required  (keypress)="PreventNonNumeric($event)">
                     <input type="text" name="p_contact" id="P_contact" class="form-control" #p_contact="ngModel" ngModel  (change)="chk_contact_no($event,'P')" required maxlength="10" minlength="10" (keypress)="PreventNonNumeric($event)">
                     <div *ngIf="p_contact.errors?.required && (p_contact.touched || p_contact.dirty)" class="text-danger h5 mt-2">
-                        *Please Provide Contact No
+                      *Please Provide Contact No
+                    </div>
+                    <div *ngIf="p_contact.errors?.minlength  && (p_contact.touched || p_contact.dirty)" class="text-danger h6 mt-2">
+                      * Must be 10 digit
+                    </div> -->
+
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">+</span>
                       </div>
-                      <div *ngIf="p_contact.errors?.minlength  && (p_contact.touched || p_contact.dirty)" class="text-danger h6 mt-2">
-                        * Must be 10 digit
-                      </div>
+                      <input type="text" class="prefix" name="p_code" maxlength="5" #p_code="ngModel" ngModel>
+                      <input type="text" name="p_contact" id="P_contact" class="form-control" #p_contact="ngModel" ngModel  (change)="chk_contact_no($event,'P')" required maxlength="10" minlength="10" (keypress)="PreventNonNumeric($event)">
+                    </div>
+                    <div *ngIf="p_contact.errors?.required && (p_contact.touched || p_contact.dirty)" class="text-danger h5 mt-2">
+                      *Please Provide Contact No
+                    </div>
+                    <div *ngIf="p_contact.errors?.minlength  && (p_contact.touched || p_contact.dirty)" class="text-danger h6 mt-2">
+                      * Must be 10 digit
+                    </div>
+
                 </div>
             </div>
             <div class="row mt-3">
                 <!-- <div class="col-1"></div> -->
                 <div class="col-5">
                     <b>Contact No.(ER)</b>
-                    <input type="text" name="er_contact" id="ER_Contact" class="form-control" #er_contact="ngModel" ngModel (change)="chk_contact_no($event,'E')" maxlength="10" minlength="10" (keypress)="PreventNonNumeric($event)">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">+</span>
+                      </div>
+                      <input type="text" class="prefix" name="er_code" maxlength="5" #er_code="ngModel" ngModel>
+                      <input type="text" name="er_contact" id="ER_Contact" class="form-control" #er_contact="ngModel" ngModel (change)="chk_contact_no($event,'E')" maxlength="10" minlength="10" (keypress)="PreventNonNumeric($event)">
+                    </div>
                     <div *ngIf="er_contact.errors?.minlength  && (er_contact.touched || er_contact.dirty)" class="text-danger h6 mt-2">
                       * Must be 10 digit
                     </div>

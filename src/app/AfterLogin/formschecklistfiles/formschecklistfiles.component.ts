@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as JSZip from 'jszip';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { Location } from '@angular/common';
 declare var JSZipUtils : any
 @Component({
   selector: 'app-formschecklistfiles',
@@ -23,7 +24,12 @@ export class FormschecklistfilesComponent implements OnInit {
   icon:any='fa-list-ul';
   url=global_url_test.URL;
   get_text:any='';
-  constructor(private route:ActivatedRoute,private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService,private router:Router,private toastr:ToastrManager) { }
+  constructor(private route:ActivatedRoute,
+    private emergencyservice:VirtualEmergencyService,
+    private spinner:NgxSpinnerService,
+    private _location:Location,
+    private router:Router,
+    private toastr:ToastrManager) { }
   displayedColumns: string[] = ['chk','img','Name', 'Date', 'Type', 'Created_by','Action'];
   dataSource= new MatTableDataSource();
    selection = new SelectionModel<any>(true);
@@ -36,7 +42,7 @@ export class FormschecklistfilesComponent implements OnInit {
    view:any='G';
    catg_name:any;
   ngOnInit(): void {
-    this.cat_id=this.route.snapshot.params['id']; 
+    this.cat_id=this.route.snapshot.params['id'];
     //For getting files
     this.emergencyservice.global_service('0','/get_forms',`catg_id=${this.cat_id}`).subscribe(data=>{
     this.spinner.show();
@@ -44,10 +50,26 @@ export class FormschecklistfilesComponent implements OnInit {
     this.Get_Uploaded_Files.length=0;
     this.get_files.length=0;
       this.Get_Uploaded_Files=data;
-      this.Get_Uploaded_Files=this.Get_Uploaded_Files.msg;   
+      this.Get_Uploaded_Files=this.Get_Uploaded_Files.msg;
+
       if(this.Get_Uploaded_Files!=''){
         this.catg_name=this.Get_Uploaded_Files[0].catg_name;
       for(let i=0;i<this.Get_Uploaded_Files.length;i++){
+          // this.get_files.push({
+          //   id:this.Get_Uploaded_Files[i].id,
+          //   catg_id:this.Get_Uploaded_Files[i].catg_id,
+          //   form_name:this.Get_Uploaded_Files[i].form_name,
+          //   form_path:this.url+""+this.Get_Uploaded_Files[i].form_path,
+          //   form_type:this.Get_Uploaded_Files[i].form_type,
+          //   catg_name:this.Get_Uploaded_Files[i].catg_name,
+          //   file_name:this.Get_Uploaded_Files[i].form_path.split('/').pop(),
+          //   file_ext:this.Get_Uploaded_Files[i].form_path.split("/")[2].split('.').pop().trim(),
+          //   date:this.Get_Uploaded_Files[i].created_at,
+          //   created_by:this.Get_Uploaded_Files[i].created_by,
+          //    })
+          //    this.Get_Uploaded_Files[i].file_name=this.Get_Uploaded_Files[i].form_path.split('/').pop();
+          //    this.Get_Uploaded_Files[i].file_ext=this.Get_Uploaded_Files[i].form_path.split("/")[2].split('.').pop().trim();
+          //    this.Get_Uploaded_Files[i].form_path=this.url+""+this.Get_Uploaded_Files[i].form_path;
           this.get_files.push({
             id:this.Get_Uploaded_Files[i].id,
             catg_id:this.Get_Uploaded_Files[i].catg_id,
@@ -55,15 +77,17 @@ export class FormschecklistfilesComponent implements OnInit {
             form_path:this.url+""+this.Get_Uploaded_Files[i].form_path,
             form_type:this.Get_Uploaded_Files[i].form_type,
             catg_name:this.Get_Uploaded_Files[i].catg_name,
-            file_name:this.Get_Uploaded_Files[i].form_path.split('/').pop(),
+            file_name:this.Get_Uploaded_Files[i].form_name,
             file_ext:this.Get_Uploaded_Files[i].form_path.split("/")[2].split('.').pop().trim(),
             date:this.Get_Uploaded_Files[i].created_at,
             created_by:this.Get_Uploaded_Files[i].created_by,
+            file_path:this.Get_Uploaded_Files[i].form_path
              })
              this.Get_Uploaded_Files[i].file_name=this.Get_Uploaded_Files[i].form_path.split('/').pop();
              this.Get_Uploaded_Files[i].file_ext=this.Get_Uploaded_Files[i].form_path.split("/")[2].split('.').pop().trim();
+             this.Get_Uploaded_Files[i].file_path=this.Get_Uploaded_Files[i].form_path;
              this.Get_Uploaded_Files[i].form_path=this.url+""+this.Get_Uploaded_Files[i].form_path;
-    
+
          }
          this.dataSource=new MatTableDataSource(this.get_files)
          this.spinner.hide();
@@ -72,6 +96,9 @@ export class FormschecklistfilesComponent implements OnInit {
             this.spinner.hide();
       }
       console.log(this.dataSource);
+       console.log(this.Get_Uploaded_Files);
+       console.log(this.get_files);
+
       })
      //For getting category name
      this.emergencyservice.global_service('0','/form_category',null).subscribe(data=>{
@@ -89,6 +116,7 @@ export class FormschecklistfilesComponent implements OnInit {
 
   //For downloading the files
   downloadfile(form_path:any,file_name:any){
+    // console.log(form_path)
     FileSaver.saveAs(form_path,file_name);
   }
   //For changing view
@@ -103,7 +131,7 @@ export class FormschecklistfilesComponent implements OnInit {
     this.emergencyservice.global_service('0','/get_forms','flag='+flag+'&catg_id='+this.cat_id).subscribe(data=>{
     this.get_files.length=0;
       this.get_files=data;
-      this.get_files=this.get_files.msg;   
+      this.get_files=this.get_files.msg;
       if(this.get_files!=''){
       for(let i=0;i<this.get_files.length;i++){
           // this.get_files.push({
@@ -125,12 +153,12 @@ export class FormschecklistfilesComponent implements OnInit {
             this.get_files[i].form_type=this.get_files[i].form_type,
             this.get_files[i].file_name=this.get_files[i].form_path.split('/').pop(),
             this.get_files[i].file_ext=this.get_files[i].form_path.split("/")[2].split('.').pop().trim(),
+            this.get_files[i].file_path = this.get_files[i].form_path,
             this.get_files[i].form_path=this.url+""+this.get_files[i].form_path,
             this.get_files[i].date=this.get_files[i].created_at,
             this.get_files[i].created_by=this.get_files[i].created_by
 
-
-         }  
+         }
          this.spinner.hide();
         }
       else{
@@ -138,8 +166,10 @@ export class FormschecklistfilesComponent implements OnInit {
       }
       this.dataSource=new MatTableDataSource(this.get_files);
       // this.selection=new SelectionModel<any>(true,this.get_files);
+      console.log(this.get_files);
 
-      }) 
+
+      })
 
   }
   selectEvent(item:any) {
@@ -156,9 +186,11 @@ export class FormschecklistfilesComponent implements OnInit {
       file_ext:item.file_ext,
       date:item.created_at,
       created_by:item.created_by,
+      file_path:item.file_path
     })
     this.dataSource=new MatTableDataSource(this.get_files);
     // this.selection=new SelectionModel<any>(true,this.get_files);
+    console.log(this.get_files);
 
 
 
@@ -169,7 +201,7 @@ export class FormschecklistfilesComponent implements OnInit {
     this.get_files.length=0;
     // this.emergencyservice.global_service('0','/get_forms',`catg_id=${this.cat_id}`).subscribe(data=>{
     //   this.Get_Uploaded_Files=data;
-    //   this.Get_Uploaded_Files=this.Get_Uploaded_Files.msg;   
+    //   this.Get_Uploaded_Files=this.Get_Uploaded_Files.msg;
       if(this.Get_Uploaded_Files!=''){
       for(let i=0;i<this.Get_Uploaded_Files.length;i++){
           this.get_files.push({
@@ -182,9 +214,10 @@ export class FormschecklistfilesComponent implements OnInit {
             file_name:this.Get_Uploaded_Files[i].file_name,
             file_ext:this.Get_Uploaded_Files[i].file_ext,
             date:this.Get_Uploaded_Files[i].created_at,
-            created_by:this.Get_Uploaded_Files[i].created_by
+            created_by:this.Get_Uploaded_Files[i].created_by,
+            file_path:this.Get_Uploaded_Files[i].file_path
              })
-         }     
+         }
         //  console.log(this.get_files);
         }
       else{
@@ -192,6 +225,8 @@ export class FormschecklistfilesComponent implements OnInit {
       // })
       this.dataSource=new MatTableDataSource(this.get_files);
       // this.selection=new SelectionModel<any>(true,this.get_files);
+      console.log(this.get_files);
+
 
   }
   onChangeSearch(event: any) {
@@ -205,13 +240,13 @@ export class FormschecklistfilesComponent implements OnInit {
       return (val.form_name.toUpperCase()).includes(this.get_text.toUpperCase()) || (val.file_name.toUpperCase()).includes(this.get_text.toUpperCase());
     }
     this.get_files = this.Get_Uploaded_Files.filter(checkKey);
-    this.dataSource=new MatTableDataSource(this.get_files); 
+    this.dataSource=new MatTableDataSource(this.get_files);
     // this.selection=new SelectionModel<any>(true,this.get_files);
-    this.get_text='';   
+    this.get_text='';
      }
 
   }
-  isAllSelected() { 
+  isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
@@ -240,7 +275,7 @@ export class FormschecklistfilesComponent implements OnInit {
      zip.file(filename, data, {binary:true});
      count++;
      if (count == arr.length) {
-      zip.generateAsync({type:'blob'}).then((content) =>{ 
+      zip.generateAsync({type:'blob'}).then((content) =>{
         this.spinner.hide();
         FileSaver.saveAs(content, zipFilename);
       });
@@ -254,5 +289,8 @@ export class FormschecklistfilesComponent implements OnInit {
      this.toastr.errorToastr("Please choose files",'',{ position: 'top-center', animate: 'slideFromTop', toastTimeout: 5000, enableHTML: true })
   }
   // this.selection.selected.length=0;
+  }
+  backToLocation(){
+ this._location.back();
   }
 }

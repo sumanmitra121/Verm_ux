@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatTableExporterDirective } from 'mat-table-exporter';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 declare var $:any;
@@ -17,6 +18,7 @@ declare var XLSX : any;
   styleUrls: ['./report-data-pooldetails.component.css']
 })
 export class ReportDataPooldetailsComponent implements OnInit , AfterViewInit{
+  _show_all_count:any;
   _u_type = localStorage.getItem('User_type');
   ctx:any="";
  workbookXML:any= "";
@@ -34,6 +36,7 @@ export class ReportDataPooldetailsComponent implements OnInit , AfterViewInit{
   displayedColumns4: string[] =[];
   displayedColumns5: string[] =[];
   displayedColumns6: string[] =[];
+  displayedColumns_handover:string[] = ['Incident','Handover_from','Handover_to','Summary','reason']
 @ViewChild(MatPaginator) paginator!: MatPaginator;
 @ViewChild(MatSort) matsort!: MatSort;
 dataSource= new MatTableDataSource();
@@ -77,8 +80,8 @@ dataSource6= new MatTableDataSource();
 
   ngOnInit(): void {
     this.Inc_type=this.route.snapshot.params['inc_type'];
-    this.Report_type = this.Inc_type=='I' ? 'Incident Reports' : (this.Inc_type=='A' ? 'Activation Reports' : (this.Inc_type=='C' ? 'Live Logs' : (this.Inc_type=='B' ? 'Boards' : (this.Inc_type=='L' ? 'Log Sheets' : (this.Inc_type=='CL' ? 'Call Logger' : '')))))
-    if(this.Inc_type=='B' || this.Inc_type=='C' || this.Inc_type=='L' || this.Inc_type=='CL' || this.Inc_type=='I' || this.Inc_type=='A'){
+    this.Report_type = this.Inc_type=='I' ? 'Incident Reports' : (this.Inc_type=='A' ? 'Activation Reports' : (this.Inc_type=='C' ? 'Live Logs' : (this.Inc_type=='B' ? 'Boards' : (this.Inc_type=='L' ? 'Log Sheets' : (this.Inc_type=='CL' ? 'Call Logger' : 'HandOver Reports')))))
+    if(this.Inc_type=='B' || this.Inc_type=='C' || this.Inc_type=='L' || this.Inc_type=='CL' || this.Inc_type=='I' || this.Inc_type=='A' || this.Inc_type=='H') {
       this.emergencyservice.global_service('0','/get_all_incident',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
          this.get_allIncident=data;
       })
@@ -103,8 +106,9 @@ dataSource6= new MatTableDataSource();
      var api_url=this.Inc_type=='A' ? '/activation_report' : (this.Inc_type=='I' ? '/incident_report': (this.Inc_type=='C' ? '/chat_report' : (this.Inc_type=='CL' ? '/call_log_report' : (this.Inc_type=='L' && this.logform.form.value.logTypes=='1') ? '/autolog_report' :'/manuallog_report')))
      this.displayedColumns=this.Inc_type=='A' ? ['Date','incident_name','team_name','Status','created_by'] : (this.Inc_type=='I' ?  ['Incident_no','Incident_type','Incident_name', 'Incident_location','Initial_tier','Final_tier','event_description','remarks','created_at','Created_By','close_date','Closed_by','Closed_at','approved_by','approved_at'] : (this.Inc_type=='C' ? ['Date','emp_name','chat','file'] : (this.Inc_type=='CL' ? ['Date','ref_no','made_by','made_to','received_by','call_details'] : [])))
     if(this.Inc_type=='I' ){
-     this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date+'&tier_id='+this.logform.form.value.tier_id).subscribe(data=>{
+     this.emergencyservice.global_service('0',api_url,'inc_id='+this.logform.form.value.inc_name+'&frm_dt='+this.logform.form.value.frm_date + '&to_dt='+this.logform.form.value.to_date+'&tier_id='+this.logform.form.value.tier_id).subscribe((data:any)=>{
       this.get_incident_details=data;
+      this._show_all_count = data.count_dt
       this.get_incident_details=this.get_incident_details.msg;
       this.dataSource=new MatTableDataSource(this.get_incident_details);
       if(this.get_incident_details.length > 0){}
@@ -152,6 +156,19 @@ dataSource6= new MatTableDataSource();
         this.dataSource=new MatTableDataSource(this.get_incident_details);
         if(this.get_incident_details.length > 0){}
         else{this.toastr.errorToastr('No reports available from '+this.logform.form.value.frm_date + ' to '+ this.logform.form.value.to_date,'')}
+        })
+    }
+    else if(this.Inc_type=='H'){
+      console.log(this.Inc_type);
+
+      this.emergencyservice.global_service('0','/handover','inc_id='+this.logform.form.value.inc_name).pipe(map((x:any) => x.msg)).subscribe(data=>{
+         if(data.length > 0){
+          this.get_incident_details = data;
+          this.dataSource=new MatTableDataSource(data);
+         }
+         else{
+          this.toastr.errorToastr('No reports of handover available','')
+         }
         })
     }
     else{
@@ -349,8 +366,8 @@ dataSource6= new MatTableDataSource();
     this.Inc_type=this.route.snapshot.params['inc_type'];
     var board = this.Inc_type=='B' ? this.board_form.form.value.board_type : '';
     var log = this.Inc_type=='L' ? this.logform.form.value.logTypes : '';
-    var element_id = this.Inc_type=='I' ? 'IncidentdivToPrint' : (this.Inc_type=='A' ? 'ActivationdivToPrint' : (this.Inc_type=='C' ? 'LiveLogdivToPrint' : (this.Inc_type=='B' ? 'BoarddivToPrint_'+board : (this.Inc_type=='L' ? 'LogSheetdivToPrint_'+log : (this.Inc_type=='CL' ? 'CalldivToPrint' : '')))))
-    var dt_pr = this.Inc_type == 'B' ? '' : '  From: ' + this.logform.form.value.frm_date + ' -- To: ' + this.logform.form.value.to_date;
+    var element_id = this.Inc_type=='I' ? 'IncidentdivToPrint' : (this.Inc_type=='A' ? 'ActivationdivToPrint' : (this.Inc_type=='C' ? 'LiveLogdivToPrint' : (this.Inc_type=='B' ? 'BoarddivToPrint_'+board : (this.Inc_type=='L' ? 'LogSheetdivToPrint_'+log : (this.Inc_type=='CL' ? 'CalldivToPrint' : 'HandOverdivToPrint')))))
+    var dt_pr = this.Inc_type == 'B' || this.Inc_type == 'H'? '' : '  From: ' + this.logform.form.value.frm_date + ' -- To: ' + this.logform.form.value.to_date;
     this.divToPrint = document.getElementById(element_id);
   console.log(this.divToPrint);
         this.WindowObject = window.open('', 'Print-Window');
@@ -407,4 +424,16 @@ dataSource6= new MatTableDataSource();
       getToday(){//For Getting Date Only
         return new Date().toISOString().substring(0,10);
       }
+
+      fetchdata(){
+
+            this.emergencyservice.global_service('0','/handover','inc_id='+this.logform.form.value.inc_name).pipe(map((x:any) => x.msg)).subscribe(res => {
+              console.log(res);
+
+            })
+
+
+        }
+
+
 }

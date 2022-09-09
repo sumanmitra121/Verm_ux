@@ -68,7 +68,9 @@ export class EditAdminEmployeeComponent implements OnInit {
         position:res[0].emp_pos_id,
         email:res[0].email,
         p_contact:res[0].personal_cnct_no,
+        p_code:res[0].p_code,
         er_contact:res[0].er_cnct_no,
+        er_code:res[0].er_code,
         emp_status:res[0].emp_status,
         user_type:res[0].user_type,
         approval_flag:res[0].approval_flag

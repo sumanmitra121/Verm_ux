@@ -10,7 +10,6 @@ export class IncDetails{
   public lon!:string;
   public offshore_name!:string
   public inc_no!:string
-  initial_tier_id!:string
-
+  public initial_tier_id!:string;
 
 }

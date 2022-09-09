@@ -312,7 +312,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
     if(this.uploaded_file!='' || this.logform.form.value.txt!=''){
     this.isEmojiPickerVisible=false;
     var date = new Date();
-    let latest_date = this.datePipe.transform(date, 'dd/mm/yyyy HH:MM');
+    let latest_date = this.datePipe.transform(date, 'dd/MM/yyyy HH:mm');
     this.storageArray.length = 0;
     var dt = {
       message: this.logform.form.value.txt,
@@ -320,7 +320,8 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
       inc_id: localStorage.getItem('Inc_id'),
       emp_id: localStorage.getItem('Employee_id'),
       file: this.uploaded_file,
-      file_name: this.uploaded_file.name
+      file_name: this.uploaded_file.name,
+      chat_dt:this.datePipe.transform(date, 'yyyy-MM-dd HH:mm')
     };
     this.emergencyservice.emit('message', dt);//emit chat after submit
     this.element = document.createElement('li');

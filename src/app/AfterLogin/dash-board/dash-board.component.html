@@ -13,7 +13,7 @@
                 [matTooltipDisabled]="inc_visibility.length > 4 ? false : true"
                 matTooltip="{{inc_visibility}}">
                   <span>
-                  {{inc_visibility =='' ? 'N/A' :(inc_visibility.length > 4  ) ? (inc_visibility | slice:0:3)+'..' : (inc_visibility)}}
+                  {{inc_visibility =='' ? 'N/A' :(inc_visibility.length > 6  ) ? (inc_visibility | slice:0:5)+'..' : (inc_visibility)}}
                   </span>
 									<h3>Visibility</h3>
 								</li>
@@ -40,7 +40,7 @@
 						<div class="whiteBox3 whiteBox2_floatLeft">
 							<ul class="watherRepoort">
 								<li>
-									<span>{{wind_speed!='' ? wind_speed +'km/h' : 'N/A'}}</span>
+									<span>{{wind_speed!='' ? wind_speed  : 'N/A'}}</span>
 									<h3>Wind Speed</h3>
 								</li>
 							</ul>
@@ -49,6 +49,32 @@
 
 
 				</div>
+
+				
+				<div class="rowCustomFlex marginBotPosition">
+					<div class="col-12 mb-12">
+						<div class="whiteBox">
+							<div class="card-header card_headerCustom">
+								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Summary Of Incident :  </h2>
+								<br clear="all">
+							</div>
+							<div class="card_bodyCustom scroll">
+
+                  <div class="verticalScroll" >
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been 
+					the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of 
+					the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy 
+					text ever since the 1500s.</p>
+                  </div>
+
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
 
 				<div class="rowCustomFlex marginBotPosition">
 
@@ -173,7 +199,7 @@
 										</tr>
 
 									</table>
-                  <ng-container *ngIf="get_vessel_status==''">
+                  <ng-container *ngIf="get_helicopter_status==''">
 							        	<h5  class="NoBoardStatusAvailable">No Helicopter Status Available</h5>
                   </ng-container>
 								</div>

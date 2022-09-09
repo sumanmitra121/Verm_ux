@@ -58,7 +58,15 @@
                 <div class="col-1"></div>
                 <div class="col-5">
                     <b>Contact No.(Personal)</b>
+
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">+</span>
+                      </div>
+                      <input type="text" class="prefix" name="p_code" maxlength="5" #p_code="ngModel" ngModel>
                     <input type="text" name="p_contact" id="p_contact" class="form-control" #p_contact="ngModel" ngModel required (keypress)="PreventNonNumeric($event)" maxlength="10" minlength="10">
+
+                    </div>
                     <div *ngIf="p_contact.errors?.required && (p_contact.touched || p_contact.dirty)" class="text-danger">
                         *Please Provide Contact No.
                       </div>
@@ -68,7 +76,16 @@
                 <!-- <div class="col-1"></div> -->
                 <div class="col-5">
                     <b>Contact No.(ER)</b>
-                    <input type="text" name="er_contact" id="ER_Contact" class="form-control" #er_Contact="ngModel" ngModel (keypress)="PreventNonNumeric($event)" maxlength="10" minlength="10">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">+</span>
+                      </div>
+                      <input type="text" class="prefix" name="er_code" maxlength="5" #er_code="ngModel" ngModel>
+                      <input type="text" name="er_contact" id="ER_Contact" class="form-control" #er_contact="ngModel" ngModel  maxlength="10" minlength="10" (keypress)="PreventNonNumeric($event)">
+                    </div>
+                    <div *ngIf="er_contact.errors?.minlength  && (er_contact.touched || er_contact.dirty)" class="text-danger h6 mt-2">
+                      * Must be 10 digit
+                    </div>
                 </div>
                 <div class="col-1"></div>
                 <div class="col-5">

@@ -40,7 +40,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 ///END//////
 import { EditIncidentComponent } from './AfterLogin/Incident/edit-incident/edit-incident.component';
 import { LiveLogComponent } from './AfterLogin/live-log/live-log.component';
-import { BoardComponent } from './AfterLogin/board/board.component';
+// import { BoardComponent } from './AfterLogin/board/board.component';
+
 import { RepositoryComponent } from './AfterLogin/repository/repository.component';
 import { FormsChecklistComponent } from './AfterLogin/forms-checklist/forms-checklist.component';
 import { AudioVideoConferenceComponent } from './AfterLogin/audio-video-conference/audio-video-conference.component';
@@ -104,6 +105,7 @@ import { FormschecklistfilesComponent } from './AfterLogin/formschecklistfiles/f
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 ///End/////////////
 ///Social Share////
+
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { CallLoggerComponent } from './AfterLogin/call-log/call-logger/call-logger.component';
@@ -133,12 +135,19 @@ import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/
 import { UserInfoComponent } from './AfterLogin/user-info/user-info.component';
 import { DialogalertComponent } from './CommonDialogAlert/dialogalert/dialogalert.component';
 import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 // End////////
 //Ngx Pagination//
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HandoverComponent } from './AfterLogin/handover/handover.component';
 import { GlobalErrorHandlingInterceptor } from './Interceptor/global-error-handling.interceptor';
+import { BoardComponent } from './AfterLogin/board/board.component';
+import { HandOverDashboardComponent } from './AfterLogin/hand-over-dashboard/hand-over-dashboard.component';
+import { LessonDashboardComponent } from './AfterLogin/Lesson_Learnt/lesson-dashboard/lesson-dashboard.component';
+import { AddLessonLearntComponent } from './AfterLogin/Lesson_Learnt/add-lesson-learnt/add-lesson-learnt.component';
+import { PageNotFoundComponent } from './Error_pages/page-not-found/page-not-found.component';
+import { MediaComponent } from './AfterLogin/Media_Module/media/media.component';
+import { ModifyMediaComponent } from './AfterLogin/Media_Module/modify-media/modify-media.component';
 //End//
 @NgModule({
   declarations: [
@@ -214,10 +223,17 @@ import { GlobalErrorHandlingInterceptor } from './Interceptor/global-error-handl
     ForgotPasswordComponent,
     UserInfoComponent,
     DialogalertComponent,
-    HandoverComponent
+    HandoverComponent,
+    HandOverDashboardComponent,
+    LessonDashboardComponent,
+    AddLessonLearntComponent,
+    PageNotFoundComponent,
+    MediaComponent,
+    ModifyMediaComponent
     // SearchFilterPipe
   ],
   imports: [
+    MatExpansionModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     MatToolbarModule,

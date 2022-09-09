@@ -6,26 +6,26 @@
   <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner> -->
   <ngx-spinner bdColor="#fff" template="<img src='/assets/images/Gif/loader.gif'>"><h3>Loading...</h3>
 </ngx-spinner>
-<ng-template [ngIf]="get_current_incident.length == 0" [ngIfElse]="productDetails">
+<ng-template [ngIf]="get_current_incident.length == 0" [ngIfElse]="INCDETAILS">
     <div class="content-wrapper" id="conent1">
         <div class="row">
             <div class="col-4">
                  <div class="incidentActiveClose">
                    <h2 class="customTextHeader">Closed Incident</h2>
-                   <p class="customTextcontent">{{closed_incident}}</p>
+                   <p class="customTextcontent">{{_show_incident_status_number ? _show_incident_status_number?.closed_inc : 0}}</p>
                  </div>
             </div>
             <div class="col-4">
              <div class="incidentActiveClose">
                 <h2 class="customTextHeader">No. Of Teams</h2>
-                <p class="customTextcontent">{{total_teams}}</p>
+                <p class="customTextcontent">{{_show_incident_status_number ? _show_incident_status_number?.tot_team : 0}}</p>
 
              </div>
             </div>
             <div class="col-4">
                 <div class="incidentActiveClose">
-                <h2 class="customTextHeader">Approved Incident</h2>
-                <p class="customTextcontent">{{approved_inc}}</p>
+                <h2 class="customTextHeader">Archived Incident</h2>
+                <p class="customTextcontent">{{_show_incident_status_number ? _show_incident_status_number?.approved_inc : 0}}</p>
 
                 </div>
                </div>
@@ -33,48 +33,50 @@
         <hr/>
 
         <!-- Team On Roaster -->
-            <div class="row">
-                <div class="col-12" (click)="expandDiv()" style="cursor:pointer">
-                    <h3>Team On Roster {{showCardBody ?'Click to Close' : 'Click to expand'}} <mat-icon class="adminCheveronIcon">chevron_left</mat-icon></h3>
-                </div>
-                <div class="col-12" [@openClose]="showCardBody ? 'open' : 'closed'">
-                <div class="tabs-container clearfix">
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel
+          (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Preview Team On Roster
+              </mat-panel-title>
+              <mat-panel-description>
+                Tap to {{!panelOpenState ? 'open' : 'closed'}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
 
-                    <table>
-                        <tr>
-                            <th colspan="4" class="text-center" id="team_Roster">
-                               {{team_roster[0]?.team_name}} <small><i>{{team_roster[0]?.team_type}} (From: {{team_roster[0]?.from_date}} To:{{team_roster[0]?.to_date}}) </i></small>
-                            </th>
-                        </tr>
-                        <tr>
-                        <th>Employee Name</th>
-                        <th>Designation</th>
-                        <th>Personal No.</th>
-                        <th>ER No.</th>
-                        </tr>
-                        <tr *ngFor="let rosterteam of team_roster">
-                        <td>{{rosterteam.emp_name}}</td>
-                        <td>
-                            <!-- {{rosterteam.user_type}} -->
-                            <div id="container"  *ngIf="rosterteam.user_type=='I'">
-                              <div class="Dot"></div>
-                              <div class="pulse"></div>
-                            </div>
-                            <span *ngIf="rosterteam.user_type=='I'" class="text-danger"> &nbsp; &nbsp; &nbsp;Incident Commandar</span>
-                            <span *ngIf="rosterteam.user_type=='U'"> User</span>
-                            <span *ngIf="rosterteam.user_type=='M'"> Approver</span>
-                            <span *ngIf="rosterteam.user_type=='A'"> Admin</span>
+            <table>
+              <tr>
+                  <th colspan="4" class="text-center" id="team_Roster">
+                     {{team_roster[0]?.team_name}} <small><i>{{team_roster[0]?.team_type}} (From: {{team_roster[0]?.from_date}} To:{{team_roster[0]?.to_date}}) </i></small>
+                  </th>
+              </tr>
+              <tr>
+              <th>Employee Name</th>
+              <th>Designation</th>
+              <th>Personal No.</th>
+              <th>ER No.</th>
+              </tr>
+              <tr *ngFor="let rosterteam of team_roster">
+              <td>{{rosterteam.emp_name}}</td>
+              <td>
+                  <div id="container"  *ngIf="rosterteam.user_type=='I'">
+                    <div class="Dot"></div>
+                    <div class="pulse"></div>
+                  </div>
+                  <span *ngIf="rosterteam.user_type=='I'" class="text-danger"> &nbsp; &nbsp; &nbsp;Incident Commandar</span>
+                  <span *ngIf="rosterteam.user_type=='U'"> User</span>
+                  <span *ngIf="rosterteam.user_type=='M'"> Approver</span>
+                  <span *ngIf="rosterteam.user_type=='A'"> Admin</span>
 
-                        </td>
-                        <td>{{rosterteam.per_no}}</td>
-                        <td>{{rosterteam.er_no}}</td>
-                        </tr>
-                    </table>
-
-                </div>
-                </div>
-
-            </div>
+              </td>
+              <td>{{rosterteam.per_no}}</td>
+              <td>{{rosterteam.er_no}}</td>
+              </tr>
+          </table>
+          </mat-expansion-panel>
+        </mat-accordion>
         <hr/>
         <!-- Incident Details -->
             <div class="row mt-3">
@@ -82,12 +84,11 @@
                     <h3>
                         Incidents Details
                     </h3>
-
                 </div>
         <div class="col-12">
         <div class="tabs-container clearfix">
             <ul class="tabs-menu">
-            <li id="active_{{i}}" [ngClass]="i==0 ? 'active' : ''" *ngFor="let inc of all_incident; let i=index" (click)="get_incident_details(inc.id,i)">
+            <li [ngClass]="inc_id==inc.id ? 'active' : ''" *ngFor="let inc of all_incident; let i=index" (click)="get_incident_details(inc.id)">
               <a>{{inc.inc_name}} ({{inc.inc_no}})</a>
             </li>
 
@@ -96,13 +97,13 @@
                 <div class="pane" *ngIf="inc_details.length > 0">
                 <div class="tab-content">
                         <ul *ngFor="let incDetails of inc_details; let i=index">
-                        <li ><span>Date:</span>  {{incDetails.inc_dt | date:'dd-MM-YYYY'}}
+                        <li ><span>Date:</span>  {{incDetails.inc_dt | date:'dd/MM/YYYY HH:mm'}}
                             <li><span>Incident No:</span>  {{incDetails.inc_no}}
                                 <li><span>Incident Name:</span>  {{incDetails.inc_name}}
                                     <li><span>Incident Type:</span>  {{incDetails.inc_type}}
                                         <li><span>Incident Location:</span>  {{incDetails.offshore_name}} ({{incDetails.o_latt}} : {{incDetails.o_long}})
                                             <li><span> Initial Tier:</span>  {{incDetails.initial_tier}}
-                                                <li><span>Event Description:</span>  {{incDetails.brief_desc}}
+                                                <li><span>Summary Of Incident:</span>  {{incDetails.brief_desc}}
 
                         </li>
 
@@ -122,7 +123,7 @@
 
             </div> -->
             </div>
-        <hr/>
+             <hr/>
         <!-- For Chart.js -->
             <div class="row">
                 <div class="col-12">
@@ -136,28 +137,32 @@
                 </div>
                 <!-- Bubble chart.js -->
                 <div class="col-6">
-                    <!-- <div  id="container" style="width:400px;height:400px;">
-                        <canvas id="bubble"></canvas>
-                    </div> -->
+
                 </div>
             </div>
 
     </div>
     </ng-template>
-    <ng-template #productDetails>
+    <ng-template #INCDETAILS>
     <div class="content-wrapper" id="conent2">
           <!-- For Incident Header -->
           <div class="row">
            <div class="col-12">
             <div class="headerIncident">
                 <div class="headerIncidentbody">
-                <ul class="topinsidentData2 topinsidentData2_1">
-                <li class="nameCl"><strong>Name:</strong> {{Inc_Name}}</li>
-                <li class="typeCl"><strong>Type:</strong> {{Inc_type}}</li>
+                <!-- <ul class="topinsidentData2 topinsidentData2_1">
+                <li class="nameCl" #tooltip="matTooltip" matTooltip="{{Inc_Name}}" [matTooltipDisabled]="Inc_Name.length <= 20"><strong>Name:</strong>
+                 {{(Inc_Name.length > 20 ) ? (Inc_Name | slice:0:18)+'..':(Inc_Name)}}
+                </li>
+                <li class="typeCl" #tooltip="matTooltip" matTooltip="{{Inc_type}}" [matTooltipDisabled]="Inc_type.length < 20"><strong>Type:</strong>
+                 {{(Inc_type.length > 20 ) ? (Inc_type | slice:0:18)+'..':(Inc_type)}}
+                </li>
                 </ul>
                 <ul class="topinsidentData2 topinsidentData2_2">
                 <li class="tierCl"><strong>Tier:</strong> {{tier}}</li>
-                <li class="locationCl"><strong>Location:</strong> {{Inc_location}}</li>
+                <li class="locationCl" #tooltip="matTooltip" matTooltip="{{Inc_location}}" [matTooltipDisabled]="Inc_location.length <= 20"><strong>Location:</strong>
+                  {{(Inc_location.length > 20 ) ? (Inc_location | slice:0:18)+'..':(Inc_location)}}
+                </li>
                 </ul>
                 <ul class="topinsidentData2 topinsidentData2_3">
                 <li class="casualtyCl"><strong>Casualty:</strong> {{tot_casualty}}</li>
@@ -165,8 +170,47 @@
                     <i class="fa fa-circle text-danger Blink ml-1"></i>
 
                 </li>
-                </ul>
-            </div>
+                </ul> -->
+
+                <ul class="topinsidentData2 topinsidentData2_1">
+
+                  <li class="typeCl" #tooltip="matTooltip" matTooltip="{{incDetails?.incident_type}}" [matTooltipDisabled]="incDetails?.incident_type.length < 20"><strong>Type:</strong>
+                   {{(incDetails?.incident_type.length > 20 ) ? (incDetails?.incident_type | slice:0:18)+'..':(incDetails?.incident_type)}}
+                  </li>
+                  <li class="nameCl" ><strong>Name:</strong>
+                    <span #tooltip="matTooltip" matTooltip="{{incDetails?.Inc_name}}" [matTooltipDisabled]="incDetails?.Inc_name.length <= 20">{{(incDetails?.Inc_name.length > 20 ) ? (incDetails?.Inc_name | slice:0:18)+'..':(incDetails?.Inc_name)}}</span>
+                    <a *ngIf="get_current_incident.length > 1" #tooltip="matTooltip"  [matMenuTriggerFor]="menu" matTooltip="click to preview all incident list" ><mat-icon class="customArrow">arrow_downward</mat-icon></a>
+                    <mat-menu #menu="matMenu">
+
+                      <mat-list>
+                          <div mat-subheader class="text-success">
+                            <mat-icon >done</mat-icon>
+                            {{incDetails?.Inc_name}}
+                            <mat-icon  class="text-danger" *ngIf='incDetails?.inc_no == (get_current_incident[get_current_incident.length-1].inc_no)'>beenhere</mat-icon>
+                          </div>
+                          <mat-list-item   *ngFor="let incidents of get_current_incident;let i=index" #tooltip="matTooltip" matTooltip="Select {{incidents.inc_name}}" (click)="setCurrentIncidentDetails(incidents)" [hidden]="incDetails?.inc_no ==incidents.inc_no">
+
+                          <mat-icon mat-list-icon class="text-danger" *ngIf='i == (get_current_incident.length-1)'>beenhere</mat-icon>
+                            <div mat-line>{{incidents.inc_name}} ({{incidents.inc_no}})</div>
+                          </mat-list-item>
+                        </mat-list>
+                    </mat-menu>
+                  </li>
+                  </ul>
+                  <ul class="topinsidentData2 topinsidentData2_2">
+                  <li class="tierCl"><strong>Tier:</strong> <span [ngClass]="incDetails?.initial_tier_id == '1' ? 'text-success' : incDetails?.initial_tier_id == '2' ? 'text-warning' :  incDetails?.initial_tier_id == '3' ? 'text-danger' : 'text-dark'">{{incDetails?.tier_type}}</span></li>
+                  <li class="locationCl" #tooltip="matTooltip" matTooltip="{{incDetails?.location}}" [matTooltipDisabled]="incDetails?.location.length <= 20"><strong>Location:</strong>
+                    {{(incDetails?.location.length > 20 ) ? (incDetails?.location | slice:0:18)+'..':(incDetails?.location)}}
+                  </li>
+                  </ul>
+                  <ul class="topinsidentData2 topinsidentData2_3">
+                  <li class="casualtyCl"><strong>Casualty:</strong> {{incDetails?.tot_casualty}}</li>
+                  <li class="timeCl"><strong>Time Elapsed:</strong> {{incDetails?.dif_time}}h
+                      <i class="fa fa-circle text-danger Blink ml-1"></i>
+
+                  </li>
+                  </ul>
+              </div>
 
             </div>
            </div>
@@ -181,8 +225,8 @@
                         <ul class="watherRepoort">
                             <li
                             #tooltip="matTooltip"
-                             [matTooltipDisabled]="inc_visibility.length > 4 ? false : true"
-                              matTooltip="{{inc_visibility}}"><span>{{inc_visibility == '' ? 'N/A' : (inc_visibility.length > 4  ) ? (inc_visibility | slice:0:3)+'..' : (inc_visibility)}}</span>
+                             [matTooltipDisabled]="cur_inc_status?.visibility.length > 4 ? false : true"
+                              matTooltip="{{cur_inc_status?.visibility}}"><span>{{!cur_inc_status ? 'N/A' : (cur_inc_status?.visibility.length > 4  ) ? (cur_inc_status?.visibility + cur_inc_status?.visibility_unit | slice:0:3)+'..' : (cur_inc_status?.visibility +  cur_inc_status?.visibility_unit)}}</span>
                                 <h3>Visibility</h3>
                             </li>
                         </ul>
@@ -192,8 +236,8 @@
 
                             <li
                             #tooltip="matTooltip"
-                              [matTooltipDisabled]="inc_sea_state.length > 4 ? false : true"
-                              matTooltip="{{inc_sea_state}}"><span>{{inc_sea_state == '' ? 'N/A' : (inc_sea_state.length > 4  ) ? (inc_sea_state | slice:0:3)+'..' : (inc_sea_state)}}</span>
+                              [matTooltipDisabled]="cur_inc_status?.sea_state.length > 4 ? false : true"
+                              matTooltip="{{cur_inc_status?.sea_state}}"><span>{{!cur_inc_status ? 'N/A' : (cur_inc_status?.sea_state.length > 4  ) ? (cur_inc_status?.sea_state | slice:0:3)+'..' : (cur_inc_status?.sea_state)}}</span>
                                 <h3>Sea Swell</h3>
                             </li>
                         </ul>
@@ -202,14 +246,14 @@
                         <ul class="watherRepoort">
                             <li>
                                 <!-- <span>{{inc_temparature}}</span> -->
-                                <span>{{temp =='' ? 'N/A' : temp+ '°' +_temp_unit}}</span>
+                                <span>{{!cur_inc_status ? 'N/A' : cur_inc_status?.temp+ '°' +cur_inc_status?.temp_unit}}</span>
                                 <h3>Temperature</h3>
                             </li>
                         </ul>
                     </div>
                     <div class="whiteBox2 mb-0">
                         <ul class="watherRepoort">
-                            <li><span>{{wind_speed =='' ? 'N/A' : wind_speed+ 'km/h'}}</span>
+                            <li><span>{{!cur_inc_status ? 'N/A' :  cur_inc_status?.wind_speed + cur_inc_status?.wind_speed_unit}}</span>
                                 <h3>Wind Speed</h3>
                             </li>
                         </ul>
@@ -234,7 +278,7 @@
                                          <div id="container"  *ngIf="activeEmp.user_type=='I'">
                                           <div class="Dot"></div>
                                           <div class="pulse"></div>
-                                      </div>
+                                         </div>
                                       </td>
                                         <td>{{activeEmp.emp_name}}</td>
                                         <td><span *ngIf="activeEmp.user_type=='I'" class="customSpan">Incident Commandar</span>
@@ -276,77 +320,69 @@
                     <li [ngClass]="status_mode=='7' ? 'active' : ''" (click)="status_type('7')"><a>Events Log</a></li>
 
                     </ul>
-                    <div class="tab" >
+                    <div [ngClass]="statusType.length > 0 ? 'tab' : 'tab noDataFound'">
                             <div class="pane">
-                            <div class="tab-content" *ngIf="this.status_mode=='2'" id="tabContentanimation">
-                                    <ul *ngFor="let statustype of statusType; let i=index">
+                            <div class="tab-content" >
 
-                                      <li> <h4 class="customHeader">{{statustype.vessel_name}} ({{statustype.vessel_type}})</h4>
-                                         <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
-                                         <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
-                                         <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
-                                         <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
-                                        </li>
-                                      <!-- <li><span>Vessel Name (Type) :</span> {{statustype.vessel_name}} ({{statusType.vessel_type}})</li> -->
+                                    <ng-container *ngIf="this.status_mode=='2'">
 
+                                      <ul *ngFor="let statustype of statusType; let i=index">
+
+                                        <li> <h4 class="customHeader">{{statustype.vessel_name}} ({{statustype.vessel_type}})</h4>
+                                           <h5><label class="customLabel">Date: </label> {{statustype.date}}</h5>
+                                           <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
+                                           <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
+                                           <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
+                                          </li>
+
+                                      </ul>
+                                    </ng-container>
+                                    <ng-container *ngIf="this.status_mode=='3'">
+                                      <ul *ngFor="let statustype of statusType; let i=index">
+
+                                        <li> <h4 class="customHeader">{{statustype.call_sign}} ({{statustype.heli_type}})</h4>
+                                           <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
+                                           <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
+                                           <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
+                                           <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
+                                          </li>
+                                      </ul>
+                                    </ng-container>
+                                    <ng-container *ngIf="this.status_mode=='4'">
+                                      <ul>
+                                        <li *ngFor="let statustype of statusType; let i=index"><span>{{statustype.prob_cat}}:</span>{{statustype.value}}</li>
                                     </ul>
+                                    </ng-container>
+                                    <ng-container *ngIf="this.status_mode=='5'">
+                                      <ul *ngFor="let statustype of statusType; let i=index">
+                                        <li> <h4 class="customHeader">{{statustype.full_name}} ({{statustype.employer}})</h4>
+                                            <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
+                                            <h5><label class="customLabel">Casualty Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
+                                            <h5><label class="customLabel">Time: </label> {{statustype.time | slice:0:5}} </h5>
+                                            <h5><label class="customLabel">Condition: </label> {{statustype.emp_condition}} </h5>
+                                           </li>
+                                    </ul>
+                                    </ng-container>
+                                    <ng-container  *ngIf="this.status_mode=='6'">
+                                      <ul *ngFor="let statustype of statusType; let i=index">
+                                        <li> <h4 class="customHeader">{{statustype.mode_of_transport}}</h4>
+                                            <h5><label class="customLabel">Date: </label> {{statustype.date |  date:'dd/MM/YYYY HH:mm'}}</h5>
+                                            <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
+                                            <h5><label class="customLabel">POB Transported: </label> {{statustype.pob_remaining}} </h5>
+                                            <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}} </h5>
+                                           </li>
+                                    </ul>
+                                    </ng-container>
+                                    <ng-container *ngIf="this.status_mode=='7'">
+                                      <ul *ngFor="let statustype of statusType; let i=index">
+                                        <li>
+                                            <h5><label class="customLabel">Date: </label> {{statustype.date |  date:'dd/MM/YYYY HH:mm'}}</h5>
+                                            <h5><label class="customLabel">Resource Assigned: </label> {{statustype.resource_assigned}}</h5>
+                                            <h5><label class="customLabel">Situation Status: </label> {{statustype.situation_status}} </h5>
+                                           </li>
+                                    </ul>
+                                    </ng-container>
                              </div>
-
-                             <div class="tab-content" *ngIf="this.status_mode=='3'" id="tabContentanimation">
-                                <ul *ngFor="let statustype of statusType; let i=index">
-
-                                  <li> <h4 class="customHeader">{{statustype.call_sign}} ({{statustype.heli_type}})</h4>
-                                     <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
-                                     <h5><label class="customLabel">From (ETA): </label> {{statustype.form_at}} ({{statustype.eta}})</h5>
-                                     <h5><label class="customLabel">TO (ETD): </label> {{statustype.to_at}} ({{statustype.etd}})</h5>
-                                     <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}}</h5>
-                                    </li>
-                                  <!-- <li><span>Vessel Name (Type) :</span> {{statustype.vessel_name}} ({{statusType.vessel_type}})</li> -->
-
-                                </ul>
-                              </div>
-                            <div class="tab-content" *ngIf="this.status_mode=='4'" id="tabContentanimation">
-                                <ul>
-                                    <li *ngFor="let statustype of statusType; let i=index"><span>{{statustype.prob_cat}}:</span>{{statustype.value}}</li>
-
-                                </ul>
-                            </div>
-
-                            <div class="tab-content" *ngIf="this.status_mode=='5'" id="tabContentanimation">
-                                <ul *ngFor="let statustype of statusType; let i=index">
-                                    <li> <h4 class="customHeader">{{statustype.full_name}} ({{statustype.employer}})</h4>
-                                        <h5><label class="customLabel">Date: </label> {{statustype.date | date:'dd/MM/YYYY HH:mm'}}</h5>
-                                        <h5><label class="customLabel">Casualty Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
-                                        <h5><label class="customLabel">Time: </label> {{statustype.time | slice:0:5}} </h5>
-                                        <h5><label class="customLabel">Condition: </label> {{statustype.emp_condition}} </h5>
-                                       </li>
-
-                                </ul>
-                            </div>
-
-                            <div class="tab-content" *ngIf="this.status_mode=='6'" id="tabContentanimation">
-                                <ul *ngFor="let statustype of statusType; let i=index">
-                                    <li> <h4 class="customHeader">{{statustype.mode_of_transport}}</h4>
-                                        <h5><label class="customLabel">Date: </label> {{statustype.date |  date:'dd/MM/YYYY HH:mm'}}</h5>
-                                        <h5><label class="customLabel">Location: </label> {{statustype.location_name}} ({{statustype.offshore_latt}}:{{statustype.offshore_long}})</h5>
-                                        <h5><label class="customLabel">POB Transported: </label> {{statustype.pob_remaining}} </h5>
-                                        <h5><label class="customLabel">Remarks: </label> {{statustype.remarks}} </h5>
-                                       </li>
-
-                                </ul>
-                            </div>
-
-                            <div class="tab-content" *ngIf="this.status_mode=='7'" id="tabContentanimation">
-                                <ul *ngFor="let statustype of statusType; let i=index">
-                                    <li>
-                                        <h5><label class="customLabel">Date: </label> {{statustype.date |  date:'dd/MM/YYYY HH:mm'}}</h5>
-                                        <h5><label class="customLabel">Resource Assigned: </label> {{statustype.resource_assigned}}</h5>
-                                        <h5><label class="customLabel">Situation Status: </label> {{statustype.situation_status}} </h5>
-                                        <!-- <h5><label class="text-primary">Remarks: </label> {{statustype.remarks}} </h5> -->
-                                       </li>
-
-                                </ul>
-                            </div>
                             </div>
                     </div>
                 </div>

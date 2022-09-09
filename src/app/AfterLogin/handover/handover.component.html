@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (IncStatus)="getIncDetails($event)"></app-header>
 <div class="page-body-wrapper">
 	<app-sidebar class="sidebarMain"></app-sidebar>
   <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)"  size = "default" color = "#fff"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(255, 255, 255)" class="mt-5"> Loading.... </p></ngx-spinner>
@@ -15,11 +15,15 @@
                 <ng-container *ngIf="_ACTIVE_FLAG!= '0'">
                 <form [formGroup]="handoverform" (ngSubmit)="HandOver()" ngNativeValidate>
                 <div class="row">
+                  <div class="col-6 col-sm-6">
+                    <label>Handover For Incident</label>
+                    <input type="text" class="form-control"  formControlName="inc"  readonly/>
+                  </div>
+
                   <div class="col-6 col-sm-6 mt-2 mb-2">
-                    <label>Header</label>
+                    <label>Reason for Handover</label>
                     <input type="text" class="form-control"  formControlName="header"  required/>
                   </div>
-                  <div class="col-6 col-sm-6"></div>
                   <div class="col-6 col-sm-6">
                     <label>Handover From</label>
                     <input type="text" class="form-control"  formControlName="from_team"  required readonly/>

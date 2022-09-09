@@ -7,18 +7,7 @@
     <div class="content-wrapper">
         <div class="card">
          <div class="card-body">
-          <!-- <div class="alert alert-success text-center alert-dismissible fade show" [hidden]="update">
-            <strong>{{m}}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="localStorage.removeItem('update-employee');">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="alert alert-success text-center alert-dismissible fade show" [hidden]="add">
-            <strong>{{m1}}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="localStorage.removeItem('add-employee');">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div> -->
+
             <div class="titleSec">
               <div class="btnSubmitSec ">
                 <h2 >Employee</h2>
@@ -33,17 +22,13 @@
                         <mat-radio-button class="p-2" name="employee"  value="I"  color="primary" (change)="check_Active_Inactive($event)">Inactive</mat-radio-button>
                       </mat-radio-group>
                 </div>
-              <!-- </div>
 
-
-             <div class="row mt-3">-->
                  <div class="col-8">
                     <mat-form-field appearance="outline" class="float-right">
                         <mat-label>Search </mat-label>
                         <input matInput (keyup)="applyFilter($event)" placeholder="Search Employee" #input>
                     </mat-form-field>
                  </div>
-                 <!-- <div class="col-sm-8"></div> -->
              </div>
 
              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
@@ -51,25 +36,28 @@
                       <div class="mat-elevation-z8">
                         <table mat-table [dataSource]="dataSource" matSort>
 
-                              <!-- Progress Column -->
+
                           <ng-container matColumnDef="Sl.No">
                             <th mat-header-cell *matHeaderCellDef class="text-center"> Sl.No </th>
                             <td mat-cell *matCellDef="let row;let i=index" class="text-center"> {{i+1}} </td>
                           </ng-container>
 
-                          <!-- Name Column -->
+
                           <ng-container matColumnDef="Name">
                             <th mat-header-cell *matHeaderCellDef class="text-center"> Name </th>
                             <td mat-cell *matCellDef="let row" class="text-center">{{row.emp_name}} <strong *ngIf="row.user_type=='I'" [ngClass]="{'text-success':row.user_type=='I'}">(IC)</strong> </td>
                           </ng-container>
 
-                          <!-- Fruit Column -->
+
                           <ng-container matColumnDef="Contact_No.">
                             <th mat-header-cell *matHeaderCellDef class="text-center"> Contact No. </th>
-                            <td mat-cell *matCellDef="let row" class="text-center">{{row.personal_cnct_no}} </td>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                               <b>{{row.p_code > 0 ? '+' + row.p_code : ''}}</b>&nbsp;{{row.personal_cnct_no}}
+
+                            </td>
                           </ng-container>
 
-                           <!-- Fruit Column -->
+
                            <ng-container matColumnDef="Edit">
                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                             <td mat-cell *matCellDef="let row" class="text-center">
@@ -78,7 +66,6 @@
                                 matTooltip="Edit Employee"
                                   [matTooltipPosition]="positionforedit.value"
                                 [routerLink]="['/admin/employee/edit',row.id]"  routerLinkActive="true">
-                                    <!-- <i class="fa fa-pencil" aria-hidden="true" ></i> -->
                                     <i class="fa fa-pencil-square-o " aria-hidden="true" ></i>
                                     </a>
                               </td>

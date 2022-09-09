@@ -1,0 +1,96 @@
+<app-header (IncStatus)="getIncDetails($event)"></app-header>
+<div class="page-body-wrapper">
+  <app-sidebar class="sidebarMain"></app-sidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+            <div class="btnSubmitSec">
+            <h2 >{{ROUTEPARAMS.type == 'M' ? 'Media Release' : 'Holding Statement'}}</h2>
+            </div>
+          </div>
+             <!-- Media Release -->
+          <form [formGroup] = "media" >
+            <div class="form-group row">
+                 <div class="col-6">
+                  <label>{{ROUTEPARAMS.type == 'M' ? 'RELEASE NO' :  'HOLDING STATEMENT NO'}}</label>
+                  <input type="text" class="form-control" formControlName="rel_no" *ngIf="ROUTEPARAMS.type == 'M'"/>
+                  <input type="text" class="form-control" formControlName="sta_no" *ngIf="ROUTEPARAMS.type == 'H'"/>
+                 </div>
+                 <div class="col-6" *ngIf="ROUTEPARAMS.type == 'H'">
+                  <label>WISHER'S NAME</label>
+                  <input type="text" class="form-control" formControlName="wishers_name"/>
+
+                 </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-6">
+                <label>DATE</label>
+                <input type="date" class="form-control" formControlName="date"/>
+               </div>
+              <div class="col-6">
+               <label>TIME</label>
+               <input type="time" class="form-control" formControlName="time"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-6">
+                <label>{{ROUTEPARAMS.type == 'M' ? 'CONTACT NAME' : 'ISSUED BY'}}</label>
+                <input type="text" class="form-control" [formControlName]="ROUTEPARAMS.type == 'M' ? 'contact_name' : 'issued_by'"/>
+               </div>
+              <div class="col-6">
+               <label>CONTACT INFORMATION</label>
+               <input type="text" class="form-control" formControlName="contact_info"/>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="ROUTEPARAMS.type == 'H'">
+              <div class="col-6" >
+                <label>ISSUED DATE</label>
+               <input type="date" class="form-control" formControlName="issued_date"/>
+              </div>
+              <div class="col-6" >
+                <label>CONTACT PERSON</label>
+               <input type="text" class="form-control" formControlName="contact_person"/>
+              </div>
+            </div>
+            <div class="form-group row">
+            <div class="col-12">
+              <label>LOCATION</label>
+              <textarea  class="form-control" rows="3" formControlName="location"></textarea>
+             </div>
+             <div class="col-12 mt-3">
+              <label>DESCRIPTION</label>
+              <textarea  class="form-control" rows="3" formControlName="description"></textarea>
+             </div>
+            </div>
+            <div class="form-group row" *ngIf="ROUTEPARAMS.type == 'H'">
+                <div class="col-12">
+              <h4>Preview: </h4>
+                  <span>
+                      Our Emergency Response Team has been mobilised to contain the incident and is working closely with <b>{{media.value.description ?  media.value.description : '[…………………………………………………………………………………….]'}}.</b>
+                      All other relevant authorities have been informed. Our utmost priority and concern is the safety of the people and environment at the moment.
+                      We will provide additional information in due course as the investigation is still being carried out.
+                  </span><br>
+                  <span>
+                    For further inquiries, please contact <b>{{media.value.contact_person ? media.value.contact_person : '[………………………………………………….]' }}.</b>
+                  </span>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="btnSubmitSec">
+                  <input type="submit" class="customBtn" value="Save As Draft" (click)="submit('D')" >
+                  <input type="submit" class="customBtn" value="Save As Final" (click)="submit('F')" >
+
+                </div>
+              </div>
+            </div>
+          </form>
+              <!-- End -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

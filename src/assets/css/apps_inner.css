@@ -44,7 +44,7 @@ ul.topinsidentData2 li{font-size: 15px;
    overflow: hidden;
    text-overflow: ellipsis; */
 }
-ul.topinsidentData2 li strong{color: #464ed0;}
+ul.topinsidentData2 li strong{color: #0a63bc;}
 ul.topinsidentData2_1{width: 31%;}
 ul.topinsidentData2_2{width: 38%;}
 ul.topinsidentData2_3{width: 31%;}
@@ -72,7 +72,7 @@ ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
 .whiteBox ul.watherRepoort{list-style-type: none;}
 .whiteBox ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
 .whiteBox ul.watherRepoort li:last-child{margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
-.whiteBox ul.watherRepoort li h3{font-size: 14px; color: #464ed0; font-weight: 700; margin: 0; padding:3px 0 0 0;}
+.whiteBox ul.watherRepoort li h3{font-size: 14px; color: #0a63bc; font-weight: 700; margin: 0; padding:3px 0 0 0;}
 .whiteBox ul.watherRepoort li span{font-size: 24px;}
 
 .whiteBox2{background: #f4f4f4; border: #fff solid 3px;
@@ -87,7 +87,7 @@ ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
 .whiteBox2 ul.watherRepoort{list-style-type: none;}
 .whiteBox2 ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
 .whiteBox2 ul.watherRepoort li:last-child{margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
-.whiteBox2 ul.watherRepoort li h3{font-size: 14px; color: #464ed0; font-weight: 700; margin: 0; padding:3px 0 0 0;}
+.whiteBox2 ul.watherRepoort li h3{font-size: 14px; color: #0a63bc; font-weight: 700; margin: 0; padding:3px 0 0 0;}
 .whiteBox2 ul.watherRepoort li span{font-size: 24px;}
 
 
@@ -100,18 +100,18 @@ ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
 
 
 .whiteBox3 ul.watherRepoort{list-style-type: none;}
-.whiteBox3 ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
+.whiteBox3 ul.watherRepoort li{text-align: center; width: 100%; color: #0d0d0d; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
 .whiteBox3 ul.watherRepoort li:last-child{margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
-.whiteBox3 ul.watherRepoort li h3{font-size: 14px; color: #464ed0; font-weight: 700; margin: 0; padding:3px 0 0 0;}
+.whiteBox3 ul.watherRepoort li h3{font-size: 14px; color: #0a63bc; font-weight: 700; margin: 0; padding:3px 0 0 0;}
 .whiteBox3 ul.watherRepoort li span{font-size: 24px;}
 
 .rowCustomFlex{display: flex; width: 100%;}
 
 .card_headerCustom{padding: 0; background: none;}
-.whiteBox button.custom_btn{padding: 5px 10px;
+.whiteBox button.custom_btn{padding: 5px 10px; color:#fff;
     font-size: 14px;
     line-height: 16px;
-    background: #3f4c66;
+    background: #0a63bc;
     border-radius: 5px;}
 .whiteBox h2.titleDashBox{margin: 0 0 7px 0;
     /* font-size: 18px;   Utsave Da */
@@ -138,7 +138,7 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 .whiteBoxComon ul.watherRepoort{list-style-type: none;}
 .whiteBoxComon ul.watherRepoort li{text-align: center; width: 100%; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: #eee solid 2px;}
 .whiteBoxComon ul.watherRepoort li:last-child{margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
-.whiteBoxComon ul.watherRepoort li h3{font-size: 14px; color: #464ed0; font-weight: 700; margin: 0; padding:3px 0 0 0;}
+.whiteBoxComon ul.watherRepoort li h3{font-size: 14px; color: #0a63bc; font-weight: 700; margin: 0; padding:3px 0 0 0;}
 .whiteBoxComon ul.watherRepoort li span{font-size: 24px;}
 
 .whiteBoxComon button.custom_btn{padding: 5px 10px;
@@ -157,7 +157,7 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 
 .whiteBoxComon ul.listDashboard{list-style-type: none;}
 .whiteBoxComon ul.listDashboard li{font-weight: 400; font-size: 15px; color: #6f7479; line-height: 20px; margin-bottom: 12px;}
-.whiteBoxComon ul.listDashboard li strong{font-size: 14px; color: #464ed0;}
+.whiteBoxComon ul.listDashboard li strong{font-size: 14px; color: #0a63bc;}
 .whiteBoxComon .card_bodyCustom h3{margin: 0 0 7px 0;
     font-size: 16px;
     color: #2f2f2f !important;
@@ -281,19 +281,8 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 .tabs-container .tabs-menu li.active a:after {font-family: "FontAwesome";position: absolute;content: "\f105";right: 6px;top: 14px;color: #212529;font-size: 20px;}
 .headerIncident{padding: 7px 10px;display: inline-block;border-radius: 10px; width: 100%;}
 .headerIncidentbody{padding: 7px 10px; display: inline-block; border-radius: 10px; width: 100%; box-shadow: 3px 3px 7px 1px #d5d5d5; background: #f4f4f4;}
-.customLabel{font-size: 14px;font-weight: 700;color: #4c4ed0;}
+.customLabel{font-size: 14px;font-weight: 700;color: #0a63bc}
 .customHeader{color: #252525;font-weight: 400;font-size: 18px;text-align: center;}
-#tabContentanimation{animation: fadeInAnimation ease 2s;animation-iteration-count: 1;animation-fill-mode: forwards;}
-@keyframes fadeInAnimation {
-  0%{
-      opacity: 0;
-  }
-  100% {
-      opacity: 1;
-   }
-}
-
-
 .pulse{
   /* width: 8px;height: 8px;border: 1px solid #464ed2;border-radius: 50%;background-color: #464ed2;z-index: 10;position: absolute; top: -4px;left: -2px; */
   width: 6px;
@@ -364,7 +353,7 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
     opacity: 0.0;
  }
 }
-.customSpan{ font-weight: 700;font-size: 15px;color: #464ed2;}
+.customSpan{ font-weight: 700;font-size: 15px;color: #0a63bc;}
 /* End */
 
 /* Admin Login */
@@ -960,8 +949,8 @@ th.mat-header-cell{text-align: center!important;}
 .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {background-color: #213f79;}
 .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent:hover{color: #213f79; background-color: white;}
 .cdk-global-overlay-wrapper, .cdk-overlay-container {z-index: 10000 !important;}
-.mat-badge-medium.mat-badge-above .mat-badge-content {top: -9px!important; left: 24px!important;background-color: #404f71;}
-.mat-badge-small.mat-badge-above .mat-badge-content {top: 17px!important; right: 6px!important;background-color: #404f71;}
+.mat-badge-medium.mat-badge-above .mat-badge-content {top: -9px!important; left: 24px!important;background-color: #0d0d0d;}
+.mat-badge-small.mat-badge-above .mat-badge-content {top: 17px!important; right: 6px!important;background-color: #0d0d0d;}
 
 /* For Drag Drop team member */
 
@@ -973,7 +962,7 @@ b{font-size: 14px;color:black;}
 .adjustContent:hover{color:red;}
 .customIcon i{font-size: 18px;color: #595a5a;padding: 5px;cursor: pointer;}
 .NoBoardStatusAvailable {font-size: 12px!important;padding: 11px;text-align: center;color: #898989;font-weight: 600!important;}
-.customLine{border-bottom: 2px solid #464ed0;}
+.customLine{border-bottom: 2px solid #0a63bc;}
 
 /* For material dialog alert */
 .mat-dialog-container {background: #424242!important;color: rgb(255 255 255 / 87%)!important;padding:35px 24px!important;}
@@ -986,6 +975,7 @@ b{font-size: 14px;color:black;}
   font-weight: 800!important;
   color: #cf2525;
   cursor:pointer;
+  vertical-align: sub!important;
 }
 
 /* .landingContainer {
@@ -1095,6 +1085,62 @@ font-size: 17px;
   color: black!important;
   font-size: 15px!important;
 }
+
+.prefix{
+  width: 58px!important;
+  text-align: center;
+  margin: 0px 6px 0 0;
+  outline: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #9f9f9f;
+  border-radius: 0.25rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.attchments {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  margin:0 5px 0 0;
+}
+.attchments:hover {
+  box-shadow: 0 0 2px 1px rgb(210 210 210 / 50%);
+}
+
+.headline{
+  color:#464ed0!important
+}
+.backBtn{
+  background: #464ed0!important;
+  color: #fff!important;
+  outline: 0!important;
+  border: 0!important;
+}
+
+.text-dark{color: #0d0d0d;}
+
+.customLabel {
+  color: #0a63bc !important;
+}
+
+.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #0a63bc !important;
+}
+.mat-radio-button.mat-primary .mat-radio-inner-circle, .mat-radio-button.mat-primary .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-primary:active .mat-radio-persistent-ripple {
+  background-color: #0a63bc !important;
+}
+
+
+.liveLogImg{width: 38px; position: relative; float: left;}
+.liveLogImg .dot-ring {left: 19px;}
+
+ul.liveChatUl .customSpan{float: left; font-weight: 700; margin: 6px 0 9px 25px;}
+ul.liveChatUl li::marker{display: none; color: #fff;}
+ul.liveChatUl li{padding: 4px auto; margin: 10px;position:relative;}
+
 
 
 

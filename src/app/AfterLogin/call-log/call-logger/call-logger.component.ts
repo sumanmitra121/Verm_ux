@@ -27,6 +27,8 @@ export class CallLoggerComponent implements OnInit {
   @ViewChild(MatSort) matsort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+
+
   constructor(private emergencyService:VirtualEmergencyService,
     private dialog:MatDialog,
     private toastr:ToastrManager,
@@ -36,6 +38,7 @@ export class CallLoggerComponent implements OnInit {
     // this.fetchdata();
   }
   fetchdata(id:any){
+    console.log(id);
     this.spinner.show()
     this.emergencyService.global_service('0','/call_log','inc_id=' + id).pipe(map((x:any)=> x.msg)).subscribe(data=>{this.putdata(data);})
   }
@@ -61,7 +64,7 @@ export class CallLoggerComponent implements OnInit {
       disalogConfig.disableClose=false;
       disalogConfig.autoFocus=true;
       disalogConfig.width='35%';
-      disalogConfig.data={id:id,api_name:'/call_log_del',name:'Board Type'}
+      disalogConfig.data={id:id,api_name:'/call_log_del',name:'board Type'}
       const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
       dialogref.afterClosed().subscribe(dt=>{
        if(dt){

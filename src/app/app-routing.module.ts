@@ -53,15 +53,20 @@ import { DashBoardComponent } from './AfterLogin/dash-board/dash-board.component
 import { FirstloggedinchangePasswordComponent } from './AfterLogin/FirstTimeChangePassWord/firstloggedinchange-password/firstloggedinchange-password.component';
 import { FormsChecklistComponent } from './AfterLogin/forms-checklist/forms-checklist.component';
 import { FormschecklistfilesComponent } from './AfterLogin/formschecklistfiles/formschecklistfiles.component';
+import { HandOverDashboardComponent } from './AfterLogin/hand-over-dashboard/hand-over-dashboard.component';
 import { HandoverComponent } from './AfterLogin/handover/handover.component';
 import { AddIncidentComponent } from './AfterLogin/Incident/add-incident/add-incident.component';
 import { ApproveIncidentComponent } from './AfterLogin/Incident/approve-incident/approve-incident.component';
 import { EditIncidentComponent } from './AfterLogin/Incident/edit-incident/edit-incident.component';
 import { IncidentModuleComponent } from './AfterLogin/Incident/incident-module/incident-module.component';
+import { AddLessonLearntComponent } from './AfterLogin/Lesson_Learnt/add-lesson-learnt/add-lesson-learnt.component';
+import { LessonDashboardComponent } from './AfterLogin/Lesson_Learnt/lesson-dashboard/lesson-dashboard.component';
 import { LiveLogComponent } from './AfterLogin/live-log/live-log.component';
 import { AddlogsheetComponent } from './AfterLogin/log-sheet/Add-Log-Sheet/addlogsheet/addlogsheet.component';
 import { EditLogSheetComponent } from './AfterLogin/log-sheet/Edit-Log-Sheet/edit-log-sheet/edit-log-sheet.component';
 import { LogSheetComponent } from './AfterLogin/log-sheet/log-sheet.component';
+import { MediaComponent } from './AfterLogin/Media_Module/media/media.component';
+import { ModifyMediaComponent } from './AfterLogin/Media_Module/modify-media/modify-media.component';
 import { ReportdatapoolDetailsComponent } from './AfterLogin/report-datepool/detailsReportdatapool/reportdatapool-details/reportdatapool-details.component';
 import { ReportDatepoolComponent } from './AfterLogin/report-datepool/report-datepool.component';
 import { RepositoryComponent } from './AfterLogin/repository/repository.component';
@@ -70,6 +75,7 @@ import { BeforeLoginDashboardComponent } from './BeforeLogin/login-lee/before-lo
 import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/forgot-password/forgot-password.component';
 import { LoginLEEComponent } from './BeforeLogin/login-lee/login-lee.component';
 import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
+import { PageNotFoundComponent } from './Error_pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -370,8 +376,32 @@ const routes: Routes = [
     component:NotificationComponent
   },
   {
-    path:'handover',
+    path:'add_handover',
     component:HandoverComponent
+  },
+  {
+    path:'handover',
+    component:HandOverDashboardComponent
+  },
+  {
+    path:'lesson_learnt',
+    component:LessonDashboardComponent
+  },
+  {
+    path:'add_lesson_learnt/:id',
+    component:AddLessonLearntComponent
+  },
+  {
+    path:'media',
+    component:MediaComponent
+  },
+  {
+       path:'media/:type/:id',
+       component:ModifyMediaComponent
+  },
+  {
+    path:"**",
+    component:PageNotFoundComponent
   }
 
 ];

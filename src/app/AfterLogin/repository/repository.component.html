@@ -11,13 +11,16 @@
          <div class="card-body">
                  <div class="container-m-nx container-m-ny bg-lightest" >
                   <div class="row">
-                    <div class="col-2">
-                        <a class='customIcon'
+                    <div class="col-2 d-flex justify-content-center align-items-center">
+                        <a class='customIcon p-1' (click)="backToLocation()">
+                          <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                        </a>
+                        <a class='customIcon p-1'
                         #toolTip="matTooltip"
                         matTooltip="List View"
                         (click)="change_view('L')"
                         ><i class="fa fa-list" aria-hidden="true"></i></a>
-                          <a class='customIcon p-2'
+                          <a class='customIcon p-1'
                           #toolTip="matTooltip"
                           matTooltip="Grid View"
                           (click)="change_view('G')"
@@ -134,7 +137,8 @@
                                    <mat-menu #menu="matMenu">
                                      <share-buttons
                                      style="color: white;"
-                                     theme="material-light"
+                                     [showText]="true"
+                                     theme="material-dark"
                                      [include]="['facebook', 'whatsapp', 'email', 'copy']"
                                      url="{{files.form_path}}"
                                    ></share-buttons>
@@ -241,10 +245,12 @@
                            <mat-menu #menu="matMenu">
                              <share-buttons
                              style="color: white;"
-                             theme="material-light"
+                              [showText]="true"
+                              theme="material-dark"
                              [include]="['facebook', 'whatsapp', 'email', 'copy']"
                              url="{{row.form_path}}"
                            ></share-buttons></mat-menu>
+
 
                            <!-- For Preview -->
                            <!-- <a style="cursor:pointer" type="button"

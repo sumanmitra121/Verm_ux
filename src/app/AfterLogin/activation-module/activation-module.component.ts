@@ -51,14 +51,18 @@ export class ActivationModuleComponent implements OnInit {
     this.dataSource.sort = this.matsort;
   }
   fetchdata(){
-    this.spinner.show();
+    // this.spinner.show();
     this.team_on_duity_data.length=0;
     this.emergencyservice.global_service('0','/get_active_emp_list','flag='+this.approval_flag+'&inc_id='+localStorage.getItem('Inc_id')).pipe(map((x:any)=> x.msg)).subscribe(data=>{
+       console.log(data);
+
       this._HAND_FLAG = data[data.length -1].hand_flag;
       this.team_on_duity_data=data;
     this.check_active_team();
     this.putdata(this.team_on_duity_data);
     this.getTeambyEmployeeId();
+    console.log('ss');
+
   });
   }
   //check_whether_active_or_not_for_two_team_assign_same_range
@@ -81,93 +85,12 @@ export class ActivationModuleComponent implements OnInit {
     this.displayedColumns=['Name', 'employees_no','Action','Status','View'];
     this.displayedColumns_employee= ['select','Employee_name','Employee_designation'];
   }
+  console.log('sssad');
+
    this.fetchdata();
   }
   //For activate or deactive team
   async team_active_deactive(event:any,team_name:any,team_id:any,index:any,toggleElement:any,active_flag:any){
-    // if(localStorage.getItem('Inc_id') != ''){
-    // this.spinner.show('slider_'+index);
-    // if(this.team_on_duity_data.length == 1){
-    // this.spinner.show('slider_'+index);
-    // var res={
-    //   inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
-    //   team_id:team_id,
-    //   team_name:team_name,
-    //   inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
-    //   user:localStorage.getItem('Email'),
-    //   flag:event.checked==true?'Y':'N'
-    // }
-    // this.active_Team(res,event.checked,team_name,index);
-    // }
-    // //For Two Team Assign bewtween same date Range
-    // else{
-    //  if(this._checked_active){
-    //   // toggleElement.checked = !event.checked;
-    //   // showing alert and uncheck toggle
-    //     event.source.checked = !event.checked;//<= this will uncheck the toggle
-    //     this._show_alert= false;
-    //   }
-    //   else{
-    //        var res={
-    //         inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
-    //         team_id:team_id,
-    //         team_name:team_name,
-    //         inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
-    //         user:localStorage.getItem('Email'),
-    //         flag:event.checked==true?'Y':'N'
-    //       }
-    //       this.active_Team(res,event.checked,team_name,index);
-    //     }
-    //   }
-    // }
-
-    // console.log(event.checked);
-
-    // if(localStorage.getItem('Inc_id') != ''){
-
-    //   if(event.checked && this._checked_active){
-    //      this._show_alert= false
-    //     //  event.source.checked = !event.checked;
-    //       this.fetchdata();
-    //       console.log('dddd');
-    //   }
-    //   else{
-    //     if(this.team_on_duity_data.length > 2 && this._HAND_FLAG == 0){
-    //           //showing alert and uncheck toggle
-    //           event.source.checked = !event.checked;
-    //           this._show_alert= false;
-    //            this.fetchdata();
-    //             console.log('assasaassa');
-    //     }
-    //     else{
-    //       var res={
-    //         inc_id:localStorage.getItem('Inc_id')!=''?localStorage.getItem('Inc_id'):'',
-    //         team_id:team_id,
-    //         team_name:team_name,
-    //         inc_name:localStorage.getItem('Inc_name')!='' ? localStorage.getItem('Inc_name') : '',
-    //         user:localStorage.getItem('Email'),
-    //         flag:event.checked==true?'Y':'N'
-    //       }
-    //       this.emergencyservice.global_service('1','/activation_team',res).subscribe(async data=>{
-    //         this.check_activity='';
-    //         this.check_activity=data;
-    //         if(this.check_activity.suc==1){
-    //         var msg = event.checked ? 'has activated ' + team_name : 'has de-activated ' + team_name;
-    //         var dt={id:'0',activity:'A',narration:localStorage.getItem('Emp_name')+ msg +' at '+new Date().toISOString().substring(0,10),view_flag:'N',inc_no:localStorage.getItem('Inc_No') == '' ? 0 : localStorage.getItem('Inc_No')};
-    //         this.push_notfication(dt);
-    //         await this.Check_Assign_Team(event.checked,index);
-    //         this.spinner.hide('slider_'+index);
-    //         }
-    //         else{
-    //         this.spinner.hide('slider_'+index);
-    //         }
-    //       })
-    //     }
-    //   }
-    // }
-    // else{
-    //   this.toaster.errorToastr('No Active Incident Available');
-    // }
     if(localStorage.getItem('Inc_id') != ''){
      this.spinner.show('slider_'+index);
         var res={
@@ -355,10 +278,12 @@ export class ActivationModuleComponent implements OnInit {
   getTeamName(team_name:any,active_flag:any){this._team_name =team_name;this._activated_flag = active_flag}
   push_notfication(dt:any){this.emergencyservice.global_service('1','/post_notification',dt).subscribe(data=>{})}
   getTeambyEmployeeId(){
-    this.emergencyservice.global_service('0','/get_assigned_team','emp_id='+localStorage.getItem('_emp_id')).pipe(map((x:any)=> x.msg)).subscribe(res =>{
-          this._show_alert = this.team_on_duity_data.find((x:any) => x.team_id == res[0].team_id).active_flag == 'Y' ? true : false;
-    })
-    this.spinner.hide();
-
+    if( this.team_on_duity_data.length > 1){
+      this.emergencyservice.global_service('0','/get_assigned_team','emp_id='+localStorage.getItem('_emp_id')).pipe(map((x:any)=> x.msg)).subscribe(res =>{
+        console.log(res);
+        this._show_alert = this.team_on_duity_data.find((x:any) => x.team_id == res[0].team_id).active_flag == 'Y' ? true : false;
+      })
+    }
+    // this.spinner.hide();
   }
 }
