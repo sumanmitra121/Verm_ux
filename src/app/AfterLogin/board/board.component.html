@@ -6,7 +6,7 @@
 <app-sidebar class="sidebarMain"></app-sidebar>
 <div class="main-panel">
   <div class="content-wrapper">
-    <div class="card whiteBoxComon_cardCus"  *ngIf="_active_flag != '0'">
+    <div class="card "  *ngIf="_active_flag != '0'">
      <div class="card-body">
 
        <!-- Inicdent Status -->
@@ -38,7 +38,7 @@
               <ng-container *ngIf="get_in_status.length == 0">
                 <ul class="boardStatus">
 									<li>
-										<h5 class="NoBoardStatusAvailable">No Incident Status Available</h5>
+										<h5 class="NoBoardStatusAvailable">No Status Available</h5>
 									</li>
 								</ul>
               </ng-container>
@@ -66,7 +66,7 @@
           <ng-container *ngIf="get_vessel_status.length == 0">
             <ul class="boardStatus">
               <li>
-                <h5 class="NoBoardStatusAvailable">No Vessel Status Available</h5>
+                <h5 class="NoBoardStatusAvailable">No Status Available</h5>
               </li>
             </ul>
           </ng-container>
@@ -93,7 +93,7 @@
             <ng-container *ngIf="get_helicopter_status.length == 0">
               <ul class="boardStatus">
                 <li>
-                  <h5 class="NoBoardStatusAvailable">No Helicopter Status Available</h5>
+                  <h5 class="NoBoardStatusAvailable">No  Status Available</h5>
                 </li>
               </ul>
             </ng-container>
@@ -120,7 +120,7 @@
               <ng-container *ngIf="get_prob_status.length == 0">
                 <ul class="boardStatus">
                   <li>
-                    <h5 class="NoBoardStatusAvailable">No Pob Status Available</h5>
+                    <h5 class="NoBoardStatusAvailable">No Status Available</h5>
                   </li>
                 </ul>
               </ng-container>
@@ -183,7 +183,7 @@
        <ng-container *ngIf="get_evacuation_status.length == 0">
         <ul class="boardStatus">
           <li>
-            <h5 class="NoBoardStatusAvailable">No Evacuation Status Available</h5>
+            <h5 class="NoBoardStatusAvailable">No Status Available</h5>
           </li>
         </ul>
       </ng-container>
@@ -212,7 +212,7 @@
            <ng-container *ngIf="get_events_status.length == 0">
             <ul class="boardStatus">
               <li>
-                <h5 class="NoBoardStatusAvailable">No Event Status Available</h5>
+                <h5 class="NoBoardStatusAvailable">No  Status Available</h5>
               </li>
             </ul>
           </ng-container>
@@ -222,7 +222,36 @@
         </div>
 
        </div>
+        <!-- Incident Objectives-->
+       <div class="col-3">
+       <div class="whiteBoxComon" type="button" id="inc_objectives" (click)="set_modal_for_create('inc_objectives')"  data-toggle="modal" data-target="#create_incident_modal">
+         <div class="card-header card_headerCustom">
+           <h2 class="pull-left text-dark titleDashBox">Incident Objectives</h2>
+
+         </div>
+         <div class="card_bodyCustom">
+          <h3 id="first-item"></h3>
+          <ul class="listDashboard">
+            <ng-container *ngIf="getIncObjectives.length > 0">
+              <li><strong>Period Date: </strong> {{period_from_dt}}</li>
+              <li><strong>Period To: </strong> {{period_to_dt}}</li>
+              <li><strong>Objectives General: </strong> {{general}}</li>
+            </ng-container>
+            <ng-container *ngIf="getIncObjectives.length == 0">
+              <ul class="boardStatus">
+                <li>
+                  <h5 class="NoBoardStatusAvailable">No  Status Available</h5>
+                </li>
+              </ul>
+            </ng-container>
+
+          </ul>
+
+         </div>
+       </div>
       </div>
+
+    </div>
     </div>
     </div>
     <div class="card" *ngIf="_active_flag == '0'">
@@ -240,6 +269,7 @@
 <div class="modal modalCustomeBoard fade" id="create_incident_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
     <div class="modal-dialog modal_dialogCustomeBoard modal-dialog-centered modal-dialog-zoom  modal-xl" role="document">
       <div class="modal-content">
+
                                 <!--Modal header -->
         <!-- Incident Status -->
         <div class="modal-header" *ngIf="this.id_create=='inc_create'">
@@ -292,10 +322,19 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
+         <!-- Incident Objectives Log -->
+         <div class="modal-header" *ngIf="this.id_create=='inc_objectives'">
+          <h3 class="modal-title" id="exampleModalLabel">Create Incident Objectives</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #myModalClose>
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
                            <!-- End -->
 
                            <!-- Modal Body -->
         <form #logForm="ngForm" (ngSubmit)="submit(logForm.value)">
+
+
           <!-- For INCIDENT STATUS -->
           <div class="modal-body" id="inc_create" [hidden]="this.id_create!='inc_create'">
 
@@ -616,9 +655,7 @@
               </thead>
               <tbody>
                    <tr *ngFor="let vessel_array of vesselArray; let i = index;">
-                      <!-- <td>
-                        <input type="date" class="form-control" type="date" [(ngModel)]="vesselArray[i].date"  [ngModelOptions]="{standalone: true}"/>
-                      </td> -->
+
                       <td>
 
                         <select class="form-control" [(ngModel)]="vesselArray[i].prob_cat_id"  [ngModelOptions]="{standalone: true}" required>
@@ -629,7 +666,6 @@
                       </td>
                       <td>
                         <input  class="form-control" type="time"  [(ngModel)]="vesselArray[i].Time" [ngModelOptions]="{standalone: true}" required/>
-                        <!-- <div *ngIf="vesselArray[i].Time==''"> <p class="text-danger">Please Provide Time</p></div> -->
                       </td>
                       <td>
                         <input type="text" placeholder="Enter POB Count" (keypress)="PreventNonNumeric($event)" class="form-control"  [(ngModel)]="vesselArray[i].value" [ngModelOptions]="{standalone: true}" required/>
@@ -643,6 +679,7 @@
                        matTooltip="Delete"
                        (click)="deleteRow(i,4,vesselArray[i].id)"
                        ><i class="fa fa-trash fa-2x"></i></a>
+
                       </td>
                 </tr>
               </tbody>
@@ -675,9 +712,14 @@
                   <tr>
                       <th class="text-center">FULL NAME</th>
                       <th class="text-center">EMPLOYER</th>
-                      <th class="text-center">CONDITION</th>
-                      <th class="text-center">CASUALTY LOCATION</th>
-                      <th class="text-center">TIME</th>
+                      <th class="text-center" colspan="3">
+                        <div class="row">
+                          <div class="col-4">CONDITION</div>
+                          <div class="col-4">CASUALTY LOCATION</div>
+                          <div class="col-3">TIME</div>
+                          <div class="col-1"></div>
+                        </div>
+                      </th>
                      <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
                       </th>
@@ -691,26 +733,36 @@
                       <td>
                         <input placeholder="Enter Employer" [(ngModel)]="vesselArray[i].employer" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
                       </td>
-                      <td>
-                        <input placeholder="Enter Condition" [(ngModel)]="vesselArray[i].condition" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                      <td  colspan="3">
+                        <div class="row mt-2 p-2 mb-2"  *ngFor="let casualtygrid of vesselArray[i].casualtygrid;let j=index">
+                               <div class="col-4 ">
+                                    <input placeholder="Enter Condition" [(ngModel)]="vesselArray[i].casualtygrid[j].emp_condition" class="form-control" type="text" [ngModelOptions]="{standalone: true}" required/>
+                              </div>
+                              <div class="col-4">
+                               <textarea placeholder="Enter Location" [(ngModel)]="vesselArray[i].casualtygrid[j].location" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="10" required></textarea>
+                              </div>
+                              <div class="col-3">
+                                <input placeholder="Enter Condition" [(ngModel)]="vesselArray[i].casualtygrid[j].time" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
+                              </div>
+                              <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a *ngIf="j > 0"  class="customIcon" type="button"
+                              (click)="deleteSubRow(i,j,5,vesselArray[i].casualtygrid[j].id)"
+                              ><i class="fa fa-minus fa-2x"></i>
+                              </a>
+                              </div>
+                        </div>
                       </td>
-                      <td>
-                        <!-- <select [(ngModel)]="vesselArray[i].location" class="form-control" [ngModelOptions]="{standalone: true}" required>
-                          <option value="">Select</option>
-                          <option *ngFor="let location of offshore_list" value="{{location.id}}" [selected]="vesselArray[i].location == location.id">{{location.offshore_name}}</option>
-                        </select> -->
-                        <textarea placeholder="Enter Remarks" [(ngModel)]="vesselArray[i].location" class="form-control" type="text" [ngModelOptions]="{standalone: true}" rows="1" cols="20" required></textarea>
-                      </td>
-                      <td>
-                        <input [(ngModel)]="vesselArray[i].time" class="form-control" type="time" [ngModelOptions]="{standalone: true}" required/>
-                      </td>
-
                       <td  class="text-center">
-                        <a class="customIcon" type="button"
+                      <a class="customIcon" type="button"
                        #tooltip="matTooltip"
                        matTooltip="Delete"
                        (click)="deleteRow(i,5,vesselArray[i].id)"
-                       ><i class="fa fa-trash fa-2x"></i></a>
+                       ><i class="fa fa-trash fa-2x"></i>
+                      </a>
+                      <a  class="customIcon" type="button"
+                       (click)="AddRow(i,5,vesselArray[i].id)"
+                       ><i class="fa fa-plus fa-2x"></i>
+                      </a>
                       </td>
                 </tr>
               </tbody>
@@ -853,19 +905,98 @@
                       <th class="text-center">TIME</th>
                       <th class="text-center" rowspan="3">SITUATION STATUS</th>
                       <th class="text-center">RESOURCE ASSIGNED</th>
-                     <th class="text-center" (click)="addRow()">
+                       <th class="text-center" (click)="addRow()">
                         <i class="fa fa-plus fa-2x"></i>
                       </th>
                   </tr>
               </tfoot>
              </table>
             </div>
+            <!-- Incident Objectives -->
+            <div class="modal-body" id="inc_objectives" *ngIf="this.id_create=='inc_objectives'">
+              <div class="row">
+                <div class="col-6">
+                  <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
+                    <label>Installation</label>
+                    <input class="form-control" type="text" name="installation" id="ins_id" ngModel #installation="ngModel" readonly>
+                </div>
+                <div class="col-6">
+                <label>COORDINATES:</label>
+                <input class="form-control" type="text" name="coordinates" id="coordinate_id" ngModel #coordinates="ngModel" readonly>
+                </div>
+             </div>
+              <table class="table table-bordered table-striped" style="margin-top:10px" width="100%">
+                <thead>
+                  <tr>
+                    <th width="90%"></th>
+                    <th class="text-center">
+                      <a (click)="addRow()"><i class="fa fa-plus fa-2x"></i>
+                      </a>
+                    </th>
+                  </tr>
+                </thead>
+                   <tbody>
+                       <tr *ngFor="let in_objectives of vesselArray;let i=index">
+                         <td width="90%">
+                         <div class="row border-bottom mb-2 p-2">
+                          <div class="col-4">
+                             <label>Operation Period From</label>
+                             <input type="datetime-local"  [(ngModel)]="vesselArray[i].op_period_from" [ngModelOptions]="{standalone: true}" class="form-control" name="period_from" id="Period_From"/>
+                          </div>
+                          <div class="col-4">
+                            <label>Operation Period To</label>
+                            <input type="datetime-local" [(ngModel)]="vesselArray[i].op_period_to" [ngModelOptions]="{standalone: true}" name="period_to" class="form-control" id="Period_To"/>
+                          </div>
+                          <div class="col-4">
+                            <label>Objectives-General</label>
+                           <textarea rows="1" cols="20" class="form-control"  [(ngModel)]="vesselArray[i].obj_general" [ngModelOptions]="{standalone: true}"></textarea>
+                          </div>
+                         </div>
+                          <h3>Objectives Specific Towards : </h3>
+                          <div class="row  border-bottom mb-2 p-2">
+                            <div class="col-3">
+                              <label>People</label>
+                              <textarea rows="2" cols="20" class="form-control" [(ngModel)]="vesselArray[i].people" [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
+                            <div class="col-3">
+                              <label>Environment</label>
+                              <textarea rows="2" cols="20" class="form-control" [(ngModel)]="vesselArray[i].environment" [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
+                            <div class="col-3">
+                              <label>Asset</label>
+                              <textarea rows="2" cols="20" class="form-control" [(ngModel)]="vesselArray[i].assets" [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
+                            <div class="col-3">
+                              <label>Reputation</label>
+                              <textarea rows="2" cols="20" class="form-control" [(ngModel)]="vesselArray[i].reputation" [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
+
+                          </div>
+                          <div class="row p-2">
+                            <div class="col-12">
+                              <label>General Situation Awareness:</label>
+                              <textarea rows="3" cols="20" class="form-control"  [(ngModel)]="vesselArray[i].awareness" [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
+                          </div>
+                         </td>
+                         <td class="text-center">
+                          <a class="customIcon" type="button"
+                          (click)="deleteRow(i,9,vesselArray[i].id)"
+                            #tooltip="matTooltip"
+                            matTooltip="Delete"><i class="fa fa-trash fa-2x"></i></a>
+                         </td>
+
+                       </tr>
+                   </tbody>
+              </table>
+            </div>
                                       <!-- End -->
         <div class="modal-footer">
-          <div class="btnSubmitSec ">
-          <input  type="submit" class="btn btn-info" id="incident_status" value="Save">
+          <div class="btnSubmitSec">
+          <input [disabled]="afterSubmit" type="submit" class="btn btn-info" id="incident_status" [value]="afterSubmit ? 'Updating ...' :  'Save' ">
         </div>
         </div>
+
         </form>
 
       </div>

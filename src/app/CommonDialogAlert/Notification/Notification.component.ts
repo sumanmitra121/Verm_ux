@@ -26,7 +26,7 @@ export class NotificationComponent implements OnInit {
     this._serve.global_service('0','/notification','emp_code='+localStorage.getItem('Employee_id')+'&limit='+this._min).pipe(map((x:any) => x.msg)).subscribe((res:any) => {
       // this._notifications.length = 0;
       this._notifications = res;
-      // console.log(res);
+    console.log(res);
   })
   }
   clickToSeeNotifications(Id:any,_activity:any){

@@ -1,0 +1,73 @@
+<app-header></app-header>
+<div class="page-body-wrapper">
+  <app-sidebar class="sidebarMain"></app-sidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+             <div class="btnSubmitSec">
+              <h2>Weekly Meeting</h2>
+              <input type="submit" class="btn btn-info float-right" value="Add" (click)="routeToModifyMeeting('0','A')">
+             </div>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+          </mat-form-field>
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+              <!-- ID Column -->
+              <ng-container matColumnDef="Id">
+                <th mat-header-cell *matHeaderCellDef > # </th>
+                <td mat-cell *matCellDef="let row;let i=index"> {{i+1}}  </td>
+              </ng-container>
+
+              <!-- Progress Column -->
+              <ng-container matColumnDef="Ref">
+                <th mat-header-cell *matHeaderCellDef > Reference </th>
+                <td mat-cell *matCellDef="let row">{{row.ref_no}}  </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="Meeting_date">
+                <th mat-header-cell *matHeaderCellDef > Meeting Date </th>
+                <td mat-cell *matCellDef="let row">{{row.date | date:'dd/MM/YYYY HH:mm'}}  </td>
+              </ng-container>
+
+              <!-- Fruit Column -->
+              <ng-container matColumnDef="Attend_by">
+                <th mat-header-cell *matHeaderCellDef > Attended By </th>
+                <td mat-cell *matCellDef="let row;let i=index">
+                         {{row.attended_by}}
+                   </td>
+              </ng-container>
+                <!-- Fruit Column -->
+                <ng-container matColumnDef="Action">
+                  <th mat-header-cell *matHeaderCellDef > Action </th>
+                  <td mat-cell *matCellDef="let row;let i=index">
+
+                      <a  class="customIcon"  type="button" (click)="routeToModifyMeeting(row.id,row.final_flag == 'Y' ? 'V' : 'U')" ><i [ngClass]="row.final_flag == 'Y' ? 'fa fa-eye' : 'fa fa-pencil-square-o'"></i></a>
+
+                     </td>
+                </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+
+            <mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of Weekly Meeting"></mat-paginator>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

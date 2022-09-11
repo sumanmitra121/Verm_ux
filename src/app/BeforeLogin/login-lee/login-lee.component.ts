@@ -15,16 +15,21 @@ export class LoginLEEComponent implements OnInit {
   constructor(public toastr: ToastrManager,
     private emergencyservice:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   submitForm(v:any){
        this.spinner.show();
        this.emergencyservice.global_service('1','/login',v).subscribe(data=>{
+        console.log(data);
+
         this.check_response=data;
        if(this.check_response.suc==1){
         localStorage.setItem('Email',this.check_response.msg[0].email);
         localStorage.setItem('Employee_id',this.check_response.msg[0].employee_id);
+        localStorage.setItem('_SHOW_POPUP','0');
         if(this.check_response.msg[0].first_login > 0){
+        localStorage.setItem('_u_login','true');
         localStorage.setItem('Emp_name',this.check_response.msg[0].emp_name);
         localStorage.setItem('Emp_status',this.check_response.msg[0].emp_status);
         localStorage.setItem('User_type',this.check_response.msg[0].user_type);
@@ -36,7 +41,7 @@ export class LoginLEEComponent implements OnInit {
         this.router.navigate(['/dashboard']);
         }
         else{
-        this.spinner.hide();
+          this.spinner.hide();
           this.router.navigate(['/firstloggedin']);
         }
       }
@@ -47,4 +52,8 @@ export class LoginLEEComponent implements OnInit {
     })
   }
 
+  route(){
+    this.router.navigate(['/dashboard']);
+
+  }
 }

@@ -22,6 +22,7 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 import { global_url_test } from 'src/app/url';
 import { validations } from 'src/app/utilitY/validation';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+
 // import { saveAs } from 'file-saver';
 declare var $: any;
 export class DynamicGrid {
@@ -65,7 +66,24 @@ export class vesselGrid {
   dest_to:any;
   total_prob:any;
   time_to_location:any;
-  // hours_to_location:any;
+  casualtygrid:Array<casualtyGrid>=[]
+
+  //For Incident Objectives//
+  op_period_from:any;
+  op_period_to:any;
+  people:any;
+  environment:any;
+  assets:any;
+  reputation:any;
+  awareness:any;
+  obj_general:any
+  // END //
+}
+export class casualtyGrid{
+  id:any
+  emp_condition: any;
+  location: any;
+  time: any;
 }
 @Component({
   selector: 'app-board',
@@ -81,9 +99,15 @@ export class vesselGrid {
   //End//
 })
 export class BoardComponent implements OnInit, OnDestroy {
+  afterSubmit:boolean=false;
+
   _active_flag: any = localStorage.getItem('active_flag');
   @ViewChild('myModalClose') modalClose!: ElementRef;
   @ViewChild('logForm') logForm!: NgForm;
+  period_from_dt:any
+  period_to_dt:any
+  general:any
+
   _vis_unit:any;
  _brief_desc:any;
   temp_unit: any;
@@ -92,6 +116,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   helicopter_status: any;
   evacuation_status: any;
   events_status: any;
+  inc_objective_status:any
   casualy_status: any;
    _pob_transported:any;
   act_Inc_id: any;
@@ -126,6 +151,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   get_casualty_status: any = [];
   get_helicopter_status: any = [];
   get_evacuation_status: any = [];
+  getIncObjectives:any = [];
   get_prob_status: any = [];
   getWindDirection:any=[];
   get_events_status: any = [];
@@ -185,6 +211,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   submit(v: Form) {
+    this.afterSubmit = true;
     var counter = 0;
     this.check_respond = '';
     if (this.id_create == 'inc_create') {
@@ -236,11 +263,14 @@ export class BoardComponent implements OnInit, OnDestroy {
               );
               this.Post_notification(post_notification);
               setTimeout(() => {
+                //  this.afterSubmit = false;
                 this.SetIncStatus(localStorage.getItem('Inc_id'));
                 this.toastr.successToastr('Submitted Successfully');
                 this.modalClose.nativeElement.click();
               }, 500);
             } else {
+              this.afterSubmit = false;
+
               this.toastr.errorToastr('Failed to submit', 'Error!', {
                 position: 'top-center',
                 animate: 'slideFromTop',
@@ -249,6 +279,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             }
           },
           (error) => {
+            this.afterSubmit = false;
             this.toastr.errorToastr(
               'Something Went Wrong,Please Try Again After Some Time',
               'Error!',
@@ -261,6 +292,8 @@ export class BoardComponent implements OnInit, OnDestroy {
           }
         );
       } else {
+         this.afterSubmit = true;
+
         this.toastr.errorToastr(
           'Some of  fields are empty, please fill them up',
           ''
@@ -293,6 +326,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           .subscribe(
             (data) => {
               this.check_respond = data;
+
               if (this.check_respond.suc == 1) {
                 if (
                   this.get_incident_details_after_save.length ==
@@ -311,11 +345,13 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.Post_notification(post_notification);
                 clearTimeout(this.vessel_status);
                 setTimeout(() => {
+                  // this.afterSubmit = false;
                   this.SetVesselStatus(localStorage.getItem('Inc_id'));
                   this.toastr.successToastr('Submitted Successfully', '');
                   this.modalClose.nativeElement.click();
                 }, 500);
               } else {
+                this.afterSubmit = false;
                 this.toastr.errorToastr('Failed to submit', 'Error!', {
                   position: 'top-center',
                   animate: 'slideFromTop',
@@ -324,20 +360,22 @@ export class BoardComponent implements OnInit, OnDestroy {
               }
             },
             (error) => {
-              this.toastr.errorToastr(
-                'Something Went Wrong Please Try Again After Some Time',
-                'Error!',
-                {
-                  position: 'top-center',
-                  animate: 'slideFromTop',
-                  toastTimeout: 5000,
-                }
-              );
+            this.afterSubmit = false;
+              // this.toastr.errorToastr(
+              //   'Something Went Wrong Please Try Again After Some Time',
+              //   'Error!',
+              //   {
+              //     position: 'top-center',
+              //     animate: 'slideFromTop',
+              //     toastTimeout: 5000,
+              //   }
+              // );
             }
           );
       } else {
+         this.afterSubmit = true;
         this.toastr.errorToastr(
-          'Some of  fields are empty, please fill them up',
+          'Some of fields are empty, please fill them up',
           ''
         );
       }
@@ -386,37 +424,46 @@ export class BoardComponent implements OnInit, OnDestroy {
               this.Post_notification(post_notification);
               setTimeout(() => {
                 this.setHelicopterStatus(localStorage.getItem('Inc_id'));
+                //  this.afterSubmit = false;
                 this.toastr.successToastr('Submitted Successfully', '');
                 this.modalClose.nativeElement.click();
               }, 500);
             } else {
+              this.afterSubmit = false;
               this.toastr.errorToastr('Failed to submit', 'Error!', {
                 position: 'top-center',
                 animate: 'slideFromTop',
                 toastTimeout: 5000,
               });
             }
+          },err=>{
+           this.afterSubmit = true;
           });
       } else {
+        this.afterSubmit = false;
         this.toastr.errorToastr(
           'Some of  fields are empty, please fill them up',
           ''
         );
       }
     } else if (this.id_create == 'casual') {
-      for (let i = 0; i < this.vesselArray.length; i++) {
-        if (
-          this.vesselArray[i].full_name == '' ||
-          this.vesselArray[i].employer == '' ||
-          this.vesselArray[i].condition == '' ||
-          this.vesselArray[i].location == '' ||
-          this.vesselArray[i].time == ''
-        ) {
-        } else {
-          counter++;
-        }
+      for(let i = 0; i<this.vesselArray.length;i++){
+          for(let j =0 ;j< this.vesselArray[i].casualtygrid.length;j++){
+              if(this.vesselArray[i].casualtygrid[j].emp_condition == '' ||
+              this.vesselArray[i].employer == '' ||
+              this.vesselArray[i].full_name == '' ||
+              this.vesselArray[i].casualtygrid[j].location == '' ||
+              this.vesselArray[i].casualtygrid[j].time == '' )
+              {
+                 this.afterSubmit = false;
+                this.toastr.errorToastr(
+                  'Some of  fields are empty, please fill them up',
+                  ''
+                );
+                return;
+               }
+          }
       }
-      if (counter == this.vesselArray.length) {
         var dt3 = {
           inc_name: localStorage.getItem('Inc_name'),
           inc_id: localStorage.getItem('Inc_id'),
@@ -452,31 +499,18 @@ export class BoardComponent implements OnInit, OnDestroy {
                   this.modalClose.nativeElement.click();
                 }, 500);
               } else {
+               this.afterSubmit = false;
                 this.toastr.errorToastr('Failed to submit', 'Error!', {
                   position: 'top-center',
                   animate: 'slideFromTop',
                   toastTimeout: 5000,
                 });
               }
-            },
-            (error) => {
-              this.toastr.errorToastr(
-                'Something Went Wrong,Please Try Again After Some Time',
-                'Error!',
-                {
-                  position: 'top-center',
-                  animate: 'slideFromTop',
-                  toastTimeout: 5000,
-                }
-              );
+            },err => {
+              this.afterSubmit = false;
             }
           );
-      } else {
-        this.toastr.errorToastr(
-          'Some of  fields are empty, please fill them up',
-          ''
-        );
-      }
+
     } else if (this.id_create == 'evacuation') {
       for (let i = 0; i < this.vesselArray.length; i++) {
         if (
@@ -525,6 +559,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                   this.modalClose.nativeElement.click();
                 }, 500);
               } else {
+               this.afterSubmit = false;
                 this.toastr.errorToastr('Failed to submit', 'Error!', {
                   position: 'top-center',
                   animate: 'slideFromTop',
@@ -533,6 +568,7 @@ export class BoardComponent implements OnInit, OnDestroy {
               }
             },
             (error) => {
+              this.afterSubmit = false;
               this.toastr.errorToastr(
                 'Something Went Wrong,Please Try Again After Some Time',
                 'Error!',
@@ -545,6 +581,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             }
           );
       } else {
+        this.afterSubmit = false;
         this.toastr.errorToastr(
           'Some of  fields are empty, please fill them up',
           ''
@@ -596,6 +633,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                   this.modalClose.nativeElement.click();
                 }, 500);
               } else {
+              this.afterSubmit = false;
                 this.toastr.errorToastr('Failed to submit', 'Error!', {
                   position: 'top-center',
                   animate: 'slideFromTop',
@@ -604,20 +642,22 @@ export class BoardComponent implements OnInit, OnDestroy {
               }
             },
             (error) => {
-              this.toastr.errorToastr(
-                'Something Went Wrong,Please Try Again After Some Time',
-                'Error!',
-                {
-                  position: 'top-center',
-                  animate: 'slideFromTop',
-                  toastTimeout: 5000,
-                }
-              );
+              this.afterSubmit = false;
+              // this.toastr.errorToastr(
+              //   'Something Went Wrong,Please Try Again After Some Time',
+              //   'Error!',
+              //   {
+              //     position: 'top-center',
+              //     animate: 'slideFromTop',
+              //     toastTimeout: 5000,
+              //   }
+              // );
             }
           );
-        // console.log(this.vesselArray);
+        // //this.vesselArray);
 
       } else {
+        this.afterSubmit = false;
         this.toastr.errorToastr(
           'Some of  fields are empty, please fill them up',
           ''
@@ -669,17 +709,75 @@ export class BoardComponent implements OnInit, OnDestroy {
                 this.modalClose.nativeElement.click();
               }, 2000);
             } else {
+               this.afterSubmit = false;
+               this.toastr.errorToastr('Failed to submit', 'Error!', {
+                position: 'top-center',
+                animate: 'slideFromTop',
+                toastTimeout: 5000,
+              });
             }
+          },err=>{
+            this.afterSubmit = false;
           });
       } else {
+        this.afterSubmit = false;
         this.toastr.errorToastr(
           'Some of  fields are empty, please fill them up',
           ''
         );
       }
     }
+    else{
+      for(let i = 0; i<this.vesselArray.length;i++){
+             if(this.vesselArray[i].assets == '' || this.vesselArray[i].awareness == '' ||
+             this.vesselArray[i].environment == '' || this.vesselArray[i].obj_general == '' ||
+             this.vesselArray[i].people == '' || this.vesselArray[i].reputation == '' ||
+             this.vesselArray[i].op_period_from == '' ||  this.vesselArray[i].op_period_to == '')
+             {
+              this.afterSubmit = false;
+              this.toastr.errorToastr(
+                'Some of  fields are empty, please fill them up',
+                ''
+              );
+              return;
+             }
+      }
+      var inc_objectives = {
+        inc_name: localStorage.getItem('Inc_name'),
+        inc_id: localStorage.getItem('Inc_id'),
+        user: this.default_user,
+        dt: this.vesselArray,
+      };
+      this.emergencyservice
+      .global_service('1','/inc_obj',inc_objectives).subscribe((res:any) =>{
+        // this.afterSubmit = false;
+        if (res.suc > 0) {
+          clearTimeout(this.inc_objective_status);
+          setTimeout(() => {
+            this.setIncObjectives(localStorage.getItem('Inc_id'));
+            this.toastr.successToastr("Inserted Successfully",'');
+            this.modalClose.nativeElement.click();
+          },500)
+          // var post_notification = global_url_test.getboardStatus(
+          //   localStorage.getItem('Email'),
+          //   'BE',
+          //   this.mode,
+          //   this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
+          //   );
+          // this.Post_notification(post_notification);
+        }
+        else{
+          this.afterSubmit = false;
+          this.toastr.errorToastr('Something wrong happen!! please try again later','');
+        }
+      },err=>{
+        this.afterSubmit = false;
+      })
+    }
   }
   set_modal_for_create(flag: any) {
+    this.afterSubmit = false;
+
     this.id_create = flag;
     //  this.get_incident_details.length=0;
     if (this.id_create == 'inc_create') {
@@ -732,7 +830,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       //.log(this.get_vessel_status.length)
       this.get_incident_details_after_save = this.get_vessel_status;
       this.vesselArray.length = 0;
-       console.log(this.get_incident_details_after_save)
+       //this.get_incident_details_after_save)
       if (this.get_incident_details_after_save.length > 0) {
         this.vesselDynamic = '';
         for (let i = 0; i < this.get_incident_details_after_save.length; i++) {
@@ -749,7 +847,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             time_to_location:moment.utc(moment(this.get_incident_details_after_save[i].eta,"HH:mm").diff(moment(this.get_incident_details_after_save[i].etd,"HH:mm"))).format("HH:mm")
           };
           this.vesselArray.push(this.vesselDynamic);
-          console.log(this.vesselArray);
+          //this.vesselArray);
 
         }
       } else {
@@ -809,7 +907,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.LogForm.form.patchValue({
         inc_id: localStorage.getItem('Inc_id'),
       });
-      // this.getOffShoreLocation();
       this.getCasualtyStatus(localStorage.getItem('Inc_id'));
     } else if (this.id_create == 'evacuation') {
       //For Casualty Status
@@ -822,8 +919,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
       this.vesselArray.length = 0;
       this.get_incident_details_after_save = this.get_evacuation_status;
+
       //.log(this.get_incident_details_after_save);
-        console.log(this.get_incident_details_after_save);
+        //this.get_incident_details_after_save);
 
       if (this.get_incident_details_after_save.length > 0) {
         // this.vesselArray.length=0;
@@ -842,7 +940,7 @@ export class BoardComponent implements OnInit, OnDestroy {
              dest_to:this.get_incident_details_after_save[i].dest_to
           };
           this.vesselArray.push(this.vesselDynamic);
-        console.log(this.vesselArray);
+        //this.vesselArray);
 
         }
       } else {
@@ -857,7 +955,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           dest_to:''
         };
         this.vesselArray.push(this.vesselDynamic);
-        console.log(this.vesselArray)
+        //this.vesselArray)
       }
     } else if (this.id_create == 'events') {
       this.LogForm.form.patchValue({
@@ -904,6 +1002,12 @@ export class BoardComponent implements OnInit, OnDestroy {
       });
       this.getSetPobStatuc(localStorage.getItem('Inc_id'));
     }
+    else{
+      this.LogForm.form.patchValue({
+            inc_id: localStorage.getItem('Inc_id'),
+          });
+      this.getIncidentObjectives(localStorage.getItem('Inc_id'));
+    }
   }
   //For FilterData from data table
   applyFilter(event: Event) {
@@ -936,7 +1040,7 @@ export class BoardComponent implements OnInit, OnDestroy {
             .global_service(
               '0',
               '/delete_board',
-              'board_id=' + _b_type + '&id=' + details
+              'board_id=' + _b_type + '&id=' + details + '&inc_id=' + localStorage.getItem('Inc_id')
             )
             .subscribe((res) => {
               this.check_respond = res;
@@ -1007,10 +1111,8 @@ export class BoardComponent implements OnInit, OnDestroy {
         id: '0',
         full_name: '',
         employer: '',
-        condition: '',
-        location: '',
-        time: '',
-      };
+        casualtygrid:[{id:0,emp_condition: '',location: '',time: ''}]
+      }
       this.vesselArray.push(this.vesselDynamic);
       // return true;
     } else if (this.id_create == 'events') {
@@ -1032,11 +1134,13 @@ export class BoardComponent implements OnInit, OnDestroy {
       };
       this.vesselArray.push(this.vesselDynamic);
     } else if (this.id_create == 'pob') {
-      // this.vesselDynamic =  {id:"0",time:this.datePipe.transform(this.now,'HH:mma'),destination:"",mode_of_transport:"",pob_remaining:"",remarks:""};
-      // this.vesselArray.push(this.vesselDynamic);
       this.vesselDynamic = { id: '0', prob_cat_id: '', Time: '', value: '' };
       this.vesselArray.push(this.vesselDynamic);
-    }
+    }else{this.set_Inc_objectives();}
+  }
+  set_Inc_objectives(){
+    this.vesselDynamic = { id: '0', op_period_from:'',op_period_to:'', people:'',environment:'',assets:'',reputation:'',awareness:'',obj_general:''};
+    this.vesselArray.push(this.vesselDynamic);
   }
   //for displaying vessel status continiously on the board
   display_vessel_status(i: any, data1: any) {
@@ -1114,6 +1218,25 @@ export class BoardComponent implements OnInit, OnDestroy {
       this.event_logs = true;
     }, 5000);
   }
+  display_Incident_objectives(j:any,data: any){
+    if (j >= data.length) {
+      j = 0;
+    }
+    if (data != '') {
+      this.period_from_dt = this.datePipe.transform(data[j].op_period_from,'dd/MM/YYYY HH:mm');
+      this.period_to_dt =this.datePipe.transform( data[j].op_period_to,'dd/MM/YYYY HH:mm');
+      this.general = data[j].obj_general;
+      //data);
+    }
+    this.inc_objective_status = setTimeout(() => {
+      j = j + 1;
+      if (!this.alive) {
+        return;
+      }
+      this.display_Incident_objectives(j, data);
+      this.event_logs = true;
+    }, 5000);
+  }
   //for displaying Casualty status continiously on the board
   display_casualty_status(j: any, data: any) {
     if (j >= data.length) {
@@ -1141,6 +1264,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     clearTimeout(this.evacuation_status);
     clearTimeout(this.events_status);
     clearTimeout(this.casualy_status);
+    clearTimeout(this.inc_objective_status);
   }
   setStatus(index: any, _b_type: any) {
     //.log({"Index":index,"Type":_b_type});
@@ -1164,6 +1288,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       case 7:
         this.get_events_status.splice(index, 1);
         break;
+      case 9:this.getIncObjectives.splice(index,1);break;
       default:
         break;
     }
@@ -1172,12 +1297,12 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   SetIncStatus(_id: any) {
     //_id)
-     console.log(_id)
+     //_id)
     this.emergencyservice
       .global_service('0', '/inc_board', 'inc_id=' + _id)
       .pipe(map((x: any) => x.msg))
       .subscribe((data) => {
-        console.log(data);
+        //data);
 
         this.get_in_status = data;
         this.get_incident_details_after_save = data;
@@ -1248,6 +1373,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       .global_service('0', '/casualty', 'inc_id=' + _id)
       .pipe(map((x: any) => x.msg))
       .subscribe((data) => {
+        //data);
+
         this.get_casualty_status.length = 0;
         this.get_casualty_status = data;
         this.get_incident_details_after_save = this.get_casualty_status;
@@ -1314,12 +1441,44 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.offshore_list = data;
       });
   }
+  getIncidentObjectives(_id: any){
+    this.emergencyservice
+    .global_service('0', '/inc_obj', 'inc_id=' + _id)
+    .pipe(map((x: any) => x.msg))
+    .subscribe(res =>{
+      this.vesselArray.length = 0;
+        this.get_incident_details_after_save = res;
+        if(res.length > 0){
+            res.forEach((element:any) => {
+              this.vesselDynamic = {
+                  id: element.id,
+                  op_period_from:this.datePipe.transform(element.op_period_from,'yyyy-MM-ddTHH:mm'),
+                  op_period_to:this.datePipe.transform(element.op_period_to ,'yyyy-MM-ddTHH:mm'),
+                  people:element.people,
+                  environment:element.environment,
+                  assets:element.assets,
+                  reputation:element.reputation,
+                  awareness:element.awareness,
+                  obj_general:element.obj_general};
+               this.vesselArray.push(this.vesselDynamic)
 
+               //this.vesselDynamic);
+
+            });
+        }
+        else{
+          this.set_Inc_objectives();
+        }
+        this.setFormvalue();
+    })
+  }
   getCasualtyStatus(_id: any) {
     this.emergencyservice
       .global_service('0', '/casualty_board', 'inc_id=' + _id)
       .pipe(map((x: any) => x.msg))
       .subscribe((data) => {
+      //data)
+      console.log(data);
         this.vesselArray.length = 0;
         this.get_incident_details_after_save = data;
         if (this.get_incident_details_after_save.length > 0) {
@@ -1330,27 +1489,28 @@ export class BoardComponent implements OnInit, OnDestroy {
             i < this.get_incident_details_after_save.length;
             i++
           ) {
-            this.vesselDynamic = {
+             this.vesselDynamic = {
               id: this.get_incident_details_after_save[i].id,
               full_name: this.get_incident_details_after_save[i].full_name,
               employer: this.get_incident_details_after_save[i].employer,
-              condition: this.get_incident_details_after_save[i].emp_condition,
-              location: this.get_incident_details_after_save[i].location,
-              time: this.get_incident_details_after_save[i].time,
-            };
+              casualtygrid: this.get_incident_details_after_save[i].casualtygrid
+            }
             this.vesselArray.push(this.vesselDynamic);
+
           }
         } else {
-          this.vesselDynamic = {
-            id: '0',
-            full_name: '',
-            employer: '',
-            condition: '',
-            location: '',
-            time: '',
-          };
-          this.vesselArray.push(this.vesselDynamic);
+            this.vesselDynamic = {
+              id: '0',
+              full_name: '',
+              employer: '',
+              casualtygrid:[{id:0,emp_condition: '',location: '',time: ''}]
+            }
+            this.vesselArray.push(this.vesselDynamic);
         }
+        //this.vesselArray);
+        console.log(this.vesselArray);
+
+
       });
   }
   getSetPobStatuc(_id: any) {
@@ -1358,6 +1518,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       .global_service('0', '/prob_board', 'inc_id=' + _id)
       .pipe(map((x: any) => x.msg))
       .subscribe((data) => {
+        //data);
+
         this.vesselArray.length = 0;
         this.get_incident_details_after_save = data;
         if (this.get_incident_details_after_save.length > 0) {
@@ -1376,7 +1538,7 @@ export class BoardComponent implements OnInit, OnDestroy {
               total_prob:this.get_incident_details_after_save[i].total_prob
             };
             this.vesselArray.push(this.vesselDynamic);
-            console.log(this.vesselArray);
+            //this.vesselArray);
 
           }
         } else {
@@ -1407,6 +1569,19 @@ export class BoardComponent implements OnInit, OnDestroy {
       });
     }, 500);
   }
+  setIncObjectives(_id:any){
+    this.emergencyservice
+    .global_service('0', '/inc_obj', 'inc_id=' + _id)
+    .pipe(map((x: any) => x.msg))
+    .subscribe(res =>{
+      this.getIncObjectives.length =0;
+      this.getIncObjectives = res;
+      this.get_incident_details_after_save = res;
+       if(res.length > 0){
+         this.display_Incident_objectives(0,this.getIncObjectives);
+       }
+    })
+  }
   //For Non Numeric Validations
   PreventNonNumeric(_event: any) {
     validations._preventnonNumeric(_event);
@@ -1427,6 +1602,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.setCasualtyStatus(localStorage.getItem('Inc_id'));
     this.setEvacuationStatus(localStorage.getItem('Inc_id'));
     this.setEventStatus(localStorage.getItem('Inc_id'));
+    this.setIncObjectives(e.id);
     this.alive = true;
   }
   changeTime(event:any,_etd:any,Index:any){
@@ -1446,9 +1622,50 @@ export class BoardComponent implements OnInit, OnDestroy {
     const dialogref = this.dialog.open(DialogalertComponent, disalogConfig);
     dialogref.afterClosed().subscribe((dt) => {
          if(dt){
-          console.log('sss');
-
          }
     })
   }
+
+  AddRow(index: any, _b_type: any, details: any){this.vesselArray[index].casualtygrid.push({id:0,emp_condition: '',location: '',time: ''});}
+  deleteSubRow(index: any,sub_index: any, _b_type: any, details: any){
+    const disalogConfig = new MatDialogConfig();
+    disalogConfig.disableClose = false;
+    disalogConfig.autoFocus = true;
+    disalogConfig.width = '35%';
+    disalogConfig.data = {
+      board_type: _b_type,
+      api_name: '',
+      name: 'board Type',
+      id: details,
+    };
+    const dialogref = this.dialog.open(DialogalertComponent, disalogConfig);
+    dialogref.afterClosed().subscribe((dt) => {
+      if (dt == 1) {
+        console.log(details);
+
+        if(details!='0'){
+          this.emergencyservice
+          .global_service(
+            '0',
+            '/delete_board',
+            'board_id=8&id=' + details + '&inc_id='+localStorage.getItem('Inc_id')
+          )
+          .subscribe((res:any) => {
+                 if(res.suc > 0){
+                     this.vesselArray[index].casualtygrid.splice(sub_index,1);
+                     this.toastr.successToastr(res.msg,'');
+                    //  this.setStatus(index, _b_type);
+                 }
+                 else{
+                   this.toastr.errorToastr('Something wrong happen!! plese try again later','')
+                 }
+          })
+        }
+        else{
+          this.vesselArray[index].casualtygrid.splice(sub_index,1);
+        }
+      }
+  })
+  }
+
 }

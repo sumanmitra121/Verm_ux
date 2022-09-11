@@ -10,6 +10,7 @@ export class AdminsidebarComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit(): void {
+    localStorage.setItem('Route_Url',this.router.url);
   }
   signout(){
     localStorage.clear();

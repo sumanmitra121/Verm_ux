@@ -89,6 +89,7 @@
                         <option value="5">Casualty Status</option>
                         <option value="6">Evacuation Status</option>
                         <option value="7">Events Log</option>
+                        <option value="8">Incident Objectives</option>
                         <option value="Consolidated" class="text-success">Consolidated</option>
 
                     </select>
@@ -872,6 +873,96 @@
                         </tbody>
                     </table>
                 </div>
+                <div id="BoarddivToPrint_8">
+                  <table mat-table [dataSource]="dataSource" style="display:none" matSort *ngIf="Inc_type=='B' && board_stats=='8'"  matTableExporter #exporter="matTableExporter">
+
+                    <ng-container matColumnDef="op_period_from">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> period From </th>
+                        <td mat-cell *matCellDef="let row;let i=index" class="text-center">{{row.op_period_from | date:'dd/MM/YYYY HH:mm'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="op_period_to">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> period To  </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.op_period_to | date:'dd/MM/YYYY HH:mm'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="obj_general">
+                        <th mat-header-cell *matHeaderCellDef class="text-center"> Objective General </th>
+                        <td mat-cell *matCellDef="let row" class="text-center">{{row.obj_general}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="people">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> People </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.people}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="assets">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Assets </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.assets}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="environment">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Environment </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.environment}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="reputation">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Reputation </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.reputation}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="awareness">
+                      <th mat-header-cell *matHeaderCellDef class="text-center"> Awareness </th>
+                      <td mat-cell *matCellDef="let row" class="text-center">{{row.awareness}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter </td>
+                    </tr>
+                  </table>
+                  <table width="100%" border="1"  *ngIf="Inc_type=='B' && board_stats=='8'"  >
+                    <thead>
+                        <tr>
+                            <th>Period From</th>
+                            <th>Period To </th>
+                            <th>Objective General</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let inc_objectives of get_incident_details">
+                        <tr>
+                          <td>{{inc_objectives.op_period_from | date:'dd/MM/YYYY HH:mm'}}</td>
+                          <td>{{inc_objectives.op_period_to | date:'dd/MM/YYYY HH:mm'}}</td>
+                          <td>{{inc_objectives.obj_general}}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" class="dashed-line">
+                            <h4 class="text-center">Objectives Specific Towards :</h4>
+                            <label>People: </label>&nbsp;{{inc_objectives.people}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" class="dashed-line">
+                            <label>Environment: </label>&nbsp;{{inc_objectives.environment}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" class="dashed-line">
+                            <label>Assets: </label>&nbsp;{{inc_objectives.assets}}
+                          </td>
+                          </tr>
+                          <tr>
+                          <td colspan="3" class="dashed-line">
+                            <label>Reputation: </label>&nbsp;{{inc_objectives.reputation}}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" class="dashed-line">
+                            <h4 class="text-center">General Situation Awareness: </h4>
+                            {{inc_objectives.awareness}}
+                          </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+
                 <!-- End -->
                 <!-- Boards Reports for consolidated -->
                 <div id="BoarddivToPrint_Consolidated">
@@ -1304,6 +1395,85 @@
                             </tbody>
                         </table>
                     </div>
+                    <div *ngIf="Inc_type=='B' && board_stats=='Consolidated'" class="mt-2">
+                      <table width="100%" border="1" style="display:none" id="tbl7">
+
+                        <thead>
+                            <tr>
+                              <th>Period From</th>
+                              <th>Period To </th>
+                              <th>Objective General</th>
+                              <th>People</th>
+                              <th>Environment</th>
+                              <th>Assets</th>
+                              <th>Reputation</th>
+                              <th>Reputation</th>
+                              <th>General Situation Awareness</th>
+
+                        </tr>
+                        </thead>
+                        <tbody *ngFor="let inc_objectives of get_incident_details7">
+                            <tr>
+                            <td>{{inc_objectives.op_period_from | date:'dd/MM/YYYY HH:mm'}}</td>
+                            <td>{{inc_objectives.op_period_to  | date:'dd/MM/YYYY HH:mm'}}</td>
+                            <td>{{inc_objectives.obj_general}}</td>
+                            <td>{{inc_objectives.people}}</td>
+                            <td>{{inc_objectives.environment}}</td>
+                            <td>{{inc_objectives.assets}}</td>
+                            <td>{{inc_objectives.reputation}}</td>
+                            <td>{{inc_objectives.awareness}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                      <table width="100%" border="1">
+                        <thead>
+                          <tr>
+                              <th class="text-center" colspan="8" style="height: 50px;font-size: 30px;">Incident Objecive Status</th>
+                          </tr>
+                      </thead>
+                        <thead>
+                            <tr>
+                                <th>Period From</th>
+                                <th>Period To </th>
+                                <th>Objective General</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let inc_objectives of get_incident_details7">
+                            <tr>
+                              <td>{{inc_objectives.op_period_from | date:'dd/MM/YYYY HH:mm'}}</td>
+                              <td>{{inc_objectives.op_period_to | date:'dd/MM/YYYY HH:mm'}}</td>
+                              <td>{{inc_objectives.obj_general}}</td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" class="dashed-line">
+                                <h4 class="text-center">Objectives Specific Towards :</h4>
+                                <label>People: </label>&nbsp;{{inc_objectives.people}}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" class="dashed-line">
+                                <label>Environment: </label>&nbsp;{{inc_objectives.environment}}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" class="dashed-line">
+                                <label>Assets: </label>&nbsp;{{inc_objectives.assets}}
+                              </td>
+                              </tr>
+                              <tr>
+                              <td colspan="3" class="dashed-line">
+                                <label>Reputation: </label>&nbsp;{{inc_objectives.reputation}}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" class="dashed-line">
+                                <h4 class="text-center">General Situation Awareness: </h4>
+                                {{inc_objectives.awareness}}
+                              </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                     </div>
                 </div>
                   <!-- End -->
                 <!-- Activation Status -->
@@ -1702,7 +1872,7 @@
             <div class="btnSubmitSec ">
             <input type="submit" class="btn btn-info float-right" value="Print"  (click)="export()">
             <input type="submit" *ngIf="board_stats!='Consolidated'"  class="btn btn-info float-right" value="Excel"  (click)="importAsXlsx()">
-            <input type="submit" *ngIf="board_stats=='Consolidated'"  class="btn btn-info float-right" value="Excel"  onClick="importmultiplesheet(['tbl1','tbl2','tbl3','prob_table','tbl4','tbl5','tbl6'], ['Vessel_Status','Incident_Status','Helicopter_Status','Pob_Status','Casualty_Status','Evacuation_Status','Events_Status'], 'Board_consolidated.xls', 'Excel')">
+            <input type="submit" *ngIf="board_stats=='Consolidated'"  class="btn btn-info float-right" value="Excel"  onClick="importmultiplesheet(['tbl1','tbl2','tbl3','prob_table','tbl4','tbl5','tbl6','tbl7'], ['Vessel_Status','Incident_Status','Helicopter_Status','Pob_Status','Casualty_Status','Evacuation_Status','Events_Status','Incident_Objectives'], 'Board_consolidated.xls', 'Excel')">
         </div>
         </div>
        </div>

@@ -1,57 +1,62 @@
 
-<div class="landingContainer">
-<div class="landingContainerSub">
+
+<!-- *** Html Page of before-login-dashboard component (http://localhost:4200/#/).
+     *** This page is for showing three options for user.
+     *** i.   Training/Drill (Yet To Develope).
+     *** ii.  Live Emergency Event (Under Developed)
+     *** iii. Maintanance & Support (Yet To Develope)
+ -->
+
+
+
+<div class="landingContainer"> <!-- Main div of this page which consist of a background image (src/assets/images/bg.jpg)-->
+<div class="landingContainerSub"> <!--Sub div which consists of two div , one is for Image (src/assets/images/logoLogin.png) & Title , another one is for showing List options (i.Training Drill ii. Live Emergency Event iii.Maintanance & Support)-->
 <div class="logoLanding">
-  <div class="logoSec">
-    <img _ngcontent-vfn-c310="" src="assets/images/logoLogin.png" alt="" class="logoLogin">
+  <div class="logoSec"><!--contain logo image (src/assets/images/logoLogin.png)-->
+    <img  src="assets/images/logoLogin.png" alt="" class="logoLogin">
   </div>
-  <div class="logoRightTxt"> Virtual Emergency Response Management System </div>
+  <div class="logoRightTxt"> <!--contain Title of this project (Virtual Emergency Response Management System)-->
+    Virtual Emergency Response Management System
+   </div>
   </div>
 
-
-  
   <div class="mainContainerLanding">
-  <!-- <div class="menUlogoSec"> -->
-      <!-- <section >
-   
-        <br>
-      </section>
-       <section class="menuSec"> -->
-      
-  <div class="col-sm-4 float-left">
+  <div class="col-sm-4 float-left"> <!--List 1: Training / Drill (Yet to develope)-->
     <div class="boxLanding">
-      <div class="iconLand iconColor_1"><img _ngcontent-vfn-c310="" src="assets/images/icon_land_1.png" alt=""></div>
+      <div class="iconLand iconColor_1"><img  src="assets/images/icon_land_1.png" alt=""></div>
     <button class="btn btn-block"><strong>Training/Drill</strong></button>
     </div>
   </div>
 
-  <div class="col-sm-4 float-left">
+  <div class="col-sm-4 float-left"> <!--List 2: Live Emergency Event (Under development)-->
     <div class="boxLanding">
-      <div class="iconLand iconColor_2"><img _ngcontent-vfn-c310="" src="assets/images/icon_land_2.png" alt=""></div>
-    <button  class="btn btn-block" routerLink="/login" routerLinkActive="true"><strong>Live Emergency Event</strong></button>
+      <div class="iconLand iconColor_2"><img  src="assets/images/icon_land_2.png" alt=""></div>
+      <!--
+            *** This button is used for navigating the user to login page (http://localhost:4200/#/login).
+            *** When routerLink is  applied to an element in a Html of a component, makes that element a link that initiates navigation.
+            *** Exported From RouterModule.
+       -->
+      <button  class="btn btn-block" routerLink="/login">
+        <strong>Live Emergency Event</strong>
+      </button>
+      <!-- *** End *** -->
     </div>
   </div>
 
-  <div class="col-sm-4 float-left">
+  <div class="col-sm-4 float-left"> <!--List 3: Maintanace & Support (Yet to develope)-->
     <div class="boxLanding">
-      <div class="iconLand iconColor_3"><img _ngcontent-vfn-c310="" src="assets/images/icon_land_3.png" alt=""></div>
+      <div class="iconLand iconColor_3"><img  src="assets/images/icon_land_3.png" alt=""></div>
     <button  class="btn btn-block"><strong>Maintanance & Support</strong></button>
     </div>
   </div>
-      
-       <!-- </section> -->
-  <!-- </div>	 -->
-  </div>	
-  <!-- <div class="footerLand">Copyright © 2022  Virtual Emergency. All Rights Reserved.</div> -->
- 
-
+  </div>
 </div>
 </div>
-  
-  
-  
-  
-  
 
-   
-  
+
+
+
+
+
+
+

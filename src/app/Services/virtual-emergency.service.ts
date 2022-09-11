@@ -23,6 +23,8 @@ export class VirtualEmergencyService {
   // this.socket = io(this.url);
   // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
   this.socket = io(this.url, {transports: ['polling']});
+
+
  }
 
   //For Adding new Offshore

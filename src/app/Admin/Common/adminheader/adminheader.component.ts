@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import {MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { from } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
 import { validations } from 'src/app/utilitY/validation';
@@ -20,6 +22,7 @@ export class AdminheaderComponent implements OnInit {
   @ViewChild('MatTabGroup') tabGroup!: MatTabGroup;
    Email:any=localStorage.getItem("Email");
    _select_tab:any = 0;
+   _show_btn:boolean = false;
    classList:any='';
    Name:any='';
    Emp_id:any=localStorage.getItem('Employee_id');
@@ -51,13 +54,14 @@ export class AdminheaderComponent implements OnInit {
   }
   getNotifications(){
     this.emergencyservice.emit('notification','');
-    this.emergencyservice.listen('notification').subscribe(data=>{
-      //data)
-      // console.log(data);
-
-      this.notifications=data;
-      this._TOTAL_LENGTH_NOTIFICATION = this.notifications[this.notifications.length-1].total;
-
+    this.emergencyservice.listen('notification').subscribe((data:any)=>{
+      this.notifications.length = 0;
+      var dt =  data.filter((x:any) => x?.user == localStorage.getItem('Employee_id'));
+      this._show_btn = dt.length > 4 ? true : false;
+      from(dt).pipe(take(4)).subscribe((res:any) =>{
+       this.notifications.push(res);
+      })
+      this._TOTAL_LENGTH_NOTIFICATION = Number(data[data.length-1]?.total?.find((x:any)=>x?.user == localStorage.getItem('Employee_id')).total);
     })
   }
   show_pass(_type:any){

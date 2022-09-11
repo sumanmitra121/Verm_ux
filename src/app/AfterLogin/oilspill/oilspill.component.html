@@ -1,0 +1,36 @@
+<app-header (IncStatus)="getIncDetails($event)"></app-header>
+<div class="page-body-wrapper">
+  <app-sidebar class="sidebarMain"></app-sidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+            <div class="btnSubmitSec">
+              <h2 >Oil Spill</h2></div></div>
+          <div class="alert alert-primary" role="alert">
+          Please download the modelling form from '<strong>OIL SPILL</strong>' folder under
+          '<strong>ER DOCUMENTATION</strong>' Section & after download this modelling form ,
+           please fill all the fields and upload it from here.
+          </div>
+          <form #logForm="ngForm" (ngSubmit)="submit()" ngNativeValidate>
+            <div class="row form-group">
+              <div class="col-6">
+                <input type="file" required name="file" #file="ngModel" ngModel id="uploaded_file" class="form-control" (change)="changeFile($event)">
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-12">
+                <div class="btnSubmitSec ">
+                    <input type="submit" [disabled]="logForm.invalid" class="btn btn-info" value="Upload"/>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

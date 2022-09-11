@@ -1,11 +1,13 @@
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { DatePipe } from '@angular/common';
 import { VirtualEmergencyService } from './../../../Services/virtual-emergency.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modify-media',
@@ -14,8 +16,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ModifyMediaComponent implements OnInit {
   ROUTEPARAMS = {"id":0,"type":''};
+  inc_location:any;
+  inc_dt:any;
+  inc_time:any;
   media!:FormGroup;
   constructor(private routeParams:ActivatedRoute,
+    private dialog: MatDialog,
     private toastr:ToastrManager,
     private fb:FormBuilder,
     private datePipe:DatePipe,
@@ -32,13 +38,13 @@ export class ModifyMediaComponent implements OnInit {
         inc_id:[''],
         inc_no:[localStorage.getItem('Inc_No')],
         user:[localStorage.getItem('Email')],
-        description:[''],
-        rel_no:[''],
-        date:[''],
-        time:[''],
-        contact_name:[''],
-        contact_info:[''],
-        location:['']
+        description:['',Validators.required],
+        rel_no:['',Validators.required],
+        date:['',Validators.required],
+        time:['',Validators.required],
+        contact_name:['',Validators.required],
+        contact_info:['',Validators.required],
+        location:['',Validators.required]
       })
     }
     else{
@@ -48,19 +54,17 @@ export class ModifyMediaComponent implements OnInit {
         wishers_name:[''],
         user:[localStorage.getItem('Email')],
         inc_no:[localStorage.getItem('Inc_No')],
-        description:[''],
-        sta_no:[''],
-        date:[''],
-        time:[''],
-        issued_by:[''],
-        contact_info:[''],
-        location:[''],
-        issued_date:[''],
-        contact_person:['']
+        description:['',Validators.required],
+        sta_no:['',Validators.required],
+        date:['',Validators.required],
+        time:['',Validators.required],
+        issued_by:['',Validators.required],
+        contact_info:['',Validators.required],
+        location:['',Validators.required],
+        issued_date:['',Validators.required],
+        contact_person:['',Validators.required]
       })
     }
-    console.log(this.media);
-
   }
   ngOnInit(): void {this.setmedia_Control();}
   setmedia_Control(){
@@ -90,6 +94,7 @@ export class ModifyMediaComponent implements OnInit {
                 id:Number(atob(this.routeParams.snapshot.params.id)),
                 inc_no:localStorage.getItem('Inc_No'),
                 inc_id:res[0].inc_id,
+                inc_location: this.inc_location,
                 wishers_name:res[0].wishers_name,
                 user:localStorage.getItem('Email'),
                 sta_no:res[0].sta_no ? res[0].sta_no : '',
@@ -114,10 +119,14 @@ export class ModifyMediaComponent implements OnInit {
         inc_id:event.id
       })
     }
+    this.inc_location = event.offshore_name;
+    this.inc_dt = this.datePipe.transform(event.inc_dt,'yyyy-MM-dd');
+    this.inc_time = this.datePipe.transform(event.inc_dt,'HH:mm');
   }
   submit(mode:any){
-  //  this.spinner.show();
-   console.log(this.media.value);
+    if(this.media.invalid){
+      return;
+    }
    var api_name;
    var msg;
    switch(mode){
@@ -126,17 +135,21 @@ export class ModifyMediaComponent implements OnInit {
               msg =  Number(atob(this.routeParams.snapshot.params.id)) > 0 ? 'Updation Successfull' : 'Submited successfully';
               this.submitForm(api_name,msg)
               break;
-    case 'F':
-              api_name = this.ROUTEPARAMS.type == 'M' ? '/media_rel_final' : '/holding';
-               msg = 'Successfully saved as pdf in repository under'+localStorage.getItem('Inc_No')+'folder';
-               this.submitForm(api_name,msg);
-               break;
+    case 'F':  api_name = this.ROUTEPARAMS.type == 'M' ? '/media_rel_final' : '/holding_final';
+                msg = 'Successfully saved as pdf in repository under '+localStorage.getItem('Inc_No')+' folder';
+                if(this.ROUTEPARAMS.type == 'M'){
+                    this.submitForm(api_name,msg);
+                }
+                else{
+                  this.openModal_Dialog(api_name,msg)
+                }
+                break;
     default:break;
 
    }
   }
-
   submitForm(api_name:any,msg:any){
+    this.spinner.show();
     this.api_call.global_service(1,api_name,this.media.value).pipe((map((x:any) => x.suc))).subscribe(res =>{
         this.spinner.hide();
         if(res > 0){
@@ -149,5 +162,36 @@ export class ModifyMediaComponent implements OnInit {
         }
     })
 
+  }
+  openModal_Dialog(api_name:any,msg:any){
+    const disalogConfig=new MatDialogConfig();
+    disalogConfig.disableClose=false;
+    disalogConfig.autoFocus=true;
+    disalogConfig.width='50%';
+    disalogConfig.data={
+      id:this.ROUTEPARAMS.id,
+      api_name:api_name,
+      name:'MHF',
+      inc_dt:this.inc_dt,
+      inc_time:this.inc_time,
+      inc_name:localStorage.getItem('Inc_name'),
+      wishers_name:this.media.value.wishers_name,
+      user:localStorage.getItem('Email'),
+      sta_no:this.media.value.sta_no ? this.media.value.sta_no : '',
+      date:this.media.value.date  ? this.media.value.date : '',
+      time:this.media.value.time ? this.media.value.time : '',
+      issued_by:this.media.value.issued_by ? this.media.value.issued_by : '',
+      contact_info:this.media.value.contact_info ? this.media.value.contact_info : '',
+      issued_date:this.media.value.issued_date ?  this.media.value.issued_date : '',
+      contact_person:this.media.value.contact_person ? this.media.value.contact_person : '',
+      description:this.media.value.description ? this.media.value.description : '',
+      location:this.media.value.location ? this.media.value.location : ''
+    }
+    const dialogref=this.dialog.open(DialogalertComponent,disalogConfig);
+    dialogref.afterClosed().subscribe(dt=>{
+       if(dt){
+        this.submitForm(api_name,msg);
+       }
+    })
   }
 }

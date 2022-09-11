@@ -30,6 +30,7 @@ export class AdminLoginComponent implements OnInit {
         localStorage.setItem('Emp_status',this.check_response.msg[0].emp_status);
         localStorage.setItem('User_type',this.check_response.msg[0].user_type);
         localStorage.setItem('id',this.check_response.msg[0].id);
+        localStorage.setItem('_a_login','true');
         this.spinner.hide();
         this.emergencyservice.global_service('0','/get_active_inc',null).subscribe(data=>{
            this.get_inc_details=data;

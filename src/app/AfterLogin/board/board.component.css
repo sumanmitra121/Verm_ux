@@ -10,3 +10,7 @@ th{background-color: #f2f2f2; }
   }
 
 mat-list{transition: all 1s ease;}
+::ng-deep .mat-button-focus-overlay {
+  background-color: whitesmoke!important;
+}
+.table th, .table td {vertical-align: middle!important;}

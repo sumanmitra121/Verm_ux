@@ -19,8 +19,14 @@ export class GlobalErrorHandlingInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(error => {
         if (error) {
-             this.spinner.hide();
-             this.toastr.errorToastr('Server Not Respond','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000});
+           this.spinner.hide();
+             this.toastr.errorToastr('Something went wrong!! Please Try again later','',
+             {position:'bottom-right',
+             animate:'slideFromRight',
+             toastTimeout:7000,
+             maxShown:1,
+             showCloseButton:true
+            });
         }
         return throwError(error);
       })

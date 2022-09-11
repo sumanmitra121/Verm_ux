@@ -26,10 +26,9 @@ export class LessonDashboardComponent implements OnInit {
   ngOnInit(): void {}
 
   fetchData(inc_id:any,id:any){
-    // console.log("INC_ID:"+inc_id+"ID:"+id);
     this.api_call.global_service('0','/lesson','inc_id='+inc_id).pipe((map((x:any) => x.msg))).subscribe(res => {
       console.log(res);
-      this.dataSource = new MatTableDataSource(res);
+      this.dataSource = new MatTableDataSource(res.length > 0 ? res.reverse() : []);
     this.dataSource.paginator = this.paginator;
 
     })
@@ -43,7 +42,6 @@ export class LessonDashboardComponent implements OnInit {
     }
   }
   getIncDetails(event:any){
-    console.log(event);
     this.fetchData(event.id,event.inc_no);
   }
   Navigate(_id:any){

@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { userDtls } from 'src/app/Model/userDtls';
-import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
@@ -13,7 +12,7 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 export class UserInfoComponent implements OnInit {
   headername:any='User Details';
   icon:any='fa fa-user';
-  displayedColumns: string[] = ['User_Name','Position','Team','Status'];
+  displayedColumns: string[] = ['User_Name','Position','Team','Status','Active Since','Last login',];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource<userDtls>();
@@ -39,8 +38,13 @@ export class UserInfoComponent implements OnInit {
     }
   }
   getUsers(_e:any){
-    console.log(_e)
-    this.putdata(_e);
+    console.log(_e);
+
+    this.putdata(_e);}
+  setHoursMinutes(min:any){
+    var hour = Math.floor(Number(min) / 60);
+    var minutes = Number(min) - (hour * 60);
+    return hour + 'H'+ ':' + minutes + 'M';
   }
 
 }

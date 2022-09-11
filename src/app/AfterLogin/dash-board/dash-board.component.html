@@ -1,4 +1,4 @@
-<app-header [headername]="headername" [icon]="icon" (IncStatus)="getIncDetails($event)"></app-header>
+<app-header [headername]="headername" [icon]="icon" (IncStatus)="getIncDetails($event)" (rolesResponsibility)="getRolesResponsibility($event)"></app-header>
 <div class="page-body-wrapper">
 	<app-sidebar class="sidebarMain"></app-sidebar>
 
@@ -49,32 +49,6 @@
 
 
 				</div>
-
-				
-				<div class="rowCustomFlex marginBotPosition">
-					<div class="col-12 mb-12">
-						<div class="whiteBox">
-							<div class="card-header card_headerCustom">
-								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Summary Of Incident :  </h2>
-								<br clear="all">
-							</div>
-							<div class="card_bodyCustom scroll">
-
-                  <div class="verticalScroll" >
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been 
-					the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of 
-					the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy 
-					text ever since the 1500s.</p>
-                  </div>
-
-
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-
 
 				<div class="rowCustomFlex marginBotPosition">
 
@@ -155,7 +129,7 @@
 						</div>
 
 
-						<div class="whiteBox whiteBoxHeightNon">
+						<div class="whiteBox whiteBoxHeightNon whiteBox_marg_bot">
 							<div class="card-header card_headerCustom">
 								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Helicopter Status</h2>
 								<button class="btn custom_btn pull-right"
@@ -207,6 +181,39 @@
 
 						</div>
 
+            <div class="whiteBox whiteBoxHeightNon">
+							<div class="card-header card_headerCustom">
+								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Incident Objective Status</h2>
+								<button class="btn custom_btn pull-right"
+									(click)="go_to_boards('inc_objectives')">Details</button>
+								<br clear="all">
+							</div>
+              <div class="card_bodyCustom scroll">
+								<div class="verticalScroll scrollTableData scrollTableDataHeightNon">
+                  <ng-container *ngIf="get_Incident_objectives.length > 0">
+                    <table>
+                      <thead>
+                       <tr>
+                         <th>Period Date</th>
+                         <th>Period To</th>
+                         <th>Objectives General</th>
+                       </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let inc_obj of get_Incident_objectives">
+                             <td>{{inc_obj.op_period_from | date:'dd/MM/YYYY HH:mm'}}</td>
+                             <td>{{inc_obj.op_period_to | date:'dd/MM/YYYY HH:mm'}}</td>
+                             <td>{{inc_obj.obj_general}}</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </ng-container>
+                  <ng-container *ngIf="get_Incident_objectives.length == 0">
+                    <h5  class="NoBoardStatusAvailable">No Incident Objective Status Available</h5>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
 
 					</div>
 				</div>
@@ -289,38 +296,23 @@
 								</div> -->
                 <ng-container *ngIf="get_casualty_status.length > 0">
 
-                  <ul class="boardStatus" *ngFor = "let casualty of get_casualty_status">
+                  <ul class="boardStatus" *ngFor = "let casualty of get_casualty_status;let i=index">
                     <li
                       matTooltip="{{casualty?.full_name}}">
                       <strong class="customLabel">Name :</strong> {{casualty?.full_name}}
-
                     </li>
                     <li
-                      matTooltip="{{casualty?.employer}}">
-                      <strong class="customLabel">Employer :</strong>
-                      {{casualty?.employer}}
+                      matTooltip="{{casualty?.location}}">
+                      <strong class="customLabel">Location :</strong>
+                      {{casualty?.location}}
                     </li>
                     <li
                       matTooltip="{{casualty?.emp_condition}}">
                       <strong class="customLabel">Condition :</strong>
                       {{casualty?.emp_condition}}
                     </li>
-                    <hr />
-                    <!-- <li *ngIf="get_casualty_status.length > 1"
-                      matTooltip="{{get_casualty_status[1]?.full_name}}">
-                      <strong class="customLabel">Name :</strong>
-                      {{get_casualty_status[1]?.full_name}}
-                    </li>
-                    <li *ngIf="get_casualty_status.length > 1"
-                      matTooltip="{{get_casualty_status[1]?.employer}}">
-                      <strong class="customLabel">Employer :</strong>
-                      {{get_casualty_status[1]?.employer}}
-                    </li>
-                    <li *ngIf="get_casualty_status.length > 1"
-                      matTooltip="{{get_casualty_status[1]?.emp_condition}}">
-                      <strong class="customLabel">Condition :</strong>
-                      {{get_casualty_status[1]?.emp_condition}}
-                    </li> -->
+
+                    <mat-divider class="m-1" *ngIf="i != (get_casualty_status.length-1)"></mat-divider>
                   </ul>
 
                 </ng-container>
@@ -381,7 +373,7 @@
 								<h3 class="customLine"></h3>
                 <ng-container *ngIf="get_evacuation_status.length > 0">
 
-								<ul class="boardStatus" *ngFor="let evacuationStatus of get_evacuation_status">
+								<ul class="boardStatus" *ngFor="let evacuationStatus of get_evacuation_status;let i=index">
 									<li
 										matTooltip="{{evacuationStatus?.mode_of_transport}}">
 										<strong class="customLabel">Transportation Mode :</strong>
@@ -394,7 +386,7 @@
 										<strong class="customLabel">POB Transported :</strong>
 										{{evacuationStatus?.pob_remaining}}
 									</li>
-									<hr />
+									<mat-divider class="m-1" *ngIf="i != (get_evacuation_status.length-1)"></mat-divider>
 								</ul>
               </ng-container>
 								<ul class="boardStatus" *ngIf="get_evacuation_status.length == 0">
@@ -422,7 +414,7 @@
 								</ngx-spinner>
 								<h3 class="customLine"></h3>
                 <ng-container *ngIf="get_events_status.length > 0">
-                  <ul class="boardStatus" *ngFor="let event of get_events_status">
+                  <ul class="boardStatus" *ngFor="let event of get_events_status;let i=index">
                     <li
                       matTooltip="{{event?.resource_assigned}}">
                       <strong class="customLabel">Resource Assigned :</strong>
@@ -434,7 +426,7 @@
                     <li>
                       <strong class="customLabel">Situation Status :</strong> {{event?.situation_status}}
                     </li>
-                    <hr />
+                    <mat-divider class="m-1" *ngIf="i != (get_events_status.length-1)"></mat-divider>
                   </ul>
 
                 </ng-container>
@@ -452,7 +444,13 @@
 				</div>
 			</div>
 			<div class="card" *ngIf="this.active_flag == '0'">
-				<div class="card-body"></div>
+				<div class="card-body">
+          <ul class="boardStatus">
+            <li>
+              <h3 class="text-center">Your team is not activated</h3>
+            </li>
+          </ul>
+        </div>
 			</div>
 		</div>
 	</div>

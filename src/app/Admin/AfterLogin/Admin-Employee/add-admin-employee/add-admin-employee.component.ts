@@ -12,18 +12,49 @@ import { validations } from 'src/app/utilitY/validation';
   styleUrls: ['./add-admin-employee.component.css']
 })
 export class AddAdminEmployeeComponent implements OnInit {
+  ckeConfig: any;
+  roles_responsibility:any='';
   chk_existance:any=[{email:0},{er_contact:1},{p_contact:0},{emp_id:0}];
   @ViewChild('logForm') LogForm!:NgForm;
   get_position:any=[];
   get_department:any=[];
   constructor(private emergencyservice:VirtualEmergencyService,
     private route:Router,private spinner: NgxSpinnerService,
-    public toastr: ToastrManager) { }
+    public toastr: ToastrManager) {
+      console.log('sasd')
+     }
   status:any='A'
   ngOnInit(): void {
     this.getPosition()
     this.getDepartment();
+    this.setConfig();
   }
+  setConfig(){
+    this.ckeConfig = {
+      allowedContent: false,
+      forcePasteAsPlainText: true,
+      font_names: 'Arial;Times New Roman;Verdana',
+      toolbarGroups: [
+        { name: 'document', groups: ['mode', 'document', 'doctools'] },
+        { name: 'clipboard', groups: ['clipboard', 'undo'] },
+        { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
+        { name: 'forms', groups: ['forms'] },
+        '/',
+        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
+        { name: 'links', groups: ['links'] },
+        { name: 'insert', groups: ['insert'] },
+        '/',
+        { name: 'styles', groups: ['styles'] },
+        { name: 'colors', groups: ['colors'] },
+        { name: 'tools', groups: ['tools'] },
+        { name: 'others', groups: ['others'] },
+        { name: 'about', groups: ['about'] }
+      ],
+      removeButtons: 'Source,Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Find,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Strike,Subscript,Superscript,CopyFormatting,RemoveFormat,Outdent,Indent,CreateDiv,Blockquote,BidiLtr,BidiRtl,Language,Unlink,Anchor,Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Maximize,ShowBlocks,About'
+    };
+  }
+
   cancel(){
    this.LogForm.form.patchValue({
       id:'0',
@@ -37,11 +68,12 @@ export class AddAdminEmployeeComponent implements OnInit {
       er_contact:'',
       emp_status:'A',
       user_type:'',
-      approval_flag:''
+      approval_flag:'',
+      user_role:''
    })
+   this.roles_responsibility = '';
   }
   logSubmit(logForm:Form){
-
     this.spinner.show();
     if(this.chk_existance[0].email == 0 || this.chk_existance[1].er_contact == 0 ||
       this.chk_existance[2].p_contact == 0 || this.chk_existance[3].emp_id == 0)
@@ -65,6 +97,7 @@ export class AddAdminEmployeeComponent implements OnInit {
 
       })
     }
+
 
     }
 //checking existance of contact number
@@ -144,4 +177,5 @@ export class AddAdminEmployeeComponent implements OnInit {
  PreventNonNumeric(_event: any) {
   validations._preventnonNumeric(_event);
 }
+
 }
