@@ -224,6 +224,7 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
 
     //For getting instant messages sent by other users without refresh the page
     this.emergencyservice.listen('message').subscribe(data => {
+
       console.log("NEW MESSAGE:" +data);
       this.phone = data;
       this.storageArray.length = 0;

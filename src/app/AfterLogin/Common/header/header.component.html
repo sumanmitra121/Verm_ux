@@ -15,9 +15,27 @@
 			<li class="nameCl locationCl active dropdown"  >
         <strong >Name:</strong>
         <span #tooltip="matTooltip" matTooltip="{{Inc_Name}}">{{(Inc_Name.length > 20 )? (Inc_Name | slice:0:18)+'..':(Inc_Name)}}</span>
+        <a #tooltip="matTooltip" [matMenuTriggerFor]="menu"  matTooltip="click to preview all incident list"  *ngIf="_activeIncBackup.length > 1" ><mat-icon class="customArrow">arrow_downward</mat-icon></a>
+        <mat-menu #menu="matMenu" xPosition="before">
 
-        <a #tooltip="matTooltip" matTooltip="click to preview all incident list"  data-toggle="dropdown" *ngIf="_activeIncBackup.length > 1" aria-haspopup="true" role="button" aria-expanded="false"><mat-icon class="customArrow">arrow_downward</mat-icon></a>
-        <div class="dropdown-menu dropdown-menu-end dropdownActive p-3" aria-labelledby="navbarDropdown">
+          <mat-list>
+            <div mat-subheader class="text-success">
+              <mat-icon >done</mat-icon>
+              {{_selected_Inc}}
+              <mat-icon  class="text-danger" *ngIf="_max_id.inc_no == localStorageAlice.getItem('Inc_No')">beenhere</mat-icon>
+            </div>
+            <mat-list-item   *ngFor="let activeInc of _activeInc;let i=index" #tooltip="matTooltip" matTooltip="Select {{activeInc.inc_name}}" (click)="active_incident(activeInc.inc_name,activeInc.inc_no,activeInc.id)">
+
+              <mat-icon mat-list-icon class="text-danger" *ngIf='_max_id.inc_no == activeInc.inc_no'>beenhere</mat-icon>
+                <div mat-line>{{activeInc.inc_name}} ({{activeInc.inc_no}})</div>
+              </mat-list-item>
+
+         </mat-list>
+         </mat-menu>
+
+        <!-- <a #tooltip="matTooltip"  matTooltip="click to preview all incident list"  data-toggle="dropdown" *ngIf="_activeIncBackup.length > 1" aria-haspopup="true" role="button" aria-expanded="false"><mat-icon class="customArrow">arrow_downward</mat-icon></a>
+
+      <div class="dropdown-menu dropdown-menu-end dropdownActive p-3" aria-labelledby="navbarDropdown">
          <ul class="list-unstyled" *ngIf="_selected_Inc !=''">
           <li  class="text-success d-flex">
             <mat-icon class="d-flex align-items-center selectedIcon">done</mat-icon>
@@ -35,7 +53,7 @@
                 {{activeInc.inc_name}} ({{activeInc.inc_no}})</small>
             </li>
           </ul>
-          </div>
+          </div> -->
       </li>
 			</ul>
 			<ul class="topinsidentData2 topinsidentData2_2">
@@ -57,18 +75,18 @@
 
 		<ul class="topMenuRight">
 		<li class="userDrop dropdown">
-			<a  class="nav-link"  [matBadge]="_TOTAL_LENGTH_NOTIFICATION" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="_TOTAL_LENGTH_NOTIFICATION == 0" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
+			<a  class="nav-link"   [matBadge]="_TOTAL_LENGTH_NOTIFICATION > 99 ? '99+' : _TOTAL_LENGTH_NOTIFICATION" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="_TOTAL_LENGTH_NOTIFICATION == 0" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
 			<div class="dropdown-menu customDropdown">
         <ng-container *ngIf="_notification.length > 1">
           <div class="notifications-item" *ngFor="let notify of _notification;let i=index">
-            <ng-container *ngIf="i < 4">
-              <!-- <a  (click)="gotoNotifications(notify.id,notify.activity)">{{notify.narration}}</a> -->
+
+
               <img src="assets/images/no-user.png" alt="img" *ngIf="notify!=null">
               <div class="text" (click)="gotoNotifications(notify.id,notify.activity)">
                <p>{{notify.narration}}</p>
              </div>
-            </ng-container>
-            <hr *ngIf="i < 4"/>
+
+
 				</div>
         </ng-container>
         <ng-container  *ngIf="_notification.length  == 1">
@@ -76,7 +94,7 @@
                 <h3>No Notfications Available</h3>
               </div>
         </ng-container>
-         <button class="btn custom_btn btn-block btn-sm" *ngIf="_notification.length > 4" (click)="gotoNotifications(0,'D')">Show All</button>
+         <button class="btn custom_btn btn-block btn-sm" *ngIf="_show_btn" (click)="gotoNotifications(0,'D')">Show All</button>
 			</div>
 		</li>
 		<li class="active dropdown">
@@ -112,7 +130,7 @@
 
 			</div>
 
-			</li>
+		</li>
 
 		</ul>
 
@@ -280,6 +298,17 @@
               </div>
              </form>
              </div>
+          </mat-tab>
+          <mat-tab label="Responsibilities">
+            <ng-container hidden="_roles_responsibility ==''">
+              <div #roles class="m-3"></div>
+            </ng-container>
+            <ng-container *ngIf="_roles_responsibility ==''">
+                <h3 class="m-3 text-center">
+                  Not Available Yet!!
+                </h3>
+            </ng-container>
+
           </mat-tab>
         </mat-tab-group>
 			  </div>

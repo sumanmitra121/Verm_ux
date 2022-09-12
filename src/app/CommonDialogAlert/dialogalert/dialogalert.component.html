@@ -3,19 +3,64 @@
       {{ data.name=='Category' ? 'All files residing within the folder will be deleted.Do you want to continue?' : 'Are you sure you want to delete?'}}
 
     </div>
-    <h2  mat-dialog-title *ngIf="data.name == 'summary_inc'">Summary Of Incident :
-      <button mat-dialog-close mat-icon-button class="float-right">
-        <mat-icon class="float-right" >close</mat-icon>
-      </button>
-
-    </h2>
+    <h1  mat-dialog-title *ngIf="data.name == 'summary_inc'">Summary Of Incident :
+        <mat-icon mat-dialog-close  class="float-right" >close</mat-icon>
+    </h1>
+    <h1  mat-dialog-title *ngIf="data.name == 'SP'">Responsibilities
+      <mat-divider class="mt-2"></mat-divider>
+    </h1>
     <div mat-dialog-content class="mat-typography" *ngIf="_u_type !='A'">
-      <!-- <h2 mat-dialog-title>Install Angular</h2> -->
-
-      {{ data.name == 'board Type' ? 'Are you sure you want to delete?' : data.name == 'lesson_final' ? 'Do you want to save this as final ? After saving this form as final this form is non editable.' : data.name == 'summary_inc' ?  data.summary_incident : 'An incident is already active!! Do you want to continue?'}}
+        <ng-container *ngIf="data.name != 'MHF' && data.name != 'SP'">
+          {{ data.name == 'board Type' ? 'Are you sure you want to delete?' : data.name == 'lesson_final' ? 'Do you want to save this as final ? After saving this form as final this form is non editable.' : data.name == 'summary_inc' ?  data.summary_incident : 'An incident is already active!! Do you want to continue?'}}
+        </ng-container>
+        <ng-container *ngIf="data.name == 'MHF'">
+          <div class="table-container">
+            <table>
+                <tr>
+                    <td class="heading">Holding Statement No<span class="suffix">:</span></td>
+                    <td class="tb-centent">{{data.sta_no}}</td>
+                </tr>
+            </table>
+            <div class="container">
+              <p class="text-center">{{data.date}} At {{data.time}}</p>
+              <p class="content">{{data.wishers_name}} wishes to inform that a {{data.inc_name}} has occurred on {{data.inc_dt}} at {{data.inc_time}}
+                  located in at {{data.inc_location}}.</p>
+              <p class="content">Our Emergency Response Team has been mobilized to contain the incident and is working closely
+                  with {{data.description}}. All
+                  other relevant authorities have been informed. Our utmost priority and concern is the safety of the people
+                  and
+                  environment at the moment.</p>
+              <p class="content">We will provide additional information in due course as the investigation is still being
+                  carried out.</p>
+              <p class="content">For further inquiries, please contact {{data.contact_person}}.</p>
+          </div>
+          <div class="table-container">
+              <table>
+                  <tr>
+                      <td class="heading">Issued By</td>
+                  </tr>
+                  <tr>
+                      <td class="heading">Name<span class="suffix">:</span></td>
+                      <td class="tb-centent">{{data.issued_by}}</td>
+                  </tr>
+                  <tr>
+                      <td class="heading">Contact Information<span class="suffix">:</span></td>
+                      <td class="tb-centent">{{data.contact_info}}</td>
+                  </tr>
+                  <tr>
+                      <td class="heading">Date<span class="suffix">:</span></td>
+                      <td class="tb-centent">{{data.issued_date}}</td>
+                  </tr>
+              </table>
+          </div>
+        </div>
+        </ng-container>
+        <ng-container hidden="data.name != 'SP'">
+          <div #roles></div>
+        </ng-container>
     </div>
     <div mat-dialog-actions *ngIf="data.name != 'summary_inc'">
-        <button mat-dialog-close mat-stroked-button tab-index="-1" >Cancel</button>
+        <button mat-dialog-close mat-stroked-button tab-index="-1" *ngIf="data.name!='SP'">Cancel</button>
         <button mat-stroked-button tab-index="-1" (click)="delete()">Ok</button>
     </div>
 </ng-container>

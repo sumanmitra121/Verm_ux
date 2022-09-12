@@ -69,7 +69,7 @@ export class FirstloggedinchangePasswordComponent implements OnInit {
       this.chk_response='';
       this.chk_response=data;
       if(this.chk_response.suc==1){
-        this.spinner.hide();
+          this.spinner.hide();
           this.router.navigate(['/login']).then(()=>{
             this.toaster.successToastr(this.chk_response.msg,'',{position:'top-center',animate:'slideFromTop',toastTimeout:50000})
           })
@@ -81,7 +81,7 @@ export class FirstloggedinchangePasswordComponent implements OnInit {
       }
     })
     }
-      
+
   }
 
 }

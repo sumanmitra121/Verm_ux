@@ -14,7 +14,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
 })
 export class UserStatusComponent implements OnInit {
   // Material datatable
-  displayedColumns: string[] = ['User_Name','Position','Team','Status','mode'];
+  displayedColumns: string[] = ['User_Name','Position','Team','Status','mode','Active Since','Last Login'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) matsort!: MatSort;
   dataSource= new MatTableDataSource();
@@ -42,7 +42,7 @@ export class UserStatusComponent implements OnInit {
     applyFilter(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
-  
+
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
@@ -63,7 +63,7 @@ export class UserStatusComponent implements OnInit {
        this.spinner.hide();
        var _index =this.get_user_status.findIndex((x:any) => x.employee_id == _e_id);
        console.log(_index);
-       
+
        this.get_user_status[_index].user_status = _mode;
 
       }
@@ -72,6 +72,11 @@ export class UserStatusComponent implements OnInit {
         this.spinner.hide();
       }
      })
-           
+
+    }
+    getLastLoginTime(last_login:any){
+      var hour = Math.floor(Number(last_login) / 60);
+      var minutes = Number(last_login) - (hour * 60);
+      return hour + 'H'+ ':' + minutes + 'M';
     }
 }

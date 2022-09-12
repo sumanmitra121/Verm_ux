@@ -1,20 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrManager } from 'ng6-toastr-notifications';
-import { map } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { map,take} from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
 import { Notifiactions } from 'src/app/Model/Notifiactions';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from 'src/app/url';
 
-declare var $:any;
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild('roles') roles!:ElementRef;
+  _show_btn:boolean=false;
   _initial_tier_id:any;
   @Output() incDetails = new EventEmitter<IncDetails>();
   _c_pass:boolean = true;
@@ -55,8 +57,9 @@ export class HeaderComponent implements OnInit {
   _selected_Inc:any='';
   _notification:Notifiactions[]=[];
   hidden = false;
+  _roles_responsibility:any='';
+  @Output() rolesResponsibility = new EventEmitter<any>();
   _TOTAL_LENGTH_NOTIFICATION:any;
-
   constructor(private router:Router,private  emergencyservice:VirtualEmergencyService,private toastr:ToastrManager) {
     this.name=localStorage.getItem('Emp_name');
     this.email=localStorage.getItem('Email');
@@ -115,15 +118,20 @@ export class HeaderComponent implements OnInit {
   }
 
  getNotifications(){
+  console.log('Notification');
+
      //call Notification if this member is activated against this team;
       if(localStorage.getItem('active_flag') == '0'){}
       else{
         this.emergencyservice.emit('notification','');
         this.emergencyservice.listen('notification').subscribe((data:any)=>{
-           //.log(data)
-           this._notification =  data;
-           this._TOTAL_LENGTH_NOTIFICATION = this._notification[this._notification.length-1].total;
-           //.log(this._TOTAL_LENGTH_NOTIFICATION);
+          this._notification.length = 0;
+           var dt =  data.filter((x:any) => x?.user == localStorage.getItem('Employee_id'));
+           this._show_btn = dt.length > 4 ? true : false;
+           from(dt).pipe(take(4)).subscribe((res:any) =>{
+            this._notification.push(res);
+           })
+           this._TOTAL_LENGTH_NOTIFICATION = Number(data[data.length-1]?.total?.find((x:any)=>x?.user == localStorage.getItem('Employee_id')).total);
 
         })
       }
@@ -133,9 +141,11 @@ export class HeaderComponent implements OnInit {
       id:localStorage.getItem('Employee_id'),
       user:localStorage.getItem('Email')
     }
-    localStorage.clear();
     this.emergencyservice.global_service('1','/log_out',dt).subscribe(data=>{
+      console.log(data);
+
     })
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
   show_pass(_type:any){
@@ -157,6 +167,8 @@ export class HeaderComponent implements OnInit {
      localStorage.removeItem('Emp_name');
      localStorage.setItem('Emp_name',this.get_profile[0].emp_name);
      this.name=localStorage.getItem('Emp_name');
+     this.setstringToHtml(this.get_profile[0].user_role);
+
      this.profile.control.patchValue({
        user:this.email,
        emp_id:localStorage.getItem('Employee_id'),
@@ -168,6 +180,13 @@ export class HeaderComponent implements OnInit {
        pos_id:this.get_profile[0].emp_pos_id
      })
     })
+  }
+  setstringToHtml(user_role:any){
+    this._roles_responsibility = user_role ? user_role : '';
+    if(user_role){
+      this.roles.nativeElement.insertAdjacentHTML('beforeend',user_role);
+      this.rolesResponsibility.emit(user_role);
+    }
   }
   Submit(logform:any){
     this.emergencyservice.global_service('1','/update_info_user',logform).subscribe(data=>{
@@ -242,7 +261,6 @@ export class HeaderComponent implements OnInit {
     this.img_src='assets/images/no-user.png';
   }
   select_mode(mode:any){
-  //  $('#activId').inner
     var dt={
       user:this.email,
       emp_id:this.Emp_id,

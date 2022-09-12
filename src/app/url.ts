@@ -1,6 +1,6 @@
 export class global_url_test{
   static URL="http://192.168.1.244:3000/";
-  static project_URL="http://localhost:4200/#/Conference"
+  static project_URL="http://localhost:4200/#/Conference";
 
   // static URL="https://vermapi.opentech4u.co.in/";
   // static project_URL="https://verm.opentech4u.co.in/#/Conference";

@@ -19,21 +19,19 @@
 		<ul class="topMenuRight">
 			<!-- <li><i class="fa fa-bell fa-2x active dropdown" aria-hidden="true"></i></li> -->
 		<li class="userDrop dropdown">
-			<a class="nav-link"  matBadge="{{_TOTAL_LENGTH_NOTIFICATION}}" matBadgeOverlap="false" [matBadgeHidden]="_TOTAL_LENGTH_NOTIFICATION == 0"  matBadgeSize="medium"  id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell fa-2x" aria-hidden="true"></i></a>
+			<a class="nav-link"  matBadge="{{_TOTAL_LENGTH_NOTIFICATION > 99 ? '99+' : _TOTAL_LENGTH_NOTIFICATION}}" matBadgeOverlap="false" [matBadgeHidden]="_TOTAL_LENGTH_NOTIFICATION == 0"  matBadgeSize="medium"  id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell fa-2x" aria-hidden="true"></i></a>
 		    <!-- <div class="arrow-up"></div> -->
 			<div class="dropdown-menu customDropdown">
 				<!-- <h2>Notifications</h2> -->
 
         <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION > 1">
 			   <div class="notifications-item" *ngFor="let notify of notifications;let i=index">
-          <ng-container *ngIf="i < 4">
 				   <img src="assets/images/no-user.png" alt="img" *ngIf="notify.img==null">
 				   <img src="{{url}}{{notify.img}}" alt="img" *ngIf="notify.img!=null">
 				   <div class="text" (click)="gotoNotifications(notify.id,'AN')">
             <h4>{{notify.emp_name}}</h4>
             <p>{{notify.narration}}</p>
 				  </div>
-        </ng-container>
 				</div>
       </ng-container>
       <ng-container *ngIf="_TOTAL_LENGTH_NOTIFICATION == 1">
@@ -41,7 +39,7 @@
           <h3>No Notfications Available</h3>
         </div>
       </ng-container>
-      <button class="btn custom_btn btn-block btn-sm" *ngIf="_TOTAL_LENGTH_NOTIFICATION > 4" (click)="gotoNotifications(0,'D')">Show All</button>
+      <button class="btn custom_btn btn-block btn-sm" *ngIf="_show_btn" (click)="gotoNotifications(0,'D')">Show All</button>
 
 				</div>
 

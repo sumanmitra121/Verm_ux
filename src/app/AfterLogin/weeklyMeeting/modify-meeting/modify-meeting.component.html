@@ -1,0 +1,112 @@
+<app-header></app-header>
+<div class="page-body-wrapper">
+  <app-sidebar class="sidebarMain"></app-sidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+             <div class="btnSubmitSec">
+              <h2>Meeting / Add</h2>
+             </div>
+          </div>
+          <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Please Wait.. </p></ngx-spinner>
+
+          <form [formGroup]="weeklyForm">
+          <div class="row">
+            <div class="col-md-6">
+              <label>Ref No. <span class="text-danger">*</span></label>
+              <input type="text" formControlName="ref_no" class="form-control">
+            </div>
+           <div class="col-md-6">
+           </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label>IMT Schedule Handover Date <span class="text-danger">*</span></label>
+              <input type="datetime-local" formControlName="handover_date" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label>Meeting Date <span class="text-danger">*</span></label>
+              <input type="datetime-local" formControlName="date" class="form-control">
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label>Handover By (Outgoing Team) <span class="text-danger">*</span></label>
+              <select formControlName="handover_by" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor = 'let team of team' value="{{team.id}}">{{team.team_name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label>Handover To (Incoming Team) <span class="text-danger">*</span></label>
+              <select formControlName="handover_to" class="form-control">
+                <option value="">Select</option>
+                <option *ngFor = 'let team of team' value="{{team.id}}">{{team.team_name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label>Attend By <span class="text-danger">*</span></label>
+              <textarea rows="4" class="form-control" formControlName="attended_by"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label>Summary Of Ongoing Activities <span class="text-danger">*</span></label>
+              <textarea rows="4"  class="form-control" formControlName="ongoing_act"></textarea>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label>Summary Of Upcoming Activities <span class="text-danger">*</span></label>
+              <textarea rows="4"  class="form-control" formControlName="upcoming_act"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label>Summary Of Logistics <span class="text-danger">*</span></label>
+              <textarea rows="4"  class="form-control" formControlName="logistics"></textarea>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label>Summary Of Short Based Activities <span class="text-danger">*</span></label>
+              <textarea rows="4"  class="form-control" formControlName="shore_act"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label>Others</label>
+              <textarea rows="4"  class="form-control" formControlName="others"></textarea>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+                 <div class="col-md-6">
+                  <label>Attachment</label>
+                  <input type="file" formControlName="file" class="form-control" accept=".png,.jpeg,.jpg" (change)="selectFile($event)">
+                <mat-hint class="mt-5"><strong class="text-danger ">Note: Only .png,.jpg,.jpeg are allowed</strong></mat-hint>
+
+                </div>
+                 <div class="col-md-6" >
+                  <a class="customAttachments" [hidden]="_file==''" href="{{_file}}" target="_blank">
+                    <img class="attchments" src="{{_file}}"/>
+                  </a>
+                 </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="btnSubmitSec" *ngIf="this.type != 'V'">
+             <input type="submit"  [disabled]="weeklyForm.invalid" value="Save As Draft" class="btn btn-info"  (click)="submit('N')">
+             <input type="submit"  [disabled]="weeklyForm.invalid" value="Save As Final" class="btn btn-info"  (click)="submit('Y')">
+            </div>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

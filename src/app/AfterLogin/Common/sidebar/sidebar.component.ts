@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { from, Subscription} from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { IncDetails } from 'src/app/Model/IncDetails';
@@ -24,7 +24,16 @@ export class SidebarComponent implements OnInit,OnDestroy {
    badge:any;
    _inc_details:IncDetails[] =[];
    _obser!:Subscription;
-  constructor(private emergencyservice:VirtualEmergencyService,private _header:HeaderComponent,private route:ActivatedRoute) { }
+  constructor(
+
+    private Router: Router,
+    private emergencyservice:VirtualEmergencyService,
+    private _header:HeaderComponent,
+    private route:ActivatedRoute) {
+      // console.log(this.Router.url);
+      localStorage.setItem('Route_Url',this.Router.url);
+
+    }
   ngOnInit(): void {
     // if(localStorage.getItem('router')!='/livelog'){
       if(this.route?.snapshot?.routeConfig?.path != 'livelog'){
@@ -44,11 +53,15 @@ export class SidebarComponent implements OnInit,OnDestroy {
     this.checkStatus();
   }
   checkStatus(){
+    this.emergencyservice.emit('user_status','');
     this.emergencyservice.listen('user_status').pipe(map((x:any) => x.users)).subscribe(data=>{
-            // console.log(data)
+      //  console.log("new:", data)
             this._u_status.emit(data);
+            console.log(data);
             if(data.find((x:userStatus) => x.employee_id == Number(localStorage.getItem('Employee_id')))?.user_status == 'O'){
-                 this._header.logout();
+              this._header.logout();
+                 console.log('sidebar');
+
             }
       })
   }

@@ -50,6 +50,10 @@
                <input type="file" formControlName="fileSource"  class="form-control"  (change)="onFileChange($event)" multiple accept=".png,.jpeg,.jpg"/>
                <mat-hint class="mt-5"><strong class="text-danger ">Note: Only .png,.jpg,.jpeg are allowed</strong></mat-hint>
             </div>
+            <div class="col-6">
+              <a [hidden]="_file==''" href="{{_file}}" target="_blank"> <img class="attchments" src="{{_file}}"/></a>
+
+            </div>
             <div class="col-12"  *ngIf="paramsString > 0 && isFile > 0">
                   <!-- <img [src]="img_url + lesson_learnt.value.file" alt="Attachment"/> -->
                   <ng-container *ngFor="let file of FILE">

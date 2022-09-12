@@ -19,8 +19,6 @@
                   <ngx-spinner bdColor = "" size = "small" color = "black" type = "line-spin-clockwise-fade" [fullScreen] = "false"></ngx-spinner>
 
                     <ul   *ngFor="let empname of emp_list">
-                    <!-- <ul> -->
-
                       <li style="padding: 4px auto; margin: 10px;position:relative;" >
                         <img src="assets/images/no-user.png" alt="profile" class="listImg" *ngIf="empname.img==null">
                         <img src="{{url}}/{{empname.img}}" alt="profile" class="listImg" *ngIf="empname.img!=null">

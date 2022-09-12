@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+
 import { Component, OnInit} from '@angular/core';
 import {Chart } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -43,7 +43,6 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private emergencyservice:VirtualEmergencyService,private spinner:NgxSpinnerService) {
     this.spinner.show();
     this.Actitve_incident();
-
   }
   showCardBody = true;
   arr:any=[];
@@ -68,6 +67,7 @@ export class AdminDashboardComponent implements OnInit {
   get_active_emp:any=[];
   total_teams:any;
   panelOpenState = false;
+  show_spinner: boolean = false;
   ngOnInit(): void {}
 
   get_incident_details(id:any){
@@ -100,14 +100,18 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
   status_type(status_mode:any){
-    this.status_mode=status_mode;
-    var api_name = status_mode!='4' ? '/board_report' : '/prob_board_dashboard';
+    this.show_spinner = true;
+    setTimeout(() =>{
+     this.status_mode=status_mode;
+      var api_name = status_mode!='4' ? '/board_report' : '/prob_board_dashboard';
     var dt = status_mode!='4' ? 'inc_id='+this.incDetails?.id+'&board_id='+this.status_mode : 'inc_id='+this.incDetails?.id;
     this.emergencyservice.global_service('0',api_name,dt).pipe(map((x:any) => x.msg)).subscribe(data=>{
-      console.log(data);
 
+      this.show_spinner = false;
       this.statusType=data;
     })
+    },500)
+
   }
 
   Actitve_incident(){

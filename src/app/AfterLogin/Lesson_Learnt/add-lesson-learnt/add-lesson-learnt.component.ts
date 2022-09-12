@@ -17,6 +17,8 @@ import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dial
 })
 export class AddLessonLearntComponent implements OnInit {
   FILE:any=[];
+  _file:any='';
+
   img_url= global_url_test.URL;
   isFile:number=0;
   paramsString!:number;
@@ -93,9 +95,15 @@ export class AddLessonLearntComponent implements OnInit {
       formdata.append("file", "");
     }
     else{
-      for (let img_file of  this.lesson_learnt.value.file) {
-        formdata.append("file", img_file);
+      if(this.lesson_learnt.value.file) {
+        for (let img_file of  this.lesson_learnt.value.file) {
+          formdata.append("file", img_file);
+        }
       }
+      else{
+        formdata.append("file", '');
+      }
+
     }
     var api_name = _type == 'D' ? '/lesson' : '/lesson_final';
     switch(_type){
@@ -103,7 +111,6 @@ export class AddLessonLearntComponent implements OnInit {
              var msg = this.lesson_learnt.value.id > 0 ? 'Updation Successfull' : 'Addition Successfull';
               this.submitData(formdata,api_name,msg);break;
     case 'F': formdata.append('inc_no',this.lesson_learnt.value.inc_no);
-
               this.openDialog(formdata,api_name);
               break;
       default:break;
@@ -161,6 +168,15 @@ export class AddLessonLearntComponent implements OnInit {
         this.lesson_learnt.patchValue({
               file: event.target.files
             });
+
+              var reader = new FileReader();
+              reader.onload = () => {
+                this._file = reader.result;
+              };
+              reader.readAsDataURL(event.target.files[0]);
+    }
+    else{
+      this._file = ''
     }
   }
   getIncDetails(e: any) {

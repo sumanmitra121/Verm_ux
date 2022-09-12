@@ -36,6 +36,7 @@ export class ReportDataPooldetailsComponent implements OnInit , AfterViewInit{
   displayedColumns4: string[] =[];
   displayedColumns5: string[] =[];
   displayedColumns6: string[] =[];
+  displayedColumns7: string[] =[];
   displayedColumns_handover:string[] = ['Incident','Handover_from','Handover_to','Summary','reason']
 @ViewChild(MatPaginator) paginator!: MatPaginator;
 @ViewChild(MatSort) matsort!: MatSort;
@@ -46,6 +47,8 @@ dataSource3= new MatTableDataSource();
 dataSource4= new MatTableDataSource();
 dataSource5= new MatTableDataSource();
 dataSource6= new MatTableDataSource();
+dataSource7= new MatTableDataSource();
+
   headername:any='Form & Checklist';
   icon:any='fa-list-ul';
   Inc_id:any;
@@ -58,6 +61,7 @@ dataSource6= new MatTableDataSource();
   get_incident_details4:any=[];
   get_incident_details5:any=[];
   get_incident_details6:any=[];
+  get_incident_details7:any=[];
   get_tier:any=[];
 
   board_stats:any='';
@@ -96,7 +100,7 @@ dataSource6= new MatTableDataSource();
       this.logform.controls["inc_name"].patchValue('0') :
       this.logform.controls["inc_name"].patchValue('');
       this.Inc_type == 'I' ? this.logform.controls["tier_id"].patchValue('0') : '';
-    },300)
+    },500)
 
   }
   form_submit(logForm:Form){
@@ -268,10 +272,22 @@ dataSource6= new MatTableDataSource();
             this.dataSource=new MatTableDataSource(this.get_incident_details);
            })
           break;
+
+      case "8":this.board_stats=this.board_form.form.value.board_type;
+            this.displayedColumns=['op_period_from','op_period_to','obj_general','people','assets','environment','reputation','awareness'];
+            this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+this.board_form.form.value.board_type).subscribe(data=>{
+              console.log(data);
+
+              this.get_incident_details=data;
+              this.get_incident_details=this.get_incident_details.msg;
+              this.dataSource=new MatTableDataSource(this.get_incident_details);
+             })
+            break;
+
       case "Consolidated": this.board_stats=this.board_form.form.value.board_type;
-       var lalala_board = ["1","2","3","4","5","6","7"]
-      for(let i = 0; i < lalala_board.length; i++){
-          this.loadAllData(lalala_board[i]);
+       var _board = ["1","2","3","4","5","6","7","8"]
+      for(let i = 0; i < _board.length; i++){
+          this.loadAllData(_board[i]);
         }
       break;
     }
@@ -320,7 +336,7 @@ dataSource6= new MatTableDataSource();
               for (const [key, value] of Object.entries(this.get_incident_details)) {
                  this.multi.push(value)
               }
-              console.log(this.multi);
+              // console.log(this.multi);
 
               setTimeout(() => {
                 for(let i=0; i<this.multi.length; i++){
@@ -357,6 +373,14 @@ dataSource6= new MatTableDataSource();
           this.get_incident_details6=data;
           this.get_incident_details6=this.get_incident_details6.msg;
           this.dataSource6=new MatTableDataSource(this.get_incident_details6);
+         })
+        break;
+    case "8":
+      this.displayedColumns7=['op_period_from','op_period_to','obj_general','people','assets','environment','reputation','awareness'];
+          this.emergencyservice.global_service('0','/board_report','inc_id='+this.board_form.form.value.inc_name+'&board_id='+id).subscribe(data=>{
+          this.get_incident_details7=data;
+          this.get_incident_details7=this.get_incident_details7.msg;
+          this.dataSource7=new MatTableDataSource(this.get_incident_details7);
          })
         break;
   }

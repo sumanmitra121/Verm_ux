@@ -1,6 +1,11 @@
+   /* ********** app-routing.module.ts************
+     This is the main routing section of this project,where
+     all routing of components are declared.
+    *******************  End ********************/
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { WeatherComponent } from './AfterLogin/weather/weather.component';
 import { AddAdminOffshoreComponent } from './Admin/AfterLogin/add-admin-offshore/add-admin-offshore.component';
 import { AdminDashboardComponent } from './Admin/AfterLogin/admin-dashboard/admin-dashboard.component';
 import { AddAdminDepartmentComponent } from './Admin/AfterLogin/Admin-Department/add-admin-department/add-admin-department.component';
@@ -67,211 +72,280 @@ import { EditLogSheetComponent } from './AfterLogin/log-sheet/Edit-Log-Sheet/edi
 import { LogSheetComponent } from './AfterLogin/log-sheet/log-sheet.component';
 import { MediaComponent } from './AfterLogin/Media_Module/media/media.component';
 import { ModifyMediaComponent } from './AfterLogin/Media_Module/modify-media/modify-media.component';
+import { OilspillComponent } from './AfterLogin/oilspill/oilspill.component';
 import { ReportdatapoolDetailsComponent } from './AfterLogin/report-datepool/detailsReportdatapool/reportdatapool-details/reportdatapool-details.component';
 import { ReportDatepoolComponent } from './AfterLogin/report-datepool/report-datepool.component';
 import { RepositoryComponent } from './AfterLogin/repository/repository.component';
 import { UserInfoComponent } from './AfterLogin/user-info/user-info.component';
+import { MeetingDashboardComponent } from './AfterLogin/weeklyMeeting/meeting-dashboard/meeting-dashboard.component';
+import { ModifyMeetingComponent } from './AfterLogin/weeklyMeeting/modify-meeting/modify-meeting.component';
 import { BeforeLoginDashboardComponent } from './BeforeLogin/login-lee/before-login-dashboard/before-login-dashboard.component';
 import { ForgotPasswordComponent } from './BeforeLogin/login-lee/ForgetPassword/forgot-password/forgot-password.component';
 import { LoginLEEComponent } from './BeforeLogin/login-lee/login-lee.component';
 import { NotificationComponent } from './CommonDialogAlert/Notification/Notification.component';
 import { PageNotFoundComponent } from './Error_pages/page-not-found/page-not-found.component';
+import { UGaurdGuard } from './Gaurds/u-gaurd.guard';
+import { AGaurdGuard } from './Gaurds/a-gaurd.guard';
+import { LoginGuard } from './Gaurds/login.guard';
+import { AdminAuthGuard } from './Gaurds/admin-auth.guard';
 
 const routes: Routes = [
+  /** Routing for BeforeLoginDashboardComponent (src/app/BeforeLogin/befor-login-dashboard) => It is the landing page of ER-360 Application **/
   {
     path:'',
-    component:BeforeLoginDashboardComponent
+    component:BeforeLoginDashboardComponent,
+    canActivate:[LoginGuard]
+
   },
+  /**                                                 END                                                                                   **/
+
   {
     path:'userinfo',
-    component:UserInfoComponent
+    component:UserInfoComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'login',
-    component:LoginLEEComponent
+    component:LoginLEEComponent,
+    canActivate:[LoginGuard]
   },
   {
     path:'dashboard',
-    component:DashBoardComponent
+    component:DashBoardComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'ActivationModule',
-    component:ActivationModuleComponent
+    component:ActivationModuleComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'IncidentModule',
-    component:IncidentModuleComponent
+    component:IncidentModuleComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'AddIncident',
-    component:AddIncidentComponent
+    component:AddIncidentComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'EditIncident/:id',
-    component:EditIncidentComponent
+    component:EditIncidentComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'livelog',
-    component:LiveLogComponent
+    component:LiveLogComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Board',
-    component:BoardComponent
+    component:BoardComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Repository/files/:cat_id/:cat_name',
-    component:RepositoryComponent
+    component:RepositoryComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'FormsCheckList',
-    component:FormsChecklistComponent
+    component:FormsChecklistComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Audio_Video',
-    component:AudioVideoConferenceComponent
+    component:AudioVideoConferenceComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Log_Sheet',
-    component:LogSheetComponent
+    component:LogSheetComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Call-Logger',
-    component:CallLoggerComponent
+    component:CallLoggerComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Report_Data_Pool',
-    component:ReportDatepoolComponent
+    component:ReportDatepoolComponent,
+    canActivate:[UGaurdGuard]
   },
    //Dashboard page
   {
     path:'admin/dashboard',
-    component:AdminDashboardComponent
+    component:AdminDashboardComponent,
+    canActivate:[AGaurdGuard]
   },
    // Offshore Dashboard page
 
   {
     path:'admin/offshore',
-    component:AdminOffshoreComponent
+    component:AdminOffshoreComponent,
+    canActivate:[AGaurdGuard]
   }
    // Offshore Add page
   ,{
     path:'admin/offshore/add',
-    component:AddAdminOffshoreComponent
+    component:AddAdminOffshoreComponent,
+    canActivate:[AGaurdGuard]
   },
   // Offshore Edit page
   {
     path:'admin/offshore/edit/:id',
-    component:EditAdminOffshoreComponent
+    component:EditAdminOffshoreComponent,
+    canActivate:[AGaurdGuard]
   },
   //Admin Incident Page
   {
     path:'admin/incident',
-    component:AdminIncidentComponent
+    component:AdminIncidentComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Incident edit Page
   {
     path:'admin/incident/edit/:id',
-    component:EditAdminIncidentComponent
+    component:EditAdminIncidentComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Incident Add Page
   {
     path:'admin/incident/add',
-    component:AddAdminIncidentComponent
+    component:AddAdminIncidentComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Tier Page
   {
     path:'admin/tier',
-    component:AdminTierComponent
+    component:AdminTierComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Tier add Page
   {
     path:'admin/tier/add',
-    component:AddAdminTierComponent
+    component:AddAdminTierComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Tier edit Page
   {
     path:'admin/tier/edit/:id',
-    component:EditAdminTierComponent
+    component:EditAdminTierComponent,
+    canActivate:[AGaurdGuard]
+
   },
    //Admin Position Page
    {
     path:'admin/position',
-    component:AdminPositionComponent
+    component:AdminPositionComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Position add Page
   {
     path:'admin/position/add',
-    component:AddAdminPositionComponent
+    component:AddAdminPositionComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Position edit Page
   {
     path:'admin/position/edit/:id',
-    component:EditAdminPositionComponent
+    component:EditAdminPositionComponent,
+    canActivate:[AGaurdGuard]
+
   },
    //Admin Department Page
    {
     path:'admin/department',
-    component:AdminDepartmentComponent
+    component:AdminDepartmentComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Department add Page
   {
     path:'admin/department/add',
-    component:AddAdminDepartmentComponent
+    component:AddAdminDepartmentComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Department edit Page
   {
     path:'admin/department/edit/:id',
-    component:EditAdminDepartmentComponent
+    component:EditAdminDepartmentComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Employee Page
   {
     path:'admin/employee',
-    component:AdminEmployeeComponent
+    component:AdminEmployeeComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Employee add Page
   {
     path:'admin/employee/add',
-    component:AddAdminEmployeeComponent
+    component:AddAdminEmployeeComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Employee edit Page
   {
     path:'admin/employee/edit/:id',
-    component:EditAdminEmployeeComponent
+    component:EditAdminEmployeeComponent,
+    canActivate:[AGaurdGuard]
+
   },
   //Admin Team Page
   {
     path:'admin/team',
-    component:AdminTeamComponent
+    component:AdminTeamComponent,
+    canActivate:[AGaurdGuard]
   },
   //Admin Team add Page
   {
     path:'admin/team/add',
-    component:AddAdminTeamComponent
+    component:AddAdminTeamComponent,
+    canActivate:[AGaurdGuard]
   },
   //Admin Team edit Page
   {
     path:'admin/team/edit/:id',
-    component:EditAdminTeamComponent
+    component:EditAdminTeamComponent,
+    canActivate:[AGaurdGuard]
   },
   //Admin Team AssignTeam Page
   {
     path:'admin/Team/assignteam',
-    component:AssignTeamComponent
+    component:AssignTeamComponent,
+    canActivate:[AGaurdGuard]
   },
   //Admin Team Member add Page
   {
     path:'admin/Team/addmember',
-    component:AddTeamMemberComponent
+    component:AddTeamMemberComponent,
+    canActivate:[AGaurdGuard]
   },
    //For Adding Team Status view
    {
     path:'admin/Team/Status/add',
-    component:AddTeamStatusComponent
+    component:AddTeamStatusComponent,
+    canActivate:[AGaurdGuard]
   },
    //For Adding Report Data Pool Dashboard
   {
     path:'admin/reportdatapoolDashboard',
-    component:ReportDataPooldashboardComponent
+    component:ReportDataPooldashboardComponent,
+    canActivate:[AGaurdGuard]
+
   },
      //For Adding Report Data Pool Dashboard
      {
@@ -280,15 +354,21 @@ const routes: Routes = [
     },
   {
     path:'admin/User_Status',
-    component:UserStatusComponent
+    component:UserStatusComponent,
+    canActivate:[AGaurdGuard]
   },
   {
     path:'admin',
-    component:AdminLoginComponent
+    component:AdminLoginComponent,
+    canActivate:[AdminAuthGuard]
+
   },
   {
     path:'admin/forgetpassword',
-    component:ForgetPasswordForAdminComponent
+    component:ForgetPasswordForAdminComponent,
+    canActivate:[AdminAuthGuard]
+
+
   },
 
   // {
@@ -297,47 +377,60 @@ const routes: Routes = [
   // }
   {
     path:'Editinc',
-    component:EditDashbaordComponent
+    component:EditDashbaordComponent,
+    canActivate:[UGaurdGuard]
+
   },
   {
     path:'EditApprove',
-    component:ApproveIncidentComponent
+    component:ApproveIncidentComponent,
+    canActivate:[UGaurdGuard]
   }
   ,{
     path:"category",
-    component:CategoryComponent
+    component:CategoryComponent,
+    canActivate:[AGaurdGuard]
   },
   {
     path:'addCategory',
-    component:CreateCategoryComponent
+    component:CreateCategoryComponent,
+    canActivate:[AGaurdGuard]
   },
   {
     path:'uploadforms',
-    component:UploadsComponent
+    component:UploadsComponent,
+    canActivate:[AGaurdGuard]
   },
   {
     path:'UploadDashBoard',
-    component:UploaddashboardComponent
+    component:UploaddashboardComponent,
+    canActivate:[AGaurdGuard]
   },
   {
     path:'formchecklist/files/:id',
-    component:FormschecklistfilesComponent
+    component:FormschecklistfilesComponent,
+    canActivate:[UGaurdGuard]
+
   },
   {
     path:'AddCallLog/:id',
-    component:AddCallLoggerComponent
+    component:AddCallLoggerComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Conference/:room_id/:name/:email',
-    component:CreateMeetingComponent
+    component:CreateMeetingComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'addLogSheet',
-    component:AddlogsheetComponent
+    component:AddlogsheetComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'EditLogSheet/:id/:flag',
-    component:EditLogSheetComponent
+    component:EditLogSheetComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'firstloggedin',
@@ -349,15 +442,20 @@ const routes: Routes = [
   },
   {
     path:'addRepository',
-    component:AddRepositoryComponent
+    component:AddRepositoryComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'Repo_dashboard',
-    component:RepoDashboardComponent
+    component:RepoDashboardComponent,
+    canActivate:[AGaurdGuard]
+
   },
   {
     path:'Add_Repo',
-    component:AddRepoComponent
+    component:AddRepoComponent,
+    canActivate:[AGaurdGuard]
+
   },
   {
     path:'ReportdatapoolDetails/:inc_type',
@@ -377,28 +475,54 @@ const routes: Routes = [
   },
   {
     path:'add_handover',
-    component:HandoverComponent
+    component:HandoverComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'handover',
-    component:HandOverDashboardComponent
+    component:HandOverDashboardComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'lesson_learnt',
-    component:LessonDashboardComponent
+    component:LessonDashboardComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'add_lesson_learnt/:id',
-    component:AddLessonLearntComponent
+    component:AddLessonLearntComponent,
+    canActivate:[UGaurdGuard]
   },
   {
     path:'media',
-    component:MediaComponent
+    component:MediaComponent,
+    canActivate:[UGaurdGuard]
   },
   {
        path:'media/:type/:id',
-       component:ModifyMediaComponent
+       component:ModifyMediaComponent,
+       canActivate:[UGaurdGuard]
   },
+  {
+    path:'oilSpill',
+    component:OilspillComponent,
+    canActivate:[UGaurdGuard]
+  },
+  {
+    path:'meeting',
+    component:MeetingDashboardComponent,
+    canActivate:[UGaurdGuard]
+  },
+  {
+    path:'meeting/:id/:type',
+    component:ModifyMeetingComponent,
+    canActivate:[UGaurdGuard]
+  },
+  {
+    path:'weather',
+    component:WeatherComponent,
+    canActivate:[UGaurdGuard]
+   },
   {
     path:"**",
     component:PageNotFoundComponent

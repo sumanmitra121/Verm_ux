@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
@@ -11,12 +11,19 @@ import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.serv
 export class DialogalertComponent implements OnInit {
   check_respond:any='';
   _u_type:any;
+  @ViewChild('roles') roles!:ElementRef;
   constructor(public dialogRef:MatDialogRef<DialogalertComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private toastr:ToastrManager,
   private emergencyservice:VirtualEmergencyService,) {}
 
   ngOnInit(): void {this._u_type = localStorage.getItem('User_type');
-   console.log(this.data)
+
+
+}
+ngAfterViewInit(){
+  if(this.data.name == 'SP'){
+    this.roles.nativeElement.insertAdjacentHTML('beforeend',this.data.roles);
+   }
 }
 
   delete(){

@@ -11,78 +11,64 @@
             </div>
           </div>
              <!-- Media Release -->
-          <form [formGroup] = "media" >
+          <form [formGroup] = "media" ngNativeValidate>
             <div class="form-group row">
                  <div class="col-6">
                   <label>{{ROUTEPARAMS.type == 'M' ? 'RELEASE NO' :  'HOLDING STATEMENT NO'}}</label>
-                  <input type="text" class="form-control" formControlName="rel_no" *ngIf="ROUTEPARAMS.type == 'M'"/>
-                  <input type="text" class="form-control" formControlName="sta_no" *ngIf="ROUTEPARAMS.type == 'H'"/>
+                  <input type="text" class="form-control" formControlName="rel_no" *ngIf="ROUTEPARAMS.type == 'M'" required/>
+                  <input type="text" class="form-control" formControlName="sta_no" *ngIf="ROUTEPARAMS.type == 'H'" required/>
                  </div>
                  <div class="col-6" *ngIf="ROUTEPARAMS.type == 'H'">
-                  <label>WISHER'S NAME</label>
-                  <input type="text" class="form-control" formControlName="wishers_name"/>
+                  <label>OPERATOR'S NAME</label>
+                  <input type="text" class="form-control" formControlName="wishers_name" required/>
 
                  </div>
             </div>
             <div class="form-group row">
               <div class="col-6">
                 <label>DATE</label>
-                <input type="date" class="form-control" formControlName="date"/>
+                <input type="date" class="form-control" formControlName="date" required/>
                </div>
               <div class="col-6">
                <label>TIME</label>
-               <input type="time" class="form-control" formControlName="time"/>
+               <input type="time" class="form-control" formControlName="time" required/>
               </div>
             </div>
             <div class="form-group row">
               <div class="col-6">
                 <label>{{ROUTEPARAMS.type == 'M' ? 'CONTACT NAME' : 'ISSUED BY'}}</label>
-                <input type="text" class="form-control" [formControlName]="ROUTEPARAMS.type == 'M' ? 'contact_name' : 'issued_by'"/>
+                <input type="text" required class="form-control" [formControlName]="ROUTEPARAMS.type == 'M' ? 'contact_name' : 'issued_by'"/>
                </div>
               <div class="col-6">
                <label>CONTACT INFORMATION</label>
-               <input type="text" class="form-control" formControlName="contact_info"/>
+               <input type="text" class="form-control" formControlName="contact_info" required/>
               </div>
             </div>
             <div class="form-group row" *ngIf="ROUTEPARAMS.type == 'H'">
               <div class="col-6" >
                 <label>ISSUED DATE</label>
-               <input type="date" class="form-control" formControlName="issued_date"/>
+               <input type="date" class="form-control" formControlName="issued_date" required/>
               </div>
               <div class="col-6" >
                 <label>CONTACT PERSON</label>
-               <input type="text" class="form-control" formControlName="contact_person"/>
+               <input type="text" class="form-control" formControlName="contact_person" required/>
               </div>
             </div>
             <div class="form-group row">
             <div class="col-12">
               <label>LOCATION</label>
-              <textarea  class="form-control" rows="3" formControlName="location"></textarea>
+              <textarea  class="form-control" rows="3" formControlName="location" required></textarea>
              </div>
              <div class="col-12 mt-3">
-              <label>DESCRIPTION</label>
-              <textarea  class="form-control" rows="3" formControlName="description"></textarea>
+              <label>DESCRIPTION OF AUTHORITIES</label>
+              <textarea  class="form-control" rows="3" formControlName="description" required></textarea>
              </div>
-            </div>
-            <div class="form-group row" *ngIf="ROUTEPARAMS.type == 'H'">
-                <div class="col-12">
-              <h4>Preview: </h4>
-                  <span>
-                      Our Emergency Response Team has been mobilised to contain the incident and is working closely with <b>{{media.value.description ?  media.value.description : '[…………………………………………………………………………………….]'}}.</b>
-                      All other relevant authorities have been informed. Our utmost priority and concern is the safety of the people and environment at the moment.
-                      We will provide additional information in due course as the investigation is still being carried out.
-                  </span><br>
-                  <span>
-                    For further inquiries, please contact <b>{{media.value.contact_person ? media.value.contact_person : '[………………………………………………….]' }}.</b>
-                  </span>
-                </div>
             </div>
             <div class="row">
               <div class="col-6">
                 <div class="btnSubmitSec">
-                  <input type="submit" class="customBtn" value="Save As Draft" (click)="submit('D')" >
-                  <input type="submit" class="customBtn" value="Save As Final" (click)="submit('F')" >
-
+                  <input type="submit" [disabled]="media.invalid" class="customBtn" value="Save As Draft" (click)="submit('D')" >
+                  <input type="submit" [disabled]="media.invalid" class="customBtn" value="Save As Final" (click)="submit('F')" >
                 </div>
               </div>
             </div>
