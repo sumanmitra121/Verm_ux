@@ -26,7 +26,9 @@ export class ModifyMeetingComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private router:Router,
     private toastr:ToastrManager) {
-      this.type = atob(this.activatedRoute.snapshot.params.type)
+      this.type = atob(this.activatedRoute.snapshot.params.type);
+      console.log(this.type);
+
       this.fetchTeam()
     this.weeklyForm=this.fb.group({
       id:[Number(atob(this.activatedRoute.snapshot.params.id))],

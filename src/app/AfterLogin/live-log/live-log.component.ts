@@ -55,11 +55,16 @@ export class LiveLogComponent implements OnInit,OnDestroy  {
     this.spinner.show();
     this.emergencyservice.get_logged_employee('active_user').subscribe((data: any) => {
       this.Emp_Check = data;
+      console.log("data");
+       console.log(data);
       this.Emp_Check = this.Emp_Check.users;
       this.emp_list.length = 0;
-      if(this.Emp_Check.length!=0){
+      if(this.Emp_Check.length > 0){
         for (let i = 0; i < this.Emp_Check.length; i++) {
           if (this.Emp_Check[i].employee_id != localStorage.getItem('Employee_id') && this.Emp_Check[i].employee_id != '1') {
+            console.log(this.Emp_Check[i].employee_id);
+
+
             this.emp_list.push(this.Emp_Check[i]);
           }
         }

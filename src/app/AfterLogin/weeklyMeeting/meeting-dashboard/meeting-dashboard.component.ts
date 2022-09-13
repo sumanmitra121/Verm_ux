@@ -24,11 +24,12 @@ export class MeetingDashboardComponent implements OnInit {
   fetchdata(){
   this.api_call.global_service(0,'/meeting',null).pipe(map((x:any) => x.msg)).subscribe(res =>{
      console.log(res);
-
      this.dataSource = new MatTableDataSource(res);
+     this.dataSource.paginator = this.paginator;
   })
   }
-  ngAfterViewInit(){this.dataSource.paginator = this.paginator;}
+  // ngAfterViewInit(){
+  //   this.dataSource.paginator = this.paginator;}
   routeToModifyMeeting(id:any,type:any){
      console.log(type);
 

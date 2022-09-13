@@ -11,24 +11,17 @@
                     <h3 class="m-b-50 heading-line">Notifications <i class="fa fa-bell text-muted"></i></h3>
 
                     <div class="notification-ui_dd-content">
-                        <div class="notification-list notification-list--unread" *ngFor="let _notification of _notifications" (click)="clickToSeeNotifications(_notification.id,_notification.activity)">
+                        <div class="notification-list notification-list--unread" *ngFor="let _notification of _notifications;let i=index" (click)="clickToSeeNotifications(_notification.id,_notification.activity)">
                             <div class="notification-list_content">
                                 <div class="notification-list_detail">
                                     <p class="text-muted">{{_notification.narration}}</p>
-                                    <p class="text-muted"><small>10 mins ago</small></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="titleSec">
-                      <div class="btnSubmitSec text-center">
-                        <input type="submit" class="btn btn-info" value="Load More Activity" (click)="setDataSource()">
-
-                        </div>
-                     </div>
-
-
             </section>
+
+
             <div class="card-body"  *ngIf="_notifications.length == 0">
               <div class="titleSec text-center">
               <h2>No Notification available</h2>

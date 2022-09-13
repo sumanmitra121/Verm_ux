@@ -69,7 +69,7 @@
         <!-- <a class="nav-link" routerLink="/Repository" > -->
         <a class="nav-link" routerLink="/addRepository" >
          <i class="fa fa-pie-chart" aria-hidden="true"></i>
-          <span class="menu-title">Repository</span>
+          <span class="menu-title">ER Repository</span>
           <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
         </a>
       </li>
@@ -95,26 +95,19 @@
         </a>
       </li>
      <!-- End -->
-    <!-- User Info -->
-     <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/userinfo" >
-          <i class="fa fa-users" aria-hidden="true"></i>
-          <span class="menu-title">User Info</span>
-        </a>
-      </li>
-      <!-- End -->
-     <!-- Log Sheet -->
+
+      <!-- Log Sheet -->
     <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/Log_Sheet">
-         <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-          <span class="menu-title">Log Sheet</span>
-          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
-        </a>
-      </li>
-      <!-- End -->
+      <a class="nav-link" routerLink="/Log_Sheet">
+       <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+        <span class="menu-title">Log Sheet</span>
+        <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+      </a>
+    </li>
+    <!-- End -->
 
       <!-- Call Logger   -->
-    <li class="nav-item" routerLinkActive="active">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/Call-Logger">
          <i class="fa fa-phone" aria-hidden="true"></i>
           <span class="menu-title">Call Logger</span>
@@ -123,16 +116,34 @@
       </li>
       <!-- End -->
 
-      <!-- Report Date Pool   -->
-    <li class="nav-item"  routerLinkActive="active">
-        <a class="nav-link" routerLink="/Report_Data_Pool">
-         <i class="fa fa-calendar" aria-hidden="true"></i>
-          <span class="menu-title">Report Data Pool</span>
-          <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+       <!-- Media -->
+       <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/media">
+         <i class="fa fa-list-ul" aria-hidden="true"></i>
+          <span class="menu-title">Media Handling</span>
         </a>
       </li>
       <!-- End -->
-        <!--Form & Checklist -->
+
+         <!-- Weather Data  -->
+         <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/weather">
+            <i class="fa fa-cloud"></i>
+             <span class="menu-title">Weather Data</span>
+          </a>
+        </li>
+        <!-- End -->
+
+          <!-- Oil Spill  -->
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/oilSpill">
+             <i class="fa fa-list-ul"  aria-hidden="true"></i>
+              <span class="menu-title">Oil Spill Modelling</span>
+            </a>
+          </li>
+          <!-- End -->
+
+          <!--Incident Handover -->
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/handover">
            <i class="fa fa-list-ul" aria-hidden="true"></i>
@@ -140,48 +151,63 @@
           </a>
         </li>
         <!-- End -->
-        <!-- Lesson Learnt -->
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/lesson_learnt">
-           <i class="fa fa-list-ul" aria-hidden="true"></i>
-            <span class="menu-title">Lesson Learnt</span>
-          </a>
-        </li>
-        <!-- End -->
 
-         <!-- Media -->
-         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/media">
-           <i class="fa fa-list-ul" aria-hidden="true"></i>
-            <span class="menu-title">Media</span>
-          </a>
-        </li>
-        <!-- End -->
-         <!-- Oil Spill  -->
-         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/oilSpill">
-           <i class="fa fa-list-ul"  aria-hidden="true"></i>
-            <span class="menu-title">Oil Spill</span>
-          </a>
-        </li>
-        <!-- End -->
-         <!-- Weekly Meeting  -->
-         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/meeting">
-            <i class="fa fa-headphones"></i>
-            <span class="menu-title">Weekly Meeting</span>
-          </a>
-        </li>
-        <!-- End -->
+        <!-- Report Date Pool   -->
+    <li class="nav-item"  routerLinkActive="active">
+      <a class="nav-link" routerLink="/Report_Data_Pool">
+       <i class="fa fa-calendar" aria-hidden="true"></i>
+        <span class="menu-title">Report Data Pool</span>
+        <!-- <i class="fa fa-chevron-right arowRight" aria-hidden="true"></i> -->
+      </a>
+    </li>
+    <!-- End -->
+     <!-- Lesson Learnt -->
+     <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/investigationRPT">
+       <i class="fa fa-list-ul" aria-hidden="true"></i>
+        <span class="menu-title">Incident Investigation</span>
+      </a>
+    </li>
+    <!-- End -->
+    <!-- Lesson Learnt -->
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/lesson_learnt">
+       <i class="fa fa-list-ul" aria-hidden="true"></i>
+        <span class="menu-title">Lesson Learnt</span>
+      </a>
+    </li>
+    <!-- End -->
 
-         <!-- Oil Spill  -->
-         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/weather">
-            <i class="fa fa-cloud"></i>
-             <span class="menu-title">Weather</span>
-          </a>
-        </li>
-        <!-- End -->
+     <!-- Weekly Meeting  -->
+     <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/meeting">
+        <i class="fa fa-headphones"></i>
+        <span class="menu-title">Weekly Meeting</span>
+      </a>
+    </li>
+    <!-- End -->
+
+    <!-- User Info -->
+     <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/userinfo" >
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span class="menu-title">User Info</span>
+        </a>
+      </li>
+      <!-- End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
   </ul>
 </div>
   </nav>

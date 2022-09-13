@@ -88,6 +88,8 @@ import { UGaurdGuard } from './Gaurds/u-gaurd.guard';
 import { AGaurdGuard } from './Gaurds/a-gaurd.guard';
 import { LoginGuard } from './Gaurds/login.guard';
 import { AdminAuthGuard } from './Gaurds/admin-auth.guard';
+import { ModifyInvestigationComponent } from './AfterLogin/IncInvestigationReport/modify-investigation/modify-investigation.component';
+import { InvestigationComponent } from './AfterLogin/IncInvestigationReport/investigation/investigation.component';
 
 const routes: Routes = [
   /** Routing for BeforeLoginDashboardComponent (src/app/BeforeLogin/befor-login-dashboard) => It is the landing page of ER-360 Application **/
@@ -154,6 +156,16 @@ const routes: Routes = [
     component:FormsChecklistComponent,
     canActivate:[UGaurdGuard]
   },
+  {
+       path:'investigationRPT/:id',
+       component:ModifyInvestigationComponent,
+       canActivate:[UGaurdGuard]
+  },
+  {
+    path:'investigationRPT',
+    component: InvestigationComponent,
+    canActivate:[UGaurdGuard]
+},
   {
     path:'Audio_Video',
     component:AudioVideoConferenceComponent,

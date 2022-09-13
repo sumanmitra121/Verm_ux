@@ -63,7 +63,7 @@ ul.portfolioStatus li i{margin-right: 5px;}
 ul.portfolioStatus li a{font-size: 14px; color: #2e6ba9;}
 
 .whiteBox{background: #f4f4f4; border: #fff solid 3px;
-    padding: 15px 15px;
+    padding: 15px 11px;
     box-shadow:3px 3px 7px 1px #d5d5d5;
     display: inline-block;
     border-radius: 10px; width: 100%; height: 100%;}
@@ -155,14 +155,19 @@ ul.topinsidentData2 li strong.colorRed{color: #ea1919;}
 .whiteBoxComon .card_bodyCustom{min-height: inherit;}
 
 .whiteBoxComon ul.listDashboard{list-style-type: none;}
-.whiteBoxComon ul.listDashboard li{font-weight: 400; font-size: 15px; color: #6f7479; line-height: 20px; margin-bottom: 12px;}
+.whiteBoxComon ul.listDashboard li{
+  font-weight: 400;
+  font-size: 12px;
+  color: #6f7479;
+  line-height: 20px;
+  margin-bottom: 12px;}
 .whiteBoxComon ul.listDashboard li strong{font-size: 14px; color: #0a63bc;}
 .whiteBoxComon .card_bodyCustom h3{margin: 0 0 7px 0;
     font-size: 16px;
     color: #2f2f2f !important;
     line-height: 20px;
     font-weight: 500;
-    border-bottom: #0a63bc solid 2px;
+    border-bottom: 2px solid #0a63bc;
     padding: 0 0 3px 0;}
 
 .whiteBoxComon_cardCus{height: 100%;}
@@ -946,8 +951,8 @@ th.mat-header-cell{text-align: center!important;}
 .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {background-color: #213f79;}
 .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent:hover{color: #213f79; background-color: white;}
 .cdk-global-overlay-wrapper, .cdk-overlay-container {z-index: 10000 !important;}
-.mat-badge-medium.mat-badge-above .mat-badge-content {top: -9px!important; left: 24px!important;background-color: #213f79;}
-.mat-badge-small.mat-badge-above .mat-badge-content {top: 17px!important; right: 6px!important;background-color: #213f79;}
+.mat-badge-medium.mat-badge-above .mat-badge-content {top: -9px!important; left: 24px!important;background-color: #0d0d0d;}
+.mat-badge-small.mat-badge-above .mat-badge-content {top: 17px!important; right: 6px!important;background-color: #0d0d0d;}
 
 /* For Drag Drop team member */
 
@@ -962,9 +967,7 @@ b{font-size: 14px;color:black;}
 .customLine{border-bottom: 2px solid #0a63bc;}
 
 /* For material dialog alert */
-/* .mat-dialog-container {background: #424242!important;color: rgb(255 255 255 / 87%)!important;padding:35px 24px!important;} */
-.mat-dialog-container {padding:35px 24px!important;}
-
+.mat-dialog-container {background: #ffffff!important;color: rgb(0 0 0 / 87%)!important;padding:35px 24px!important;}
 .mat-toolbar {background: #424242!important;color: rgb(255 255 255 / 87%)!important;}
 .mat-dialog-content {font-size: 16px;font-weight: 400;text-align: center; margin: 9px 0 9px 0!important;}
 .mat-dialog-actions {justify-content: flex-end;}
@@ -1119,20 +1122,6 @@ font-size: 17px;
   border: 0!important;
 }
 
-.attchments {
-  border: 1px solid #ddd; /* Gray border */
-  border-radius: 4px;  /* Rounded border */
-  padding: 5px; /* Some padding */
-  width: 150px; /* Set a small width */
-}
-
-/* Add a hover effect (blue shadow) */
-.attchments:hover {
-  box-shadow: 1px 2px 3px 2px rgb(183 184 185 / 50%);
-}
-.customAttachments{position: relative;}
-
-
 .text-dark{color: #0d0d0d;}
 
 .customLabel {
@@ -1150,7 +1139,11 @@ font-size: 17px;
 .liveLogImg{width: 38px; position: relative; float: left;}
 .liveLogImg .dot-ring {left: 19px;}
 
-ul.liveChatUl .customSpan{float: left; font-weight: 700; margin: 6px 0 9px 25px;}
+ul.liveChatUl .customSpan{
+  float: left;
+  font-weight: 700;
+   margin: 6px 0 9px 11px;
+  }
 ul.liveChatUl li::marker{display: none; color: #fff;}
 ul.liveChatUl li{padding: 4px auto; margin: 10px;position:relative;}
 mat-list-item:hover{
@@ -1159,4 +1152,18 @@ mat-list-item:hover{
 }
 .noDataFound{
   background-image: url('../../../../assets/images/no_data_found.png');
+}
+
+.customIcon mat-icon{color: #595a5a;}
+
+
+.attchments_inv {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width:82px;
+  margin:0 5px 0 0;
+}
+.attchments_inv:hover {
+  box-shadow: 0 0 2px 1px rgb(210 210 210 / 50%);
 }

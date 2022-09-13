@@ -1,5 +1,6 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Notifiactions } from 'src/app/Model/Notifiactions';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { map } from 'rxjs/operators';
@@ -20,18 +21,30 @@ export class NotificationComponent implements OnInit {
   _min:number = 0;
   ngOnInit() {
     this.setDataSource();
+
   }
   setDataSource(){
     this._min = this._min + 10;
     this._serve.global_service('0','/notification','emp_code='+localStorage.getItem('Employee_id')+'&limit='+this._min).pipe(map((x:any) => x.msg)).subscribe((res:any) => {
-      // this._notifications.length = 0;
       this._notifications = res;
-    console.log(res);
   })
   }
   clickToSeeNotifications(Id:any,_activity:any){
     if(localStorage.getItem('Employee_id') == '1'){}
     else{this._serve.clearNotifications(Id,_activity);}
+  }
+
+  //on window scrolling fetch & display the data
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    console.log(window.innerHeight + ':' + window.scrollY);
+    console.log(document.body.offsetHeight);
+    if ( window.innerHeight + window.scrollY == document.body.offsetHeight){
+
+      this.setDataSource();
+    }
+    else{
+    }
   }
 
 }

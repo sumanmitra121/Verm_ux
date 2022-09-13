@@ -8,7 +8,7 @@
         <div class="card-body">
           <div class="titleSec">
              <div class="btnSubmitSec">
-              <h2>Meeting / Add</h2>
+              <h2>Meeting / {{  this.type == 'A' ?  'Add' : 'Update'}}</h2>
              </div>
           </div>
           <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Please Wait.. </p></ngx-spinner>

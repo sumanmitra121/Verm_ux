@@ -24,9 +24,10 @@ export class HandOverDashboardComponent implements OnInit {
      this._api_call.global_service('0','/handover','inc_id='+_id).pipe(map((x:any) => x.msg)).subscribe(res => {
        console.log(res);
        this.dataSource = new MatTableDataSource(res);
+       this.dataSource.paginator = this.paginator;
      })
   }
-  ngAfterViewInit(){this.dataSource.paginator = this.paginator;}
+  // ngAfterViewInit(){this.dataSource.paginator = this.paginator;}
  //For FilterData from data table
  applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value;

@@ -78,6 +78,7 @@
 			<a  class="nav-link"   [matBadge]="_TOTAL_LENGTH_NOTIFICATION > 99 ? '99+' : _TOTAL_LENGTH_NOTIFICATION" matBadgeOverlap="false" matBadgeSize="medium" [matBadgeHidden]="_TOTAL_LENGTH_NOTIFICATION == 0" id="drop1" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i></a>
 			<div class="dropdown-menu customDropdown">
         <ng-container *ngIf="_notification.length > 1">
+
           <div class="notifications-item" *ngFor="let notify of _notification;let i=index">
 
 

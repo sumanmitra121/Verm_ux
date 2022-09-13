@@ -1,0 +1,482 @@
+<app-header></app-header>
+<div class="page-body-wrapper">
+  <app-sidebar class="sidebarMain"></app-sidebar>
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="default" color="#fff" type="ball-clip-rotate" [fullScreen]="false">
+    <p style="color: rgb(255, 255, 255)" class="mt-5"> Submitting.... </p>
+  </ngx-spinner>
+
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+            <div class="btnSubmitSec ">
+              <h2>
+                {{routeParams.snapshot.params.id > 0 ? 'Update' : 'Add'}} Investigation Report</h2>
+            </div>
+          </div>
+
+          <form [formGroup]="investigationForm" >
+
+            <!-- Ref No & Incident Name -->
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>Ref No <span class="text-danger">*</span></label>
+                <input type="text" id="ref_no" class="form-control" formControlName="ref_no">
+                <div
+                  *ngIf="investigationForm.controls['ref_no'].invalid && (investigationForm.controls['ref_no'].dirty || investigationForm.controls['ref_no'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['ref_no'].errors?.required">
+                    <strong>*Please enter reference no</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Incident Name <span class="text-danger">*</span></label>
+                <input type="text" id="inc_name" class="form-control" formControlName="inc_name">
+                <div
+                  *ngIf="investigationForm.controls['inc_name'].invalid && (investigationForm.controls['inc_name'].dirty || investigationForm.controls['inc_name'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['inc_name'].errors?.required">
+                    <strong>*Please enter incident name</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reported By & Reported On -->
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>Reported By</label>
+                <input type="text" id="reported_by" class="form-control" formControlName="reported_by">
+                <div
+                  *ngIf="investigationForm.controls['reported_by'].invalid && (investigationForm.controls['reported_by'].dirty || investigationForm.controls['reported_by'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['reported_by'].errors?.required">
+                    <strong>*Please enter reported by</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Reported On </label>
+                <input type="date" id="reported_on" class="form-control" formControlName="reported_on">
+                <div
+                  *ngIf="investigationForm.controls['reported_on'].invalid && (investigationForm.controls['reported_on'].dirty || investigationForm.controls['reported_on'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['reported_on'].errors?.required">
+                    <strong>*Please enter reporting date</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Approved By & Approved On -->
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>Approved By</label>
+                <input type="text" id="approved_by" class="form-control" formControlName="approved_by">
+                <div
+                  *ngIf="investigationForm.controls['approved_by'].invalid && (investigationForm.controls['approved_by'].dirty || investigationForm.controls['approved_by'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['approved_by'].errors?.required">
+                    <strong>*Please enter approved by</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Approved On</label>
+                <input type="date" id="approved_on" class="form-control" formControlName="approved_on">
+                <div
+                  *ngIf="investigationForm.controls['approved_on'].invalid && (investigationForm.controls['approved_on'].dirty || investigationForm.controls['approved_on'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['approved_on'].errors?.required">
+                    <strong>*Please enter approval date</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Executive Summary -->
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <label>Executive Summary</label>
+                <textarea id="summary" class="form-control" formControlName="summary" cols="30" rows="3"></textarea>
+                <div
+                  *ngIf="investigationForm.controls['summary'].invalid && (investigationForm.controls['summary'].dirty || investigationForm.controls['summary'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['summary'].errors?.required">
+                    <strong>*Please enter executive summary</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <h4>INTRODUCTION <mat-divider class="mt-2"></mat-divider></h4> -->
+            <h4 class="bg-info text-left pl-2 text-white">
+              <mat-divider class="mb-2"></mat-divider> INTRODUCTION <mat-divider class="mt-2"></mat-divider>
+            </h4>
+
+
+            <!-- Approved By & Approved On -->
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>Overview Of The Incident</label>
+                <textarea class="form-control" formControlName="overview" cols="30" rows="3"></textarea>
+                <div
+                  *ngIf="investigationForm.controls['overview'].invalid && (investigationForm.controls['overview'].dirty || investigationForm.controls['overview'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['overview'].errors?.required">
+                    <strong>*Please enter overview of the incident</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Investigation Methodology</label>
+                <textarea class="form-control" formControlName="method" cols="30" rows="3"></textarea>
+                <div
+                  *ngIf="investigationForm.controls['method'].invalid && (investigationForm.controls['method'].dirty || investigationForm.controls['method'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['method'].errors?.required">
+                    <strong>*Please enter investigation methodology</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Introduction -->
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <table class="table-striped">
+
+                  <thead>
+                    <tr>
+                      <th colspan="4">Investigation Team Members</th>
+                    </tr>
+                  </thead>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Designation</th>
+                      <th>Members Designation</th>
+                      <th><a (click)="addnew_investigation_team_member()">
+                          <mat-icon>add</mat-icon>
+                        </a></th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="investigation_team_members">
+                    <tr *ngFor="let inv_team_members of inv_team_member.controls; let i = index">
+                      <ng-container [formGroupName]="i">
+                        <td>
+                          <input type="text" formControlName="name" class="form-control">
+                          <div
+                            *ngIf="inv_team_member.controls[i].get('name')?.invalid && (inv_team_member.controls[i].get('name')?.dirty || inv_team_member.controls[i].get('name')?.touched)"
+                            class="text-danger mt-1">
+                            <div *ngIf="inv_team_member.controls[i].get('name')?.errors?.required">
+                              <strong>*Please enter name</strong>
+                            </div>
+                          </div>
+
+                        </td>
+                        <td>
+                          <input type="text" formControlName="designation" class="form-control">
+                          <div
+                            *ngIf="inv_team_member.controls[i].get('designation')?.invalid && (inv_team_member.controls[i].get('designation')?.dirty || inv_team_member.controls[i].get('designation')?.touched)"
+                            class="text-danger mt-1">
+                            <div *ngIf="inv_team_member.controls[i].get('designation')?.errors?.required">
+                              <strong>*Please enter designation</strong>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <input type="text" formControlName="inv_team_designation" class="form-control">
+                          <!-- <div
+                            *ngIf="investigationForm.controls['inv_team_designation'].invalid && (investigationForm.controls['inv_team_designation'].dirty || investigationForm.controls['inv_team_designation'].touched)"
+                            class="text-danger mt-1">
+                            <div *ngIf="investigationForm.controls['inv_team_designation'].errors?.required">
+                              <strong>*Please enter member's designation</strong>
+                            </div>
+                          </div> -->
+                          <div
+                            *ngIf="inv_team_member.controls[i].get('inv_team_designation')?.invalid && (inv_team_member.controls[i].get('inv_team_designation')?.dirty || inv_team_member.controls[i].get('inv_team_designation')?.touched)"
+                            class="text-danger mt-1">
+                            <div *ngIf="inv_team_member.controls[i].get('inv_team_designation')?.errors?.required">
+                              <strong>*Please enter member's designation</strong>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <a class="customIcon" type="button" *ngIf="i > 0" (click)="removeInv_Team_Member(i,inv_team_member.controls[i].get('id')?.value)">
+                            <mat-icon>delete</mat-icon>
+                          </a>
+                        </td>
+                      </ng-container>
+
+
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+
+            </div>
+
+            <!-- <h4>BACKGROUND <mat-divider class="mt-2"></mat-divider></h4> -->
+            <h4 class="bg-info text-left pl-2 text-white">
+              <mat-divider class="mb-2"></mat-divider> BACKGROUND <mat-divider class="mt-2"></mat-divider>
+            </h4>
+
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>Facility Information / Project Background</label>
+                <textarea class="form-control" formControlName="background" cols="30" rows="3"></textarea>
+                <div
+                  *ngIf="investigationForm.controls['background'].invalid && (investigationForm.controls['background'].dirty || investigationForm.controls['background'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['background'].errors?.required">
+                    <strong>*Please enter facility information / project background</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Other Relevent Facts For The Facility</label>
+                <textarea class="form-control" formControlName="facility" cols="30" rows="3"></textarea>
+                <div
+                  *ngIf="investigationForm.controls['facility'].invalid && (investigationForm.controls['facility'].dirty || investigationForm.controls['facility'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['facility'].errors?.required">
+                    <strong>*Please enter other relevent facts for the facility</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>DESCRIPTION OF THE INCIDENT</label>
+                <textarea class="form-control" formControlName="description" cols="30" rows="3"></textarea>
+                <div
+                  *ngIf="investigationForm.controls['description'].invalid && (investigationForm.controls['description'].dirty || investigationForm.controls['description'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['description'].errors?.required">
+                    <strong>*Please enter description of the incident</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Details of the Incident</label>
+                <textarea class="form-control" formControlName="incDtls" cols="30" rows="3"></textarea>
+
+                <div
+                  *ngIf="investigationForm.controls['incDtls'].invalid && (investigationForm.controls['incDtls'].dirty || investigationForm.controls['incDtls'].touched)"
+                  class="text-danger mt-1">
+                  <div *ngIf="investigationForm.controls['incDtls'].errors?.required">
+                    <strong>*Please enter details of the incident</strong>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>Details of Injured Person </label>
+                <textarea class="form-control" formControlName="details" cols="30" rows="3"></textarea>
+                <div
+                *ngIf="investigationForm.controls['details'].invalid && (investigationForm.controls['details'].dirty || investigationForm.controls['details'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['details'].errors?.required">
+                  <strong>*Please enter details of injured person</strong>
+                </div>
+              </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Sequence of Events </label>
+                <textarea class="form-control" formControlName="sequence" cols="30" rows="3"></textarea>
+                <div
+                *ngIf="investigationForm.controls['sequence'].invalid && (investigationForm.controls['sequence'].dirty || investigationForm.controls['sequence'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['sequence'].errors?.required">
+                  <strong>*Please enter sequence of events</strong>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>IMPACT OF INCIDENT</label>
+                <textarea class="form-control" formControlName="impact" cols="30" rows="3"></textarea>
+                <div
+                *ngIf="investigationForm.controls['impact'].invalid && (investigationForm.controls['impact'].dirty || investigationForm.controls['impact'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['impact'].errors?.required">
+                  <strong>*Please enter impact of incident</strong>
+                </div>
+              </div>
+              </div>
+              <div class="col-sm-6">
+                <label>RESULTS OF THE INCIDENT INVESTIGATION </label>
+                <textarea class="form-control" formControlName="result" cols="30" rows="3"></textarea>
+                <div
+                *ngIf="investigationForm.controls['result'].invalid && (investigationForm.controls['result'].dirty || investigationForm.controls['result'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['result'].errors?.required">
+                  <strong>*Please enter result of the incident investigation</strong>
+                </div>
+              </div>
+
+              </div>
+
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <label>Analysis of Findings</label>
+                <textarea class="form-control" formControlName="analysis" cols="30" rows="3"></textarea>
+                <div
+                *ngIf="investigationForm.controls['analysis'].invalid && (investigationForm.controls['analysis'].dirty || investigationForm.controls['analysis'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['analysis'].errors?.required">
+                  <strong>*Please enter analysis of findings</strong>
+                </div>
+              </div>
+              </div>
+              <div class="col-sm-6">
+                <label>CONCLUSION</label>
+                <textarea class="form-control" formControlName="conclusion" cols="30" rows="3"></textarea>
+                <div
+                *ngIf="investigationForm.controls['conclusion'].invalid && (investigationForm.controls['conclusion'].dirty || investigationForm.controls['conclusion'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['conclusion'].errors?.required">
+                  <strong>*Please enter conclusion</strong>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <label>RECOMMENDATIONS</label>
+                <textarea class="form-control" formControlName="recommendations" cols="30" rows="3"></textarea>
+                <div
+                *ngIf="investigationForm.controls['recommendations'].invalid && (investigationForm.controls['recommendations'].dirty || investigationForm.controls['recommendations'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['recommendations'].errors?.required">
+                  <strong>*Please enter recommendations</strong>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <h4 class="bg-info text-left pl-2 text-white">
+              <mat-divider class="mb-2"></mat-divider> ATTACHMENTS <mat-divider class="mt-2"></mat-divider>
+            </h4>
+
+            <div class="row form-group">
+              <div [ngClass]="this.investigationForm.controls['files1_to_preview'].value != '' ? 'col-sm-5' : 'col-sm-6'">
+                <label>ATTACHMENT 1</label>
+                <input accept=".png,.jpeg,.jpg" type="file" formControlName="file1" class="form-control" (change)="selectFile($event,1)">
+                <mat-hint class="mt-5"><strong class="text-danger ">Note: Only .png,.jpg,.jpeg are allowed</strong></mat-hint>
+
+              </div>
+              <div class="col-sm-1 d-flex justify-content-center align-items-center" *ngIf="this.investigationForm.controls['files1_to_preview'].value != ''">
+                <a target="_blank" [href]="this.investigationForm.controls['files1_to_preview'].value">
+                  <img class="attchments_inv" alt="attachment1" src="{{ this.investigationForm.controls['files1_to_preview'].value}}">
+                </a>
+              </div>
+              <div class="col-sm-6">
+                <label>Description Of Attachment1</label>
+                <textarea class="form-control" formControlName="attch1" cols="30" rows="1"></textarea>
+                <div
+                *ngIf="investigationForm.controls['attch1'].invalid && (investigationForm.controls['attch1'].dirty || investigationForm.controls['attch1'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['attch1'].errors?.required">
+                  <strong>*Please enter description of attachment1</strong>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div [ngClass]="this.investigationForm.controls['files2_to_preview'].value != '' ? 'col-sm-5' : 'col-sm-6'">
+                <label>ATTACHMENT 2</label>
+                <input accept=".png,.jpeg,.jpg" type="file" formControlName="file2" class="form-control" (change)="selectFile($event,2)">
+                <mat-hint class="mt-5"><strong class="text-danger ">Note: Only .png,.jpg,.jpeg are allowed</strong></mat-hint>
+
+                <!-- <div
+                *ngIf="investigationForm.controls['file2'].invalid && (investigationForm.controls['file2'].dirty || investigationForm.controls['file2'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['file2'].errors?.required">
+                  <strong>*Please enter attachment2</strong>
+                </div>
+              </div> -->
+              </div>
+              <div class="col-sm-1 d-flex justify-content-center align-items-center" *ngIf="this.investigationForm.controls['files2_to_preview'].value != ''">
+                <a target="_blank" [href]="this.investigationForm.controls['files2_to_preview'].value">
+                  <img class="attchments_inv" alt="attachment2" src="{{ this.investigationForm.controls['files2_to_preview'].value}}">
+                </a>
+              </div>
+              <div class="col-sm-6">
+                <label>Description Of Attachment2</label>
+                <textarea class="form-control" formControlName="attch2" cols="30" rows="1"></textarea>
+                <div
+                *ngIf="investigationForm.controls['attch2'].invalid && (investigationForm.controls['attch2'].dirty || investigationForm.controls['attch2'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['attch2'].errors?.required">
+                  <strong>*Please enter description of attachment2</strong>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div [ngClass]="this.investigationForm.controls['files3_to_preview'].value != '' ? 'col-sm-5' : 'col-sm-6'">
+                <label>ATTACHMENT 3</label>
+                <input accept=".png,.jpeg,.jpg" type="file" formControlName="file3" class="form-control" (change)="selectFile($event,3)">
+                <mat-hint class="mt-5"><strong class="text-danger ">Note: Only .png,.jpg,.jpeg are allowed</strong></mat-hint>
+
+                <!-- <div
+                *ngIf="investigationForm.controls['file3'].invalid && (investigationForm.controls['file3'].dirty || investigationForm.controls['file3'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['file3'].errors?.required">
+                  <strong>*Please enter attachment3</strong>
+                </div>
+              </div> -->
+              </div>
+              <div class="col-sm-1 d-flex justify-content-center align-items-center" *ngIf="this.investigationForm.controls['files3_to_preview'].value != ''">
+                <label>&nbsp;</label>
+               <a target="_blank" [href]="this.investigationForm.controls['files3_to_preview'].value">
+                 <img class="attchments_inv" alt="attachment1" src="{{ this.investigationForm.controls['files3_to_preview'].value}}">
+               </a>
+             </div>
+              <div class="col-sm-6">
+                <label>Description Of Attachment3</label>
+                <textarea class="form-control" formControlName="attch3" cols="30" rows="1"></textarea>
+                <div
+                *ngIf="investigationForm.controls['attch3'].invalid && (investigationForm.controls['attch3'].dirty || investigationForm.controls['attch3'].touched)"
+                class="text-danger mt-1">
+                <div *ngIf="investigationForm.controls['attch3'].errors?.required">
+                  <strong>*Please enter description of attachment3</strong>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-6">
+                <div class="titleSec">
+                  <div class="btnSubmitSec">
+                      <input type="submit"  id="SF" value="Save As Final"
+                      (click)="submit_investigationReport('SF')"
+                      class="btn btn-info">
+                      <input type="submit"  id="SD" value="Save As Draft"
+                      (click)="submit_investigationReport('SD')"
+                      class="btn btn-info">
+                      <!-- [disabled]="investigationForm.invalid" -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,16 +18,38 @@
                   <div class="chat-messages-show-container_for_members">
                   <ngx-spinner bdColor = "" size = "small" color = "black" type = "line-spin-clockwise-fade" [fullScreen] = "false"></ngx-spinner>
 
-                    <ul   *ngFor="let empname of emp_list">
-                      <li style="padding: 4px auto; margin: 10px;position:relative;" >
-                        <img src="assets/images/no-user.png" alt="profile" class="listImg" *ngIf="empname.img==null">
+                    <ul   *ngFor="let empname of emp_list" class="liveChatUl">
+                      <li >
+                        <!-- <img src="assets/images/no-user.png" alt="profile" class="listImg" *ngIf="empname.img==null">
                         <img src="{{url}}/{{empname.img}}" alt="profile" class="listImg" *ngIf="empname.img!=null">
 
                         <span class="customSpan">{{empname.emp_name}}</span>
                        <div class="dot-ring"></div>
-                       <div class="dot"></div>
+                       <div class="dot"></div> -->
+                       <div class="liveLogImg">
+                        <div class="dot-ring"></div>
+                          <div class="dot"></div>
+                          <img src="assets/images/no-user.png" alt="profile" class="listImg" *ngIf="empname.img==null">
+                          <img src="{{url}}/{{empname.img}}" alt="profile" class="listImg" *ngIf="empname.img!=null">
+                        </div>
+                        <span matTooltip="{{empname.emp_name}}" class="customSpan">{{empname.emp_name}}</span>
+
                       </li>
                     </ul>
+
+                    <!-- <ul class="liveChatUl">
+
+                        <li>
+                          <div class="liveLogImg">
+                            <div class="dot-ring"></div>
+                              <div class="dot"></div>
+                              <img src="assets/images/no-user.png" alt="profile" class="listImg" >
+                            </div>
+
+                          <span class="customSpan">Suman Mitra</span>
+
+                        </li>
+                      </ul> -->
                   </div>
 
                </div>

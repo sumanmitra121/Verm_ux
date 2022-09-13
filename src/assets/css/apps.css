@@ -164,7 +164,7 @@ img {
 
 .logo{background: #fff; padding:10px 15px; text-align: center; width: 260px; border-bottom:#eee solid 1px; position: relative;}
 .logo::after{content: "";
-  border-right: #878585 solid 2px;
+  border-right:#d2d2d2 solid 2px;
   position: absolute;
   right: 0;
   top: 10px;
@@ -202,17 +202,19 @@ img {
 }
 
 .sidebar ul.nav {display: inherit;}
-.sidebar ul.nav li.nav-item a{color: #6a6969; padding:15px 15px; font-size: 15px; display: flex;}
+.sidebar ul.nav li.nav-item a{color: #0d0d0d; padding:15px 15px; font-size: 15px; display: flex;}
 /* For change the background color of particular link */
-.sidebar ul.nav li.active>a{color: #6a6969;background: #fff;}
-
-.sidebar ul.nav li.nav-item a:hover{color: #6a6969; background: #fff;}
 .sidebar ul.nav li.nav-item a i.fa {
-    font-size: 16px;
-    line-height: 1;
-    margin-right: 1.25rem;
-    color: #6a6969;
+  font-size: 16px;
+  line-height: 1;
+  margin-right: 1.25rem;
+  color: #0d0d0d;
 }
+.sidebar ul.nav li.active>a{color: #fff;background: #0a63bc;}
+.sidebar ul.nav li.active>a i.fa{color: #fff;}
+
+.sidebar ul.nav li.nav-item a:hover{color: #fff;background: #0a63bc;}
+.sidebar ul.nav li.nav-item a:hover i.fa{color: #fff;}
 .sidebar ul.nav li.nav-item a i.arowRight{margin-left: auto; font-size: 11px; line-height: 18px; margin-right: 0;}
 
 /* .main-panel {
@@ -327,7 +329,7 @@ button.navbar-toggler{background: #fa607e; padding: 6px 8px; color: #fff; float:
 
 ul.topMenuRight{margin-left: auto;}
 ul.topMenuRight li{display: inline-block; color: #4b4e51;}
-ul.topMenuRight li.userDrop > a{color: #4b4e51; font-size: 14px;}
+ul.topMenuRight li.userDrop > a{color: #0d0d0d; font-size: 14px;}
 ul.topMenuRight li.userDrop a img.thumImg{width: 45px;
     height: 45px;
     overflow: hidden;
@@ -405,17 +407,20 @@ ul.topMenuRight li.active .dropdownActive i{margin-right: 5px; color: #333;}
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 7px 13px;
-  margin-bottom: 7px;
+  padding: 13px;
+  margin-bottom: 1px;
   background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+
   -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
 }
 
 .notification-list--unread {
   /* border-left: 2px solid #29B6F6; */
-  border-radius: 5px;
-    border-left: 2px solid #464ed0;
+  /* border-radius: 5px; */
+    /* border-left: 2px solid #464ed0; */
 }
 
 .notification-list .notification-list_content {
