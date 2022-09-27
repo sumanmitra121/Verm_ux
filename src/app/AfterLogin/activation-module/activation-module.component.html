@@ -24,7 +24,7 @@
                </div>
               </div>
               <div class="row text-center" >
-                <div class="col-12">
+                <div class="col-sm-12">
                   <div class="alert alert-danger alert-dismissible" *ngIf="_is_activeIncident!='' && team_on_duity_data.length > 2 && _show_alert && approval_flag == 0">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong><i class="fa fa-exclamation-triangle fs-3" aria-hidden="true"></i>If you want to handover this incident to another team ,then you have to fillup the handover form first</strong>
@@ -148,7 +148,7 @@
       </div>
       <div class="modal-body">
         <div class="row mb-2">
-          <div class="col-12 btnSubmitSec" [hidden]="approval_flag > 0">
+          <div class="col-sm-12 btnSubmitSec" [hidden]="approval_flag > 0">
             <b [ngClass]="_is_activeIncident != '' ? 'text-success' : 'text-danger'">Note:   {{_is_activeIncident == '' ? 'There is no active incident ' : ' You can either activate all members or  a particular member of this team'}}</b>
             <input type="submit" #active_member value="Active / De-Active" [disabled]="_is_activeIncident == ''" [hidden]="(_activated_flag == 'N' || _activated_flag == null) && _checked_active && team_on_duity_data.length > 2" class="btn btn-info float-right" (click)="Active_member()">
           </div>

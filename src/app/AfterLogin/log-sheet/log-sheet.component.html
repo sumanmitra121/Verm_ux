@@ -69,7 +69,7 @@
                 </div>
               <form #ManualLog="ngForm" (ngSubmit)="SubmitForm(ManualLog.value)">
                <div class="row">
-                 <div class="col-6">
+                 <div class="col-sm-6">
                   <input type="hidden" name="inc_id" [(ngModel)]="Inc_id">
                   <input type="hidden" name="act_type" [(ngModel)]="Act_type">
                   <input type="hidden" name="id" [(ngModel)]="Id">
@@ -79,7 +79,7 @@
                     *Please Provide Act By
                   </div>
                  </div>
-                 <div class="col-6">
+                 <div class="col-sm-6">
                   <label>Act At</label>
                   <input type="datetime-local" class="form-control" name="act_at" #act_at="ngModel" ngModel max="{{this.now}}" required/>
                   <div *ngIf="act_at.errors?.required && (act_at.touched || act_at.dirty)" class="text-danger">
@@ -88,7 +88,7 @@
                  </div>
                </div>
                <div class="row mt-2 mb-2">
-                 <div class="col-12">
+                 <div class="col-sm-12">
                      <label>Activity</label>
                      <textarea class="form-control"  class="form-control" name="activity" #activity="ngModel" ngModel rows="5" required></textarea>
                      <div *ngIf="activity.errors?.required && (activity.touched || activity.dirty)" class="text-danger">
@@ -97,7 +97,7 @@
                  </div>
                </div>
                <div class="row">
-                 <div class="col-6">
+                 <div class="col-sm-6">
                   <div class="btnSubmitSec">
                    <input type="submit" value="Add" #submitBtn id="submitBtn" class="btn btn-info" [disabled]="ManualLog.invalid"/>
 
@@ -154,7 +154,7 @@
                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                    <tr class="mat-row" *matNoDataRow>
-                     <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                     <td class="mat-cell" colspan="3">No data matching the filter "{{input.value}}"</td>
                    </tr>
                  </table>
                  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>

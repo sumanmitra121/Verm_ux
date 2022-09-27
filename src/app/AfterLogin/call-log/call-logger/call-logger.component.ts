@@ -38,8 +38,7 @@ export class CallLoggerComponent implements OnInit {
     // this.fetchdata();
   }
   fetchdata(id:any){
-    console.log(id);
-    this.spinner.show()
+    // this.spinner.show()
     this.emergencyService.global_service('0','/call_log','inc_id=' + id).pipe(map((x:any)=> x.msg)).subscribe(data=>{this.putdata(data);})
   }
   putdata(v:any){
@@ -86,5 +85,8 @@ export class CallLoggerComponent implements OnInit {
          this.spinner.hide();
       })
     }
-    getIncDetails(_e:IncDetails){this.fetchdata(_e.id);}
+    getIncDetails(_e:IncDetails){
+    this.spinner.show()
+
+      this.fetchdata(_e.id);}
 }

@@ -15,7 +15,7 @@
                         <!-- <div class="col-1"></div> -->
                         <input type="hidden" name="id" id="default_value" #id="ngModel" ngModel >
                         <input type="hidden" name="user" id="default_user" #user="ngModel" ngModel >
-                <div class="col-6">
+                <div class="col-sm-6">
                     <b>Position</b>
                     <input  type="text" name="position" id="position" class="form-control" ngModel #Position="ngModel" required>
                     <div *ngIf="Position.errors?.required && (Position.touched || Position.dirty)" class="text-danger h5 mt-2">
@@ -24,7 +24,7 @@
                 </div>
                 </div>
                 <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="btnSubmitSec ">
                     <input type="submit" class="btn btn-info" name="submit" id="submit" value="Send" [disabled]="logForm.invalid">
                     <input type="button" (click)="cancel()" class="btn reset" value="Cancel" >

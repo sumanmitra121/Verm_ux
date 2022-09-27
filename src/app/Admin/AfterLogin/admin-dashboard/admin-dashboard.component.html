@@ -80,12 +80,12 @@
         <hr/>
         <!-- Incident Details -->
             <div class="row mt-3">
-                <div class="col-12">
+                <div class="col-sm-12">
                     <h3>
                         Incidents Details
                     </h3>
                 </div>
-        <div class="col-12">
+        <div class="col-sm-12">
         <div class="tabs-container clearfix">
             <ul class="tabs-menu">
             <li [ngClass]="inc_id==inc.id ? 'active' : ''" *ngFor="let inc of all_incident; let i=index" (click)="get_incident_details(inc.id)">
@@ -126,17 +126,17 @@
              <hr/>
         <!-- For Chart.js -->
             <div class="row">
-                <div class="col-12">
+                <div class="col-sm-12">
                     <h3>Overall Incidents Status</h3>
                 </div>
                 <!-- Pie Chart.js -->
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div  id="container" style="width:400px;height:400px;">
                         <canvas id="ctx"></canvas>
                     </div>
                 </div>
                 <!-- Bubble chart.js -->
-                <div class="col-6">
+                <div class="col-sm-6">
 
                 </div>
             </div>
@@ -147,7 +147,7 @@
     <div class="content-wrapper" id="conent2">
           <!-- For Incident Header -->
           <div class="row">
-           <div class="col-12">
+           <div class="col-sm-12">
             <div class="headerIncident">
                 <div class="headerIncidentbody">
                 <!-- <ul class="topinsidentData2 topinsidentData2_1">
@@ -306,10 +306,10 @@
             <hr/>
             <!-- Vessel Details -->
             <div class="row mt-3">
-                <div class="col-12">
+                <div class="col-sm-12">
                     <h3>Vessel Details</h3>
                 </div>
-                <div class="col-12">
+                <div class="col-sm-12">
                   <mat-progress-bar mode="indeterminate" *ngIf="show_spinner"></mat-progress-bar>
                 <div class="tabs-container clearfix">
                     <ul class="tabs-menu">

@@ -9,7 +9,7 @@
             <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Please Wait... </p></ngx-spinner>
             <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)" ngNativeValidate>
             <div class="row">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <input type="hidden" name="user"  class="form-control" #user="ngModel" ngModel>
                     <b >Category</b>
                     <input  type="text" name="catg_name" id="category" class="form-control mt-1" ngModel #catg_name="ngModel" required>
@@ -19,7 +19,7 @@
                 </div>
                 </div>
                 <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="btnSubmitSec ">
                     <input type="submit" class="btn btn-info" name="submit" id="submit" value="Save" [disabled]="logForm.invalid">
                     <input type="button" (click)="cancel()" class="btn reset" value="Cancel" >

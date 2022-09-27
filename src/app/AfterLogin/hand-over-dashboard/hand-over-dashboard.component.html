@@ -9,7 +9,7 @@
         <div class="card-body">
           <div class="titleSec">
             <div class="btnSubmitSec">
-              <h2>Handover Dashboard</h2>
+              <h2>Incident Handover</h2>
               <input type="submit" class="btn btn-info float-right" [routerLink]="['/add_handover']" routerLinkActive="true" value="Add">
 
             </div>
@@ -45,7 +45,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
                 </tr>
               </table>
               <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>

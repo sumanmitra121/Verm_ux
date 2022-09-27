@@ -9,26 +9,26 @@
             <div class="card-body">
               <div class="titleSec"  *ngIf="_ACTIVE_FLAG!= '0'">
                 <div class="btnSubmitSec ">
-                     <h2>Hand Over Form</h2>
+                     <h2>Add Incident Handover</h2>
                   </div>
                 </div>
                 <ng-container *ngIf="_ACTIVE_FLAG!= '0'">
                 <form [formGroup]="handoverform" (ngSubmit)="HandOver()" ngNativeValidate>
                 <div class="row">
-                  <div class="col-6 col-sm-6">
+                  <div class="col-sm-6 col-sm-6">
                     <label>Handover For Incident</label>
                     <input type="text" class="form-control"  formControlName="inc"  readonly/>
                   </div>
 
-                  <div class="col-6 col-sm-6 mt-2 mb-2">
+                  <div class="col-sm-6 col-sm-6 mt-2 mb-2">
                     <label>Reason for Handover</label>
                     <input type="text" class="form-control"  formControlName="header"  required/>
                   </div>
-                  <div class="col-6 col-sm-6">
+                  <div class="col-sm-6 col-sm-6">
                     <label>Handover From</label>
                     <input type="text" class="form-control"  formControlName="from_team"  required readonly/>
                   </div>
-                  <div class="col-6 col-sm-6">
+                  <div class="col-sm-6 col-sm-6">
                     <label>Handover To</label>
                     <select class="form-control" formControlName="to_team_id" >
                       <option value="0">Select Team</option>
@@ -37,17 +37,17 @@
                     </select>
                   </div>
 
-                  <div class="col-12 mt-3 col-sm-12">
+                  <div class="col-sm-12 mt-3 col-sm-12">
                     <label>Comment</label>
                     <textarea  class="form-control" formControlName="remarks" rows="5" required></textarea>
                   </div>
-                  <div class="col-6 col-sm-6 mt-3">
+                  <div class="col-sm-6 col-sm-6 mt-3">
                     <div class="titleSec">
                       <div class="btnSubmitSec">
                         <input type="submit" [disabled]="handoverform.invalid" class="btn btn-info float-left" value="Submit"></div>
                       </div>
                   </div>
-                  <div class="col-6 col-sm-6"></div>
+                  <div class="col-sm-6 col-sm-6"></div>
 
                 </div>
               </form>

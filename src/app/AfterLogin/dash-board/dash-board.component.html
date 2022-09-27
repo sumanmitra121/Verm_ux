@@ -52,7 +52,7 @@
 
 				<div class="rowCustomFlex marginBotPosition">
 
-					<div class="col-6 mb-6">
+					<div class="col-sm-6 mb-6">
 						<div class="whiteBox">
 							<div class="card-header card_headerCustom">
 								<h2 class="pull-left text-dark titleDashBox" id="card_heading">Chat Box </h2>
@@ -70,7 +70,7 @@
 
 						</div>
 					</div>
-					<div class="col-6 mb-6">
+					<div class="col-sm-6 mb-6">
 
 
 						<div class="whiteBox whiteBoxHeightNon whiteBox_marg_bot">
@@ -258,42 +258,6 @@
 							</div>
 							<div class="card_bodyCustom scroll">
 								<h3 class="customLine"></h3>
-								<!-- <div class="customScroll">
-									<table *ngIf="get_casualty_status!=''">
-										<thead>
-											<tr>
-												<th></th>
-												<th>Full Name</th>
-												<th>Employer</th>
-												<th>Condition</th>
-												<th>Time</th>
-											</tr>
-										</thead>
-										<tbody *ngFor="let casualty of get_casualty_status;let i=index">
-											<tr [ngClass]="i == 0 ? 'my_class1' : ''"
-												[matTooltip]="getTooltipText(casualty.full_name,casualty.employer,casualty.emp_condition,casualty.time,'','','C')">
-												<td>
-													<div id="container" *ngIf='i==0'>
-														<div class="dot"></div>
-														<div class="pulse"></div>
-													</div>
-												</td>
-												<td>
-													<p>{{casualty.full_name}}</p>
-												</td>
-												<td>
-													<p>{{casualty.employer}}</p>
-												</td>
-												<td>
-													<p>{{casualty.emp_condition}}</p>
-												</td>
-												<td>
-													<p>{{casualty.time}}</p>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div> -->
                 <ng-container *ngIf="get_casualty_status.length > 0">
 
                   <ul class="boardStatus" *ngFor = "let casualty of get_casualty_status;let i=index">
@@ -338,38 +302,6 @@
 									type="ball-clip-rotate" [fullScreen]="false">
 									<p style="color: rgb(0, 0, 0)" class="mt-5"> Please Wait.... </p>
 								</ngx-spinner>
-								<!-- <div class="customScroll">
-									<table *ngIf="get_evacuation_status!=''">
-										<thead>
-											<tr>
-												<th></th>
-												<th>Mode Of Transport</th>
-												<th>Time</th>
-												<th>Pob Remaining</th>
-											</tr>
-										</thead>
-										<tbody *ngFor="let evacuation of get_evacuation_status;let i=index">
-											<tr [ngClass]="i == 0 ? 'my_class1' : ''"
-												[matTooltip]="getTooltipText(evacuation.mode_of_transport,evacuation.time,evacuation.pob_remaining,'','','','E')">
-												<td>
-													<div id="container" *ngIf='i==0'>
-														<div class="dot"></div>
-														<div class="pulse"></div>
-													</div>
-												</td>
-												<td>
-													<p>{{evacuation.mode_of_transport}}</p>
-												</td>
-												<td>
-													<p>{{evacuation.time}}</p>
-												</td>
-												<td>
-													<p>{{evacuation.pob_remaining}}</p>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div> -->
 								<h3 class="customLine"></h3>
                 <ng-container *ngIf="get_evacuation_status.length > 0">
 
@@ -423,7 +355,7 @@
                     <li>
                       <strong class="customLabel">Time :</strong> {{event?.time | slice:0:5}}
                     </li>
-                    <li>
+                    <li matTooltip="{{event?.situation_status}}">
                       <strong class="customLabel">Situation Status :</strong> {{event?.situation_status}}
                     </li>
                     <mat-divider class="m-1" *ngIf="i != (get_events_status.length-1)"></mat-divider>

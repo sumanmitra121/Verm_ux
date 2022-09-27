@@ -10,7 +10,7 @@
              <h2>Archive Incident</h2>
              </div>
              <div class="row">
-                 <div class="col-6">
+                 <div class="col-sm-6">
                      <label>Incident No.</label>
                      <form #f="ngForm">
                      <input type="text"  id="inc_no" name="Inc_no" name="Inc_no" #Inc_no="ngModel" ngModel class="form-control" (change)="getInc_details()" (keypress)="PreventNonNumeric($event)">
@@ -21,7 +21,7 @@
 
                 <div class="row">
 
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Incident Type</label>
                         <div class="col-sm-12">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="form-group row">
                       <label  class="col-sm-12 col-form-label">Incident Name</label>
                       <div class="col-sm-12">
@@ -51,7 +51,7 @@
                  </div>
 
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-sm-6">
                         <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Incident Location</label>
                         <div class="col-sm-12">
@@ -65,7 +65,7 @@
                         </div>
                     </div>
 
-                     <div class="col-6">
+                     <div class="col-sm-6">
                     <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Initial Tier</label>
                         <div class="col-sm-12">
@@ -83,7 +83,7 @@
 
 
                 <div class="row ">
-                    <div class="col-12">
+                    <div class="col-sm-12">
                         <div class="form-group row">
                             <label  class="col-sm-12 col-form-label">Summary Of Incident</label>
                             <div class="col-sm-12">
@@ -99,34 +99,34 @@
 
                 <div class="row">
 
-                    <div class="col-6">
+                    <div class="col-sm-6">
                         <label>Created Date</label>
                         <input type="text" class="form-control" #created_date="ngModel" ngModel name="created_date" id="created_date" disabled>
                     </div>
-                    <div class="col-6">
+                    <div class="col-sm-6">
                         <label>Created By</label>
                         <input type="text" name="created_by" #created_by="ngModel" ngModel class="form-control" id="created_by" disabled>
                     </div>
 
 
 
-                    <div class="col-6 mt-2">
+                    <div class="col-sm-6 mt-2">
                         <label>Close Date</label>
                         <input type="text" class="form-control" name="closed_date" #closed_date="ngModel" ngModel id="closed_date" disabled>
                     </div>
 
 
-                    <div class="col-6 mt-2">
+                    <div class="col-sm-6 mt-2">
                         <label>Closed At</label>
                         <input type="text" name="closed_at" #closed_at="ngModel" ngModel id="closed_at" class="form-control" disabled>
                     </div>
-                    <div class="col-12 mt-2">
+                    <div class="col-sm-12 mt-2">
                         <label>Closed by</label>
                         <input type="text" name="closed_by" #closed_by="ngModel" ngModel id="closed_by" disabled class="form-control">
                     </div>
             </div>
                 <div class="row mt-2">
-                    <div class="col-6">
+                    <div class="col-sm-6">
 
                             <label>Status</label>
 
@@ -137,7 +137,7 @@
                             </select>
 
                        </div>
-                        <div class="col-6">
+                        <div class="col-sm-6">
                                 <label for="Final_tier_id">Final Tier</label>
 
                                 <select name="final_tier_id" id="Final_tier_id" #final_tier_id="ngModel" ngModel class="form-control" readonly>
@@ -148,7 +148,7 @@
                         </div>
                     </div>
                 <div class="row ">
-                    <div class="col-12">
+                    <div class="col-sm-12">
                         <div class="form-group row">
                             <label  class="col-sm-12 col-form-label">Remarks</label>
                             <div class="col-sm-12">

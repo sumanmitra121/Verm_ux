@@ -8,22 +8,50 @@
         <div class="card-body">
           <div class="titleSec">
             <div class="btnSubmitSec">
-              <h2 >Oil Spill</h2></div></div>
+              <h2>Oil Spill</h2>
+            </div>
+          </div>
           <div class="alert alert-primary" role="alert">
-          Please download the modelling form from '<strong>OIL SPILL</strong>' folder under
-          '<strong>ER DOCUMENTATION</strong>' Section & after download this modelling form ,
-           please fill all the fields and upload it from here.
+            Please download the modelling form from '<strong>OIL SPILL</strong>' folder under
+            '<strong>ER DOCUMENTATION</strong>' Section & after download this modelling form ,
+            please fill all the fields and upload it from here.
           </div>
           <form #logForm="ngForm" (ngSubmit)="submit()" ngNativeValidate>
             <div class="row form-group">
-              <div class="col-6">
-                <input type="file" required name="file" #file="ngModel" ngModel id="uploaded_file" class="form-control" (change)="changeFile($event)">
+              <div class="col-sm-6 m-auto">
+                <input type="file" required name="file" #file="ngModel" ngModel id="uploaded_file" class="form-control"
+                  multiple (change)="changeFile($event)">
+              </div>
+              <div class="col-sm-6">
+                <ul>
+                  <li *ngFor="let image of _FILE;let i = index" class="imageLink">
+                    <a (click)="openFiles(image.img)">
+                      <img class="attchments"
+
+                      [src]="image.type == 'pdf' ? '/assets/images/pdf.svg'
+                      : image.type == 'docx' ? '/assets/images/docx-file.png'
+                      : image.type == 'doc' ? '/assets/images/doc.svg'
+                      : image.type == 'xlsx' ? '/assets/images/Excel.png'
+                      : image.type == 'pptx' ? '/assets/images/pptx.svg'
+                      : image.type == 'jpg' ? '/assets/images/jpg.svg'
+                      : image.type == 'png' ? '/assets/images/png.svg'
+                      : '/assets/images/jpeg_logo.png'"
+
+                      alt="Attachments"
+                        style="width:100px;height:100px">
+                    </a>
+                    <a class="deleteIcon" (click)="deleteFiles(i)">
+                      <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
             <div class="row form-group">
-              <div class="col-12">
+              <div class="col-sm-12">
                 <div class="btnSubmitSec ">
-                    <input type="submit" [disabled]="logForm.invalid" class="btn btn-info" value="Upload"/>
+                  <input type="submit" [disabled]="logForm.invalid" class="btn btn-info" value="Upload" />
                 </div>
               </div>
             </div>
@@ -34,3 +62,4 @@
     </div>
   </div>
 </div>
+

@@ -13,7 +13,7 @@
                 <input type="hidden" name="id" id="default_value" #id="ngModel" ngModel>
                 <input type="hidden" name="user" id="default_user" #user="ngModel" ngModel>
 
-                <div class="col-6">
+                <div class="col-sm-6">
                     <b>Tier Type</b>
                     <input  type="text" name="tier_type" id="Tire_Type" class="form-control" ngModel #Tire_Type="ngModel" required>
                     <div *ngIf="Tire_Type.errors?.required && (Tire_Type.touched || Tire_Type.dirty)" class="text-danger h5 mt-2">
@@ -22,7 +22,7 @@
                 </div>
                 </div>
                 <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="btnSubmitSec ">
                     <input type="submit" class="btn btn-info" name="submit" id="submit" value="Save" [disabled]="logForm.invalid">
                     <input type="button" (click)="cancel()" class="btn reset" value="Cancel" >

@@ -67,8 +67,6 @@ import { IncidentModuleComponent } from './AfterLogin/Incident/incident-module/i
 import { AddLessonLearntComponent } from './AfterLogin/Lesson_Learnt/add-lesson-learnt/add-lesson-learnt.component';
 import { LessonDashboardComponent } from './AfterLogin/Lesson_Learnt/lesson-dashboard/lesson-dashboard.component';
 import { LiveLogComponent } from './AfterLogin/live-log/live-log.component';
-import { AddlogsheetComponent } from './AfterLogin/log-sheet/Add-Log-Sheet/addlogsheet/addlogsheet.component';
-import { EditLogSheetComponent } from './AfterLogin/log-sheet/Edit-Log-Sheet/edit-log-sheet/edit-log-sheet.component';
 import { LogSheetComponent } from './AfterLogin/log-sheet/log-sheet.component';
 import { MediaComponent } from './AfterLogin/Media_Module/media/media.component';
 import { ModifyMediaComponent } from './AfterLogin/Media_Module/modify-media/modify-media.component';
@@ -382,16 +380,10 @@ const routes: Routes = [
 
 
   },
-
-  // {
-  //   path:'Editinc/:id',
-  //   component:EditDashbaordComponent
-  // }
   {
     path:'Editinc',
     component:EditDashbaordComponent,
     canActivate:[UGaurdGuard]
-
   },
   {
     path:'EditApprove',
@@ -435,16 +427,6 @@ const routes: Routes = [
     canActivate:[UGaurdGuard]
   },
   {
-    path:'addLogSheet',
-    component:AddlogsheetComponent,
-    canActivate:[UGaurdGuard]
-  },
-  {
-    path:'EditLogSheet/:id/:flag',
-    component:EditLogSheetComponent,
-    canActivate:[UGaurdGuard]
-  },
-  {
     path:'firstloggedin',
     component:FirstloggedinchangePasswordComponent
   },
@@ -461,7 +443,6 @@ const routes: Routes = [
     path:'Repo_dashboard',
     component:RepoDashboardComponent,
     canActivate:[AGaurdGuard]
-
   },
   {
     path:'Add_Repo',

@@ -42,14 +42,14 @@
                     </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <label>Received By</label>
                             <input type="text" name="received_by" id="received_by" class="form-control" ngModel #received_by="ngModel" required>
                             <div *ngIf="received_by.errors?.required && (received_by.touched || received_by.dirty)" class="text-danger">
                                 *Please Provide This Field
                               </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-sm-6">
                             <label>Call Date & Time</label>
                             <input type="datetime-local" name="call_datetime" id="call_datetime" class="form-control" ngModel #call_datetime="ngModel" required>
                             <div *ngIf="call_datetime.errors?.required && (call_datetime.touched || call_datetime.dirty)" class="text-danger">
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="row mt-2 mb-2">
-                        <div class="col-12">
+                        <div class="col-sm-12">
                             <label>Call Details</label>
                             <textarea name="call_details" id="call_details" class="form-control" rows="5" cols="5" ngModel #call_details="ngModel" required></textarea>
                             <div *ngIf="call_details.errors?.required && (call_details.touched || call_details.dirty)" class="text-danger">

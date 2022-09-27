@@ -264,8 +264,6 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons'; // Used for showing s
 import { CallLoggerComponent } from './AfterLogin/call-log/call-logger/call-logger.component';
 import { AddCallLoggerComponent } from './AfterLogin/call-log/add-call-logger/add-call-logger.component';
 import { CreateMeetingComponent } from './AfterLogin/audio-video-conference/create-meeting/create-meeting/create-meeting.component';
-import { AddlogsheetComponent } from './AfterLogin/log-sheet/Add-Log-Sheet/addlogsheet/addlogsheet.component';
-import { EditLogSheetComponent } from './AfterLogin/log-sheet/Edit-Log-Sheet/edit-log-sheet/edit-log-sheet.component';
 import { FirstloggedinchangePasswordComponent } from './AfterLogin/FirstTimeChangePassWord/firstloggedinchange-password/firstloggedinchange-password.component';
 import { PreviewFileComponent } from './Admin/AfterLogin/PreviewFile/preview-file/preview-file.component';
 ///Ngx Doc Viewer ////////////////////////////////
@@ -374,8 +372,6 @@ import { ModifyInvestigationComponent } from './AfterLogin/IncInvestigationRepor
     FormschecklistfilesComponent,
     AddCallLoggerComponent,
     CreateMeetingComponent,
-    AddlogsheetComponent,
-    EditLogSheetComponent,
     FirstloggedinchangePasswordComponent,
     PreviewFileComponent,
     AddRepositoryComponent,

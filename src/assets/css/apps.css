@@ -437,3 +437,23 @@ ul.topMenuRight li.active .dropdownActive i{margin-right: 5px; color: #333;}
 
 /* End */
 
+.example-large-box {
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.imageLink{
+  position: relative;
+  display: inline-block;
+  margin: 8px;
+}
+.deleteIcon{
+  position: absolute;
+  right: 7px;
+  margin: 0px;
+  font-size: 17px;
+  width: 15px;
+  cursor: pointer;
+  top: 0;
+}

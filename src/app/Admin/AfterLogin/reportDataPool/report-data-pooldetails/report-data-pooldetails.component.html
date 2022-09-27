@@ -12,7 +12,7 @@
      <div class="card-body">
          <form #logForm="ngForm" (ngSubmit)="form_submit(logForm.value)" *ngIf="Inc_type!='B'">
           <div class="row" *ngIf="Inc_type=='L'">
-                 <div class="col-6">
+                 <div class="col-sm-6">
                      <input type="radio" name="logTypes"  #logTypes="ngModel" ngModel value="1"> Auto Log
                      <input type="radio" name="logTypes"  #logTypes="ngModel" ngModel value="2" class="m-1"> Manual Log
                  </div>

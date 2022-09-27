@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./modify-investigation.component.css']
 })
 export class ModifyInvestigationComponent implements OnInit {
+  route_parameter:number = Number(atob(this.routeParams.snapshot.params.id))
   investigationForm!: FormGroup;
   constructor(
     public routeParams: ActivatedRoute,
@@ -99,7 +100,7 @@ export class ModifyInvestigationComponent implements OnInit {
           attch1:res[0].file1_dtls,
           attch2:res[0].file2_dtls,
           attch3:res[0].file3_dtls,
-          files1:res[0].file_1!='' ? global_url_test.URL+res[0].file1 : '',
+          files1:res[0].file_1!='' ? global_url_test.URL+res[0].file_1 : '',
           files2:res[0].file_2 != '' ? global_url_test.URL+res[0].file_2 : '',
           files3:res[0].file_3 != '' ? global_url_test.URL+res[0].file_3 : '',
           files1_to_preview:res[0].file_1!='' ? global_url_test.URL+res[0].file_1 : '',

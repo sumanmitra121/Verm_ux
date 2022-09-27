@@ -24,24 +24,33 @@ export class MediaComponent implements OnInit {
   ngOnInit(): void {}
   fetchData(inc_id:any){
     console.log(inc_id);
+    if(inc_id){
+      let api_name = this.flag == 'M' ? '/media_rel' :'/holding'
+      this.api_call.global_service(0,api_name,'inc_id='+inc_id).pipe(map((x:any) => x.msg)).subscribe(res =>{
+       this.dataSource = new MatTableDataSource(res);
+           this.dataSource.paginator = this.paginator;
+      })
+    }
+    else{
 
-     let api_name = this.flag == 'M' ? '/media_rel' :'/holding'
-     this.api_call.global_service(0,api_name,'inc_id='+inc_id).pipe(map((x:any) => x.msg)).subscribe(res =>{
-      console.log(res);
+    }
 
-      this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-     })
   }
   getIncDetails(event:any){
     this.incDetails = event;
+     console.log(event);
     this.fetchData(event.id);
     this.inc_name = event.inc_name+' (' + event.inc_no + ')';
   }
   checkMediaType(event:any){
       this.flag = event.value;
+       console.log(this.incDetails.id);
+
+    //  if(this.incDetails.id){
       this.setColumn();
       this.fetchData(this.incDetails.id);
+
+    //  }
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

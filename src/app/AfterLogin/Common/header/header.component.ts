@@ -22,7 +22,8 @@ export class HeaderComponent implements OnInit {
   _c_pass:boolean = true;
   _n_pass:boolean = true;
   _o_pass:boolean = true;
-  _max_id!:any;
+  _max_id:any;
+  _inc_no:any;
   localStorageAlice = localStorage;
   @Input() IncID!:string;
   @Output() IncStatus= new EventEmitter<IncDetails>();
@@ -118,7 +119,7 @@ export class HeaderComponent implements OnInit {
   }
 
  getNotifications(){
-  console.log('Notification');
+  // console.log('Notification');
 
      //call Notification if this member is activated against this team;
       if(localStorage.getItem('active_flag') == '0'){}
@@ -142,11 +143,11 @@ export class HeaderComponent implements OnInit {
       user:localStorage.getItem('Email')
     }
     this.emergencyservice.global_service('1','/log_out',dt).subscribe(data=>{
-      console.log(data);
-
+      // console.log(data);
+      localStorage.clear();
+      this.router.navigate(['/login']);
     })
-    localStorage.clear();
-    this.router.navigate(['/login']);
+
   }
   show_pass(_type:any){
     switch(_type){
@@ -275,7 +276,6 @@ export class HeaderComponent implements OnInit {
     else{
 
     }
-
    })
   }
 
@@ -290,10 +290,12 @@ export class HeaderComponent implements OnInit {
 
   getDetails(_inc_no:number){
     var incStatus = this._activeIncBackup.find((x:any) => x.inc_no == _inc_no);
-   console.log(incStatus);
-
-    this.Inc_Name = incStatus.inc_name + '(' +incStatus.inc_no +')';
-    this._selected_Inc = this.Inc_Name;
+  //  console.log(incStatus);
+    // this.Inc_Name = incStatus.inc_name + '(' +incStatus.inc_no +')';
+    // this._selected_Inc = this.Inc_Name;
+    this._inc_no = incStatus.inc_no;
+    this.Inc_Name = incStatus.inc_name;
+    this._selected_Inc = incStatus.inc_name + '(' +incStatus.inc_no +')';
     this.Inc_location=incStatus.offshore_name+" ("+incStatus.lat+" : "+incStatus.lon+ ")";
     this._initial_tier_id = incStatus.initial_tier_id
     this.tier=incStatus.tier_type;

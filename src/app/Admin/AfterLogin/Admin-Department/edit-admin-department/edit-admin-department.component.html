@@ -12,13 +12,13 @@
                 <!-- <div class="col-1"></div> -->
                 <input type="hidden" name="user" #user="ngModel" ngModel id="default_user">
 
-                <div class="col-6">
+                <div class="col-sm-6">
                     <b>Sl No.</b>
                     <input  type="text" readonly name="id" id="sl_no" class="form-control" ngModel #sl_no="ngModel" >
                 </div>
                 </div>
             <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <b>Department</b>
                     <input  type="text" name="department" id="department" class="form-control" ngModel #department="ngModel" required>
                     <div *ngIf="department.errors?.required && (department.touched || department.dirty)" class="text-danger h5 mt-2">
@@ -27,7 +27,7 @@
                 </div>
                 </div>
                 <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="btnSubmitSec ">
                     <input type="submit" class="btn btn-info" name="submit" id="submit" value="Send" [disabled]="logForm.invalid">
                     <input type="button" (click)="cancel()" class="btn reset" value="Cancel" >

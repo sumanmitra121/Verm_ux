@@ -536,9 +536,13 @@ th.mat-header-cell{text-align: center!important;}
     text-decoration:none;
   }
   .file-manager-col-view .file-item {
-    margin: 0 1.25rem 0.25rem 0;
+    /* margin: 0 1.25rem 0.25rem 0;
     padding: 1.25rem 0 1rem 0;
     width: 11rem;
+    text-align: center; */
+    margin: 14px 0px;
+    padding: 16px;
+    width: 20%;
     text-align: center;
   }
   [dir="rtl"] .file-manager-col-view .file-item {
@@ -1106,7 +1110,8 @@ font-size: 17px;
   border-radius: 4px;
   padding: 5px;
   width: 150px;
-  margin:0 5px 0 0;
+  margin:0 5px 7px 0;
+  object-fit: contain;
 }
 .attchments:hover {
   box-shadow: 0 0 2px 1px rgb(210 210 210 / 50%);
@@ -1167,3 +1172,13 @@ mat-list-item:hover{
 .attchments_inv:hover {
   box-shadow: 0 0 2px 1px rgb(210 210 210 / 50%);
 }
+
+
+.exampleLargeBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 8px;
+}
+

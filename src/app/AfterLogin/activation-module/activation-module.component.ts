@@ -54,8 +54,6 @@ export class ActivationModuleComponent implements OnInit {
     // this.spinner.show();
     this.team_on_duity_data.length=0;
     this.emergencyservice.global_service('0','/get_active_emp_list','flag='+this.approval_flag+'&inc_id='+localStorage.getItem('Inc_id')).pipe(map((x:any)=> x.msg)).subscribe(data=>{
-       console.log(data);
-
       this._HAND_FLAG = data[data.length -1].hand_flag;
       this.team_on_duity_data=data;
     this.check_active_team();
@@ -73,9 +71,11 @@ export class ActivationModuleComponent implements OnInit {
     this.dataSource= new MatTableDataSource(v);
     this.dataSource.paginator=this.paginator;
     this.dataSource.sort=this.matsort;
+    this.spinner.hide();
    }
    //For filtering of teams on duty or off duty
   check_team_duity(event:any){
+    this.spinner.show();
   this.approval_flag=event.value;
   if(event.value=='1'){
     this.displayedColumns=['Name', 'employees_no','View'];

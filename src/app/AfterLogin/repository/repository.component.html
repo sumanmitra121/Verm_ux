@@ -81,19 +81,19 @@
                   </div>
                <form #logForm="ngForm" (ngSubmit)="Submit(logForm.value)">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-sm-6">
                         <label>File Name</label>
                         <input type="text" name="form_name" #form_name="ngModel" ngModel class="form-control" required>
                         <div *ngIf="form_name.errors?.required && (form_name.touched || form_name.dirty)" class="text-danger">
                            *Please Provide Form Name
                          </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-sm-6">
 
                     </div>
                 </div>
                 <div class="row mt-4 mb-4">
-                    <div class="col-6">
+                    <div class="col-sm-6">
                        <label>Select File</label>
                        <input type="file" class="form-control" name="file" id="File" #file="ngModel" ngModel  (change)="fileChangeEvent($event)" required>
                         <br/><span *ngIf="check_format">(Note : Only pdf,doc or docx can be uploaded)</span>
@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <div class="row">
-                   <div class="col-6">
+                   <div class="col-sm-6">
                        <div class="btnSubmitSec">
                             <input type="submit" value="Save" class="btn btn-info" [disabled]="!check_format || logForm.invalid">
                        </div>
@@ -124,21 +124,21 @@
                            <!-- {{files.form_path}} -->
                                <div class="file-man-box">
                                  <div class="row">
-                                   <div class="col-6">
+                                   <div class="col-sm-6 m-auto">
                                      <mat-checkbox  color="primary" (click)="$event.stopPropagation()"
                                      (change)="$event ? selection.toggle(files) : null"
                                      [checked]="selection.isSelected(files)">
                                      </mat-checkbox>
                                    </div>
-                                   <div class="col-6">
+                                   <div class="col-sm-6 p-0">
                                      <a  class="customIcon w-100"  type="button" [matMenuTriggerFor]="menu" #Tooltip="matTooltip" matTooltip="Share {{files.file_name}}">
                                        <i class="fa fa-share float-right mr-1" aria-hidden="true"></i>
                                     </a>
                                    <mat-menu #menu="matMenu">
                                      <share-buttons
-                                     style="color: white;"
                                      [showText]="true"
-                                     theme="material-dark"
+                                      [theme]="'circles-dark'"
+                                      [autoSetMeta]="false"
                                      [include]="['facebook', 'whatsapp', 'email', 'copy']"
                                      url="{{files.form_path}}"
                                    ></share-buttons>
@@ -149,12 +149,15 @@
                                    <div class="file-img-box">
 
                                        <a  [routerLink]="['/previewFile',files.path]" target="_blank">
-                                         <img src="/assets/images/doc.svg" *ngIf="files.file_ext=='doc'">
-                                       <img src="/assets/images/docx-file.png" *ngIf="files.file_ext=='docx'">
-                                       <img src="/assets/images/pdf.svg" *ngIf="files.file_ext=='pdf'">
-                                       <img src="/assets/images/png.svg" *ngIf="files.file_ext=='png'">
-                                       <img src="/assets/images/jpg.svg" *ngIf="files.file_ext=='jpg'">
-                                       <img src="/assets/images/ppt.svg" *ngIf="files.file_ext=='ppt'"></a>
+                                         <img style="width:100px;height:100px" src="/assets/images/doc.svg" *ngIf="files.file_ext=='doc'">
+                                       <img style="width:100px;height:100px" src="/assets/images/docx-file.png" *ngIf="files.file_ext=='docx'">
+                                       <img style="width:100px;height:100px" src="/assets/images/pdf.svg" *ngIf="files.file_ext=='pdf'">
+                                       <img style="width:100px;height:100px" src="/assets/images/png.svg" *ngIf="files.file_ext=='png'">
+                                       <img style="width:100px;height:100px" src="/assets/images/jpg.svg" *ngIf="files.file_ext=='jpg'">
+                                       <img style="width:100px;height:100px" src="/assets/images/pptx.webp" *ngIf="files.file_ext=='ppt'">
+                                       <img style="width:100px;height:100px" src="/assets/images/Excel.png" *ngIf="files.file_ext=='xlsx'">
+                                      </a>
+
                                    </div>
                                    <a (click)="downloadfile(files.form_path,files.file_name)" type="button" #Tooltip="matTooltip" matTooltip="Download {{files.file_name}}" class="file-download"><i class="fa fa-download"></i></a>
                                    <div class="file-man-title">
@@ -203,7 +206,8 @@
                              <img src="/assets/images/pdf.svg"   height="40px" width="40px" *ngIf="row.file_ext=='pdf'">
                              <img src="/assets/images/png.svg"  height="40px" width="40px" *ngIf="row.file_ext=='png'">
                              <img src="/assets/images/jpg.svg"  height="40px" width="40px" *ngIf="row.file_ext=='jpg'">
-                             <img src="/assets/images/ppt.svg"  height="40px" width="40px" *ngIf="row.file_ext=='ppt'"></a>
+                             <img src="/assets/images/pptx.webp"  height="40px" width="40px" *ngIf="row.file_ext=='ppt'">
+                             <img src="/assets/images/Excel.png" *ngIf="row.file_ext=='xlsx'" height="40px" width="40px"></a>
                            </td>
                          </ng-container>
 
@@ -244,9 +248,9 @@
                             </a>
                            <mat-menu #menu="matMenu">
                              <share-buttons
-                             style="color: white;"
-                              [showText]="true"
-                              theme="material-dark"
+                             [showText]="true"
+                             [theme]="'circles-dark'"
+                             [autoSetMeta]="false"
                              [include]="['facebook', 'whatsapp', 'email', 'copy']"
                              url="{{row.form_path}}"
                            ></share-buttons></mat-menu>

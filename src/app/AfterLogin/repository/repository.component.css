@@ -1,5 +1,8 @@
 .form-control{padding: 8px!important;}
 .table th, .table td {text-align: center;vertical-align: middle!important;}
+th,td{
+  width:13.5%;
+}
   select{
     padding: 9px;
     border: solid 1px #517B97;

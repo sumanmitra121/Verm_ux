@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogalertComponent } from 'src/app/CommonDialogAlert/dialogalert/dialogalert.component';
 import { ToastrManager } from 'ng6-toastr-notifications';
+import { global_url_test } from 'src/app/url';
 
 @Component({
   selector: 'app-investigation',
@@ -15,6 +16,7 @@ import { ToastrManager } from 'ng6-toastr-notifications';
   styleUrls: ['./investigation.component.css']
 })
 export class InvestigationComponent implements OnInit {
+  _url= global_url_test.URL;
   dataSource = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[]=['id','inc_name','reported_by','reported_on','Action'];
@@ -24,13 +26,9 @@ export class InvestigationComponent implements OnInit {
     private toastr:ToastrManager,
     private api_call:VirtualEmergencyService,
     private spinner:NgxSpinnerService
-    ) {
-      this.spinner.show();
-    }
+    ) {this.spinner.show();}
 
-  ngOnInit(): void {
-   this.fetchData();
-  }
+  ngOnInit(): void {this.fetchData();}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

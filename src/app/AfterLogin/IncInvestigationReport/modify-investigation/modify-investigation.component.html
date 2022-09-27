@@ -12,7 +12,7 @@
           <div class="titleSec">
             <div class="btnSubmitSec ">
               <h2>
-                {{routeParams.snapshot.params.id > 0 ? 'Update' : 'Add'}} Investigation Report</h2>
+                {{route_parameter > 0 ? 'Update' : 'Add'}} Investigation Report</h2>
             </div>
           </div>
 
@@ -44,27 +44,27 @@
               </div>
             </div>
 
-            <!-- Reported By & Reported On -->
+            <!-- Prepaired By & Prepaired On -->
             <div class="row form-group">
               <div class="col-sm-6">
-                <label>Reported By</label>
+                <label>Prepared By</label>
                 <input type="text" id="reported_by" class="form-control" formControlName="reported_by">
                 <div
                   *ngIf="investigationForm.controls['reported_by'].invalid && (investigationForm.controls['reported_by'].dirty || investigationForm.controls['reported_by'].touched)"
                   class="text-danger mt-1">
                   <div *ngIf="investigationForm.controls['reported_by'].errors?.required">
-                    <strong>*Please enter reported by</strong>
+                    <strong>*Please enter prepared by</strong>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6">
-                <label>Reported On </label>
+                <label>prepared On </label>
                 <input type="date" id="reported_on" class="form-control" formControlName="reported_on">
                 <div
                   *ngIf="investigationForm.controls['reported_on'].invalid && (investigationForm.controls['reported_on'].dirty || investigationForm.controls['reported_on'].touched)"
                   class="text-danger mt-1">
                   <div *ngIf="investigationForm.controls['reported_on'].errors?.required">
-                    <strong>*Please enter reporting date</strong>
+                    <strong>*Please enter prepared date</strong>
                   </div>
                 </div>
               </div>

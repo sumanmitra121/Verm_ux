@@ -27,8 +27,7 @@ export class ModifyMeetingComponent implements OnInit {
     private router:Router,
     private toastr:ToastrManager) {
       this.type = atob(this.activatedRoute.snapshot.params.type);
-      console.log(this.type);
-
+      // console.log(this.type);
       this.fetchTeam()
     this.weeklyForm=this.fb.group({
       id:[Number(atob(this.activatedRoute.snapshot.params.id))],
@@ -78,7 +77,7 @@ export class ModifyMeetingComponent implements OnInit {
           others:res[0].others,
           file:'',
           final_flag:res[0].final_flag,
-          file_path:this._url + res[0].file_path
+          file_path:res[0].file_path ? this._url + res[0].file_path : ''
          })
          this._file =res[0].file_path ? this._url + res[0].file_path : '';
        }

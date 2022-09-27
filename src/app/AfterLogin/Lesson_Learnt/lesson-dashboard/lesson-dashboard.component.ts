@@ -23,14 +23,15 @@ export class LessonDashboardComponent implements OnInit {
   constructor(private api_call:VirtualEmergencyService,
     private router:Router,
     private dialog:MatDialog) { }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchData(null,null);
+  }
 
   fetchData(inc_id:any,id:any){
     this.api_call.global_service('0','/lesson','inc_id='+inc_id).pipe((map((x:any) => x.msg))).subscribe(res => {
       console.log(res);
       this.dataSource = new MatTableDataSource(res.length > 0 ? res.reverse() : []);
-    this.dataSource.paginator = this.paginator;
-
+       this.dataSource.paginator = this.paginator;
     })
   }
 
@@ -41,9 +42,9 @@ export class LessonDashboardComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  getIncDetails(event:any){
-    this.fetchData(event.id,event.inc_no);
-  }
+  // getIncDetails(event:any){
+  //   this.fetchData(event.id,event.inc_no);
+  // }
   Navigate(_id:any){
     this.router.navigate(['/add_lesson_learnt',btoa(_id)])
   }

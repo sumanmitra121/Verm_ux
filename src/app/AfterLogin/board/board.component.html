@@ -340,22 +340,22 @@
 
              <!-- Installation Co-ordinates -->
              <div class="row">
-                <div class="col-6">
+                <div class="col-sm-6">
                   <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
                     <label>Installation</label>
                     <input class="form-control" type="text" name="installation" id="ins_id" ngModel #installation="ngModel" readonly>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6">
                 <label>COORDINATES:</label>
                 <input class="form-control" type="text" name="coordinates" id="coordinate_id" ngModel #coordinates="ngModel" readonly>
                 </div>
             </div>
            <!--SUMMARY OF INCIDENT  STATUS OF EMERGENCY RESPONSE -->
            <div class="row mt-2">
-            <div class="col-6"><label>Summary Of Incident</label>
+            <div class="col-sm-6"><label>Summary Of Incident</label>
                 <textarea cols="30" rows="4" class="form-control" name="summary" id="incidentsummary" ngModel #summary="ngModel" placeholder="Summary Of Incident"></textarea>
             </div>
-            <div class="col-6"><label>Status Of Emergency Response</label>
+            <div class="col-sm-6"><label>Status Of Emergency Response</label>
                 <textarea cols="30" rows="4" class="form-control" name="status" id="emergencyresponse" ngModel #status="ngModel" placeholder="Status Of Emergency Response"></textarea>
             </div>
            </div>
@@ -478,7 +478,7 @@
           <div class="modal-body" id="inc_create" *ngIf="this.id_create=='vessel_create'">
             <div class="row">
               <!-- Vessel Name -->
-              <div class="col-6">
+              <div class="col-sm-6">
                 <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
 
               </div>
@@ -558,7 +558,7 @@
           <div class="modal-body" id="inc_create" *ngIf="this.id_create=='hel_create'">
             <div class="row">
               <!-- Vessel Name -->
-              <div class="col-6">
+              <div class="col-sm-6">
                 <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
 
               </div>
@@ -634,7 +634,7 @@
           <!-- For POB STATUS -->
           <div class="modal-body" id="inc_create" *ngIf="this.id_create=='pob'">
             <div class="row">
-              <div class="col-6">
+              <div class="col-sm-6">
                 <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel" >
 
               </div>
@@ -700,7 +700,7 @@
           <div class="modal-body" id="inc_create" *ngIf="this.id_create=='casual'">
             <div class="row">
               <!-- Vessel Name -->
-              <div class="col-6">
+              <div class="col-sm-6">
                 <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
 
               </div>
@@ -786,7 +786,7 @@
 
             <div class="row">
               <!-- Vessel Name -->
-              <div class="col-6">
+              <div class="col-sm-6">
                 <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
 
               </div>
@@ -865,7 +865,7 @@
             <div class="modal-body" id="inc_create" *ngIf="this.id_create=='events'">
               <div class="row">
                 <!-- Vessel Name -->
-                <div class="col-6">
+                <div class="col-sm-6">
                   <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
 
                 </div>
@@ -915,12 +915,12 @@
             <!-- Incident Objectives -->
             <div class="modal-body" id="inc_objectives" *ngIf="this.id_create=='inc_objectives'">
               <div class="row">
-                <div class="col-6">
+                <div class="col-sm-6">
                   <input class="form-control" type="hidden" name="inc_id" id="inc_id" ngModel #inc_id="ngModel">
                     <label>Installation</label>
                     <input class="form-control" type="text" name="installation" id="ins_id" ngModel #installation="ngModel" readonly>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6">
                 <label>COORDINATES:</label>
                 <input class="form-control" type="text" name="coordinates" id="coordinate_id" ngModel #coordinates="ngModel" readonly>
                 </div>
@@ -973,7 +973,7 @@
 
                           </div>
                           <div class="row p-2">
-                            <div class="col-12">
+                            <div class="col-sm-12">
                               <label>General Situation Awareness:</label>
                               <textarea rows="3" cols="20" class="form-control"  [(ngModel)]="vesselArray[i].awareness" [ngModelOptions]="{standalone: true}"></textarea>
                             </div>

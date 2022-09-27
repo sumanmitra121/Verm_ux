@@ -1,7 +1,7 @@
 
  <app-adminheader></app-adminheader>
  <div class="page-body-wrapper">
- 
+
  <app-adminsidebar class="sidebarMain"></app-adminsidebar>
  <div class="main-panel">
      <div class="content-wrapper">
@@ -14,13 +14,13 @@
 
                    <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)">
                     <div class="row">
-                     
+
                            <input type="hidden" name="user" id="default_user" [(ngModel)]="default_user" >
                            <input type="hidden" name="emp_list" id="emp_list"  #emp_id="ngModel" ngModel>
                            <!-- <input type="hidden" name="emp_status" id="emp_status"  #emp_status="ngModel" ngModel> -->
 
                         <!-- For Select Team -->
-                        <div class="col-12 mb-3">
+                        <div class="col-sm-12 mb-3">
                         <b>Team</b>
                         <select name="team_id" id="Team_id" class="form-control" #team="ngModel" ngModel>
                             <option value="">Select</option>
@@ -29,7 +29,7 @@
                         </div>
                     <!-- For drop tram member -->
                     <!-- <mat-card class="example-card"> -->
-                        <div class="col-6 text-center">
+                        <div class="col-sm-6 text-center">
                         <mat-card class="example-card">
                             <div class="example-container">
                             <h2>Team Member  <button type="button"  class="float-right btn-info"  mat-mini-fab color="primary" (click)="selectall('todo')" [hidden]="this.selected_member.length==0"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
@@ -49,7 +49,7 @@
                             </div>
                         </mat-card>
                         </div>
-                        <div class="col-6 text-center">
+                        <div class="col-sm-6 text-center">
                         <mat-card class="example-card">
                             <div class="example-container">
                             <h2><button type="button" mat-mini-fab class="float-left  btn-info" color="primary" (click)="selectall('done')" [hidden]="this.All_Employee.length==0"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>All Members</h2>

@@ -11,14 +11,14 @@
                 <div class="row">
                 <input type="hidden" name="user" #user="ngModel" ngModel id="default_user">
 
-                    <div class="col-6">
+                    <div class="col-sm-6">
                   <b>Sl No.</b>
                   <input type="text" name="id" id="sl_no" #id="ngModel" ngModel readonly class="form-control">
                     </div>
                 </div>
              <div class="row mt-3">
                 <!-- <div class="col-1"></div> -->
-                <div class="col-6">
+                <div class="col-sm-6">
                     <b>Team Type</b>
                     <!-- <input type="text" name="team_type" id="team_type" #team_type="ngModel" ngModel required class="form-control">
                     <div *ngIf="team_type.errors?.required && (team_type.touched || team_type.dirty)" class="text-danger">
@@ -36,7 +36,7 @@
                 </div>
                </div>
              <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <b>Team Name</b>
                     <input  type="text" name="team_name" id="Team_name" class="form-control" ngModel #Team_name="ngModel" required>
                     <div *ngIf="Team_name.errors?.required && (Team_name.touched || Team_name.dirty)" class="text-danger text-danger h5 mt-2">
@@ -45,7 +45,7 @@
                 </div>
                 </div>
                 <div class="row mt-3">
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="btnSubmitSec ">
                     <input type="submit" class="btn btn-info" name="submit" id="submit" value="Send" [disabled]="logForm.invalid">
                     <input type="button"(click)="cancel()" class="btn reset" value="Cancel" >

@@ -12,13 +12,13 @@
              </div>
              <form #logForm="ngForm" (ngSubmit)="logSubmit(logForm.value)" >
                  <div class="row">
-                     <div class="col-6">
+                     <div class="col-sm-6">
                          <label>Incident No.</label>
                          <input type="text" name="inc_id" id="Inc_id" #inc_id="ngModel" ngModel class="form-control" disabled>
                      </div>
                  </div>
                 <div class="row">
-            <div class="col-6">
+            <div class="col-sm-6">
                 <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Incident Type</label>
                         <div class="col-sm-12">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-6">
                     <div class="form-group row">
                         <!-- <input type="hidden" name="id" #id="ngModel" ngModel> -->
                       <label  class="col-sm-12 col-form-label">Incident Name</label>
@@ -53,7 +53,7 @@
 
                 <div class="row">
                     <!-- Incident Location -->
-                    <div class="col-6">
+                    <div class="col-sm-6">
                         <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Incident Location</label>
                         <div class="col-sm-12">
@@ -71,7 +71,7 @@
                     <!-- Incident Type -->
 
                     <!-- Initial Tier -->
-                     <div class="col-6">
+                     <div class="col-sm-6">
                     <div class="form-group row">
                         <label  class="col-sm-12 col-form-label">Initial Tier</label>
                         <div class="col-sm-12">
@@ -89,7 +89,7 @@
                 </div>
 
                 <div class="row ">
-                    <div class="col-12">
+                    <div class="col-sm-12">
                         <div class="form-group row">
                             <label  class="col-sm-12 col-form-label">Summary Of Incident</label>
                             <div class="col-sm-12">
@@ -105,22 +105,22 @@
 
                 <div class="row" *ngIf="this.inc_status!='O'">
 
-                  <div class="col-6">
+                  <div class="col-sm-6">
                       <label>Created Date</label>
                       <input type="text" class="form-control" name="created_date" #create_date="ngModel" ngModel id="created_date" >
                   </div>
-                  <div class="col-6">
+                  <div class="col-sm-6">
                       <label>Created By</label>
                       <input type="text" name="created_by"  #created_by="ngModel" ngModel class="form-control" id="created_by" >
                   </div>
 
 
-              <!-- <div class="col-12"> -->
-                  <div class="col-6 mt-2">
+              <!-- <div class="col-sm-12"> -->
+                  <div class="col-sm-6 mt-2">
                       <label>Closed Date</label>
                       <input type="text" class="form-control" name="closed_date" #closed_date="ngModel" ngModel id="closed_date" >
                   </div>
-                  <div class="col-6 mt-2">
+                  <div class="col-sm-6 mt-2">
                       <label>Final Tier</label>
 
                       <select name="final_tire" #final_tire="ngModel" ngModel class="form-control" >
@@ -132,17 +132,17 @@
                   </div>
 
               <!-- </div> -->
-              <div class="col-12 mt-2">
+              <div class="col-sm-12 mt-2">
                   <label>Remarks</label>
                   <textarea class='form-control' name="closing_remarks" #closing_remarks="ngModel" ngModel id="close_reamrks" cols="30" rows="5" ></textarea>
 
               </div>
-              <!-- <div class="col-12"> -->
-                  <div class="col-6 mt-2">
+              <!-- <div class="col-sm-12"> -->
+                  <div class="col-sm-6 mt-2">
                       <label>Closed At</label>
                       <input type="text" name="closed_at" #closed_at="ngModel" ngModel id="closed_at" class="form-control" >
                   </div>
-                  <div class="col-6 mt-2">
+                  <div class="col-sm-6 mt-2">
                       <label>Closed by</label>
                       <input type="text" name="closed_by" id="closed_by" #closed_by="ngModel" ngModel  class="form-control">
                   </div>

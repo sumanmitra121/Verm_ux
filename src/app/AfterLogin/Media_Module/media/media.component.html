@@ -8,13 +8,13 @@
        <div class="card-body">
         <div class="titleSec">
           <div class="btnSubmitSec">
-            <h2 >Media <small> / </small> {{flag == 'M' ? 'Media Release' : 'Holding Statement'}}</h2>
+            <h2 >Media Handling<small> / </small> {{flag == 'M' ? 'Media Release' : 'Holding Statement'}}</h2>
             <input type="submit" class="btn btn-info float-right" (click)="routeToMediaModification(0)"  routerLinkActive="true" value="Add {{flag == 'M' ? 'Media Release' : 'Holding Statement'}}">
           </div>
            </div>
 
           <div class="row">
-            <div class="col-6 d-flex align-items-center">
+            <div class="col-sm-6 d-flex align-items-center">
               <mat-radio-group aria-label="Select an Media Type" (change)="checkMediaType($event)">
                 <mat-radio-button color="primary" checked value="M">Media Release</mat-radio-button>
                 <mat-radio-button  color="primary" value="H" class="ml-2">Holding Statement</mat-radio-button>
@@ -86,7 +86,7 @@
 
               <!-- Row shown when there is no matching data. -->
               <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                <td class="mat-cell" colspan="5">No data matching the filter "{{input.value}}"</td>
               </tr>
             </table>
 

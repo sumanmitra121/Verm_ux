@@ -2,13 +2,6 @@
 /* @import "~angular2-multiselect-dropdown/themes/default.theme.css"; */
 @import url('https://fonts.googleapis.com/css?family=Spectral+SC:700');
 @import '~@angular/cdk/overlay-prebuilt.css';
-/* @import '~ngx-sharebuttons/themes/material.scss'; */
-/* @import '~ngx-sharebuttons/themes/modern.scss'; */
-/* @import '~@ngx-share/button/styles/themes/default/default-theme.css'; */
-/* @import url(https://weloveiconfonts.com/api/?family=entypo);     */
-/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap'); */
-/* html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body { padding-right: 0 !important }
