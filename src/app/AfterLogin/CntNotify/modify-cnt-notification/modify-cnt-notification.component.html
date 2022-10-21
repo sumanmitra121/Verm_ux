@@ -1,0 +1,975 @@
+<app-header></app-header>
+<div class="page-body-wrapper">
+<app-sidebar class="sidebarMain"></app-sidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)"  size = "default" color = "#fff"   type = "ball-clip-rotate"  [fullScreen] = "false"><p style="color: rgb(255, 255, 255)" class="mt-5"> Loading.... </p></ngx-spinner>
+          <div class="wrapper_Form">
+            <form [formGroup]="CntNotify" (ngSubmit)="saveForm()">
+              <div class="headerMain">
+                <div class="headerMainTop_1"><span>VOLUME 3</span>
+                  HEALTH, SAFETY, SECURITY AND ENVIRONMENT</div>
+
+                <div class="headerMainTop_2">
+                  <p><span>Appendix 9: Notification Form</span>
+                    NOTIFICATION FORM (NF)</p>
+                </div>
+
+                <div class="headerMainTop_3">
+                  <div class="logoSec"><img src="../../../../../assets/images/pet_logo.png" alt="" /></div>
+                  <div class="comcen">
+                    <p><span>COMCEN:</span>
+
+                      Tel: +603-2331 2141/42/43/44 OR +603-2161 1703<br>
+
+                      Fax: +603-2161 1696 / +603-2051 2101<br>
+
+                      SMS: +6019-384 4696 / +6012-316 8496<br>
+
+                      Email: comcen@petronas.com.my</p>
+                  </div>
+                  <div class="from">
+
+                    <ul class="ulLiNormal">
+                      <li><strong>FROM:</strong><label class="fieldNor">
+                          <input type="text" formControlName="from"></label></li>
+                      <li><strong>BU:</strong><label class="fieldNor">
+                          <input type="text" formControlName="bu"></label></li>
+                      <li><strong>Tel:</strong><label class="fieldNor">
+                          <input type="text" formControlName="tel"></label></li>
+                      <li><strong>Fax:</strong><label class="fieldNor">
+                          <input type="text" formControlName="fax"></label></li>
+                      <li><strong>Sequence No:</strong><label class="fieldNor">
+                          <input type="text" formControlName="seq_no"></label></li>
+                    </ul>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="bodyContentSec">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tableCustomMain">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+                          <thead>
+                            <tr>
+                              <th class="col_3_1"><strong>Type</strong>
+                                (OPU to Tick)</th>
+                              <th class="col_3_2">COMCEN to notify the following notification list:
+                                (OPU to tick <strong>With IMPACT / Hi-PO / NO IMPACT</strong> where
+                                relevant)</th>
+                              <th class="col_3_3"><strong>OPU</strong> to notify internally
+                                as follows:</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr>
+                              <td formGroupName="opu_type">
+                                <label class="fieldNor"><input type="checkbox" value="1" formControlName="non_emer"> Non
+                                  emergency</label><br>
+                                <label class="fieldNor"><input type="checkbox" value="1" formControlName="tire1"> Tier
+                                  1</label><br>
+                                <label class="fieldNor"><input type="checkbox" value="1" formControlName="tire2"> Tier
+                                  2</label>
+                              </td>
+                              <td formGroupName="comcen">
+                                <label class="fieldNor">
+                                  <input type="checkbox" formControlName="with_impact">
+                                  <strong>With IMPACT / HIGH POTENTIAL INCIDENT*</strong>
+                                </label>
+                                <br>
+
+                                <ul>
+                                  <li>PETRONAS ELT</li>
+                                  <li>VP GHSSE</li>
+                                  <li>Head GHSE</li>
+                                  <li>Head Group Security </li>
+                                  <li>Head Group Strategic Communications</li>
+                                  <li>GM HSE MPM (for Domestic Upstream Emergency
+                                    only)</li>
+                                </ul>
+
+                                <label class="fieldNor">
+                                  <input type="checkbox" formControlName="no_impact"> <strong>NO IMPACT*</strong>
+                                </label>
+                                <br>
+                                <ul>
+                                  <li>VP GHSSE</li>
+                                  <li>Head GHSE</li>
+                                  <li>Head Group Security </li>
+                                  <li>Head Group Strategic Communications</li>
+                                  <li>GM HSE MPM (for Domestic Upstream Emergency
+                                    only)</li>
+                                </ul>
+                              </td>
+                              <td>
+                                <ul>
+                                  <li>Notification list as
+                                    established by OPU /
+                                    BU</li>
+                                </ul>
+
+                              </td>
+                            </tr>
+
+
+                            <tr>
+                              <td formGroupName="opu_type">
+                                <label class="fieldNor"><input type="checkbox" formControlName="tire3"> Tier 3</label>
+                              </td>
+                              <td formGroupName="comcen">
+                                <label class="fieldNor">
+                                  <input type="checkbox" formControlName="hi_po"> <strong>Hi-po*</strong>
+                                </label>
+                                <br>
+                                <ul>
+                                  <li>PETRONAS ELT</li>
+                                  <li>VP GHSSE</li>
+                                  <li>Head GHSE</li>
+                                  <li>Head Group Security </li>
+                                  <li>Head Group Strategic Communications</li>
+                                  <li>GM HSE MPM (for Domestic Upstream Emergency
+                                    only)</li>
+                                </ul>
+                              </td>
+                              <td>
+                                <ul>
+                                  <li>Notification list as
+                                    established by OPU /
+                                    BU</li>
+                                </ul>
+
+                              </td>
+                            </tr>
+
+
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="midleTitle"><strong>*DESCRIPTION OF IMPACT, EMERGENCY, NON-EMERGENCY & HI-PO</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+                            <tr>
+                              <td class="col_half_1">
+                                <label class="fieldNor"> <strong>Impact:</strong></label><br>
+
+                                <ul>
+                                  <li>Fatality</li>
+                                  <li>Major injury / health effect that resulted in Permanent Partial <br>
+                                    Disability / Lost Workday Case more than 4 days<br>
+                                  </li>
+                                  <li>Occupational Illness with irreversible health impact<br>
+                                  </li>
+                                  <li>Asset damage equal or exceeding USD 100,000<br>
+                                  </li>
+                                  <li>LOPC release equal to or above Tier 1 threshold quantity**<br>
+                                  </li>
+                                  <li>Spill no longer confined within company site, with off-site <br>
+                                    environmental impact (e.g. visible contamination to soil / water <br>
+                                    system, fish killed, vegetation damaged). <br>
+                                  </li>
+                                  <li>Emission or discharge from regulated / permitted source, exceeding <br>
+                                    regulatory standard<br>
+                                  </li>
+                                  <li>Chemical / Noise over exposure (exceeds the occupational exposure <br>
+                                    limit (OEL))<br>
+                                  </li>
+                                  <li>Local media / public concerns with considerable reputation <br>
+                                    consequence or worst</li>
+                                </ul>
+                              </td>
+                              <td class="col_half_2">
+                                <label class="fieldNor"><strong>Emergency:</strong></label><br>
+
+                                <ul>
+                                  <li>Incident where emergency <br>
+                                    or crisis team have been activated (Tier 1, Tier 2, or <br>
+                                    Tier 3)</li>
+                                </ul>
+
+                                <label class="fieldNor"><strong>Non-Emergency:</strong></label><br>
+
+                                <ul>
+                                  <li>Incident where there is no
+                                    activation of emergency or
+                                    crisis team</li>
+                                </ul>
+
+                                <label class="fieldNor"><strong>High Potential (Hi-Po)
+                                    Incident:</strong></label><br>
+
+                                <ul>
+                                  <li>Any incident which, under
+                                    different circumstances,
+                                    would have caused more
+                                    severe consequences leading
+                                    to a major incident</li>
+                                </ul>
+
+
+                              </td>
+
+                            </tr>
+
+
+
+
+
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+                            <tr>
+
+                              <td class="col_full">
+                                <p><strong>** Note:</strong> Natural gas, Methane, Ethane, Propane, Butane, LPG, LNG =
+                                  500 kg
+                                  Petrol, Gasoline, Methanol, above 15 API Gravity Crude oil = 1000 kg or 7 bbl
+                                  Diesel, below 15 API Gravity Crude oil = 2000 kg or 14 bbl
+                                  For other material, please refer to PTS 18.06.01 / API 754 Standard</p>
+
+
+                              </td>
+
+                            </tr>
+
+
+
+
+
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+                            <tr>
+                              <td class="col_3_1">
+                                <div class="logoImgMid"><img src="../../../../../assets/images/pet_logo.png"
+                                    alt="petronasLogo"></div>
+                              </td>
+                              <td class="col_3_2">
+                                NOTIFICATION FORM
+                              </td>
+                              <td class="col_3_3">
+                                <ul class="ulLiNormal">
+                                  <li><strong>BU:</strong><label class="fieldNor"><input type="text" #bu (input)="setFormControl('bu',$event.target)"></label></li>
+                                  <li><strong>OPU:</strong><label class="fieldNor"><input type="text"  formControlName="opu"></label></li>
+                                  <li><strong>Tel:</strong><label class="fieldNor"><input type="text" #tel (input)="setFormControl('tel',$event.target)"></label></li>
+                                  <li><strong>Fax:</strong><label class="fieldNor"><input type="text" #fax (input)="setFormControl('fax',$event.target)"></label></li>
+                                </ul>
+
+                              </td>
+                            </tr>
+
+
+
+
+
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+                            <tr>
+                              <td class="col_3_two_1">
+                                <p>*** Type of
+                                  Notification</p>
+                              </td>
+                              <td class="col_3_two_2"  formGroupName="type_of_noti">
+                                <label class="fieldNor"><input type="checkbox" formControlName="initial"> Initial</label>
+                                <label class="fieldNor"><input type="checkbox" formControlName="update"> Update</label>
+                                <label class="fieldNor"><input type="checkbox" formControlName="nothing_to_report"> Nothing To Report</label>
+                                <label class="fieldNor"><input type="checkbox" formControlName="stand_down"> Stand Down / All Clear</label>
+                                <label class="fieldNor"><input type="checkbox" formControlName="temp_case"> Temporary Cease of Operations (will be
+                                  resumed on <input type="date" formControlName="dt"> Time:<input type="time" formControlName="time"> ) </label>
+                              </td>
+
+                            </tr>
+
+
+
+
+
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="midleTitle"><strong>***SECTION A: BASIC INFORMATION</strong></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+                            <tr>
+                              <td class="col_3_two_1">
+                                <p>Location:</p>
+                              </td>
+                              <td class="col_3_two_2" formGroupName="location">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable">
+                                  <tbody>
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="onshore"> Onshore <input type="text" formControlName="onshore_text"></label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="malaysia"> Malaysia</label></td>
+
+                                      <td><label class="fieldNor">Date: <input type="date" formControlName="dt"></label></td>
+                                    </tr>
+
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="offshore"> Offshore <input type="text" formControlName="offshore_text"></label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="international"> International</label></td>
+
+                                      <td><label class="fieldNor">Time: <input type="time" formControlName="time"></label></td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+
+
+
+                              </td>
+
+                            </tr>
+                            <tr>
+                              <td class="col_3_two_1">
+                                <p>Department
+                                  Responsible:</p>
+                              </td>
+                              <td class="col_3_two_2">&nbsp;
+                                <input type="text" formControlName="dept_res">
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="midleTitle"><strong>***SECTION B: TYPE</strong></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+                            <tr>
+                              <td class="col_3_two_1">
+                                <p>HSE &
+                                  Process Safety</p>
+                              </td>
+                              <td class="col_3_two_2">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody formGroupName="hse">
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="fire"> Fire </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="exp"> Explosion</label></td>
+
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="haz"> HAZMAT</label></td>
+
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="hi_po"> Hi-Po Incident</label></td>
+
+                                    </tr>
+
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="chem"> Chemical / Noise Over
+                                          Exposure </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="liquid"> Loss of Primary Containment
+                                          (Liquid)</label></td>
+
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="gas"> Loss of Primary Containment
+                                          (Gaseous)</label></td>
+
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="spill"> Spillage</label></td>
+
+                                    </tr>
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="other"> Other</label>
+                                        <input type="text" formControlName="other_text">
+                                      </td>
+                                      <td><label class="fieldNor">Release Volume: <input type="text" formControlName="rel_vol"></label></td>
+                                      <td><label class="fieldNor">Recovered Volume: <input type="text" formControlName="recov_vol"></label></td>
+                                      <td>&nbsp;</td>
+                                    </tr>
+
+
+
+                                  </tbody>
+                                </table>
+
+
+
+                              </td>
+
+                            </tr>
+                            <tr>
+                              <td class="col_3_two_1">
+                                <p>Security</p>
+                              </td>
+                              <td class="col_3_two_2">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody formGroupName="security">
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="comm"> Community Disturbance </label>
+                                      </td>
+                                      <td><label class="fieldNor"><input type="checkbox"
+                                        formControlName="encro"> Encroachment /
+                                          Intrusion</label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="bomb"> Bomb Threat</label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="piracy"> Piracy</label></td>
+                                    </tr>
+
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="rob"> Robbery </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="demo"> Demonstration </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="host"> Hostage </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="kidn"> Kidnapping </label></td>
+                                    </tr>
+
+                                    <tr>
+                                      <td><label class="fieldNor">
+                                        <input type="checkbox" formControlName="hija"> Hijack </label></td>
+                                      <td><label class="fieldNor">
+                                        <input type="checkbox" formControlName="sea_rob"> Sea Robbery </label></td>
+                                      <td>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="murder"> Murder </label></td>
+                                      <td>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="terror"> Terrorist Attack </label></td>
+                                    </tr>
+
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="other"> Others </label>
+                                        <label class="fieldNor">Please specify: <input type="text" formControlName="other_text"></label></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+
+                            <tr>
+                              <td class="col_3_two_1">
+                                <p>Transportation</p>
+                              </td>
+                              <td class="col_3_two_2">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody formGroupName="transport">
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="land"> Land </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="water"> Water</label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="air"> Air </label></td>
+                                      <td><label class="fieldNor">
+                                        <input type="checkbox" formControlName="other">
+                                        Others, please specify: </label>
+                                        <input type="text" formControlName="other_text">
+                                      </td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td class="col_3_two_1">
+                                <p>Natural Disaster</p>
+                              </td>
+                              <td class="col_3_two_2">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody formGroupName="natu_dis">
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox"  formControlName="flood"> Flood </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="eartqk"> Earthquake</label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="tus"> Tsunami </label></td>
+                                      <td><label class="fieldNor">
+                                        <input type="checkbox" formControlName="other">
+                                        Others, please specify: </label>
+                                        <input type="text" formControlName="other_text">
+                                      </td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+
+
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="midleTitle"><strong>***SECTION C: IMPACT</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+
+
+                            <tr>
+                              <td class="col_full">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody formGroupName="impact">
+                                    <tr>
+                                      <td><label class="fieldNor"><input type="checkbox"  formControlName="peop"> People (specify in SECTION D)
+                                        </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="env"> Environment</label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="asset"> Asset </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="repu"> Reputation</label></td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+
+
+
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="midleTitle"><strong>***SECTION D: INJURED / ILL / FATALITY / MISSING</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+
+
+                            <tr>
+                              <td class="col_full">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody >
+                                    <tr>
+                                      <td formGroupName="injury_type" style="vertical-align: top !important;">
+                                        <label class="fieldNor"><strong>Number of Injured Person</strong></label><br>
+
+                                        <label class="fieldNor"><input type="checkbox" formControlName="petro"> PETRONAS   </label>
+                                        <input type="text" formControlName="petro_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="contr"> Contractor </label>
+                                        <input type="text" formControlName="contr_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="trd"> 3rd Party</label>
+                                        <input type="text" formControlName="trd_no"/>
+
+                                      </td>
+                                      <td formGroupName="ill_type" style="vertical-align: top !important;">
+                                        <label class="fieldNor"><strong>Number of Ill Person</strong></label><br>
+
+                                        <label class="fieldNor"><input type="checkbox" formControlName="petro"> PETRONAS   </label>
+                                        <input type="text" formControlName="petro_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="contr"> Contractor </label>
+                                        <input type="text" formControlName="contr_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="trd"> 3rd Party</label>
+                                        <input type="text" formControlName="trd_no"/>
+
+                                      </td>
+                                      <td formGroupName="fata_type" style="vertical-align: top !important;">
+                                        <label class="fieldNor"><strong>Number of Fatality</strong></label><br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="petro"> PETRONAS   </label>
+                                        <input type="text" formControlName="petro_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="contr"> Contractor </label>
+                                        <input type="text" formControlName="contr_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="trd"> 3rd Party</label>
+                                        <input type="text" formControlName="trd_no"/>
+                                      </td>
+                                      <td formGroupName="miss_type" style="vertical-align: top !important;">
+
+                                        <label class="fieldNor"><strong>Number of Missing</strong></label><br>
+
+                                        <label class="fieldNor"><input type="checkbox" formControlName="petro"> PETRONAS   </label>
+                                        <input type="text" formControlName="petro_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="contr"> Contractor </label>
+                                        <input type="text" formControlName="contr_no"/>
+                                        <br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="trd"> 3rd Party</label>
+                                        <input type="text" formControlName="trd_no"/>
+
+                                      </td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+
+
+
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="midleTitle"><strong>***SECTION E: POTENTIAL ESCALATION</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+
+
+                            <tr>
+                              <td class="col_full">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody>
+                                    <tr formGroupName="poten_escal">
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="under_control"> Under control with available
+                                          resources. No
+                                          potential of escalation</label></td>
+                                      <td><label class="fieldNor"><input type="checkbox"  formControlName="may_req"> May require additional
+                                          resources (e.g.
+                                          authorities, contractors, mutual aid group)</label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="auth_may_take_over"> Authorities may take over
+                                          command and
+                                          control </label></td>
+                                      <td><label class="fieldNor"><input type="checkbox" formControlName="may_trigger"> May trigger significant
+                                          authorities / public /
+                                          community / media interest</label></td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+
+
+
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="midleTitle"><strong>***SECTION F: AUTHORITIES INFORMED</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+
+                          <tbody>
+
+
+
+                            <tr>
+                              <td class="col_full">
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="noBorderTable_2">
+                                  <tbody>
+                                    <tr formGroupName="auth_informed">
+                                      <td><label class="fieldNor">Authorities / Date Informed:</label><br>
+
+                                        <textarea style="width: 100%; height: 60px;" formControlName="date"></textarea>
+                                      </td>
+
+
+                                      <td style="vertical-align: top !important;">
+
+                                        <label class="fieldNor"><input type="checkbox" formControlName="police"> Police </label><br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="fire_dept"> Fire Department </label><br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="medical"> Medical</label><br>
+                                        <label class="fieldNor"><input type="checkbox" formControlName="civil_def"> Civil Defence</label>
+
+
+                                      </td>
+                                      <td style="vertical-align: top !important;">
+                                        <label class="fieldNor"><input type="checkbox" formControlName="hse_regu"> HSE Regulator: e.g. DOSH,
+                                          Department of Environment, etc. </label><br>
+                                        <label class="fieldNor">Please specify: <input type="text" formControlName="hse_regu_dept"></label>
+                                      </td>
+                                      <td style="vertical-align: top !important;">
+                                        <label class="fieldNor"><input type="checkbox" formControlName="others"> Others: e.g. Coast Guard, Marine
+                                          Dept., Municipality, etc. </label><br>
+                                        <label class="fieldNor">Please specify: <input type="text" formControlName="others_txt"></label>
+                                      </td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+
+
+
+
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td
+                        style="padding:12px 15px; border-left: #000 solid 1px; border-right: #000 solid 1px; border-bottom: #000 solid 1px;">
+                        <strong>*** Mandatory to be filled up for initial notification</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td class="midleTitle"><strong>SECTION G: BRIEF DESCRIPTION (Who, What, Where, When &
+                          Consequence)</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+                          <tbody>
+                            <tr>
+                              <td class="col_full">
+                                <textarea style="width: 100%; height: 100px;" formControlName="brief_desc"></textarea>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="midleTitle"><strong>SECTION H: RESPONSE / ACTION TAKEN</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+                          <tbody>
+                            <tr>
+                              <td class="col_full">
+                                <textarea style="width: 100%; height: 100px;" formControlName="action_taken"></textarea>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="midleTitle"><strong>SECTION I: ADDITIONAL INFORMATION</strong></td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <table border="0" cellpadding="0" cellspacing="0" class="tableCustom">
+                          <tbody>
+                            <tr>
+                              <td class="col_full">
+                                <textarea style="width: 100%; height: 100px;" formControlName="add_info"></textarea>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </td>
+                    </tr>
+
+
+
+                    <tr>
+                      <td>
+
+
+                        <table class="tableCustom" cellspacing="0" cellpadding="0" border="0">
+
+                          <tbody>
+
+                            <tr formGroupName="stand_down">
+                              <td class="col_3_1 greenColor">
+                                <strong>SECTION J: STAND DOWN /
+                                  ALL CLEAR</strong>
+                              </td>
+                              <td class="col_3_2">
+                                <label class="fieldNor">Date: <input type="date" formControlName="dt"></label>
+                              </td>
+                              <td class="col_3_3">
+                                <label class="fieldNor">Time: <input type="time"  formControlName="time"></label>
+
+                              </td>
+                            </tr>
+
+                            <tr formGroupName="prepared">
+                              <td class="col_3_1 greenColor">
+                                <label class="fieldNor"><strong>Authorities / Date Informed:</strong></label>
+                                <br>
+
+                                <textarea style="width: 100%; height: 115px;" formControlName="info"></textarea>
+                              </td>
+                              <td class="col_3_2">
+                                <table class="noBorderTable_3" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                  <tbody >
+                                    <tr>
+                                      <td><label class="fieldNor">Name: </label></td>
+                                      <td><input type="text"  formControlName="name"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><label class="fieldNor">Designation:</label></td>
+                                      <td><input type="text" formControlName="desig"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><label class="fieldNor">Contact No: </label></td>
+                                      <td><input type="text" formControlName="contact"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><label class="fieldNor">Date / Time:</label></td>
+                                      <td><input type="datetime-local" formControlName="dt"></td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                              <td class="col_3_3">
+                                <label class="fieldNor">Signature:</label><br>
+                                <!-- <textarea style="width: 100%; height: 115px;"></textarea> -->
+                                <input type="file" accept="image/*" formControlName="signature_source" (change)="submitSignature($event,'P')"/>
+
+                                <div class="mt-3 imageLink" *ngIf="this.CntNotify.get('prepared.signature')?.value != ''">
+                                  <a >
+                                    <img class="attchments_inv" alt="Signature1" src="{{this.CntNotify.get('prepared.signature')?.value}}">
+                                  </a>
+                                  <a  class="deleteIcon" (click)="deleteImage('P')">
+                                    <i class="fa fa-times-circle-o" aria-hidden="true" ></i>
+                                  </a>
+                                </div>
+                              </td>
+                            </tr>
+
+                            <tr formGroupName="approved">
+                              <td class="col_3_1 greenColor">
+                                <label class="fieldNor"><strong>***Approved and Submitted by</strong></label>
+                                <br>
+
+                                <textarea style="width: 100%; height: 115px;" formControlName="info"></textarea>
+                              </td>
+                              <td class="col_3_2">
+                                <table class="noBorderTable_3" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                  <tbody>
+                                    <tr>
+                                      <td><label class="fieldNor">Name: </label></td>
+                                      <td><input type="text"  formControlName="name"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><label class="fieldNor">Designation:</label></td>
+                                      <td><input type="text" formControlName="desig"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><label class="fieldNor">Contact No: </label></td>
+                                      <td><input type="text" formControlName="contact"></td>
+                                    </tr>
+                                    <tr>
+                                      <td><label class="fieldNor">Date / Time:</label></td>
+                                      <td><input type="datetime-local" formControlName="dt"></td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+                              </td>
+                              <td class="col_3_3">
+                                <label class="fieldNor">Signature:</label><br>
+                                <input type="file" accept="image/*" formControlName="signature_source" (change)="submitSignature($event,'A')">
+                                <div class="mt-3 imageLink" *ngIf="this.CntNotify.get('approved.signature')?.value != ''">
+                                  <a >
+                                    <img class="attchments_inv" alt="Signature1" src="{{this.CntNotify.get('approved.signature')?.value}}">
+                                  </a>
+                                  <a  class="deleteIcon" (click)="deleteImage('A')">
+                                    <i class="fa fa-times-circle-o" aria-hidden="true" ></i>
+                                  </a>
+                                </div>
+
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+
+
+
+
+              </div>
+              <div class="btnSubmitSec">
+                <input type="submit" value="Save" class="btn btn-info" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

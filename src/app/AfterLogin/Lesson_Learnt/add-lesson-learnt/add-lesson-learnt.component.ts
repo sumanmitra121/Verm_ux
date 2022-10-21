@@ -79,10 +79,9 @@ export class AddLessonLearntComponent implements OnInit {
       })
     }
     })
-  setTimeout(() =>{
-    console.log(this.lesson_learnt.value.file);
-
-  },1000)
+  //setTimeout(() =>{
+  //  console.log(this.lesson_learnt.value.file);
+  //},1000)
   }
   submit(_type: any) {
    console.log(this.lesson_learnt.invalid)

@@ -1,0 +1,87 @@
+
+
+
+        <mat-form-field appearance="outline" >
+          <mat-label>Search </mat-label>
+          <input matInput (keyup)="applyFilter($event)"
+          placeholder="Search Contact Information" #input>
+      </mat-form-field>
+
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort  multiTemplateDataRows>
+
+
+              <ng-container matColumnDef="Sl.No">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Sl.No </th>
+                <td mat-cell *matCellDef="let row;let i = dataIndex" class="text-center">{{i + 1}}</td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Name </th>
+                <td mat-cell *matCellDef="let row" class="text-center"> {{row.catg_name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Action">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
+                <td mat-cell *matCellDef="let row;let i=index" class="text-center">
+                     <a   class="customIcon"
+                     *ngIf="u_type == 'A'"
+                    #tooltip="matTooltip"
+                    matTooltip="Edit {{row.catg_name}}"
+                    (click)="routeToMediaModification(row.catg_id)" routerLinkActive="true">
+                        <i class="fa fa-pencil-square-o " aria-hidden="true" ></i>
+                        </a>
+                       <a class="customIcon" (click)="row.isExpanded = !row.isExpanded">
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                       </a>
+
+                  </td>
+              </ng-container>
+
+              <ng-container matColumnDef="showDetails">
+                <td mat-cell *matCellDef="let row;let k = dataIndex" [attr.colspan]="displayedColumns.length">
+                <div class="row contact-element-detail" [@detailExpand]="row.isExpanded ? 'expanded' : 'collapsed'">
+                 <div class="col-md-12 py-5">
+                  <table class="table-stripped">
+                      <thead>
+                        <tr>
+                          <th class="subTH">Name</th>
+                          <th class="subTH">Email</th>
+                          <th class="subTH">Contact No.</th>
+                          <th class="subTH">Address</th>
+                          <th class="subTH" *ngIf="u_type == 'A'">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let dt of row.dt;let i=index">
+                          <td class="subTD">{{dt.con_name}}</td>
+                          <td class="subTD">{{dt.con_email}}</td>
+                          <td class="subTD">{{dt.con_no}}</td>
+                          <td class="subTD">{{dt.con_addr}}</td>
+                          <td class="subTD" *ngIf="u_type == 'A'">
+                           <a class="customIcon"  #tooltip="matTooltip" matTooltip="Delete"  (click)="deleteRow(dt.id,i,k)">
+                            <i class="fa fa-trash" aria-hidden="true" ></i>
+                           </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                  </table>
+                 </div>
+
+                </div>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <!-- Extra row to show detail content column -->
+              <tr mat-row *matRowDef="let row; columns: ['showDetails']" class="contact-detail-row"></tr>
+
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[50, 100, 200, 300]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
+          </div>

@@ -2,8 +2,6 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, ViewChild ,AfterViewInit, ElementRef} from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faWindows } from '@fortawesome/free-brands-svg-icons';
-import ZoomMtgEmbedded from "@zoomus/websdk/embedded";
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { global_url_test } from '../../../app/url';
@@ -33,7 +31,7 @@ export class AudioVideoConferenceComponent implements OnInit,AfterViewInit {
 
   icon:any='fa-file-video-o'; 
    headername:any='Audio / Video Conference';
-   client = ZoomMtgEmbedded.createClient();
+   //client = ZoomMtgEmbedded.createClient();
    meetingSDKElement:any;
    host_modal:any;
    role:any;
@@ -42,7 +40,10 @@ export class AudioVideoConferenceComponent implements OnInit,AfterViewInit {
   //  secret_key:any="uDAUimbWnYKhKEB8SmtQI0vJANArE9UsMfVH";
   secret_key:any="sOR9LM0v89ffZeo4zjtcpwa76agZAW8K2ARS";
    signature:any;
-  constructor(private emergencyService:VirtualEmergencyService,private router:Router,private spinner:NgxSpinnerService) { }   
+  constructor(
+    private emergencyService: VirtualEmergencyService,
+    private router: Router,
+    private spinner: NgxSpinnerService) { }   
 
   ngOnInit(): void {
     var alpha=['A','B','C','D','E','F','G','H','I','J','K','L','M','N',
@@ -59,7 +60,7 @@ export class AudioVideoConferenceComponent implements OnInit,AfterViewInit {
     var g=alpha[Math.floor(Math.random()*62)]
     var sum=a+b+c+d+e+f+g;
    this.room=sum;
-   this.user={name:localStorage.getItem('Emp_name')?localStorage.getItem('Emp_name'):'Test'}
+   this.user={name:localStorage.getItem('Emp_name')?localStorage.getItem('Emp_name') : 'Test'}
 
 
     // this.meetingSDKElement = document.getElementById('meetingSDKElement');
@@ -94,9 +95,7 @@ export class AudioVideoConferenceComponent implements OnInit,AfterViewInit {
 
   }
 
-  ngAfterViewInit(){
-   
-  }
+  ngAfterViewInit(){}
 
   handleClose=()=>{
    console.log("handleCLose");
@@ -271,45 +270,45 @@ handleVideoMuteStatusChanged=(video:any)=>{}
   logjoin(logForm:Form){
     console.log(logForm);
   }
-  get_signature(api_key:any,secret:any,meet_no:any,role:any,password:any,userName:any){
-        this.emergencyService.global_service('0','/signature','apiKey='+api_key+'&apiSecret='+secret+'&meetingNumber='+meet_no+'&role='+role).subscribe(data=>{
-         console.log(data);
-         this.signature=data;
-         console.log(this.signature.msg);
-         if(this.signature.suc==1){
-          this.meetingSDKElement = document.getElementById('meetingSDKElement');
-          this.client.init({
-            debug: true,
-            zoomAppRoot: this.meetingSDKElement,
-            language: 'en-US',
-            customize: {
-              meetingInfo: ['topic', 'host', 'mn', 'pwd', 'telPwd', 'invite', 'participant', 'dc', 'enctype'],
-              toolbar: {
-                buttons: [
-                  {
-                    text: 'Custom Button',
-                    className: 'CustomButton',
-                    onClick: () => {
-                      console.log('custom button');
-                    }
-                  }
-                ]
-              }
-            }
-          });
-        this.client.join({
-              apiKey: api_key,
-              signature: this.signature.msg,
-                   meetingNumber: meet_no,
-              password: password,
-              userName:userName,   
-            })
-         }
-         else{
+  //get_signature(api_key:any,secret:any,meet_no:any,role:any,password:any,userName:any){
+  //      this.emergencyService.global_service('0','/signature','apiKey='+api_key+'&apiSecret='+secret+'&meetingNumber='+meet_no+'&role='+role).subscribe(data=>{
+  //       console.log(data);
+  //       this.signature=data;
+  //       console.log(this.signature.msg);
+  //       if(this.signature.suc==1){
+  //        this.meetingSDKElement = document.getElementById('meetingSDKElement');
+  //        this.client.init({
+  //          debug: true,
+  //          zoomAppRoot: this.meetingSDKElement,
+  //          language: 'en-US',
+  //          customize: {
+  //            meetingInfo: ['topic', 'host', 'mn', 'pwd', 'telPwd', 'invite', 'participant', 'dc', 'enctype'],
+  //            toolbar: {
+  //              buttons: [
+  //                {
+  //                  text: 'Custom Button',
+  //                  className: 'CustomButton',
+  //                  onClick: () => {
+  //                    console.log('custom button');
+  //                  }
+  //                }
+  //              ]
+  //            }
+  //          }
+  //        });
+  //      this.client.join({
+  //            apiKey: api_key,
+  //            signature: this.signature.msg,
+  //                 meetingNumber: meet_no,
+  //            password: password,
+  //            userName:userName,   
+  //          })
+  //       }
+  //       else{
 
-         }
-        })
-  }
+  //       }
+  //      })
+  //}
   open_another_tab(){
 
   }

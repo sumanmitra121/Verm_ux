@@ -309,7 +309,14 @@ import { AdminAuthGuard } from './Gaurds/admin-auth.guard';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { InvestigationComponent } from './AfterLogin/IncInvestigationReport/investigation/investigation.component';
 import { ModifyInvestigationComponent } from './AfterLogin/IncInvestigationReport/modify-investigation/modify-investigation.component';
-//End//
+import { ModifyComponent } from './Admin/AfterLogin/Contact-Directory/modify/modify.component';
+import { ContactCategoryComponent } from './Admin/AfterLogin/Contact-Directory/category/contactcategory.component';
+import { ContactInformationComponent } from './Admin/AfterLogin/CntInfo/contact-information/contact-information.component';
+import { ModifyCntinfoComponent } from './Admin/AfterLogin/CntInfo/modify-cntinfo/modify-cntinfo.component';
+import { CntNotificationComponent } from './AfterLogin/CntNotify/cnt-notification/cnt-notification.component';
+import { ModifyCntNotificationComponent } from './AfterLogin/CntNotify/modify-cnt-notification/modify-cnt-notification.component';
+import { InformationComponent } from './CommonDialogAlert/information/information.component';
+import { UserCntinfoComponent } from './AfterLogin/user-cnt-info/user-cnt-info.component';
 @NgModule({
   //It is the container section of the NgModule where all the commponents that are created is going to be imported here.
   declarations: [
@@ -395,8 +402,15 @@ import { ModifyInvestigationComponent } from './AfterLogin/IncInvestigationRepor
     MeetingDashboardComponent,
     ModifyMeetingComponent,
     InvestigationComponent,
-    ModifyInvestigationComponent
-    // SearchFilterPipe
+    ModifyInvestigationComponent,
+    ModifyComponent,
+    ContactCategoryComponent,
+    ContactInformationComponent,
+    ModifyCntinfoComponent,
+    CntNotificationComponent,
+    ModifyCntNotificationComponent,
+    InformationComponent,
+    UserCntinfoComponent
   ],
   //It is the container section of the NgModule where all the modules of packages that are installed is going to be imported here.
   imports: [

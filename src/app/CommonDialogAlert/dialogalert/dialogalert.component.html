@@ -1,8 +1,8 @@
 <ng-container>
-    <div mat-dialog-content *ngIf="_u_type =='A'">
-      {{ data.name=='Category' ? 'All files residing within the folder will be deleted.Do you want to continue?' : 'Are you sure you want to delete?'}}
+  <div mat-dialog-content *ngIf="_u_type =='A'">
+    {{ data.name=='Category' ? 'All files residing within the folder will be deleted.Do you want to continue?' : 'Are you sure you want to delete?'}}
 
-    </div>
+  </div>
     <h1  mat-dialog-title *ngIf="data.name == 'summary_inc'">Summary Of Incident :
         <mat-icon mat-dialog-close  class="float-right" >close</mat-icon>
     </h1>
@@ -10,7 +10,7 @@
       <mat-divider class="mt-2"></mat-divider>
     </h1>
     <div mat-dialog-content class="mat-typography" *ngIf="_u_type !='A'">
-        <ng-container *ngIf="data.name != 'MHF' && data.name != 'SP'">
+        <ng-container *ngIf="data.name != 'MHF' && data.name != 'SP' && data.name !='C_notify'">
           {{ data.name == 'board Type' ? 'Are you sure you want to delete?' : data.name == 'lesson_final' ? 'Do you want to save this as final ? After saving this form as final this form is non editable.' : data.name == 'summary_inc' ?  data.summary_incident : 'An incident is already active!! Do you want to continue?'}}
         </ng-container>
         <ng-container *ngIf="data.name == 'MHF'">
@@ -57,6 +57,9 @@
         </ng-container>
         <ng-container hidden="data.name != 'SP'">
           <div #roles></div>
+        </ng-container>
+        <ng-container *ngIf="data.name =='C_notify'">
+          <p>Once submitted , this form can not be modified in future. Are you sure?</p>
         </ng-container>
     </div>
     <div mat-dialog-actions *ngIf="data.name != 'summary_inc'">

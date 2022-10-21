@@ -1,0 +1,31 @@
+<app-adminheader></app-adminheader>
+<div class="page-body-wrapper">
+
+  <app-adminsidebar class="sidebarMain"></app-adminsidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+            <div class="btnSubmitSec ">
+              <h2> {{ id > 0 ? 'Update' : 'Create'}} Contact Category</h2>
+           </div>
+          </div>
+
+           <form [formGroup]="contact_cat" (ngSubmit)="submitContact()">
+            <div class="row form-group">
+              <div class="col-md-6">
+                <label>Contact Category</label>
+                <input type="text" class="form-control" formControlName="catg_name"/>
+              </div>
+            </div>
+            <div class="titleSec">
+              <div class="btnSubmitSec ">
+                <input type="submit" [disabled]="contact_cat.invalid" [value]="id > 0 ? 'Update' : 'Add'" class="btn btn-info">
+             </div>
+             </div>
+           </form>
+      </div>
+    </div>
+  </div>
+</div>

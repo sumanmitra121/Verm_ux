@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\Admin",
+    "\\src\\app\\Admin\\AfterLogin",
+    "\\src\\app\\AfterLogin\\Lesson_Learnt\\add-lesson-learnt",
+    "\\src\\app\\CommonDialogAlert\\dialogalert",
+    "\\src\\app\\Error_pages\\page-not-found",
+    "\\src\\assets",
+    "\\src\\assets\\css"
+  ],
+  "SelectedNode": "\\src\\app\\app-routing.module.ts",
+  "PreviewInSolutionExplorer": false
+}

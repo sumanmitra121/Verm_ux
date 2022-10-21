@@ -116,6 +116,7 @@ export class AdminDashboardComponent implements OnInit {
 
   Actitve_incident(){
     this.emergencyservice.global_service('0','/get_active_inc',null).pipe(map((x:any) => x.msg)).subscribe(res=>{
+      localStorage.setItem('inc_no',res[0].inc_no);
       this.get_current_incident=res;
       if(res.length > 0){
         this.setCurrentIncidentDetails(this.get_current_incident[this.get_current_incident.length -1]);
@@ -130,6 +131,7 @@ export class AdminDashboardComponent implements OnInit {
     })
   }
   setCurrentIncidentDetails(_res:any){
+    localStorage.setItem('inc_no',_res.inc_no);
     this.incDetails = _res;
     this.incDetails.Inc_name = _res.inc_name+" ("+_res.inc_no +")";
     this.incDetails.location = _res.offshore_name+" ("+_res.lat+" : "+_res.lon+ ")";
@@ -157,9 +159,7 @@ export class AdminDashboardComponent implements OnInit {
   getAllIncidents(){
           this.emergencyservice.global_service('0','/get_all_incident',null).pipe(map((x:any) => x.msg)).subscribe(data=>{
           this.all_incident=data;
-          if(data.length>0){
-          this.get_incident_details(data[0].id);
-          }
+          if(data.length>0){this.get_incident_details(data[0].id);}
           })
   }
   getTeamRoaster_data(){this.emergencyservice.global_service('0','/team_adm_dashboard',null).pipe(map((x:any) => x.msg)).subscribe(data=>{

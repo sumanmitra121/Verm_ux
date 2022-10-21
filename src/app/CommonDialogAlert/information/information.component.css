@@ -1,0 +1,30 @@
+tr.contact-detail-row {height: 0;}
+.table-stripped {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}
+
+
+.subTH, .subTD {border: 1px solid #dddddd;text-align: center;padding: 8px;}
+.subTD{
+  width:20%;
+}
+
+
+tr.contact-element-row:not(.contact-expanded-row):hover {background: whitesmoke;}
+
+tr.contact-element-row:not(.contact-expanded-row):active {background: #efefef;}
+
+.contact-element-row td {border-bottom-width: 0;}
+
+.contact-element-detail {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-element-description {
+  padding: 16px;
+}
+
+.contact-element-description-attribution {
+  opacity: 0.5;
+}

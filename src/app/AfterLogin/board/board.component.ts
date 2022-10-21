@@ -549,7 +549,7 @@ export class BoardComponent implements OnInit, OnDestroy {
                   localStorage.getItem('Email'),
                   'BE',
                   this.mode,
-                  this.datePipe.transform(new Date(), 'dd/MM/YYYY HH:mma')
+                  this.datePipe.transform(new Date(), 'YYYY-MM-ddTHH:mm:ss')
                 );
                 clearTimeout(this.evacuation_status);
                 this.Post_notification(post_notification);

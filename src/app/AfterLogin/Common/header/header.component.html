@@ -1,17 +1,16 @@
 <nav class="navbar col-lg-12 col-sm-12 p-0 fixed-top d-flex flex-row">
-	<div class="text-left navbar-brand-wrapper d-flex logo"><img src="assets/images/logoWhit.png" alt=""/>
+	<div class="text-left navbar-brand-wrapper d-flex logo">
+    <img src="assets/images/logoWhit.png" alt=""/>
     <!-- <b class="m-auto Blink text-success" style="font-size: 10px;">{{_ActiveIncNum}} Incident Activated</b> -->
-
+    <b class="m-auto incidentNo" *ngIf="_inc_no && active_flag!=0" >Incident No: {{_inc_no}}</b>
 	</div>
 	<div class="navbar-menu-wrapper d-flex align-items-center">
 		<div class="breadCamp" *ngIf='active_flag!=0'>
 			<!--<a><i class="fa {{icon}}" aria-hidden="true"></i></a>  <strong>{{headername}}</strong> -->
 			<div class="insidentDataCont" *ngIf="Inc_Name!= ''">
-        <h2 class="text-center">{{_inc_no}}</h2>
 			<ul class="topinsidentData2 topinsidentData2_1">
 			<li class="typeCl locationCl" #tooltip="matTooltip" matTooltip="{{Inc_type}}"><strong>Type:</strong>
         {{(Inc_type.length > 26 ) ? (Inc_type | slice:0:23)+'..':(Inc_type)}}
-
       </li>
 			<li class="nameCl locationCl active dropdown"  >
         <strong >Name:</strong>

@@ -6,9 +6,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { VirtualEmergencyService } from 'src/app/Services/virtual-emergency.service';
 import { MatTableExporterDirective } from 'mat-table-exporter';
-import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
-import 'jspdf-autotable'
 @Component({
   selector: 'app-reportdatapool-details',
   templateUrl: './reportdatapool-details.component.html',

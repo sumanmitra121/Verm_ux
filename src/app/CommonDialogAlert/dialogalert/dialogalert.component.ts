@@ -27,19 +27,24 @@ ngAfterViewInit(){
 }
 
   delete(){
-    this.dialogRef.close(1);
+    // this.dialogRef.close(1);
     if(this._u_type == 'A'){
-    this.emergencyservice.global_service('0',this.data.api_name,'id='+this.data.id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
-      this.check_respond=data;
-      if(this.check_respond.suc==1){
+      if(this.data.id > 0){
+        this.emergencyservice.global_service('0',this.data.api_name,'id='+this.data.id+'&user='+localStorage.getItem('Email')).subscribe(data=>{
+          this.check_respond=data;
+          if(this.check_respond.suc==1){
+            this.dialogRef.close(1);
+            this.toastr.successToastr(this.data.name +' deleted successfully','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
+            }
+            else{
+              this.dialogRef.close();
+              this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
+              }
+        })
+      }
+      else{
         this.dialogRef.close(1);
-        this.toastr.successToastr(this.data.name +' deleted successfully','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
-        }
-        else{
-          this.dialogRef.close();
-          this.toastr.errorToastr('Something went wrong, failed to delete','',{position:'bottom-right',animate:'slideFromRight',toastTimeout:7000})
-          }
-    })
+      }
    }
    else{
         this.dialogRef.close(1);

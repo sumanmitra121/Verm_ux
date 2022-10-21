@@ -1,0 +1,125 @@
+<app-adminheader></app-adminheader>
+<div class="page-body-wrapper">
+
+  <app-adminsidebar class="sidebarMain"></app-adminsidebar>
+  <div class="main-panel">
+    <div class="content-wrapper">
+      <div class="card">
+        <div class="card-body">
+          <div class="titleSec">
+            <div class="btnSubmitSec">
+              <h2> {{ id > 0 ? 'Update' : 'Create'}} Contact Information</h2>
+            </div>
+
+            <form [formGroup]="c_info" (ngSubmit)="submitContactInformation()">
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <label>Select Category</label>
+                <select class="form-control" formControlName="catg_id">
+                  <option value="">--Select--</option>
+                  <option *ngFor="let catg of setCat" [value]="catg.id">{{catg.catg_name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <table class="table-striped">
+                  <thead>
+                            <tr>
+                              <th colspan="12"></th>
+                              <th>
+                                <a (click)="addnew_subContact()">
+                                <mat-icon>add</mat-icon>
+                              </a></th>
+
+                            </tr>
+                  </thead>
+                  <tbody formArrayName="dt">
+                    <tr *ngFor="let subContacts of subContact.controls; let i = index">
+                      <ng-container [formGroupName]="i">
+
+                        <td colspan="12">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <textarea class="form-control" formControlName="con_desc" rows="2" placeholder="Enter Description"></textarea>
+                              <div
+                              *ngIf="subContact.controls[i].get('con_desc')?.invalid && (subContact.controls[i].get('con_desc')?.dirty || subContact.controls[i].get('con_desc')?.touched)"
+                              class="text-danger mt-1">
+                              <div *ngIf="subContact.controls[i].get('con_desc')?.errors?.required">
+                                <strong>*Please enter description</strong>
+                              </div>
+                            </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <textarea rows="2" class="form-control" formControlName="con_name" placeholder="Enter Name"></textarea>
+                                <div
+                                *ngIf="subContact.controls[i].get('con_name')?.invalid && (subContact.controls[i].get('con_name')?.dirty || subContact.controls[i].get('con_name')?.touched)"
+                                class="text-danger mt-1">
+                                <div *ngIf="subContact.controls[i].get('con_name')?.errors?.required">
+                                  <strong>*Please enter name</strong>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                              <textarea rows="2" placeholder="Enter Email" class="form-control" formControlName="con_email"></textarea>
+                              <div
+                              *ngIf="subContact.controls[i].get('con_email')?.invalid && (subContact.controls[i].get('con_email')?.dirty || subContact.controls[i].get('con_email')?.touched)"
+                              class="text-danger mt-1">
+                              <div *ngIf="subContact.controls[i].get('con_email')?.errors?.required">
+                                <strong>*Please enter email</strong>
+                              </div>
+                            </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                              <textarea  cols="12" rows="2" placeholder="Enter Mobile Number" class="form-control" formControlName="con_no"></textarea>
+                              <div
+                              *ngIf="subContact.controls[i].get('con_no')?.invalid && (subContact.controls[i].get('con_no')?.dirty || subContact.controls[i].get('con_no')?.touched)"
+                              class="text-danger mt-1">
+                              <div *ngIf="subContact.controls[i].get('con_no')?.errors?.required">
+                                <strong>*Please enter contact number</strong>
+                              </div>
+                            </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                              <textarea class="form-control" formControlName="con_addr" rows="2" placeholder="Enter Address"></textarea>
+                              <div
+                              *ngIf="subContact.controls[i].get('con_addr')?.invalid && (subContact.controls[i].get('con_addr')?.dirty || subContact.controls[i].get('con_addr')?.touched)"
+                              class="text-danger mt-1">
+                              <div *ngIf="subContact.controls[i].get('con_addr')?.errors?.required">
+                                <strong>*Please enter address</strong>
+                              </div>
+                            </div>
+
+                            </div>
+
+                          </div>
+                        </td>
+                        <td>
+                          <a class="customIcon" type="button"
+                             (click)="removeSubContact(i,subContact.controls[i].get('id')?.value)">
+                            <mat-icon>delete</mat-icon>
+                          </a>
+                        </td>
+
+                      </ng-container>
+
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="titleSec mt-3">
+            <div class="btnSubmitSec">
+              <input [disabled]="c_info.invalid" type="submit" [value]="id > 0 ? 'Update' : 'Save'" class="btn btn-info">
+            </div>
+            </div>
+          </form>
+
+
+
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+import { ModifyComponent } from './Admin/AfterLogin/Contact-Directory/modify/modify.component';
+import { ContactCategoryComponent } from './Admin/AfterLogin/Contact-Directory/category/contactcategory.component';
    /* ********** app-routing.module.ts************
      This is the main routing section of this project,where
      all routing of components are declared.
@@ -88,7 +90,11 @@ import { LoginGuard } from './Gaurds/login.guard';
 import { AdminAuthGuard } from './Gaurds/admin-auth.guard';
 import { ModifyInvestigationComponent } from './AfterLogin/IncInvestigationReport/modify-investigation/modify-investigation.component';
 import { InvestigationComponent } from './AfterLogin/IncInvestigationReport/investigation/investigation.component';
-
+import { ContactInformationComponent } from './Admin/AfterLogin/CntInfo/contact-information/contact-information.component';
+import { ModifyCntinfoComponent } from './Admin/AfterLogin/CntInfo/modify-cntinfo/modify-cntinfo.component';
+import { CntNotificationComponent } from './AfterLogin/CntNotify/cnt-notification/cnt-notification.component';
+import { ModifyCntNotificationComponent } from './AfterLogin/CntNotify/modify-cnt-notification/modify-cnt-notification.component';
+import { UserCntinfoComponent } from './AfterLogin/user-cnt-info/user-cnt-info.component';
 const routes: Routes = [
   /** Routing for BeforeLoginDashboardComponent (src/app/BeforeLogin/befor-login-dashboard) => It is the landing page of ER-360 Application **/
   {
@@ -516,6 +522,53 @@ const routes: Routes = [
     component:WeatherComponent,
     canActivate:[UGaurdGuard]
    },
+   {
+       path:'admin/cntcat',
+       component: ContactCategoryComponent,
+       canActivate: [AGaurdGuard]
+
+
+   },
+   {
+          path:'admin/cntcat/:id',
+         component: ModifyComponent,
+         canActivate: [AGaurdGuard]
+
+   },
+   {
+         path:'admin/cntinfo',
+         component: ContactInformationComponent,
+         canActivate: [AGaurdGuard]
+
+   },
+   {
+        path:'admin/cntinfo/:id',
+        component: ModifyCntinfoComponent,
+        canActivate: [AGaurdGuard]
+
+   },
+
+    {
+      path:'cntnotify',
+      component: ModifyCntNotificationComponent,
+      canActivate:[UGaurdGuard]
+    },
+
+    // {
+    //   path:'cntnotify',
+    //   component: CntNotificationComponent,
+    //   canActivate:[UGaurdGuard]
+    // },
+    // {
+    //   path:'cntnotify/:id',
+    //   component: ModifyCntNotificationComponent,
+    //   canActivate:[UGaurdGuard]
+    // },
+    {
+          path:'ucntinfo',
+          component:UserCntinfoComponent,
+          canActivate:[UGaurdGuard]
+    },
   {
     path:"**",
     component:PageNotFoundComponent

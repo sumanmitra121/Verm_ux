@@ -434,7 +434,7 @@ export class RepositoryComponent implements OnInit {
      console.log(this.catg_name);
      console.log(inc_details.inc_no);
 
-    this._show_btn = Number(inc_details.inc_no) == this.catg_name ? false : true;
+    this._show_btn = Number(inc_details.inc_no) == this.catg_name && Number(localStorage.getItem('active_flag')) > 0 ? false : true;
       console.log(this._show_btn);
 
   }

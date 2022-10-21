@@ -3,7 +3,6 @@
 
 <app-adminsidebar class="sidebarMain"></app-adminsidebar>
 <div class="main-panel">
-  <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner> -->
   <ngx-spinner bdColor="#fff" template="<img src='/assets/images/Gif/loader.gif'>"><h3>Loading...</h3>
 </ngx-spinner>
 <ng-template [ngIf]="get_current_incident.length == 0" [ngIfElse]="INCDETAILS">

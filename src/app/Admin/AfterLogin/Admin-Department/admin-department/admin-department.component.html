@@ -19,7 +19,6 @@
 
 
                    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-
                      <div class="mat-elevation-z8">
                        <table mat-table [dataSource]="dataSource" matSort>
 
@@ -65,7 +64,6 @@
                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                          </tr>
                        </table>
-
                        <mat-paginator [pageSizeOptions]="[50, 100, 200, 300]" aria-label="Select page of users" showFirstLastButtons></mat-paginator>
 
              </div>

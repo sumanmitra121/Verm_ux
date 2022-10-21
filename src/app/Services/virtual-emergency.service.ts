@@ -1,3 +1,4 @@
+import { ToastrManager } from 'ng6-toastr-notifications';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import  { io, Socket }  from 'socket.io-client';//For Socket.io-client implementation
@@ -15,11 +16,11 @@ export class VirtualEmergencyService {
 
   // public url = 'http://192.168.1.244:3000';
   // public url = 'https://vermapi.opentech4u.co.in';
-  public url = 'https://api.er-360.com';
+   public url = 'https://api.er-360.com';
   // socket:any;
   //  url:any='http://localhost:3000';
   //  readonly url:any='https://vermapi.opentech4u.co.in';
- constructor(private route:Router,public dialog:MatDialog,private http:HttpClient) {
+ constructor(private route:Router,public dialog:MatDialog,private http:HttpClient,private toastr:ToastrManager) {
   // this.socket = io(this.url);
   // this.socket = io(this.url, {transports: ['websocket', 'polling', 'flashsocket']});
   this.socket = io(this.url, {transports: ['polling']});
@@ -139,6 +140,13 @@ export class VirtualEmergencyService {
   disconnectSocket(){this.socket.disconnect();}
   getWindDirection(){
     return this.http.get('../../assets/JSON/windDirection.json');
+  }
+  showToast(msg:any,type:any){
+    switch(type){
+      case 'E' :this.toastr.errorToastr(msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:4000});break;
+      case 'S' :this.toastr.successToastr(msg,'',{position:'bottom-right',animate:'slideFromRight',toastTimeout:4000});break;
+      default  : break;
+    }
   }
   }
 

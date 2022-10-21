@@ -25,7 +25,6 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@zoomus/websdk": "^2.1.1",
     "angular-ng-autocomplete": "^2.0.5",
     "angular2-multiselect-dropdown": "^5.0.4",
     "cdk-table-exporter": "^10.2.4",
