@@ -202,7 +202,7 @@ export class ModifyCntNotificationComponent implements OnInit {
   saveForm() {
     if(localStorage.getItem('inc_no') != ''){
       this.CntNotify.patchValue({
-        date:this.datePipe.transform(new Date(), 'YYYY-MM-ddTHH:mm:ss')
+        datetime:this.datePipe.transform(new Date(), 'YYYY-MM-ddTHH:mm:ss')
        });
       this.openDialog(this.CntNotify.value);
     }
@@ -235,17 +235,17 @@ export class ModifyCntNotificationComponent implements OnInit {
     this.setFAX();
   }
   setBU() {
-    this.CntNotify.get('bu')?.valueChanges.subscribe((res) => {
+    this.CntNotify.get('bu')?.valueChanges.subscribe((res:any) => {
       this.BU.nativeElement.value = res;
     });
   }
   setTEL() {
-    this.CntNotify.get('tel')?.valueChanges.subscribe((res) => {
+    this.CntNotify.get('tel')?.valueChanges.subscribe((res:any) => {
       this.TEL.nativeElement.value = res;
     });
   }
   setFAX() {
-    this.CntNotify.get('fax')?.valueChanges.subscribe((res) => {
+    this.CntNotify.get('fax')?.valueChanges.subscribe((res:any) => {
       this.FAX.nativeElement.value = res;
     });
   }
@@ -312,7 +312,7 @@ export class ModifyCntNotificationComponent implements OnInit {
     disalogConfig.width = '35%';
     disalogConfig.data = { id: 0, api_name: '', name: 'C_notify' }
       const dialogref = this.dialog.open(DialogalertComponent, disalogConfig);
-      dialogref.afterClosed().subscribe(dt => {
+      dialogref.afterClosed().subscribe((dt:any) => {
         if (dt) {
           this.callSubmit_api(data);}
         else { }
@@ -320,6 +320,7 @@ export class ModifyCntNotificationComponent implements OnInit {
   }
 
   callSubmit_api(dt: any) {
+    console.log(dt)
     this.spinner.show();
     this.api_call.global_service(1, '/comcen_notification',this.CntNotify.value).subscribe((res:any) =>{
         this.api_call.showToast(res.suc > 0 ? 'Save successfull . Please check the submitted form inside the ER-Repository Module' : 'Something went wrong! please try again later' , res.suc > 0 ? 'S' : 'E');
